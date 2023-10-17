@@ -634,7 +634,7 @@ void BeginLog()
 //	LogFile=pack_fopen("gamelog.txt","w");	
 };
 
-void WriteLog(char * Txt)
+void WriteLog(const char * Txt)
 {
 	if (bLog)
 	{
@@ -643,13 +643,13 @@ void WriteLog(char * Txt)
 	};	
 };
 
-void DFileLog(char *Txt)
+void DFileLog(const char *Txt)
 {
 	if (bFullLogMode)
 	{FileLog(Txt);};
 };
 
-void FileLog(char *Txt)
+void FileLog(const char *Txt)
 {
 	Logos << Txt << endl;
 	/*while (*Txt!='\0')
@@ -669,7 +669,7 @@ void EndLog()
 	Logos.close();
 };
 
-void StopLog(char * Txt, int Value)
+void StopLog(const char * Txt, int Value)
 {
 	if (bLog)
 	{		
@@ -880,7 +880,7 @@ clCastle::~clCastle()
 {};
 
 int Progress=0;
-int OpenFile(char *FileName)
+int OpenFile(const char *FileName)
 {
 //	int Result;
 //	char sName[500];

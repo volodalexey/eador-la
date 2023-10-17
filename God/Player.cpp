@@ -16,7 +16,7 @@ dcShop::dcShop()
 dcShop::~dcShop()
 {};
 
-char* GetAttitudeName(int Att)
+const char* GetAttitudeName(int Att)
 {
 	for (int i=0; i<=iMaxAttitude; i++)
 	{

@@ -6101,7 +6101,7 @@ void ScreenGarrison (dcHero * Garrison, bool CanHire)
 	iAntisleep=iAntisleepDelay;
 };
 
-char* GetRulerNick(int Karma)
+const char* GetRulerNick(int Karma)
 {
 	for (int i=0; i<=iMaxNick; i++)
 	{
@@ -6111,7 +6111,7 @@ char* GetRulerNick(int Karma)
 	return "";
 };
 
-char* GetRulerTitle(int Score)
+const char* GetRulerTitle(int Score)
 {
 	for (int i=0; i<=iMaxTitle; i++)
 	{

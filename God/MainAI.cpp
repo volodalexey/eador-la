@@ -1483,7 +1483,7 @@ void HireUnits(int Player, int Hero)
 			for (int i=0; i<40; i++)
 			{
 				if ((arSpecUnit[i][0]>0)&&((pFirstUnitType+arSpecUnit[i][0])->iLevel==Rank)&&
-					((pFirstUnitType+arSpecUnit[i][0]>0)||
+					((pFirstUnitType+arSpecUnit[i][0]!=0)||
 					((arPlayer[Player].Gold>=arPlayer[Player].GetUnitGoldPrice(arSpecUnit[i][0],arPlayer[Player].ipProvince))&&(arPlayer[Player].Gem>=arPlayer[Player].GetUnitGemPrice(arSpecUnit[i][0],arPlayer[Player].ipProvince)))))
 				{
 					RollerN[Count]=arSpecUnit[i][0];

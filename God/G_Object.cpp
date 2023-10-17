@@ -7,7 +7,7 @@ bool bHint;
 bool bInput=false;
 int RedrawTick=0;
 
-void StupidLogger(G_Object * Obj, char * Log)
+void StupidLogger(G_Object * Obj, const char * Log)
 {
 	/*if (bShowAnim)
 	{
@@ -671,7 +671,7 @@ G_Object::~G_Object()
 	};
 };
 
-void G_Object::SmartLog(char *Txt)
+void G_Object::SmartLog(const char *Txt)
 {
 	if (bGlobalError)
 	{

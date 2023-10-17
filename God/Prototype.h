@@ -1091,10 +1091,10 @@ void SaveRecords();		//Сохранение таблицы рекордов
 void SaveCampRecords();	//Сохранение таблицы рекордов кампании
 void FillTab();			//Заполнение таблицы рекордов базовыми значениями
 extern bool bLog;
-void WriteLog(char * Txt);
-void FileLog(char * Txt);
-void DFileLog(char * Txt);
-void StopLog(char * Txt, int Value);
+void WriteLog(const char * Txt);
+void FileLog(const char * Txt);
+void DFileLog(const char * Txt);
+void StopLog(const char * Txt, int Value);
 void BeginLog();
 void EndLog();
 void RunHourGlass(int iPhrase, int DY);	//Запускает анимацию песочных часов с фразой iPhrase

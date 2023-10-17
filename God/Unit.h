@@ -776,8 +776,8 @@ void MakeTextHint (int ID, char *Str);
 void MakeSiteHint(dcProvince *PR, int Site);
 //void MakeStringHint (int Phrase); перенесено в Interface.h
 
-char* GetAttitudeName(int Att);
-char* GetRulerNick(int Karma);
+const char* GetAttitudeName(int Att);
+const char* GetRulerNick(int Karma);
 
 extern dcPlayer arPlayer[MAX_PLAYERS]; //Массив игроков
 extern dcProvince * pFirstProvince;
@@ -817,7 +817,7 @@ void ScrollSound();
 void CoinSound();
 void RunCampaignEvent(int Index, int Player, int Param);
 void ScreenCampStat();
-char* GetRulerTitle(int Score);
+const char* GetRulerTitle(int Score);
 int GetEnergyIncome(); //Возвращает доход энергии с мира игрока
 //int ShopRoller(int iShop, int iLevel); //Заполняет таблицу вероятностей для магазина типа iShop предметами уровня не выше iLevel
 //iShop: 1, 2, 9 Оружие и щиты, 3 Луки и стрелы, 4 Жезлы и сферы, 5 Знамёна, 6 кожа и пояса, 7 Кольчуги, 8 Латы, 10 Свитки, -1 Одежда, -2 Украшения

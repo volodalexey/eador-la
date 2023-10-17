@@ -1414,7 +1414,7 @@ void MainScreen(int Player)
 	
 
 
-	char * InfoString;
+	const char * InfoString;
 	const int BarX=707;//750;
 	const int BarY=243;//280;
 	const int LowY=768-bmpGUI_LowPanel->h;//723;

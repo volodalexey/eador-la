@@ -226,7 +226,7 @@ public:
 	bool PlayAnimation();
 	bool ShowLink(int Layer);
 	void PlaceOnMap(int mX, int mY);
-	void SmartLog(char *Txt);
+	void SmartLog(const char *Txt);
 	clEffQue * AddAttackUnitEffect(int ipType, int iDelay);
 	clEffQue * AddAttackEnemyEffect(int ipType, int iDelay);
 	clEffQue * AddAttackEnemyEffect(int ipType, int iDelay, G_Object *objTarget);
@@ -449,7 +449,7 @@ void ShowIconPercent(BITMAP *bmpPic, int x, int y, int Num);
 void ShowIconString(BITMAP *bmpPic, int x, int y, char * Str);
 
 void MakeStringHint (int Phrase);
-void StupidLogger(G_Object * Obj, char * Log);
+void StupidLogger(G_Object * Obj, const char * Log);
 
 #endif
 
