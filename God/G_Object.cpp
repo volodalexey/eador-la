@@ -979,7 +979,7 @@ void G_Object::Move(clPath *Path, int Step, int Delay, bool Add)
 		}
 		else
 		{
-			fDeltaX=Step/(1+abs(Waypoint->y-fY)/abs(Waypoint->x-fX));
+			fDeltaX=Step/(1+fabs(Waypoint->y-fY)/fabs(Waypoint->x-fX));
 			fDeltaY=Step-fDeltaX;
 			if (fX>Waypoint->x)
 			{
@@ -1426,7 +1426,7 @@ bool G_Object::PlayAnimation()
 		fY+=fDeltaY;
 		x=fX;
 		y=fY;
-		if (((abs(x-Waypoint->x)<=abs(fDeltaX))&&(abs(y-Waypoint->y)<=abs(fDeltaY)))||(abs(fX-Waypoint->x)<abs(fX-Waypoint->x+fDeltaX))||(abs(fY-Waypoint->y)<abs(fY-Waypoint->y+fDeltaY)))
+		if (((abs(x-Waypoint->x)<=fabs(fDeltaX))&&(abs(y-Waypoint->y)<=fabs(fDeltaY)))||(fabs(fX-Waypoint->x)<fabs(fX-Waypoint->x+fDeltaX))||(fabs(fY-Waypoint->y)<fabs(fY-Waypoint->y+fDeltaY)))
 		{
 			clPath *P=Track;
 			if (Waypoint->pPrev)
