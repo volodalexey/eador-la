@@ -1,4 +1,6 @@
-
+#ifdef _DEBUG
+#define ALLEGRO_NO_MAGIC_MAIN
+#endif
 #include "Mapper.h"
 
 bool bFullLogMode=false;
