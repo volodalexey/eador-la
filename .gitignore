@@ -4,6 +4,6 @@ Release/
 
 GoD/gamelog.txt
 GoD/tracer.txt
-GoD/save/game*.cmp
-GoD/save/map*.cmp
-GoD/save/player*.prf
+GoD/save/game*
+GoD/save/map*
+GoD/save/player*
