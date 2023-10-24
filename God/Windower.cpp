@@ -5782,6 +5782,8 @@ bool WindowProfile (int Index, bool bList)
 			{arHumans[Index].ipAvatar++;}
 			else
 			{arHumans[Index].ipAvatar=0;};
+			// FIXME: error where arHumans[Index].ipAvatar == 21, but iMaxAvatarPic == 41
+			//        open the character in the main menu and scroll through avatars
 			draw_sprite(bmpWindow,bmpAvatar[arHumans[Index].ipAvatar],73,215);
 			bClick=true;
 		};
