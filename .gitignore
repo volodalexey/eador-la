@@ -1,6 +1,7 @@
 .vs/
 Debug/
 Release/
+*.user
 
 GoD/gamelog.txt
 GoD/tracer.txt
