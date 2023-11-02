@@ -3,8 +3,7 @@
 /*
 
 interface Snapshot {
-	poly_const_iterator<std::byte> begin() const;
-	poly_const_iterator<std::byte> end() const;
+	std::string bytes() const;
 }
 
 interface Host {
