@@ -1,7 +1,9 @@
 .vs/
 Debug/
 Release/
+out/
 *.user
+CMakePresets.json
 
 GoD/gamelog.txt
 GoD/tracer.txt
