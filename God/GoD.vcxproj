@@ -164,12 +164,17 @@
     <ClCompile Include="Yuplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Host.hpp" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Log.hpp" />
     <ClInclude Include="Mapper.h" />
     <ClInclude Include="Prototype.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Snapshot.hpp" />
+    <ClInclude Include="State.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Windower.h" />
