@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Unit.h"
+#include "Loggin.h"
 
 //”казатели на первые элементы массивов прототипов:	
 	stString		*pFirstPhrase;
@@ -571,9 +572,6 @@ clWorldRules::~clWorldRules()
 
 using namespace std;
 
-ofstream Logos ("gamelog.txt");
-
-
 //*****************************************************************************************
 //*********   √енератор ключей   **********************************************************
 //*****************************************************************************************
@@ -629,10 +627,7 @@ void GenerateKeys()
 
 
 
-void BeginLog()
-{
-//	LogFile=pack_fopen("gamelog.txt","w");	
-};
+void BeginLog() {};
 
 void WriteLog(const char * Txt)
 {
@@ -649,25 +644,11 @@ void DFileLog(const char *Txt)
 	{FileLog(Txt);};
 };
 
-void FileLog(const char *Txt)
-{
-	Logos << Txt << endl;
-	/*while (*Txt!='\0')
-	{
-		pack_putc(*Txt,LogFile);
-		Txt++;
-	};
-	pack_putc('\n',LogFile);*/
-//	char NTxt[200];
-//	sprintf(NTxt,"%s \n",Txt);
-	
+void FileLog(const char *Txt) {
+	log()->log(Txt);
 };
 
-void EndLog()
-{
-//	pack_fclose(LogFile);
-	Logos.close();
-};
+void EndLog() {};
 
 void StopLog(const char * Txt, int Value)
 {
