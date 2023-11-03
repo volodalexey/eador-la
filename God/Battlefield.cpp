@@ -5793,6 +5793,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};	
 	};
 
+	FileLog("Unit placement");
 	if (Hero1->CheckHeroBonus(999)<Hero2->CheckHeroBonus(999))
 	{
 		AA=1;
@@ -5805,6 +5806,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		UnitPlacement(0);
 		UnitPlacement(1);
 	};
+	FileLog("Unit placement end");
 	//Диверсии
 	if ((Heroes[0])&&(Squad[0][0].iLife>0)&&(Heroes[0]->ipClass1>0)&&((Heroes[0]->CheckSkill(24)>1)||(Squad[0][0].CheckSkill(981)>0)))
 	{
@@ -6039,6 +6041,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 	FearVictory=0;
 	bInPanic=false;
 
+	FileLog("Start Fight!");
 	while((Loss(AA)>=0)&&(Loss(1-AA)>=0)&&(iTurn/2<=MAX_BATTLE_DURATION)&&(FearVictory==0))
 	{
 		bHint=false;
