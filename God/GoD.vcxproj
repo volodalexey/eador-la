@@ -142,12 +142,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GlobalCrutches.cpp" />
     <ClCompile Include="G_Object.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Keymaster.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="MainAI.cpp" />
     <ClCompile Include="MainProcess.cpp" />
     <ClCompile Include="Mapper.cpp" />
@@ -166,11 +168,14 @@
   <ItemGroup>
     <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
+    <ClInclude Include="TextFileLog.hpp" />
     <ClInclude Include="ForkedLog.hpp" />
     <ClInclude Include="GameGlobalLog.hpp" />
+    <ClInclude Include="GlobalCrutches.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Host.hpp" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Log.hpp" />
     <ClInclude Include="LoggedHost.hpp" />
     <ClInclude Include="Mapper.h" />

@@ -1,4 +1,4 @@
-#include "Loggin.h"
+#include "Logging.h"
 #include "ForkedLog.hpp"
 #include "StreamLog.hpp"
 #include "TextFileLog.hpp"

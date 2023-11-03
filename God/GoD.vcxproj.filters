@@ -120,6 +120,12 @@
     <ClCompile Include="Yuplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalCrutches.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battlefield.h">
@@ -184,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="LoggedHost.hpp">
       <Filter>Implementations\Host</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalCrutches.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileLog.hpp">
+      <Filter>Implementations\Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

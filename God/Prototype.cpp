@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Unit.h"
-#include "Loggin.h"
+#include "Logging.h"
 
 //”казатели на первые элементы массивов прототипов:	
 	stString		*pFirstPhrase;

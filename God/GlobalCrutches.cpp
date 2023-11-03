@@ -1,5 +1,5 @@
 #include "GlobalCrutches.h"
-#include "Loggin.h"
+#include "Logging.h"
 #include <iostream>
 
 namespace {
