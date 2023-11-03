@@ -8,10 +8,23 @@
 #define GLOBAL_USED
 #define ALOGG_DLL
 #define SNOWBALL
+
 #include <alogg.h>
-#include "stdio.h"
-#include <math.h>
 #include <allegro.h>
+#undef bool
+#undef false
+#undef true
+#undef int8_t
+#undef int16_t
+#undef int32_t
+#undef int64_t
+#undef uint8_t
+#undef uint16_t
+#undef uint32_t
+#undef uint64_t
+
+#include <cstdio>
+#include <cmath>
 //#include <audiere.h>
 
 // Global Main  Const Variables
