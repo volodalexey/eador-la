@@ -1,4 +1,5 @@
 #include "Mapper.h"
+#include "GlobalCrutches.h"
 
 clHumanProfile::clHumanProfile()
 {
@@ -172,6 +173,7 @@ int RunGame(bool bSave)
 	int AIS;
 	while (!bExitGame)
 	{	
+		onBeforeStep();
 		for (int i=1; ((i<=CurGame.iMaxPlayers)&&(!bExitGame)); i++)
 		{
 			bool bNewTurn=true;
@@ -321,6 +323,7 @@ int RunGame(bool bSave)
 				LoadGame(CurGame.iGameType);			
 			};
 		};
+		onAfterStep();
 	};
 	bHourGlass=false;
 	return iExitFlag;
