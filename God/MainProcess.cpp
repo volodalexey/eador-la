@@ -7820,6 +7820,7 @@ void BeginMainTurn(int Player)
 	RunEvents(Player,10,objMain);
 	while ((!bExitGame)&&(arPlayer[Player].pEvent))
 	{	
+		FileLog("Some event");
 		dx=200;		
 		if (arPlayer[Player].Control==1)
 		{
