@@ -166,18 +166,25 @@
   <ItemGroup>
     <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
+    <ClInclude Include="ForkedLog.hpp" />
+    <ClInclude Include="GameGlobalLog.hpp" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Host.hpp" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Log.hpp" />
+    <ClInclude Include="LoggedHost.hpp" />
     <ClInclude Include="Mapper.h" />
+    <ClInclude Include="MemSnapshot.hpp" />
     <ClInclude Include="Prototype.h" />
+    <ClInclude Include="RemoteHost.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Snapshot.hpp" />
     <ClInclude Include="State.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StreamLog.hpp" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Windower.h" />
+    <ClInclude Include="WithVector.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico" />

@@ -16,6 +16,21 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{dbfd8fa0-9720-4250-8ac5-75a024d29443}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Implementations">
+      <UniqueIdentifier>{b1295594-f6b7-4e33-bc94-38f62f825f99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementations\Log">
+      <UniqueIdentifier>{437629db-f979-4bf3-85ca-b577af42d23d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{7fbea188-0070-4745-ad06-2e00fbd26bc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementations\Host">
+      <UniqueIdentifier>{5c4b8a9c-34ec-452d-988e-d65a1d247110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Implementations\Snapshot">
+      <UniqueIdentifier>{2fe2d26a-734b-4779-8f26-1931ae561bb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp">
@@ -148,6 +163,27 @@
     </ClInclude>
     <ClInclude Include="Log.hpp">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamLog.hpp">
+      <Filter>Implementations\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="GameGlobalLog.hpp">
+      <Filter>Implementations\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="ForkedLog.hpp">
+      <Filter>Implementations\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="WithVector.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteHost.hpp">
+      <Filter>Implementations\Host</Filter>
+    </ClInclude>
+    <ClInclude Include="MemSnapshot.hpp">
+      <Filter>Implementations\Snapshot</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggedHost.hpp">
+      <Filter>Implementations\Host</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
