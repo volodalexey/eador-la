@@ -129,6 +129,9 @@
     <ClCompile Include="Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CurrentGameState.cpp">
+      <Filter>Implementations\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battlefield.h">
@@ -204,6 +207,9 @@
       <Filter>Implementations\Log</Filter>
     </ClInclude>
     <ClInclude Include="LoggedState.hpp">
+      <Filter>Implementations\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentGameState.hpp">
       <Filter>Implementations\State</Filter>
     </ClInclude>
   </ItemGroup>
