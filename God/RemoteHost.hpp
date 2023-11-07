@@ -4,23 +4,15 @@
 #include "MemSnapshot.hpp"
 #include "cpp-httplib/httplib.h"
 
-class Path : public std::string {
-public:
-	using std::string::basic_string;
-};
-
 class RemoteHost : public Host {
 	mutable httplib::Client client;
-	Path snapshotPath;
+	std::string snapshotPath;
 public:
-	RemoteHost(httplib::Client client, Path snapshotPath)
+	RemoteHost(httplib::Client client, std::string snapshotPath)
 		: client(std::move(client)), snapshotPath(std::move(snapshotPath)) {}
 
-	RemoteHost(httplib::Client client, std::string gameId)
-		: RemoteHost(std::move(client), Path("/game/" + gameId + "/snapshot")) {}
-
 	RemoteHost(std::string host, std::string gameId)
-		: RemoteHost(httplib::Client(host), std::move(gameId)) {}
+		: RemoteHost(httplib::Client(host), "/game/" + gameId + "/snapshot") {}
 
 	void send(std::shared_ptr<Snapshot> snapshot) override {
 		if (not client.Post(snapshotPath, snapshot->bytes(), "application/octet-stream"))
