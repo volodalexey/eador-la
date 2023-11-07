@@ -7,6 +7,9 @@ class LoggedState : public State {
 	std::shared_ptr<Log> log;
 	std::shared_ptr<State> origin;
 public:
+	explicit LoggedState(std::shared_ptr<Log> log, std::shared_ptr<State> origin)
+		: log(std::move(log)), origin(std::move(origin)) {}
+
 	std::shared_ptr<Snapshot> snapshot() const override {
 		log->log("Create snapshot");
 		return origin->snapshot();
