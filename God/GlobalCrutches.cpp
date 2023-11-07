@@ -14,7 +14,7 @@ namespace {
 	struct SecondMain {
 		SecondMain() {
 			log()->log("Just Fun!");
-			host = std::make_shared<LoggedHost>(log(), std::make_shared<RemoteHost>("localhost:42"));
+			host = std::make_shared<LoggedHost>(log(), std::make_shared<RemoteHost>("localhost:42", "test"));
 			state = std::make_shared<LoggedState>(log(), std::make_shared<CurrentGameState>());
 		}
 	} lifeHack;
