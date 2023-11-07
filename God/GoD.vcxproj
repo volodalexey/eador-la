@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
+    <ClInclude Include="LoggedState.hpp" />
     <ClInclude Include="TextFileLog.hpp" />
     <ClInclude Include="ForkedLog.hpp" />
     <ClInclude Include="GameGlobalLog.hpp" />

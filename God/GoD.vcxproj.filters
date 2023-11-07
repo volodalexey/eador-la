@@ -31,6 +31,9 @@
     <Filter Include="Implementations\Snapshot">
       <UniqueIdentifier>{2fe2d26a-734b-4779-8f26-1931ae561bb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Implementations\State">
+      <UniqueIdentifier>{2b4ff79b-bbd6-40f4-b8d9-95d759d61d9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="TextFileLog.hpp">
       <Filter>Implementations\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggedState.hpp">
+      <Filter>Implementations\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
