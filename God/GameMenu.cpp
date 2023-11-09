@@ -218,6 +218,9 @@ int RunGame(bool bSave)
 				};
 			};			
 		};
+		CurGame.iActivePlayer = LastPlayer;
+		onAfterStep();
+		CurGame.iActivePlayer = 0;
 		if (!bExitGame)
 		{		
 			RunHourGlass(149, HOUR_SHIFT);
@@ -323,7 +326,6 @@ int RunGame(bool bSave)
 				LoadGame(CurGame.iGameType);			
 			};
 		};
-		onAfterStep();
 	};
 	bHourGlass=false;
 	return iExitFlag;
