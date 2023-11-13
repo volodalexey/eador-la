@@ -259,9 +259,11 @@ namespace {
 		pFirstProvince[0].sName = pFirstPhrase[327].str;
 	}
 
-	void FillObstracleMap(int) {}
-
-	void UnloadGame() {}
+	void FillObstracleMap() {
+		for (long int i = 1; i <= MapSize; i++) {
+			pFirstProvince[i].DrawPic(false);
+		}
+	}
 
 	template <class T>
 	void readBytes(std::istream& in, T& x) {
@@ -491,7 +493,7 @@ namespace {
 				pRitual = RR;
 			}
 
-			FillObstracleMap(19200);
+			FillObstracleMap();
 		}
 		else {
 			CurGame.iCurrentTurn = -1;
