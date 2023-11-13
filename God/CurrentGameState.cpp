@@ -176,6 +176,10 @@ namespace {
 		in.read(reinterpret_cast<char*>(&x), sizeof(x));
 	}
 
+	void readBytes(std::istream& in, char* x, std::size_t len) {
+		in.read(x, len);
+	}
+
 	std::istream& operator>>(std::istream& in, dcHero& x) {
 		readBytes(in, x);
 		for (int j = 0; j < MAX_SQUAD; j++)
