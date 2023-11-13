@@ -176,6 +176,15 @@ namespace {
 		out.write(x, len);
 	}
 
+	template <class T>
+	void readBytes(std::istream& in, T& x) {
+		in.read(reinterpret_cast<char*>(&x), sizeof(x));
+	}
+
+	void readBytes(std::istream& in, char* x, std::size_t len) {
+		in.read(x, len);
+	}
+
 	void saveMapBitmaps(PACKFILE* out) {
 		PALETTE palette;
 		get_palette(palette);
@@ -263,15 +272,6 @@ namespace {
 		for (long int i = 1; i <= MapSize; i++) {
 			pFirstProvince[i].DrawPic(false);
 		}
-	}
-
-	template <class T>
-	void readBytes(std::istream& in, T& x) {
-		in.read(reinterpret_cast<char*>(&x), sizeof(x));
-	}
-
-	void readBytes(std::istream& in, char* x, std::size_t len) {
-		in.read(x, len);
 	}
 
 	std::istream& operator>>(std::istream& in, dcHero& x) {
