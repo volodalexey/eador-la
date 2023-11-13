@@ -6,6 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include "MemSnapshot.hpp"
+#include "Mapper.h"
 
 namespace {
 
@@ -165,7 +166,98 @@ namespace {
 }
 
 namespace {
-	void LoadMap() {}
+
+	template <class T>
+	void writeBytes(std::ostream& out, const T& x) {
+		out.write(reinterpret_cast<const char*>(&x), sizeof(x));
+	}
+
+	void writeBytes(std::ostream& out, const char* x, std::size_t len) {
+		out.write(x, len);
+	}
+
+	void saveMapBitmaps(PACKFILE* out) {
+		PALETTE palette;
+		get_palette(palette);
+		save_pcx_pf(out, bmpMap, palette);
+		for (int i = 1; i <= MapSize; i++) {
+			save_pcx_pf(out, pFirstFog[i].Pic, palette);
+		}
+	}
+
+	void loadMapBitmaps(PACKFILE* out) {
+		PALETTE buf;
+		bmpMap = load_pcx_pf(out, buf);
+		for (int i = 1; i <= MapSize; i++) {
+			pFirstFog[i].Pic = load_pcx_pf(out, buf);
+		}
+	}
+
+	void SaveMap(std::ostream& out)
+	{
+		writeBytes(out, MapSize);
+		for (int i = 1; i <= MapSize; i++) {
+			writeBytes(out, pFirstFog[i]);
+
+			dcProvince& province = pFirstProvince[i];
+			writeBytes(out, province);
+			writeBytes(out, strlen(province.sName));
+			writeBytes(out, province.sName, strlen(province.sName));
+		}
+		for (int i = 0; i < MAP_SIZE; i++) {
+			Map_Border* border = Map[i];
+			while (border) {
+				writeBytes(out, i);
+				writeBytes(out, *border);
+				border = border->Next;
+			}
+		}
+		writeBytes(out, -1);
+	}
+
+	Map_Border& newMapBorederLeaf(int index) {
+		if (not Map[index]) Map[index] = new Map_Border;
+		Map_Border* border = Map[index];
+		while (border->Next) border = border->Next;
+		border->Next = new Map_Border;
+		return *border->Next;
+	}
+
+	void LoadMap(std::istream &in) {
+		readBytes(in, MapSize);
+
+		pFirstProvince = new dcProvince[MapSize + 1];
+		pFirstFog = new clFog[MapSize + 1];
+		pMoveMap = new int[MapSize + 1];
+		pRunMap = new int[MapSize + 1];
+		pMobilMap = new int[MapSize + 1];
+
+		for (int i = 1; i <= MapSize; i++) {
+			clFog fog = {};
+			readBytes(in, fog);
+			pFirstFog[fog.Num] = fog;
+
+			dcProvince province = {};
+			readBytes(in, province);
+			std::size_t nameLen;
+			readBytes(in, nameLen);
+			province.sName = new char[nameLen + 1];
+			readBytes(in, province.sName, nameLen + 1);
+			pFirstProvince[province.iNumber] = province;
+		}
+
+		for (int i = 0; i < MAP_SIZE; i++) {
+			Map[i] = NULL;
+		}
+		int Index;
+		readBytes(in, Index);
+		while (Index < 4000) {
+			auto &border = newMapBorederLeaf(Index);
+			readBytes(in, border);
+			readBytes(in, Index);
+		};
+		pFirstProvince[0].sName = pFirstPhrase[327].str;
+	}
 
 	void FillObstracleMap(int) {}
 
@@ -377,7 +469,6 @@ namespace {
 			//Общие данные
 			readBytes(in, CurGame);
 			readBytes(in, WorldRules);
-			LoadMap();
 
 			readProvinces(in);
 			readPlayers(in);
