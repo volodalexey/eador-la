@@ -293,6 +293,7 @@ namespace {
 
 			x.pSquad[j] = new dcUnit(unit);
 		}
+		return in;
 	}
 
 	void readProvinces(std::istream& in) {
