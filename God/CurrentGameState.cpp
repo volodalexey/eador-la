@@ -457,7 +457,7 @@ namespace {
 		}
 	}
 
-	bool LoadGame(std::istream& in)
+	void LoadGame(std::istream& in)
 	{
 		bTimeShift = false;
 		dcOldHero* WrkHero = new dcOldHero;
