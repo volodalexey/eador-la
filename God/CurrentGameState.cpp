@@ -10,19 +10,26 @@
 
 namespace {
 
-	#define BOOGY_WRITE(x) out.write(reinterpret_cast<const char*>(x), sizeof(*(x)))
+	template <class T>
+	void writeBytes(std::ostream& out, const T& x) {
+		out.write(reinterpret_cast<const char*>(&x), sizeof(x));
+	}
+
+	void writeBytes(std::ostream& out, const char* x, std::size_t len) {
+		out.write(x, len);
+	}
 
 	const char EXISTS = 1;
 	const char NOT_EXISTS = 0;
 
 	std::ostream& operator<<(std::ostream& out, const dcHero& hero) {
-		out.write(reinterpret_cast<const char*>(&hero), sizeof(hero));
+		writeBytes(out, hero);
 		for (int i = 0; i < MAX_SQUAD; i++)
 		{
 			if (hero.pSquad[i])
 			{
 				out << EXISTS;
-				out.write(reinterpret_cast<char*>(hero.pSquad[i]), sizeof(*hero.pSquad[i]));
+				writeBytes(out, *hero.pSquad[i]);
 			}
 			else
 			{
@@ -36,7 +43,7 @@ namespace {
 		for (int i = 1; i <= MapSize; i++)
 		{
 			dcProvince* PR = (pFirstProvince + i);
-			out.write(reinterpret_cast<char*>(PR), sizeof(*PR));
+			writeBytes(out, *PR);
 			if (PR->pGuard) out << EXISTS << *PR->pGuard;
 			else out << NOT_EXISTS;
 			if (PR->pGarrison) out << EXISTS << *PR->pGarrison;
@@ -47,13 +54,13 @@ namespace {
 				if (PR->arSiteGuard[k])
 				{
 					out << EXISTS;
-					out.write(reinterpret_cast<char*>(PR->arSiteGuard[k]), sizeof(*PR->arSiteGuard[k]));
+					writeBytes(out, *PR->arSiteGuard[k]);
 					for (int j = 0; j < MAX_SQUAD; j++)
 					{
 						if (PR->arSiteGuard[k]->pSquad[j])
 						{
 							out << EXISTS;
-							out.write(reinterpret_cast<char*>(PR->arSiteGuard[k]->pSquad[j]), sizeof(*PR->arSiteGuard[k]->pSquad[j]));
+							writeBytes(out, *PR->arSiteGuard[k]->pSquad[j]);
 						}
 						else
 						{
@@ -70,7 +77,7 @@ namespace {
 	}
 
 	void writePlayers(std::ostream& out) {
-		out.write(reinterpret_cast<char*>(&arPlayer), sizeof(arPlayer));
+		writeBytes(out, arPlayer);
 		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++)
 		{
 			for (int i = 0; i < MAX_HERO; i++)
@@ -79,29 +86,36 @@ namespace {
 				else out << NOT_EXISTS;
 			};
 
-			BOOGY_WRITE(&iMaxDefender);
-			out.write(reinterpret_cast<const char*>(arPlayer[PL].pDefender), sizeof(*arPlayer[PL].pDefender) * (iMaxDefender + 1));
+			writeBytes(out, iMaxDefender);
+			for (int i = 0; i <= iMaxDefender; i++) {
+				writeBytes(out, arPlayer[PL].pDefender[i]);
+			}
 
-			BOOGY_WRITE(&iMaxOuterBld);
-			out.write(reinterpret_cast<const char*>(arPlayer[PL].pOuterBld), sizeof(*arPlayer[PL].pOuterBld) * (iMaxOuterBld + 1));
+			writeBytes(out, iMaxOuterBld);
+			for (int i = 0; i <= iMaxOuterBld; i++) {
+				writeBytes(out, arPlayer[PL].pOuterBld[i]);
+			}
 
-			BOOGY_WRITE(&iMaxRitual);
+			writeBytes(out, iMaxRitual);
 			for (int i = 0; i <= iMaxRitual; i++)
 			{
-				out.write(reinterpret_cast<const char*>(&arPlayer[PL].pRitual[i]), sizeof(*arPlayer[PL].pRitual));
-				out.write(reinterpret_cast<const char*>(&arPlayer[PL].pRitualCD[i]), sizeof(*arPlayer[PL].pRitualCD));
+				writeBytes(out, arPlayer[PL].pRitual[i]);
+				writeBytes(out, arPlayer[PL].pRitualCD[i]);
 			};
 			
-			out.write(reinterpret_cast<const char*>(&arPlayer[PL].pFog[1]), sizeof(*arPlayer[PL].pFog) * MapSize);
+			for (int i = 1; i <= MapSize; i++) {
+				writeBytes(out, arPlayer[PL].pFog[i]);
+			}
 
-			BOOGY_WRITE(&iMaxEvent);
+
+			writeBytes(out, iMaxEvent);
 			for (int i = 1; i <= iMaxEvent; i++)
 			{
-				out.write(reinterpret_cast<const char*>(&arPlayer[PL].pStory[i]), sizeof(*arPlayer[PL].pStory));
-				out.write(reinterpret_cast<const char*>(&arPlayer[PL].pPlace[i]), sizeof(*arPlayer[PL].pPlace));
+				writeBytes(out, arPlayer[PL].pStory[i]);
+				writeBytes(out, arPlayer[PL].pPlace[i]);
 			};
 		};
-		BOOGY_WRITE(&iMaxPureItem);
+		writeBytes(out, iMaxPureItem);
 	}
 
 	void writeRituals(std::ostream& out) {
@@ -112,11 +126,11 @@ namespace {
 			RR = RR->pNext;
 			Count++;
 		};
-		BOOGY_WRITE(&Count);
+		writeBytes(out, Count);
 		RR = pRitual;
 		while (RR)
 		{
-			out.write(reinterpret_cast<char*>(RR), sizeof(*RR));
+			writeBytes(out, *RR);
 			RR = RR->pNext;
 		};
 	}
@@ -143,38 +157,25 @@ namespace {
 		if (MODE < 2)
 		{
 			//Общие данные
-			out.write(reinterpret_cast<char*>(&CurGame), sizeof(CurGame));
-			out.write(reinterpret_cast<char*>(&WorldRules), sizeof(WorldRules));
+			writeBytes(out, CurGame);
+			writeBytes(out, WorldRules);
 
 			writeProvinces(out);
 			writePlayers(out);
 
 			//Магазины
-			BOOGY_WRITE(&iMaxShop);
-			out.write(reinterpret_cast<char*>(pFirstShop), sizeof(*pFirstShop) * iMaxShop);
+			writeBytes(out, iMaxShop);
+			for (int i = 0; i < iMaxShop; i++) {
+				writeBytes(out, pFirstShop[i]);
+			}
 
 			writeRituals(out);
 		};
-		if (MODE > 0)
-		{
-			//Сохранение данных кампании
-			out.write(reinterpret_cast<char*>(&Campaign), sizeof(Campaign));
-			writeWorldShards(out);
-		};
-		out.write(reinterpret_cast<char*>(&Tutorial), sizeof(Tutorial));
+		writeBytes(out, Tutorial);
 	}
 }
 
 namespace {
-
-	template <class T>
-	void writeBytes(std::ostream& out, const T& x) {
-		out.write(reinterpret_cast<const char*>(&x), sizeof(x));
-	}
-
-	void writeBytes(std::ostream& out, const char* x, std::size_t len) {
-		out.write(x, len);
-	}
 
 	template <class T>
 	void readBytes(std::istream& in, T& x) {
