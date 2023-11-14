@@ -215,6 +215,9 @@
     <ClInclude Include="CurrentGameState.hpp">
       <Filter>Implementations\State</Filter>
     </ClInclude>
+    <ClInclude Include="Bytes.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">

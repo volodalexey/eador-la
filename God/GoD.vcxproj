@@ -169,6 +169,7 @@
   <ItemGroup>
     <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
+    <ClInclude Include="Bytes.hpp" />
     <ClInclude Include="CurrentGameState.hpp" />
     <ClInclude Include="LoggedState.hpp" />
     <ClInclude Include="TextFileLog.hpp" />
