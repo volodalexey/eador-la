@@ -233,6 +233,9 @@
     <ClInclude Include="Ritual.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">
