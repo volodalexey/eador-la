@@ -177,6 +177,7 @@
     <ClInclude Include="Optional.hpp" />
     <ClInclude Include="Ritual.hpp" />
     <ClInclude Include="Rules.hpp" />
+    <ClInclude Include="Shop.hpp" />
     <ClInclude Include="Squad.hpp" />
     <ClInclude Include="TextFileLog.hpp" />
     <ClInclude Include="ForkedLog.hpp" />
