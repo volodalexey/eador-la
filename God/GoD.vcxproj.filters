@@ -34,6 +34,9 @@
     <Filter Include="Implementations\State">
       <UniqueIdentifier>{2b4ff79b-bbd6-40f4-b8d9-95d759d61d9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StreamOperators">
+      <UniqueIdentifier>{1fae613c-11bf-44b5-8304-34d3393c007c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp">
