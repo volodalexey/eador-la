@@ -224,6 +224,9 @@
     <ClInclude Include="Unit.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="Squad.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">
