@@ -9,6 +9,30 @@
 #include "Mapper.h"
 
 namespace {
+	std::ostream& operator<<(std::ostream& out, const dcUnit& unit);
+	std::ostream& operator<<(std::ostream& out, const dcHero& hero);
+
+	template <class T>
+	struct OutputOptional {
+		enum Existense : char { EXISTS = 1, NOT_EXISTS = 0 };
+
+		T const* const obj;
+
+		friend std::ostream& operator<<(std::ostream& out, const OutputOptional<T>& x) {
+			if (not x.obj) return out << NOT_EXISTS;
+			return out << EXISTS << *x.obj;
+		}
+	};
+
+	struct OutputSquad {
+		dcUnit const* const* const units;
+
+		friend std::ostream& operator<<(std::ostream& out, const OutputSquad& squad) {
+			auto x = squad.units[1];
+			for (int i = 0; i < MAX_SQUAD; i++) out << OutputOptional(squad.units[i]);
+			return out;
+		}
+	};
 
 	template <class T>
 	void writeBytes(std::ostream& out, const T& x) {
@@ -19,143 +43,136 @@ namespace {
 		out.write(x, len);
 	}
 
-	const char EXISTS = 1;
-	const char NOT_EXISTS = 0;
+	std::ostream& operator<<(std::ostream& out, const dcUnit& unit) {
+		writeBytes(out, unit);
+		return out;
+	}
 
 	std::ostream& operator<<(std::ostream& out, const dcHero& hero) {
 		writeBytes(out, hero);
-		for (int i = 0; i < MAX_SQUAD; i++) {
-			if (hero.pSquad[i]) {
-				out << EXISTS;
-				writeBytes(out, *hero.pSquad[i]);
-			}
-			else {
-				out << NOT_EXISTS;
-			}
+		return out << OutputSquad(hero.pSquad);
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcProvince& province) {
+		writeBytes(out, province);
+		out << OutputOptional(province.pGuard) << OutputOptional(province.pGarrison);
+
+		for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
+			out << OutputOptional(province.arSiteGuard[i]);
 		}
+
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcPlayer& player) {
+		for (int i = 0; i < MAX_HERO; i++) {
+			out << OutputOptional(player.arHero[i]);
+		}
+
+		writeBytes(out, iMaxDefender);
+		for (int i = 0; i <= iMaxDefender; i++) {
+			writeBytes(out, player.pDefender[i]);
+		}
+
+		writeBytes(out, iMaxOuterBld);
+		for (int i = 0; i <= iMaxOuterBld; i++) {
+			writeBytes(out, player.pOuterBld[i]);
+		}
+
+		writeBytes(out, iMaxRitual);
+		for (int i = 0; i <= iMaxRitual; i++) {
+			writeBytes(out, player.pRitual[i]);
+			writeBytes(out, player.pRitualCD[i]);
+		}
+
+		for (int i = 1; i <= MapSize; i++) {
+			writeBytes(out, player.pFog[i]);
+		}
+
+		writeBytes(out, iMaxEvent);
+		for (int i = 1; i <= iMaxEvent; i++) {
+			writeBytes(out, player.pStory[i]);
+			writeBytes(out, player.pPlace[i]);
+		}
+
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcRitual& ritual) {
+		writeBytes(out, ritual);
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcGame& game) {
+		writeBytes(out, game);
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcWorldRules& rules) {
+		writeBytes(out, rules);
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcShop& shop) {
+		writeBytes(out, shop);
+		return out;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const dcTutorial& tutorial) {
+		writeBytes(out, tutorial);
 		return out;
 	}
 
 	void writeProvinces(std::ostream& out) {
 		for (int i = 1; i <= MapSize; i++) {
-			dcProvince &province = pFirstProvince[i];
-			writeBytes(out, province);
-			if (province.pGuard) out << EXISTS << *province.pGuard;
-			else out << NOT_EXISTS;
-			if (province.pGarrison) out << EXISTS << *province.pGarrison;
-			else out << NOT_EXISTS;
-
-			for (int k = 0; k < MAX_PROVINCE_SITE; k++) {
-				if (province.arSiteGuard[k]) {
-					out << EXISTS;
-					auto& siteGuard = *province.arSiteGuard[k];
-					writeBytes(out, siteGuard);
-					for (int j = 0; j < MAX_SQUAD; j++) {
-						if (siteGuard.pSquad[j]) {
-							out << EXISTS;
-							writeBytes(out, *siteGuard.pSquad[j]);
-						}
-						else {
-							out << NOT_EXISTS;
-						}
-					}
-				}
-				else {
-					out << NOT_EXISTS;
-				}
-			}
+			out << pFirstProvince[i];
 		}
 	}
 
 	void writePlayers(std::ostream& out) {
 		writeBytes(out, arPlayer);
 		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++) {
-			auto& player = arPlayer[PL];
-
-			for (int i = 0; i < MAX_HERO; i++) {
-				if (player.arHero[i]) out << EXISTS << *player.arHero[i];
-				else out << NOT_EXISTS;
-			}
-
-			writeBytes(out, iMaxDefender);
-			for (int i = 0; i <= iMaxDefender; i++) {
-				writeBytes(out, player.pDefender[i]);
-			}
-
-			writeBytes(out, iMaxOuterBld);
-			for (int i = 0; i <= iMaxOuterBld; i++) {
-				writeBytes(out, player.pOuterBld[i]);
-			}
-
-			writeBytes(out, iMaxRitual);
-			for (int i = 0; i <= iMaxRitual; i++) {
-				writeBytes(out, player.pRitual[i]);
-				writeBytes(out, player.pRitualCD[i]);
-			}
-			
-			for (int i = 1; i <= MapSize; i++) {
-				writeBytes(out, player.pFog[i]);
-			}
-
-			writeBytes(out, iMaxEvent);
-			for (int i = 1; i <= iMaxEvent; i++) {
-				writeBytes(out, player.pStory[i]);
-				writeBytes(out, player.pPlace[i]);
-			}
+			out << arPlayer[PL];
 		}
 		writeBytes(out, iMaxPureItem);
 	}
 
-	void writeRituals(std::ostream& out) {
-		int count = 0;
-		dcRitual* ritual = pRitual;
-		while (ritual) {
-			ritual = ritual->pNext;
-			count++;
-		}
-		writeBytes(out, count);
-		ritual = pRitual;
-		while (ritual) {
-			writeBytes(out, *ritual);
-			ritual = ritual->pNext;
+	void writeShops(std::ostream& out) {
+		writeBytes(out, iMaxShop);
+		for (int i = 0; i < iMaxShop; i++) {
+			out << pFirstShop[i];
 		}
 	}
 
-	void writeWorldShards(std::ostream& out) {
-		dcShard* shard = pFirstShard;
-		for (int i = 0; i < Campaign.iMaxShards; i++) {
-			writeBytes(out, *shard);
-			shard = shard->pNext;
-		}
+	int count(const dcRitual* begin) {
+		int count = 0;
+		for (auto it = begin; it; it = it->pNext) count++;
+		return count;
+	}
+
+	void writeRituals(std::ostream& out) {
+		writeBytes(out, count(pRitual));
+		for (auto it = pRitual; it; it = it->pNext) out << *it;
 	}
 
 	void SaveGame(std::ostream &out)
 	{
-		out << (char)111 << (char)107; // что-то непонятное и потом версия
+		char mode; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
+		if (iGameMode == 1)              mode = 2;
+		else if (CurGame.iGameType == 2) mode = 1;
+		else                             mode = 0;
+		if (mode == 2) throw std::runtime_error("Can't save campaign");
 
-		char MODE; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
-		if (iGameMode == 1)              MODE = 2;
-		else if (CurGame.iGameType == 2) MODE = 1;
-		else                             MODE = 0;
-		out << MODE;
+		char mark = 111;
+		char version = 107;
+		out << mark << version << mode << CurGame << WorldRules;
 
-		if (MODE < 2) {
-			//Общие данные
-			writeBytes(out, CurGame);
-			writeBytes(out, WorldRules);
+		writeProvinces(out);
+		writePlayers(out);
+		writeShops(out);
+		writeRituals(out);
 
-			writeProvinces(out);
-			writePlayers(out);
-
-			//Магазины
-			writeBytes(out, iMaxShop);
-			for (int i = 0; i < iMaxShop; i++) {
-				writeBytes(out, pFirstShop[i]);
-			}
-
-			writeRituals(out);
-		}
-		writeBytes(out, Tutorial);
+		out << Tutorial;
 	}
 }
 
