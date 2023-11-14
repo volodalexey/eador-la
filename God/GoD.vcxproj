@@ -198,6 +198,7 @@
     <ClInclude Include="State.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StreamLog.hpp" />
+    <ClInclude Include="Tutorial.hpp" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Unit.hpp" />
     <ClInclude Include="Windower.h" />
