@@ -230,6 +230,9 @@
     <ClInclude Include="Hero.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="Ritual.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">

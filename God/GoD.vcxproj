@@ -174,6 +174,7 @@
     <ClInclude Include="Hero.hpp" />
     <ClInclude Include="LoggedState.hpp" />
     <ClInclude Include="Optional.hpp" />
+    <ClInclude Include="Ritual.hpp" />
     <ClInclude Include="Squad.hpp" />
     <ClInclude Include="TextFileLog.hpp" />
     <ClInclude Include="ForkedLog.hpp" />
