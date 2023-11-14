@@ -193,6 +193,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StreamLog.hpp" />
     <ClInclude Include="Unit.h" />
+    <ClInclude Include="Unit.hpp" />
     <ClInclude Include="Windower.h" />
     <ClInclude Include="WithVector.hpp" />
   </ItemGroup>
