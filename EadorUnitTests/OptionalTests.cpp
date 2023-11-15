@@ -40,4 +40,19 @@ TEST_SUITE("Optional") {
 			CHECK(buf.str().front() == 0);
 		}
 	}
+
+	TEST_CASE("load int pointer") {
+		std::stringstream source{ "\x01\x42" };
+		char *destination = nullptr;
+		auto box = binary::InputOptional<char>{destination};
+		source >> box;
+
+		SUBCASE("pointer should not be nullptr") {
+			REQUIRE(destination != nullptr);
+		}
+
+		SUBCASE("read int should be equal 0x42") {
+			CHECK(*destination == 0x42);
+		}
+	}
 }
