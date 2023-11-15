@@ -132,6 +132,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="doctest-configured.h" />
     <ClInclude Include="doctest.h" />
   </ItemGroup>
   <ItemGroup>
