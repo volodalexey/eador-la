@@ -7,6 +7,4 @@ CMakePresets.json
 
 GoD/gamelog.txt
 GoD/tracer.txt
-GoD/save/game*
-GoD/save/map*
-GoD/save/player*
+GoD/save/
