@@ -26,4 +26,18 @@ TEST_SUITE("Optional") {
 			CHECK(buf.str().front() == 1);
 		}
 	}
+
+	TEST_CASE("save nullptr") {
+		std::stringstream buf;
+		buf << binary::OutputOptional<int>{nullptr};
+		CAPTURE(buf.str());
+
+		SUBCASE("bytes count should be equal to ont byte-flag") {
+			CHECK(buf.str().size() == 1);
+		}
+
+		SUBCASE("first byte should be equal 0") {
+			CHECK(buf.str().front() == 0);
+		}
+	}
 }
