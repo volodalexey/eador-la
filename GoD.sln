@@ -1,18 +1,36 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eador", "GoD\GoD.vcxproj", "{8BC912CE-A6BD-438C-A481-B6B54B77B85D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EadorUnitTests", "EadorUnitTests\EadorUnitTests.vcxproj", "{A881271C-AFBC-4327-BDF8-D548CD7CF471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Debug|Win32.Build.0 = Debug|Win32
+		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Debug|x64.ActiveCfg = Debug|Win32
+		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Debug|x64.Build.0 = Debug|Win32
 		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Release|Win32.ActiveCfg = Release|Win32
 		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Release|Win32.Build.0 = Release|Win32
+		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Release|x64.ActiveCfg = Release|Win32
+		{8BC912CE-A6BD-438C-A481-B6B54B77B85D}.Release|x64.Build.0 = Release|Win32
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Debug|Win32.Build.0 = Debug|Win32
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Debug|x64.ActiveCfg = Debug|x64
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Debug|x64.Build.0 = Debug|x64
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Release|Win32.ActiveCfg = Release|Win32
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Release|Win32.Build.0 = Release|Win32
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Release|x64.ActiveCfg = Release|x64
+		{A881271C-AFBC-4327-BDF8-D548CD7CF471}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
