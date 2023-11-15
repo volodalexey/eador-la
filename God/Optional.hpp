@@ -8,7 +8,7 @@ namespace binary {
 		T const* const obj;
 
 		friend std::ostream& operator<<(std::ostream& out, const OutputOptional<T>& x) {
-			if (not x.obj) return out << false;
+			if (not x.obj) return out << (char)0;
 			return out << (char)1 << *x.obj;
 		}
 	};
