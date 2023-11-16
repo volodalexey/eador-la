@@ -10,7 +10,7 @@ namespace binary {
 	public:
 		ArrayInclusiveEnd(It begin, It end) : begin(begin), end(end) {}
 
-		int len() const { return end - begin + 1; }
+		int len() const { return end - begin; }
 
 		friend std::ostream& operator<<(std::ostream& out, const ArrayInclusiveEnd& arr) {
 			out << AsBinary(arr.len());
