@@ -177,6 +177,7 @@
     <ClInclude Include="Hero.hpp" />
     <ClInclude Include="LoggedState.hpp" />
     <ClInclude Include="Optional.hpp" />
+    <ClInclude Include="Player.hpp" />
     <ClInclude Include="Province.hpp" />
     <ClInclude Include="Ritual.hpp" />
     <ClInclude Include="Rules.hpp" />

@@ -254,6 +254,9 @@
     <ClInclude Include="ArrayInclusiveEnd.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">
