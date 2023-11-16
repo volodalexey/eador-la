@@ -136,6 +136,7 @@
     <ClInclude Include="doctest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayInclusiveEndTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptionalTests.cpp" />
   </ItemGroup>

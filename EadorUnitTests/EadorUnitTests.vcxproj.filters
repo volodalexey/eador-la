@@ -32,5 +32,8 @@
     <ClCompile Include="OptionalTests.cpp">
       <Filter>Исходные файлы\StreamOperators</Filter>
     </ClCompile>
+    <ClCompile Include="ArrayInclusiveEndTests.cpp">
+      <Filter>Исходные файлы\StreamOperators</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
