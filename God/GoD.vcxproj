@@ -167,6 +167,7 @@
     <ClCompile Include="Yuplay.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayInclusiveEnd.hpp" />
     <ClInclude Include="AsBinary.hpp" />
     <ClInclude Include="BaseInterface.hpp" />
     <ClInclude Include="Battlefield.h" />
