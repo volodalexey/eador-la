@@ -1,128 +1,25 @@
 #include "CurrentGameState.hpp"
 #include "Unit.h"
+#include "Mapper.h"
+#include "MemSnapshot.hpp"
+#include "Player.hpp"
+#include "AsBinary.hpp"
+#include "Bytes.hpp"
+#include "Ritual.hpp"
+#include "Rules.hpp"
+#include "Game.hpp"
+#include "Shop.hpp"
+#include "Tutorial.hpp"
+#include "Province.hpp"
 #include <stdexcept>
 #include <format>
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include "MemSnapshot.hpp"
-#include "Mapper.h"
 
-namespace {
-	std::ostream& operator<<(std::ostream& out, const dcUnit& unit);
-	std::ostream& operator<<(std::ostream& out, const dcHero& hero);
+#include "Optional.hpp"
 
-	template <class T>
-	struct OutputOptional {
-		enum Existense : char { EXISTS = 1, NOT_EXISTS = 0 };
-
-		T const* const obj;
-
-		friend std::ostream& operator<<(std::ostream& out, const OutputOptional<T>& x) {
-			if (not x.obj) return out << NOT_EXISTS;
-			return out << EXISTS << *x.obj;
-		}
-	};
-
-	struct OutputSquad {
-		dcUnit const* const* const units;
-
-		friend std::ostream& operator<<(std::ostream& out, const OutputSquad& squad) {
-			auto x = squad.units[1];
-			for (int i = 0; i < MAX_SQUAD; i++) out << OutputOptional(squad.units[i]);
-			return out;
-		}
-	};
-
-	template <class T>
-	void writeBytes(std::ostream& out, const T& x) {
-		out.write(reinterpret_cast<const char*>(&x), sizeof(x));
-	}
-
-	void writeBytes(std::ostream& out, const char* x, std::size_t len) {
-		out.write(x, len);
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcUnit& unit) {
-		writeBytes(out, unit);
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcHero& hero) {
-		writeBytes(out, hero);
-		return out << OutputSquad(hero.pSquad);
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcProvince& province) {
-		writeBytes(out, province);
-		out << OutputOptional(province.pGuard) << OutputOptional(province.pGarrison);
-
-		for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
-			out << OutputOptional(province.arSiteGuard[i]);
-		}
-
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcPlayer& player) {
-		for (int i = 0; i < MAX_HERO; i++) {
-			out << OutputOptional(player.arHero[i]);
-		}
-
-		writeBytes(out, iMaxDefender);
-		for (int i = 0; i <= iMaxDefender; i++) {
-			writeBytes(out, player.pDefender[i]);
-		}
-
-		writeBytes(out, iMaxOuterBld);
-		for (int i = 0; i <= iMaxOuterBld; i++) {
-			writeBytes(out, player.pOuterBld[i]);
-		}
-
-		writeBytes(out, iMaxRitual);
-		for (int i = 0; i <= iMaxRitual; i++) {
-			writeBytes(out, player.pRitual[i]);
-			writeBytes(out, player.pRitualCD[i]);
-		}
-
-		for (int i = 1; i <= MapSize; i++) {
-			writeBytes(out, player.pFog[i]);
-		}
-
-		writeBytes(out, iMaxEvent);
-		for (int i = 1; i <= iMaxEvent; i++) {
-			writeBytes(out, player.pStory[i]);
-			writeBytes(out, player.pPlace[i]);
-		}
-
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcRitual& ritual) {
-		writeBytes(out, ritual);
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcGame& game) {
-		writeBytes(out, game);
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcWorldRules& rules) {
-		writeBytes(out, rules);
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcShop& shop) {
-		writeBytes(out, shop);
-		return out;
-	}
-
-	std::ostream& operator<<(std::ostream& out, const dcTutorial& tutorial) {
-		writeBytes(out, tutorial);
-		return out;
-	}
-
+namespace binary {
 	void writeProvinces(std::ostream& out) {
 		for (int i = 1; i <= MapSize; i++) {
 			out << pFirstProvince[i];
@@ -130,15 +27,14 @@ namespace {
 	}
 
 	void writePlayers(std::ostream& out) {
-		writeBytes(out, arPlayer);
 		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++) {
 			out << arPlayer[PL];
 		}
-		writeBytes(out, iMaxPureItem);
+		out << AsBinary(iMaxPureItem);
 	}
 
 	void writeShops(std::ostream& out) {
-		writeBytes(out, iMaxShop);
+		out << AsBinary(iMaxShop);
 		for (int i = 0; i < iMaxShop; i++) {
 			out << pFirstShop[i];
 		}
@@ -151,7 +47,7 @@ namespace {
 	}
 
 	void writeRituals(std::ostream& out) {
-		writeBytes(out, count(pRitual));
+		out << AsBinary(count(pRitual));
 		for (auto it = pRitual; it; it = it->pNext) out << *it;
 	}
 
@@ -176,17 +72,7 @@ namespace {
 	}
 }
 
-namespace {
-
-	template <class T>
-	void readBytes(std::istream& in, T& x) {
-		in.read(reinterpret_cast<char*>(&x), sizeof(x));
-	}
-
-	void readBytes(std::istream& in, char* x, std::size_t len) {
-		in.read(x, len);
-	}
-
+namespace binary {
 	void saveMapBitmaps(PACKFILE* out) {
 		PALETTE palette;
 		get_palette(palette);
@@ -274,28 +160,6 @@ namespace {
 		for (long int i = 1; i <= MapSize; i++) {
 			pFirstProvince[i].DrawPic(false);
 		}
-	}
-
-	std::istream& operator>>(std::istream& in, dcHero& x) {
-		readBytes(in, x);
-		for (int j = 0; j < MAX_SQUAD; j++)
-		{
-			if (in.get()) {
-				x.pSquad[j] = nullptr;
-				continue;
-			}
-
-			dcUnit unit = {};
-			readBytes(in, unit);
-			unit.pHero = nullptr;
-
-			if (not (0 <= unit.GetUnitType() and unit.GetUnitType() < iMaxUnitType)) {
-				unit.SetUnitType(1);
-			}
-
-			x.pSquad[j] = new dcUnit(unit);
-		}
-		return in;
 	}
 
 	void readProvinces(std::istream& in) {
@@ -504,6 +368,8 @@ namespace {
 		}
 	}
 }
+
+using namespace binary;
 
 std::shared_ptr<Snapshot> CurrentGameState::snapshot() const
 {
