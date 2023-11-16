@@ -9,6 +9,7 @@ namespace binary {
 		It end;
 	public:
 		ArrayInclusiveEnd(It begin, It end) : begin(begin), end(end) {}
+		ArrayInclusiveEnd(It begin, int len) : ArrayInclusiveEnd(begin, begin + len) {}
 
 		int len() const { return end - begin; }
 
