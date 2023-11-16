@@ -248,6 +248,9 @@
     <ClInclude Include="Province.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="AsBinary.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">
