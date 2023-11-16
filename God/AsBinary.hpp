@@ -17,4 +17,19 @@ namespace binary {
 		writeBytes(out, ref.obj);
 		return out;
 	}
+
+	template <class T>
+	struct InputAsBinary {
+		T& obj;
+	};
+
+	template <class T>
+	inline std::istream& operator>>(std::istream& in, InputAsBinary<T> ref) {
+		return in >> ref.obj;
+	}
+
+	inline std::istream& operator>>(std::istream& in, InputAsBinary<int> ref) {
+		readBytes(in, ref.obj);
+		return in;
+	}
 }
