@@ -18,7 +18,7 @@ namespace binary {
 		T*& obj;
 
 		friend std::istream& operator>>(std::istream& in, InputOptional<T>& x) {
-			bool existence;
+			char existence;
 			in >> existence;
 			x.obj = nullptr;
 			if (existence) {
