@@ -35,5 +35,8 @@
     <ClCompile Include="ArrayInclusiveEndTests.cpp">
       <Filter>Исходные файлы\StreamOperators</Filter>
     </ClCompile>
+    <ClCompile Include="AsBinary.cpp">
+      <Filter>Исходные файлы\StreamOperators</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
