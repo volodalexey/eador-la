@@ -39,5 +39,9 @@ namespace binary {
 			}
 			return in;
 		}
+
+		friend std::istream& operator>>(std::istream& in, InputArrayInclusiveEnd&& arr) {
+			return in >> arr;
+		}
 	};
 }
