@@ -27,5 +27,10 @@ namespace binary {
 			}
 			return in;
 		}
+
+		template <class T>
+		friend std::istream& operator>>(std::istream& in, InputOptional<T>&& x) {
+			return in >> x
+		}
 	};
 }
