@@ -2,8 +2,8 @@
 #include "Unit.h"
 #include "Mapper.h"
 #include "MemSnapshot.hpp"
+#include "Fog.hpp"
 #include "Player.hpp"
-#include "AsBinary.hpp"
 #include "Bytes.hpp"
 #include "Ritual.hpp"
 #include "Rules.hpp"
@@ -17,26 +17,13 @@
 #include <sstream>
 #include <fstream>
 
+#include "AsBinary.hpp"
 #include "Optional.hpp"
 
 namespace binary {
-	void writeProvinces(std::ostream& out) {
-		for (int i = 1; i <= MapSize; i++) {
-			out << AsBinary(pFirstProvince[i].iNumber) << pFirstProvince[i];
-		}
-	}
-
 	void writePlayers(std::ostream& out) {
 		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++) {
 			out << arPlayer[PL];
-		}
-		out << AsBinary(iMaxPureItem);
-	}
-
-	void writeShops(std::ostream& out) {
-		out << AsBinary(iMaxShop);
-		for (int i = 0; i < iMaxShop; i++) {
-			out << pFirstShop[i];
 		}
 	}
 
@@ -51,7 +38,7 @@ namespace binary {
 		for (auto it = pRitual; it; it = it->pNext) out << *it;
 	}
 
-	void SaveGame(std::ostream &out) {
+	void SaveGame(std::ostream& out) {
 		char mode; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
 		if (iGameMode == 1)              mode = 2;
 		else if (CurGame.iGameType == 2) mode = 1;
@@ -60,14 +47,18 @@ namespace binary {
 
 		char mark = 111;
 		char version = 107;
-		out << mark << version << mode << CurGame << WorldRules;
+		out << mark
+			<< version
+			<< mode
+			<< CurGame
+			<< WorldRules
+			<< AsBinary(iMaxShop)
+			<< AsBinary(iMaxPureItem)
+			<< ArrayInclusiveEnd(pFirstProvince, pFirstProvince + MapSize)
+			<< ArrayInclusiveEnd(pFirstShop, pFirstShop + iMaxShop - 1);
 
-		writeProvinces(out);
-		writePlayers(out);
-		writeShops(out);
 		writeRituals(out);
-
-		out << Tutorial;
+		writePlayers(out);
 	}
 }
 
@@ -89,69 +80,48 @@ namespace binary {
 		}
 	}
 
-	void SaveMap(std::ostream& out) {
-		writeBytes(out, MapSize);
-		for (int i = 1; i <= MapSize; i++) {
-			writeBytes(out, pFirstFog[i]);
-
-			dcProvince& province = pFirstProvince[i];
-			writeBytes(out, province);
-			writeBytes(out, strlen(province.sName));
-			writeBytes(out, province.sName, strlen(province.sName));
-		}
-		for (int i = 0; i < MAP_SIZE; i++) {
-			Map_Border* border = Map[i];
-			while (border) {
-				writeBytes(out, i);
-				writeBytes(out, *border);
-				border = border->Next;
-			}
-		}
-		writeBytes(out, -1);
-	}
-
-	Map_Border& newMapBorederLeaf(int index) {
-		if (not Map[index]) Map[index] = new Map_Border;
+	Map_Border& newMapBorderLeaf(int index) {
+		if (not Map[index]) Map[index] = new Map_Border{ .Next = nullptr };
 		Map_Border* border = Map[index];
 		while (border->Next) border = border->Next;
 		border->Next = new Map_Border;
 		return *border->Next;
 	}
 
-	void LoadMap(std::istream &in) {
-		readBytes(in, MapSize);
+	void SaveMap(std::ostream& out) {
+		out << AsBinary(MapSize)
+			<< ArrayInclusiveEnd(pFirstFog, pFirstFog + MapSize)
+			<< ArrayInclusiveEnd(pFirstProvince, pFirstProvince + MapSize);
+		
+		for (int i = 0; i < MAP_SIZE; i++) {
+			Map_Border* border = Map[i];
+			while (border) {
+				out << AsBinary(i);
+				writeBytes(out, *border);
+				border = border->Next;
+			}
+		}
+	}
 
-		pFirstProvince = new dcProvince[MapSize + 1];
-		pFirstFog = new clFog[MapSize + 1];
+	void LoadMap(std::istream& in) {
+		in >> InputAsBinary(MapSize)
+			>> InputArrayInclusiveEnd(pFirstFog)
+			>> InputArrayInclusiveEnd(pFirstProvince);
+
 		pMoveMap = new int[MapSize + 1];
 		pRunMap = new int[MapSize + 1];
 		pMobilMap = new int[MapSize + 1];
 
-		for (int i = 1; i <= MapSize; i++) {
-			clFog fog = {};
-			readBytes(in, fog);
-			pFirstFog[fog.Num] = fog;
-
-			dcProvince province = {};
-			readBytes(in, province);
-			std::size_t nameLen;
-			readBytes(in, nameLen);
-			province.sName = new char[nameLen + 1];
-			readBytes(in, province.sName, nameLen + 1);
-			pFirstProvince[province.iNumber] = province;
-		}
-
 		for (int i = 0; i < MAP_SIZE; i++) {
-			Map[i] = NULL;
+			Map[i] = nullptr;
 		}
-		int Index;
-		readBytes(in, Index);
-		while (Index < 4000) {
-			auto &border = newMapBorederLeaf(Index);
+		int index = 0;
+		in >> InputAsBinary(index);
+		while (index < 4000) {
+			auto& border = newMapBorderLeaf(index);
 			readBytes(in, border);
-			readBytes(in, Index);
+			in >> InputAsBinary(index);
 		};
-		pFirstProvince[0].sName = pFirstPhrase[327].str;
 	}
 
 	void FillObstracleMap() {
@@ -160,31 +130,11 @@ namespace binary {
 		}
 	}
 
-	void readProvinces(std::istream& in) {
-		for (int i = 1; i <= MapSize; i++) {
-			int number = 0;
-			auto numberBox = InputAsBinary(number);
-			in >> numberBox >> pFirstProvince[number];
-			pFirstProvince[number].Pic = nullptr;
-			pFirstProvince[number].Obj = nullptr;
-		}
-	}
-
 	void readPlayers(std::istream& in) {
-		readBytes(in, arPlayer);
-		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++) {
-			in >> arPlayer[PL];
+		for (int i = 1; i <= CurGame.iMaxPlayers; i++) {
+			in >> arPlayer[i];
 			// TODO: load profiles (old implementation)
-			arPlayer[PL].MakeFlags();
-		}
-	}
-
-	void readShops(std::istream& in) {
-		auto box = InputAsBinary(iMaxShop);
-		in >> box;
-		pFirstShop = new dcShop[iMaxShop];
-		for (int i = 0; i < iMaxShop; i++) {
-			in >> pFirstShop[i];
+			arPlayer[i].MakeFlags();
 		}
 	}
 
@@ -203,12 +153,18 @@ namespace binary {
 
 	void LoadGame(std::istream& in) {
 		char mark, version, mode;
-		in >> mark >> version >> mode >> CurGame >> WorldRules;
+		in >> mark
+			>> version
+			>> mode
+			>> CurGame
+			>> WorldRules
+			>> InputAsBinary(iMaxShop)
+			>> InputAsBinary(iMaxPureItem)
+			>> InputArrayInclusiveEnd(pFirstProvince)
+			>> InputArrayInclusiveEnd(pFirstShop);
 
-		readProvinces(in);
-		readPlayers(in);
-		readShops(in);
 		readRituals(in);
+		readPlayers(in);
 
 		// TODO: call FillObstracleMap (old implementation)
 	}
