@@ -1,5 +1,10 @@
 #pragma once
 
+namespace binary {
+	inline std::ostream& operator<<(std::ostream& out, const dcProvince& province);
+	inline std::istream& operator>>(std::istream& in, dcProvince& province);
+}
+
 #include "Unit.h"
 #include "Bytes.hpp"
 #include "Hero.hpp"

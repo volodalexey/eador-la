@@ -3,14 +3,13 @@
 #include "Mapper.h"
 #include "MemSnapshot.hpp"
 #include "Fog.hpp"
+#include "Shop.hpp"
+#include "Province.hpp"
 #include "Player.hpp"
 #include "Bytes.hpp"
 #include "Ritual.hpp"
 #include "Rules.hpp"
 #include "Game.hpp"
-#include "Shop.hpp"
-#include "Tutorial.hpp"
-#include "Province.hpp"
 #include <stdexcept>
 #include <format>
 #include <iostream>
