@@ -173,6 +173,7 @@
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Bytes.hpp" />
     <ClInclude Include="CurrentGameState.hpp" />
+    <ClInclude Include="Fog.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Hero.hpp" />
     <ClInclude Include="LoggedState.hpp" />
