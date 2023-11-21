@@ -3,13 +3,15 @@
 #include "Unit.h"
 #include "Bytes.hpp"
 #include "Hero.hpp"
+#include "ArrayInclusiveEnd.hpp"
 
 namespace binary {
-	// TODO: save and load province name 
-
 	inline std::ostream& operator<<(std::ostream& out, const dcProvince& province) {
 		writeBytes(out, province);
-		out << OutputOptional(province.pGuard) << OutputOptional(province.pGarrison);
+		
+		out << OutputOptional(province.pGuard)
+			<< OutputOptional(province.pGarrison)
+			<< ArrayInclusiveEnd(province.sName, province.sName + std::strlen(province.sName));
 
 		for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
 			out << OutputOptional(province.arSiteGuard[i]);
@@ -20,13 +22,15 @@ namespace binary {
 
 	inline std::istream& operator>>(std::istream& in, dcProvince& province) {
 		readBytes(in, province);
-		auto guardBox = InputOptional(province.pGuard);
-		auto garrisonBox = InputOptional(province.pGarrison);
-		in >> guardBox >> garrisonBox;
+		province.Pic = nullptr;
+		province.Obj = nullptr;
+
+		in >> InputOptional(province.pGuard)
+			>> InputOptional(province.pGarrison)
+			>> InputArrayInclusiveEnd(province.sName);
 
 		for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
-			auto box = InputOptional(province.arSiteGuard[i]);
-			in >> box;
+			in >> InputOptional(province.arSiteGuard[i]);
 		}
 
 		return in;
