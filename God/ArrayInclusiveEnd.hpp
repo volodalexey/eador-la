@@ -16,7 +16,7 @@ namespace binary {
 		friend std::ostream& operator<<(std::ostream& out, const ArrayInclusiveEnd& arr) {
 			out << AsBinary(arr.len());
 			for (auto it = arr.begin; it != arr.end; ++it) out << AsBinary(*it);
-			return out << *arr.end;
+			return out << AsBinary(*arr.end);
 		}
 	};
 
