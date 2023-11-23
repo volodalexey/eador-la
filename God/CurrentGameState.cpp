@@ -1,6 +1,17 @@
 #include "CurrentGameState.hpp"
 #include "Unit.h"
 #include "Mapper.h"
+#include <stdexcept>
+#include <format>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+namespace binary {
+	std::ostream& operator<<(std::ostream& out, const dcPlayer& player);
+	std::istream& operator>>(std::istream& in, dcPlayer& player);
+}
+
 #include "MemSnapshot.hpp"
 #include "Fog.hpp"
 #include "Shop.hpp"
@@ -11,12 +22,6 @@
 #include "Rules.hpp"
 #include "Game.hpp"
 #include "Range.hpp"
-#include <stdexcept>
-#include <format>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-
 #include "AsBinary.hpp"
 #include "Optional.hpp"
 
