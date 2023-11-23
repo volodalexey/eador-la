@@ -144,6 +144,7 @@
     <ClCompile Include="AsBinary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptionalTests.cpp" />
+    <ClCompile Include="RangeTests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

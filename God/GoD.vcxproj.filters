@@ -260,6 +260,9 @@
     <ClInclude Include="Fog.hpp">
       <Filter>StreamOperators</Filter>
     </ClInclude>
+    <ClInclude Include="Range.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">
