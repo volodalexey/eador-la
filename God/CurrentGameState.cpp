@@ -150,5 +150,6 @@ std::shared_ptr<Snapshot> CurrentGameState::snapshot() const
 
 void CurrentGameState::applay(std::shared_ptr<Snapshot> snapshot)
 {
-	// TODO: Implement
+	std::stringstream buf{ snapshot->bytes() };
+	LoadGame(buf);
 }
