@@ -32,6 +32,21 @@ namespace binary {
 		for (auto it = pRitual; it; it = it->pNext) out << *it;
 	}
 
+	void readRituals(std::istream& in) {
+		int count;
+		auto box = InputAsBinary(count);
+		in >> box;
+		pRitual = nullptr;
+		for (int i = 0; i < count; i++) {
+			dcRitual* ritual = new dcRitual();
+			in >> *ritual;
+			ritual->pNext = pRitual;
+			pRitual = ritual;
+		}
+	}
+}
+
+namespace binary {
 	void SaveGame(std::ostream& out) {
 		char mode; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
 		if (iGameMode == 1)              mode = 2;
@@ -53,6 +68,24 @@ namespace binary {
 			<< Range(&arPlayer[1], &arPlayer[CurGame.iMaxPlayers]);
 
 		writeRituals(out);
+	}
+
+	void LoadGame(std::istream& in) {
+		char mark, version, mode;
+		in >> mark
+			>> version
+			>> mode
+			>> CurGame
+			>> WorldRules
+			>> InputAsBinary(iMaxShop)
+			>> InputAsBinary(iMaxPureItem)
+			>> InputArrayInclusiveEnd(pFirstProvince)
+			>> InputArrayInclusiveEnd(pFirstShop)
+			>> Range(&arPlayer[1], &arPlayer[CurGame.iMaxPlayers]);
+
+		readRituals(in);
+
+		// TODO: call FillObstracleMap (old implementation)
 	}
 }
 
@@ -105,37 +138,6 @@ namespace binary {
 		for (long int i = 1; i <= MapSize; i++) {
 			pFirstProvince[i].DrawPic(false);
 		}
-	}
-
-	void readRituals(std::istream& in) {
-		int count;
-		auto box = InputAsBinary(count);
-		in >> box;
-		pRitual = nullptr;
-		for (int i = 0; i < count; i++) {
-			dcRitual* ritual = new dcRitual();
-			in >> *ritual;
-			ritual->pNext = pRitual;
-			pRitual = ritual;
-		}
-	}
-
-	void LoadGame(std::istream& in) {
-		char mark, version, mode;
-		in >> mark
-			>> version
-			>> mode
-			>> CurGame
-			>> WorldRules
-			>> InputAsBinary(iMaxShop)
-			>> InputAsBinary(iMaxPureItem)
-			>> InputArrayInclusiveEnd(pFirstProvince)
-			>> InputArrayInclusiveEnd(pFirstShop)
-			>> Range(&arPlayer[1], &arPlayer[CurGame.iMaxPlayers]);
-
-		readRituals(in);
-
-		// TODO: call FillObstracleMap (old implementation)
 	}
 }
 
