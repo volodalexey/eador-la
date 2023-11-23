@@ -141,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArrayInclusiveEndTests.cpp" />
-    <ClCompile Include="AsBinary.cpp" />
+    <ClCompile Include="AsBinaryTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptionalTests.cpp" />
     <ClCompile Include="RangeTests.cpp" />
