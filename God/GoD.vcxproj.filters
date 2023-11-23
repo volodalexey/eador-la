@@ -135,6 +135,9 @@
     <ClCompile Include="CurrentGameState.cpp">
       <Filter>Implementations\State</Filter>
     </ClCompile>
+    <ClCompile Include="FileSnapshot.hpp">
+      <Filter>Implementations\Snapshot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battlefield.h">

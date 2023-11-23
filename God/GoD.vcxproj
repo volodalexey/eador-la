@@ -161,6 +161,7 @@
     <ClCompile Include="Randomizer.cpp" />
     <ClCompile Include="Screens.cpp" />
     <ClCompile Include="Simulation.cpp" />
+    <ClCompile Include="FileSnapshot.hpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Windower.cpp" />
     <ClCompile Include="WorldRules.cpp" />
