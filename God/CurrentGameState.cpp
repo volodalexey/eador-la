@@ -10,6 +10,7 @@
 #include "Ritual.hpp"
 #include "Rules.hpp"
 #include "Game.hpp"
+#include "Range.hpp"
 #include <stdexcept>
 #include <format>
 #include <iostream>
@@ -20,12 +21,6 @@
 #include "Optional.hpp"
 
 namespace binary {
-	void writePlayers(std::ostream& out) {
-		for (int PL = 1; PL <= CurGame.iMaxPlayers; PL++) {
-			out << arPlayer[PL];
-		}
-	}
-
 	int count(const dcRitual* begin) {
 		int count = 0;
 		for (auto it = begin; it; it = it->pNext) count++;
@@ -54,10 +49,10 @@ namespace binary {
 			<< AsBinary(iMaxShop)
 			<< AsBinary(iMaxPureItem)
 			<< ArrayInclusiveEnd(pFirstProvince, pFirstProvince + MapSize)
-			<< ArrayInclusiveEnd(pFirstShop, pFirstShop + iMaxShop - 1);
+			<< ArrayInclusiveEnd(pFirstShop, pFirstShop + iMaxShop - 1)
+			<< Range(&arPlayer[1], &arPlayer[CurGame.iMaxPlayers]);
 
 		writeRituals(out);
-		writePlayers(out);
 	}
 }
 
@@ -91,7 +86,7 @@ namespace binary {
 		out << AsBinary(MapSize)
 			<< ArrayInclusiveEnd(pFirstFog, pFirstFog + MapSize)
 			<< ArrayInclusiveEnd(pFirstProvince, pFirstProvince + MapSize);
-		
+
 		for (int i = 0; i < MAP_SIZE; i++) {
 			Map_Border* border = Map[i];
 			while (border) {
@@ -129,14 +124,6 @@ namespace binary {
 		}
 	}
 
-	void readPlayers(std::istream& in) {
-		for (int i = 1; i <= CurGame.iMaxPlayers; i++) {
-			in >> arPlayer[i];
-			// TODO: load profiles (old implementation)
-			arPlayer[i].MakeFlags();
-		}
-	}
-
 	void readRituals(std::istream& in) {
 		int count;
 		auto box = InputAsBinary(count);
@@ -160,10 +147,10 @@ namespace binary {
 			>> InputAsBinary(iMaxShop)
 			>> InputAsBinary(iMaxPureItem)
 			>> InputArrayInclusiveEnd(pFirstProvince)
-			>> InputArrayInclusiveEnd(pFirstShop);
+			>> InputArrayInclusiveEnd(pFirstShop)
+			>> Range(&arPlayer[1], &arPlayer[CurGame.iMaxPlayers]);
 
 		readRituals(in);
-		readPlayers(in);
 
 		// TODO: call FillObstracleMap (old implementation)
 	}
