@@ -57,23 +57,6 @@ namespace binary {
 }
 
 namespace binary {
-	void saveMapBitmaps(PACKFILE* out) {
-		PALETTE palette;
-		get_palette(palette);
-		save_pcx_pf(out, bmpMap, palette);
-		for (int i = 1; i <= MapSize; i++) {
-			save_pcx_pf(out, pFirstFog[i].Pic, palette);
-		}
-	}
-
-	void loadMapBitmaps(PACKFILE* out) {
-		PALETTE buf;
-		bmpMap = load_pcx_pf(out, buf);
-		for (int i = 1; i <= MapSize; i++) {
-			pFirstFog[i].Pic = load_pcx_pf(out, buf);
-		}
-	}
-
 	Map_Border& newMapBorderLeaf(int index) {
 		if (not Map[index]) Map[index] = new Map_Border{ .Next = nullptr };
 		Map_Border* border = Map[index];
