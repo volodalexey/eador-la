@@ -124,7 +124,11 @@ int arHerbColors[MAX_HERB_COLOR][3]=
 		{97,102,24}
 	};
 
-int main(int argc, char **argv)
+#ifdef NO_EADOR_MAIN
+int EadorMain(int argc, char **argv)
+#else
+int main(int argc, char** argv)
+#endif
 {
 	sprintf(stVersion,"1.05.1");
 	//Инициализация Аллегро
