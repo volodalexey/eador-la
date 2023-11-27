@@ -269,6 +269,9 @@
     <ClInclude Include="MapBitmaps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GuardPrefix.hpp">
+      <Filter>StreamOperators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="eador.ico">

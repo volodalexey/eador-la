@@ -176,6 +176,7 @@
     <ClInclude Include="CurrentGameState.hpp" />
     <ClInclude Include="Fog.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="GuardPrefix.hpp" />
     <ClInclude Include="Hero.hpp" />
     <ClInclude Include="LoggedState.hpp" />
     <ClInclude Include="MapBitmaps.h" />
