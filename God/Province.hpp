@@ -9,11 +9,13 @@ namespace binary {
 #include "Bytes.hpp"
 #include "Hero.hpp"
 #include "ArrayInclusiveEnd.hpp"
+#include "GuardPrefix.hpp"
 
 namespace binary {
 	inline std::ostream& operator<<(std::ostream& out, const dcProvince& province) {
+		out << GuardPrefix::named<dcProvince>();
 		writeBytes(out, province);
-		
+
 		out << OutputOptional(province.pGuard)
 			<< OutputOptional(province.pGarrison)
 			<< ArrayInclusiveEnd(province.sName, province.sName + std::strlen(province.sName));
@@ -26,6 +28,7 @@ namespace binary {
 	}
 
 	inline std::istream& operator>>(std::istream& in, dcProvince& province) {
+		in >> GuardPrefix::named<dcProvince>();
 		readBytes(in, province);
 		province.Pic = nullptr;
 		province.Obj = nullptr;
