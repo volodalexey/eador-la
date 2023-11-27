@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AsBinary.hpp"
+#include <format>
 
 namespace binary {
 	template <class It>
@@ -35,7 +36,17 @@ namespace binary {
 			arr.begin = new T[len + 1];
 			arr.end = arr.begin + len;
 			for (int i = 0; i <= len; i++) {
-				in >> InputAsBinary<T>{ arr.begin[i] };
+				try {
+					in >> InputAsBinary<T>{ arr.begin[i] };
+				}
+				catch (...) {
+					std::throw_with_nested(
+						std::runtime_error(
+							std::format(
+								"Failed while read {} with index {}",
+								typeid(T).name(),
+								i)));
+				}
 			}
 			return in;
 		}
