@@ -28,19 +28,37 @@ namespace binary {
 	}
 
 	inline std::istream& operator>>(std::istream& in, dcProvince& province) {
-		in >> GuardPrefix::named<dcProvince>();
-		readBytes(in, province);
-		province.Pic = nullptr;
-		province.Obj = nullptr;
+		try {
+			in >> GuardPrefix::named<dcProvince>();
+			readBytes(in, province);
+			province.Pic = nullptr;
+			province.Obj = nullptr;
 
-		in >> InputOptional(province.pGuard)
-			>> InputOptional(province.pGarrison)
-			>> InputArrayInclusiveEnd(province.sName);
+			try {
+				in >> InputOptional(province.pGuard);
+			}
+			catch (...) {
+				std::throw_with_nested(std::runtime_error("Failed to read guard of province"));
+			}
 
-		for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
-			in >> InputOptional(province.arSiteGuard[i]);
+			try {
+				in >> InputOptional(province.pGarrison);
+			}
+			catch (...) {
+				std::throw_with_nested(std::runtime_error("Failed to read garrison of province"));
+			}
+
+
+			in >> InputArrayInclusiveEnd(province.sName);
+
+			for (int i = 0; i < MAX_PROVINCE_SITE; i++) {
+				in >> InputOptional(province.arSiteGuard[i]);
+			}
+
+			return in;
 		}
-
-		return in;
+		catch (...) {
+			std::throw_with_nested(std::runtime_error("Failed to read province"));
+		}
 	}
 }
