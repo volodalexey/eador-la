@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Bytes.hpp"
+#include <concepts>
 
 namespace binary {
 	template <class T>
@@ -10,10 +11,11 @@ namespace binary {
 
 	template <class T>
 	inline std::ostream& operator<<(std::ostream& out, AsBinary<T> ref) {
-		return out << ref.obj;
+		return ::binary::operator<<(out, ref.obj);
 	}
 
-	inline std::ostream& operator<<(std::ostream& out, AsBinary<int> ref) {
+	template <class T> requires std::integral<T> or std::floating_point<T>
+	inline std::ostream& operator<<(std::ostream& out, AsBinary<T> ref) {
 		writeBytes(out, ref.obj);
 		return out;
 	}
@@ -25,10 +27,11 @@ namespace binary {
 
 	template <class T>
 	inline std::istream& operator>>(std::istream& in, InputAsBinary<T> ref) {
-		return in >> ref.obj;
+		return ::binary::operator>>(in, ref.obj);
 	}
 
-	inline std::istream& operator>>(std::istream& in, InputAsBinary<int> ref) {
+	template <class T> requires std::integral<T> or std::floating_point<T>
+	inline std::istream& operator>>(std::istream& in, InputAsBinary<T> ref) {
 		readBytes(in, ref.obj);
 		return in;
 	}
