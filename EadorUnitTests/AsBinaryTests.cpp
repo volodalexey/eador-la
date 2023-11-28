@@ -36,4 +36,15 @@ TEST_SUITE("AsBinary") {
 			CHECK(&original.obj == &copy.obj);
 		}
 	}
+
+	TEST_CASE("should read space and X") {
+		char source[2] = { ' ', 'X' };
+		char got[2] = { 0 };
+		std::stringstream buf;
+		buf << binary::AsBinary(source[0]) << binary::AsBinary(source[1]);
+		buf >> binary::InputAsBinary(got[0]) >> binary::InputAsBinary(got[1]);
+
+		CHECK(got[0] == source[0]);
+		CHECK(got[1] == source[1]);
+	}
 }
