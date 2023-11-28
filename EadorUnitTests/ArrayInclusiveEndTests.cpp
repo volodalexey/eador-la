@@ -1,19 +1,15 @@
-#include "../GoD/ArrayInclusiveEnd.hpp"
-#include "doctest-configured.h"
 #include <sstream>
 
-TEST_SUITE("ArrayInclusiveEnd") {
-	char arr[] = { 1, 2, 3, 4, 42 };
-	auto count = _countof(arr) - 1;
+namespace binary {
+	struct custom;
+	std::ostream& operator<<(std::ostream& out, const custom& x);
+	std::istream& operator>>(std::istream& in, custom& x);
+}
 
-	TEST_CASE("save array of int") {
-		auto box = binary::ArrayInclusiveEnd<char*>(arr, arr + count);
-	
-		SUBCASE("len should be equal count of source elements minus one") {
-			CHECK(box.len() == count);
-		}
-	}
+#include "../GoD/ArrayInclusiveEnd.hpp"
+#include "doctest-configured.h"
 
+namespace binary {
 	struct custom {
 		int a, b;
 
@@ -27,6 +23,21 @@ TEST_SUITE("ArrayInclusiveEnd") {
 			return in >> binary::InputAsBinary<int>{x.a} >> binary::InputAsBinary<int>{x.b};
 		}
 	};
+}
+
+TEST_SUITE("ArrayInclusiveEnd") {
+	using binary::custom;
+
+	char arr[] = { 1, 2, 3, 4, 42 };
+	auto count = _countof(arr) - 1;
+
+	TEST_CASE("save array of int") {
+		auto box = binary::ArrayInclusiveEnd<char*>(arr, arr + count);
+	
+		SUBCASE("len should be equal count of source elements minus one") {
+			CHECK(box.len() == count);
+		}
+	}
 
 	TEST_CASE("read array of structs") {
 		std::stringstream buf;
