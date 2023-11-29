@@ -20,8 +20,13 @@ namespace binary {
 		try {
 			in >> GuardPrefix::named<dcHero>();
 			readBytes(in, hero);
-			auto box = InputSquad(hero.pSquad);
-			return in >> box;
+
+			hero.pstName = &pName[std::max(0, hero.ipClass1 - 1)][std::max(0, hero.ipName)];
+			hero.Pic = bmpPortrait[std::max(0, hero.ipPortrait)];
+			hero.smPic = bmpSmallPort[std::max(0, hero.ipPortrait)];
+			hero.pProvince = &pFirstProvince[std::max(0, hero.ipProvince)];
+
+			return in >> InputSquad(hero);
 		}
 		catch (...) {
 			std::throw_with_nested(std::runtime_error("Failed to read Hero"));
