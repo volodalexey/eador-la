@@ -32,6 +32,8 @@ namespace binary {
 			in >> box;
 		}
 
+		player.pEvent = nullptr;
+
 		auto defenders = InputArrayInclusiveEnd(player.pDefender);
 		auto outerBuilding = InputArrayInclusiveEnd(player.pOuterBld);
 		auto rituals = InputArrayInclusiveEnd(player.pRitual);
