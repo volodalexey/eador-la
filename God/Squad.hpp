@@ -16,15 +16,19 @@ namespace binary {
 	};
 
 	struct InputSquad {
-		dcUnit** units;
+		dcHero& hero;
 
 		friend std::istream& operator>>(std::istream& in, InputSquad& squad) {
-			auto x = squad.units[1];
 			for (int i = 0; i < MAX_SQUAD; i++) {
-				auto box = InputOptional(squad.units[i]);
-				in >> box;
+				auto& unit = squad.hero.pSquad[i];
+				in >> InputOptional(unit);
+				if (unit) unit->pHero = &squad.hero;
 			}
 			return in;
+		}
+
+		friend std::istream& operator>>(std::istream& in, InputSquad&& squad) {
+			return in >> squad;
 		}
 	};
 }
