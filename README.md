@@ -1,4 +1,4 @@
-# Eador: Genesis — Linux port
+# Eador: Genesis — Linux|Android port
 
 ## [Русская документация → RU.md](./RU.md)
 

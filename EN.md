@@ -51,8 +51,9 @@ Both the English (`Text/`) and Russian (`text/`) installers are handled identica
 **Allegro 4.4** is built from the `allegro4/` submodule into `out/allegro4/`;
 subsequent `make build` calls skip the rebuild.
 
-**innoextract** (the `innoextract/` submodule) is used only when passing
-`GOG_EXE`. Assets from an installed folder are copied directly.
+**innounp** (the `innounp/` directory) is a built-in extractor for the GOG
+installers (Inno Setup 5.5.7, LZMA1/LZMA2) that depends only on zlib. It is used
+only when passing `GOG_EXE`. Assets from an installed folder are copied directly.
 
 **Window icon** comes from `goggame-*.ico`; the 32-bit BMP images inside it
 are set via the X11 `_NET_WM_ICON` property.

@@ -1,6 +1,5 @@
 out/
 allegro4/build*
-innoextract/build*
 *.o
 *.a
 build/

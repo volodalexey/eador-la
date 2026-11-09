@@ -1,7 +1,7 @@
 #!/bin/sh
 # Импорт ресурсов оригинальной игры (GOG) в каталог запуска.
 #
-#   import-gog.sh --exe  <setup_eador_genesis_*.exe> <runtime_dir> <innoextract>
+#   import-gog.sh --exe  <setup_eador_genesis_*.exe> <runtime_dir> <innounp>
 #   import-gog.sh --game <установленная копия "Eador - Genesis"> <runtime_dir>
 #
 # Копирует dat/, text/, var/ с исходным регистром имён файлов (именно так
@@ -11,7 +11,7 @@
 set -eu
 
 usage() {
-	echo "usage: $0 --exe <installer.exe> <runtime_dir> <innoextract>" >&2
+	echo "usage: $0 --exe <installer.exe> <runtime_dir> <innounp>" >&2
 	echo "       $0 --game <game_dir> <runtime_dir>" >&2
 	exit 1
 }
@@ -35,7 +35,7 @@ case "$mode" in
 	[ $# -eq 4 ] || usage
 	[ -f "$src" ] || { echo "import: нет файла установщика '$src'" >&2; exit 1; }
 	tmp=$(mktemp -d "$runtime/.gog_extract.XXXXXX")
-	"$4" --extract --silent --output-dir "$tmp" "$src"
+	"$4" "$src" "$tmp"
 	game=$tmp
 	;;
 --game)

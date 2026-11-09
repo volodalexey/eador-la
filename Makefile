@@ -12,9 +12,9 @@ OUT         ?= out
 BUILD_DIR   ?= $(OUT)/build
 INSTALL_DIR ?= $(OUT)/eador-linux
 ALLEGRO4    ?= $(abspath $(OUT)/allegro4)
-INNOEXTRACT ?= $(abspath $(OUT)/innoextract-build/innoextract)
+INNOUNP     ?= $(abspath $(OUT)/innounp-build/innounp)
 
-.PHONY: all build configure allegro4 innoextract import run clean
+.PHONY: all build configure allegro4 innounp import run clean
 
 all: build
 
@@ -39,17 +39,15 @@ build: configure
 	cmake --build $(BUILD_DIR)
 	cmake --build $(BUILD_DIR) --target prepare-native
 
-innoextract:
-	@if [ ! -f $(INNOEXTRACT) ]; then \
-		cmake -S innoextract -B $(OUT)/innoextract-build -G Ninja \
-			-DCMAKE_BUILD_TYPE=Release && \
-		cmake --build $(OUT)/innoextract-build; \
-	fi
+# Свой распаковщик установщиков GOG (Inno Setup 5.5.7), зависит только от zlib.
+innounp:
+	cmake -S innounp -B $(OUT)/innounp-build -G Ninja -DCMAKE_BUILD_TYPE=Release
+	cmake --build $(OUT)/innounp-build
 
 import:
 ifdef GOG_EXE
-	$(MAKE) innoextract
-	sh cmake/import-gog.sh --exe "$(GOG_EXE)" $(INSTALL_DIR) $(INNOEXTRACT)
+	$(MAKE) innounp
+	sh cmake/import-gog.sh --exe "$(GOG_EXE)" $(INSTALL_DIR) $(INNOUNP)
 else ifdef GOG_PATH
 	sh cmake/import-gog.sh --game "$(GOG_PATH)" $(INSTALL_DIR)
 else
