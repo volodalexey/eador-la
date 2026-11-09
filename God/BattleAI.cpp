@@ -3,7 +3,7 @@
 int iAISacVictim;
 
 
-//Проверка соседней клетки для создания карты AI
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ AI
 bool TryAIXYmap(int x, int y, int Weight)
 {	
 	if ((x>=0)&&(y>=0)&&(x<8)&&(y<8))
@@ -19,7 +19,7 @@ bool TryAIXYmap(int x, int y, int Weight)
 	return 0;
 };
 
-//Рекурсивная функция для создания карты поиска пути AI
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё AI
 bool bFirst;
 int StepAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, int StamCost, int StamLeft)
 {
@@ -85,7 +85,7 @@ int StepAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, int StamCost,
 	return 0;
 };
 
-//Проверка соседней клетки для поиска пути AI
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё AI
 
 bool TryAIXYpath(int x, int y, int Weight)
 {
@@ -99,7 +99,7 @@ bool TryAIXYpath(int x, int y, int Weight)
 	return 0;
 };
 
-//Поиск пути AI (без преобразования координат)
+//РџРѕРёСЃРє РїСѓС‚Рё AI (Р±РµР· РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РєРѕРѕСЂРґРёРЅР°С‚)
 
 int StepAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft, int StamCost, int StamLeft)
 {
@@ -128,7 +128,7 @@ int StepAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Spee
 	clPath *pRoad=new clPath(x, y, Path);
 	if ((x==x1)&&(y==y1))
 	{
-		if (((TruePath)&&(Weight<MinWeight))||((!TruePath)&&(Weight==MinWeight))) //Потом вес заменить на стамину
+		if (((TruePath)&&(Weight<MinWeight))||((!TruePath)&&(Weight==MinWeight))) //РџРѕС‚РѕРј РІРµСЃ Р·Р°РјРµРЅРёС‚СЊ РЅР° СЃС‚Р°РјРёРЅСѓ
 		{	
 			clPath *P1, *P2, *P3;
 			if (TruePath)
@@ -196,7 +196,7 @@ int StepAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Spee
 
 bool TryFly[8][8];
 
-//Проверка соседней клетки для создания карты (для летающих юнитов)
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ (РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ)
 
 int FlyAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, bool Over);
 
@@ -225,7 +225,7 @@ void FlyAIXYmap(int xp, int yp, int x, int y, int Weight, int Speed, int SpeedLe
 };
 
 
-//Рекурсивная функция для создания карты поиска пути для летающих юнитов
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ
 
 int FlyAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, bool Over)
 {
@@ -269,7 +269,7 @@ int FlyAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, bool Over)
 	return 0;
 };
 
-//Проверка соседней клетки для поиска пути (для летающих юнитов)
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё (РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ)
 
 int FlyAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft);
 
@@ -309,7 +309,7 @@ void FlyAIXYpath(int xp, int yp, int x, int y, int Weight, clPath *Path, int x1,
 //	};	
 //};
 
-//Поиск пути для летающих юнитов без преобразования координат
+//РџРѕРёСЃРє РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ Р±РµР· РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ РєРѕРѕСЂРґРёРЅР°С‚
 
 int FlyAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft)
 {
@@ -383,7 +383,7 @@ int FlyAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed
 };
 
 
-//Стандартные действия после вызова заклинания AI
+//РЎС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° Р·Р°РєР»РёРЅР°РЅРёСЏ AI
 void SpellCastAI(clSpell *Spell)
 {
 	ActiveUnit->G_Obj->AnimText(Spell->sName,makecol(200,60,250));
@@ -436,7 +436,7 @@ void SpellCastAI(clSpell *Spell)
 			int iType=ActiveUnit->pUnit->GetUnitType();
 			if (ActiveUnit->TakeDamage(Hit,3))
 			{ActiveUnit->G_Obj->AnimDeath((pFirstUnitType+iType)->wavDeath);};
-//Добавить задержку перед вылетом цифирки
+//Р”РѕР±Р°РІРёС‚СЊ Р·Р°РґРµСЂР¶РєСѓ РїРµСЂРµРґ РІС‹Р»РµС‚РѕРј С†РёС„РёСЂРєРё
 			if (bShowAnim)
 			{
 				ActiveUnit->G_Obj->pLink->pEffQue=new clEffQue(1,10,ActiveUnit->G_Obj);
@@ -463,7 +463,7 @@ void SpellCastAI(clSpell *Spell)
 	ActiveUnit->DrawBar();
 };
 
-//Выбор активного юнита АИ
+//Р’С‹Р±РѕСЂ Р°РєС‚РёРІРЅРѕРіРѕ СЋРЅРёС‚Р° РђР
 void AI_SelectUnit(BF_Unit *Unit, bool CanRun)
 {
 	for (int i=0; i<8; i++){
@@ -475,7 +475,7 @@ void AI_SelectUnit(BF_Unit *Unit, bool CanRun)
 		};
 	};
 
-//Построение карты дальности выстрела
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё РІС‹СЃС‚СЂРµР»Р°
 
 	if ((Unit->GetShootingRange())&&(Unit->iAmmo))
 	{
@@ -489,7 +489,7 @@ void AI_SelectUnit(BF_Unit *Unit, bool CanRun)
 		};
 	};
 
-//Построение карты поиска пути
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 	for (int i=0; i<3; i++)
 	{CanPass[i]=0;};
 
@@ -516,13 +516,13 @@ void AI_SelectUnit(BF_Unit *Unit, bool CanRun)
 			Speed++;
 			Stam-=Unit->CheckSkill(29);
 		};
-		if (Unit->CheckSkill(14)) //Летающий
+		if (Unit->CheckSkill(14)) //Р›РµС‚Р°СЋС‰РёР№
 		{
 			FlyMap(Unit->x,Unit->y,-1,Speed,true);
 		}
 		else
 		{
-			if (Unit->CheckSkill(15)) //Низколетающий
+			if (Unit->CheckSkill(15)) //РќРёР·РєРѕР»РµС‚Р°СЋС‰РёР№
 			{
 				FlyMap(Unit->x,Unit->y,-1,Speed,false);
 			}
@@ -539,7 +539,7 @@ void AI_SelectUnit(BF_Unit *Unit, bool CanRun)
 	};
 };
 
-//Проверка, может ли юнит ударить с указанного тайла при текущей скорости
+//РџСЂРѕРІРµСЂРєР°, РјРѕР¶РµС‚ Р»Рё СЋРЅРёС‚ СѓРґР°СЂРёС‚СЊ СЃ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚Р°Р№Р»Р° РїСЂРё С‚РµРєСѓС‰РµР№ СЃРєРѕСЂРѕСЃС‚Рё
 int AI_InMeleeRange(int x, int y)
 {	
 	if ((x>=0)&&(y>=0)&&(x<8)&&(y<8))
@@ -564,7 +564,7 @@ int AI_InMeleeRange(int x, int y)
 	return 0;
 };
 
-//Проверка, может ли юнит ударить с указанного тайла при максимуме скорости
+//РџСЂРѕРІРµСЂРєР°, РјРѕР¶РµС‚ Р»Рё СЋРЅРёС‚ СѓРґР°СЂРёС‚СЊ СЃ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚Р°Р№Р»Р° РїСЂРё РјР°РєСЃРёРјСѓРјРµ СЃРєРѕСЂРѕСЃС‚Рё
 int AI_InMeleeRangePower(int x, int y)
 {	
 	if ((x>=0)&&(y>=0)&&(x<8)&&(y<8))
@@ -601,10 +601,10 @@ int AI_CalcRangedHit(BF_Unit * Attacker, BF_Unit * Defender)
 	return GetRangedHit(Attacker,Defender);
 };
 
-//Возвращает истину, если ActiveUnit тайл x,y нравится больше чем тайл x1,y1
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё ActiveUnit С‚Р°Р№Р» x,y РЅСЂР°РІРёС‚СЃСЏ Р±РѕР»СЊС€Рµ С‡РµРј С‚Р°Р№Р» x1,y1
 bool AI_BetterPlace(int x, int y, int x1, int y1, int mov, int mov1) 
 {
-	//Проверка соседей для круговой атаки
+	//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРµР№ РґР»СЏ РєСЂСѓРіРѕРІРѕР№ Р°С‚Р°РєРё
 	if ((ActiveUnit->CheckSkill(65)>0)||((ActiveUnit->CheckSkill(66)>0)&&(ActiveUnit->iStamina>ActiveUnit->CheckSkill(66))))
 	{
 		int OldX=ActiveUnit->x;
@@ -617,14 +617,14 @@ bool AI_BetterPlace(int x, int y, int x1, int y1, int mov, int mov1)
 		if (Neig>Neig1)
 		{return true;};
 	};
-	//Проверка знания местности
+	//РџСЂРѕРІРµСЂРєР° Р·РЅР°РЅРёСЏ РјРµСЃС‚РЅРѕСЃС‚Рё
 	if ((ActiveUnit->CheckSkill(32)>3)&&(arGrid[x][y].Land==2)&&(arGrid[x1][y1].Land!=2))
 	{return true;};
 	if ((ActiveUnit->CheckSkill(33)>3)&&(arGrid[x][y].Land==3)&&(arGrid[x1][y1].Land!=3))
 	{return true;};
 	if ((ActiveUnit->CheckSkill(34)>3)&&(arGrid[x][y].Land==4)&&(arGrid[x1][y1].Land!=4))
 	{return true;};
-	//Проверка затрат хода
+	//РџСЂРѕРІРµСЂРєР° Р·Р°С‚СЂР°С‚ С…РѕРґР°
 	if (ActiveUnit->CheckSkill(18)==0)
 	{
 		if (mov1>mov)
@@ -632,10 +632,10 @@ bool AI_BetterPlace(int x, int y, int x1, int y1, int mov, int mov1)
 		if (mov1<mov)
 		{return false;};
 	};
-	//Проверка холмов
+	//РџСЂРѕРІРµСЂРєР° С…РѕР»РјРѕРІ
 	if ((arGrid[x][y].Land==3)&&(arGrid[x1][y1].Land!=3))
 	{return true;};
-	//Проверка близости к вражеским тылам
+	//РџСЂРѕРІРµСЂРєР° Р±Р»РёР·РѕСЃС‚Рё Рє РІСЂР°Р¶РµСЃРєРёРј С‚С‹Р»Р°Рј
 	if ((AA==0)&&(x>x1))
 	{return true;};
 	if ((AA==1)&&(x<x1))
@@ -643,10 +643,10 @@ bool AI_BetterPlace(int x, int y, int x1, int y1, int mov, int mov1)
 	return false;
 };
 
-//Массив возможностей юнитов
-int arUnitPower[2][MAX_SQUAD+MAX_SUMMONS][7]; //0-лечение, 1-стрельба, 2-рукопашная, 3-под магическим обстрелом, 4-под обстрелом, 5-под магической атакой, 6-под атакой
+//РњР°СЃСЃРёРІ РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№ СЋРЅРёС‚РѕРІ
+int arUnitPower[2][MAX_SQUAD+MAX_SUMMONS][7]; //0-Р»РµС‡РµРЅРёРµ, 1-СЃС‚СЂРµР»СЊР±Р°, 2-СЂСѓРєРѕРїР°С€РЅР°СЏ, 3-РїРѕРґ РјР°РіРёС‡РµСЃРєРёРј РѕР±СЃС‚СЂРµР»РѕРј, 4-РїРѕРґ РѕР±СЃС‚СЂРµР»РѕРј, 5-РїРѕРґ РјР°РіРёС‡РµСЃРєРѕР№ Р°С‚Р°РєРѕР№, 6-РїРѕРґ Р°С‚Р°РєРѕР№
 
-//Оценка возможностей юнитов на данном ходу
+//РћС†РµРЅРєР° РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№ СЋРЅРёС‚РѕРІ РЅР° РґР°РЅРЅРѕРј С…РѕРґСѓ
 void AI_CalcPower()
 {
 	int MoveMap [8][8];
@@ -670,7 +670,7 @@ void AI_CalcPower()
 		if (ActiveUnit->CheckSkill(24))
 		{
 			AI_SelectUnit(ActiveUnit,true);			
-		//Поиск целей с места
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°
 			for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 			{
 				if ((Squad[Side][i].iLife>0)&&(Field[Squad[Side][i].x][Squad[Side][i].y].Shoot)
@@ -687,7 +687,7 @@ void AI_CalcPower()
 					};
 				};
 			};
-		//Карта проходимости
+		//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
 			if ((ActiveUnit->GetSpeed()>1)&&(arUnitPower[Side][Unit][0]==0))
 			{
 			for (int i=0; i<8; i++){
@@ -725,7 +725,7 @@ void AI_CalcPower()
 				};
 				};
 
-				//Влияние холмов на дальность
+				//Р’Р»РёСЏРЅРёРµ С…РѕР»РјРѕРІ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ
 				int CurrRange=ActiveUnit->GetShootingRange();
 				if ((ActiveUnit->GetShootingRange()>1)&&(ActiveUnit->CheckSkill(14)<=0))
 				{
@@ -739,7 +739,7 @@ void AI_CalcPower()
 					};
 				}
 
-				//Поиск целей с подходом
+				//РџРѕРёСЃРє С†РµР»РµР№ СЃ РїРѕРґС…РѕРґРѕРј
 				ShootMap(x,y,-1,CurrRange);
 				for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 				{		
@@ -763,10 +763,10 @@ void AI_CalcPower()
 			};
 		};
 
-//Стрельба
+//РЎС‚СЂРµР»СЊР±Р°
 //********
 		
-		//Поиск целей с места		
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°		
 		if (ActiveUnit->GetRangedAttack()>0)
 		{
 			AI_SelectUnit(ActiveUnit,true);
@@ -792,7 +792,7 @@ void AI_CalcPower()
 					};
 				};
 			};
-			//Карта проходимости
+			//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
 			if (ActiveUnit->GetSpeed()>1)
 			{
 			for (int i=0; i<8; i++){
@@ -830,7 +830,7 @@ void AI_CalcPower()
 					Field[i][j].Shoot=0;
 				};
 				};
-				//Влияние холмов на дальность
+				//Р’Р»РёСЏРЅРёРµ С…РѕР»РјРѕРІ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ
 				int CurrRange=ActiveUnit->GetShootingRange();
 				if ((ActiveUnit->GetShootingRange()>1)&&(ActiveUnit->CheckSkill(14)<=0))
 				{
@@ -843,7 +843,7 @@ void AI_CalcPower()
 						CurrRange++;
 					};
 				};
-				//Поиск целей с подходом
+				//РџРѕРёСЃРє С†РµР»РµР№ СЃ РїРѕРґС…РѕРґРѕРј
 				ShootMap(x,y,-1,CurrRange);
 				for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 				{		
@@ -873,7 +873,7 @@ void AI_CalcPower()
 			};
 		};
 
-//Рукопашная
+//Р СѓРєРѕРїР°С€РЅР°СЏ
 //**********
 		AI_SelectUnit(ActiveUnit,true);
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -967,10 +967,10 @@ void AI_SimulatePower()
 			};
 		};		
 	
-//Стрельба
+//РЎС‚СЂРµР»СЊР±Р°
 //********
 		
-		//Поиск целей с места		
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°		
 		if (ActiveUnit->GetRangedAttack()>0)
 		{			
 			for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -997,7 +997,7 @@ void AI_SimulatePower()
 			};
 		};
 
-//Рукопашная
+//Р СѓРєРѕРїР°С€РЅР°СЏ
 //**********
 //		AI_SelectUnit(ActiveUnit);
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -1019,7 +1019,7 @@ void AI_SimulatePower()
 
 int DangerZone[8][8];
 
-//Проверка соседней клетки для создания карты опасности
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РѕРїР°СЃРЅРѕСЃС‚Рё
 bool TryXYZone(int x, int y, int Weight)
 {	
 	if ((x>=0)&&(y>=0)&&(x<8)&&(y<8))
@@ -1032,7 +1032,7 @@ bool TryXYZone(int x, int y, int Weight)
 	return 0;
 };
 
-//Создание опасной зоны вокруг указанной точки
+//РЎРѕР·РґР°РЅРёРµ РѕРїР°СЃРЅРѕР№ Р·РѕРЅС‹ РІРѕРєСЂСѓРі СѓРєР°Р·Р°РЅРЅРѕР№ С‚РѕС‡РєРё
 int StepZone (int x, int y, int Weight)
 {
 	DangerZone[x][y]=Weight;
@@ -1064,7 +1064,7 @@ int StepZone (int x, int y, int Weight)
 	return 0;
 };
 
-//Вычисление зон близости к противнику
+//Р’С‹С‡РёСЃР»РµРЅРёРµ Р·РѕРЅ Р±Р»РёР·РѕСЃС‚Рё Рє РїСЂРѕС‚РёРІРЅРёРєСѓ
 void AI_CalcDangerZone()
 {
 	for (int i=0; i<8; i++){
@@ -1080,7 +1080,7 @@ void AI_CalcDangerZone()
 };
 
 
-//Вычисление зон близости к противнику
+//Р’С‹С‡РёСЃР»РµРЅРёРµ Р·РѕРЅ Р±Р»РёР·РѕСЃС‚Рё Рє РїСЂРѕС‚РёРІРЅРёРєСѓ
 void AI_SimulateDangerZone()
 {	
 	int Max=0;
@@ -1101,7 +1101,7 @@ void AI_SimulateDangerZone()
 		DangerZone[i][j]=i-Max;};};	
 };
 
-//Возвращает ценность юнита для общества
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ С†РµРЅРЅРѕСЃС‚СЊ СЋРЅРёС‚Р° РґР»СЏ РѕР±С‰РµСЃС‚РІР°
 int AI_GetUnitTaste(BF_Unit *Unit)
 {
 	int Result=Unit->GetAttack()+Unit->GetCounterAttack()/2+Unit->GetRangedAttack()*Unit->iAmmo/4+Unit->CheckSkill(24)*Unit->iAmmo/4;
@@ -1113,7 +1113,7 @@ int AI_GetUnitTaste(BF_Unit *Unit)
 	return Result;
 };
 
-//Возвращает пользу от перемещения дружественного юнита в указанный тайл
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·Сѓ РѕС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ РґСЂСѓР¶РµСЃС‚РІРµРЅРЅРѕРіРѕ СЋРЅРёС‚Р° РІ СѓРєР°Р·Р°РЅРЅС‹Р№ С‚Р°Р№Р»
 int GetTeleportTaste(BF_Unit *Unit, int x, int y)
 {
 	int Result=0;	
@@ -1151,14 +1151,14 @@ int GetTeleportTaste(BF_Unit *Unit, int x, int y)
 				};
 				Result=BigHit;
 			};
-//			StopLog("Телепорт:",Result);
+//			StopLog("РўРµР»РµРїРѕСЂС‚:",Result);
 		};
 		Unit->x=OldX; Unit->y=OldY;
 	};	
 	return Result;
 };
 
-//Возвращает пользу от перемещения дружественного юнита в указанный тайл в режиме симуляции
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·Сѓ РѕС‚ РїРµСЂРµРјРµС‰РµРЅРёСЏ РґСЂСѓР¶РµСЃС‚РІРµРЅРЅРѕРіРѕ СЋРЅРёС‚Р° РІ СѓРєР°Р·Р°РЅРЅС‹Р№ С‚Р°Р№Р» РІ СЂРµР¶РёРјРµ СЃРёРјСѓР»СЏС†РёРё
 int GetTeleportTaste(BF_Unit *Unit, int x)
 {
 	int Result=0;
@@ -1179,8 +1179,8 @@ int GetTeleportTaste(BF_Unit *Unit, int x)
 };
 
 
-int iGainSpellDamage;	//Хранит полученное в функции повреждение, наносимое заклинанием
-//Вычисление эффективности заклинания на вражеском юните
+int iGainSpellDamage;	//РҐСЂР°РЅРёС‚ РїРѕР»СѓС‡РµРЅРЅРѕРµ РІ С„СѓРЅРєС†РёРё РїРѕРІСЂРµР¶РґРµРЅРёРµ, РЅР°РЅРѕСЃРёРјРѕРµ Р·Р°РєР»РёРЅР°РЅРёРµРј
+//Р’С‹С‡РёСЃР»РµРЅРёРµ СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚Рё Р·Р°РєР»РёРЅР°РЅРёСЏ РЅР° РІСЂР°Р¶РµСЃРєРѕРј СЋРЅРёС‚Рµ
 int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 {
 	clSpell *SP=pFirstSpell+ipSpell;
@@ -1247,7 +1247,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 			case 1:									
 				if (SP->arEffect[2][i]==-1)
 				{
-					//Повреждение
+					//РџРѕРІСЂРµР¶РґРµРЅРёРµ
 					BaseDamage+=SpellPower;
 					Hit=GetHit(SpellPower,Resist*SP->bResistPower+Target->GetDefence()*SP->bDefencePower);
 					iGainSpellDamage+=Hit;
@@ -1272,7 +1272,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Сжигание снарядов
+					//РЎР¶РёРіР°РЅРёРµ СЃРЅР°СЂСЏРґРѕРІ
 							BaseDamage+=SpellPower;
 							Hit=GetHit(SpellPower,Resist*SP->bResistPower);
 							if (Target->iAmmo<Hit)
@@ -1293,7 +1293,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};			
 					break;
@@ -1304,7 +1304,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Понижение энергии
+					//РџРѕРЅРёР¶РµРЅРёРµ СЌРЅРµСЂРіРёРё
 							Hit+=SpellPower-Resist*SP->bResistPower;
 							if (Hit>0)
 							{
@@ -1329,7 +1329,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};
 					};
@@ -1341,7 +1341,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Страх
+					//РЎС‚СЂР°С…
 							Hit=SpellPower-Resist*SP->bResistPower;
 							if ((Hit>0)&&(Target->iMorale>0))
 							{
@@ -1373,13 +1373,13 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};	
 					};
 					break;
 				case 31:
-					//Снятие чар
+					//РЎРЅСЏС‚РёРµ С‡Р°СЂ
 					SpellPower=SP->arEffect[1][i]+ActiveUnit->CheckSkill(908);
 					if (ActiveUnit->pHero)
 					{
@@ -1412,7 +1412,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						};
 						Eff=Eff->pNext;
 					};
-				//Повреждения вызванным существам
+				//РџРѕРІСЂРµР¶РґРµРЅРёСЏ РІС‹Р·РІР°РЅРЅС‹Рј СЃСѓС‰РµСЃС‚РІР°Рј
 					if ((Target->bSummoned)&&(SpellPower>Resist))
 					{
 						BaseDamage+=SpellPower;
@@ -1426,7 +1426,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						AttBuff+=Target->GetRangedAttack()*Target->iAmmo/5+(Target->GetAttack()+Target->GetDefence()+Target->GetRangedDefence())/2;
 					};			
 					break;
-				//Паутина
+				//РџР°СѓС‚РёРЅР°
 				case 47:
 					if ((Resist<4)&&(!Target->CheckSkill(36)))
 					{
@@ -1449,7 +1449,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 //					bFriendlyFire=true;
 //					break;
 				case 73:
-				//Подчинение
+				//РџРѕРґС‡РёРЅРµРЅРёРµ
 					if (SP->arEffect[2][i]==-1)
 					{
 						if ((SpellPower>Resist)&&(!Target->CheckSkill(36))&&
@@ -1471,7 +1471,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					};						
 				break;
 				case 92:
-				//Суицид
+				//РЎСѓРёС†РёРґ
 					if (Resist*SP->bResistPower<=SpellPower)
 					{
 						iGainSpellDamage+=GetMeleeHit(Target,Target,true);
@@ -1497,7 +1497,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 				if (Duration>1)
 				{					
 					if ((Index>1000)&&((Target->pUnit->pType()->iLevel>2)||(Target->pHero)))
-					{//Полиморф
+					{//РџРѕР»РёРјРѕСЂС„
 					//	Buff+=(Target->iLife-(pFirstUnitType+Index-1000)->iLife)*Duration;
 						if (arUnitPower[1-AA][Unit][2]==2)
 						{
@@ -1509,12 +1509,12 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							iGainSpellDamage+=Target->iLife;
 							Buff+=(Target->iLife-(pFirstUnitType+Index-1000)->iLife)*Duration;
 						};
-//						textprintf(screen,Font1,0,0,COLOR_2,"Полиморф на %s. Дамаг: %d, Бафф: %d               ",(pFirstUnitType+Target->pUnit->ipType)->sName,iGainSpellDamage,Buff);
+//						textprintf(screen,Font1,0,0,COLOR_2,"РџРѕР»РёРјРѕСЂС„ РЅР° %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",(pFirstUnitType+Target->pUnit->ipType)->sName,iGainSpellDamage,Buff);
 //						readkey();
 					};
 					switch (Index)
 					{
-					case -1: //Отравление
+					case -1: //РћС‚СЂР°РІР»РµРЅРёРµ
 						Buff-=Duration*SpellPower;
 						iGainSpellDamage-=Duration*SpellPower;
 						if (((arUnitPower[1-AA][Unit][0]==2)||(arUnitPower[1-AA][Unit][1]==2))&&(arUnitPower[1-AA][Unit][3]==0)&&(arUnitPower[1-AA][Unit][4]==0)&&(arUnitPower[1-AA][Unit][5]==0)&&(arUnitPower[1-AA][Unit][6]==0)&&(SpellPower<0))
@@ -1523,10 +1523,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							Buff+=Target->CheckSkill(24)*Target->iAmmo/4;
 						};
 						break;
-					case 2:	//Снижение атаки
+					case 2:	//РЎРЅРёР¶РµРЅРёРµ Р°С‚Р°РєРё
 						if (arUnitPower[1-AA][Unit][2]==2)
 						{
-				//			StopLog("Атака:",Unit);
+				//			StopLog("РђС‚Р°РєР°:",Unit);
 							if ((abs(SpellPower)>Target->GetAttack())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetAttack()-1)*Duration;
@@ -1537,10 +1537,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};
 						};
 						break;
-					case 3:	//Снижение контратаки
+					case 3:	//РЎРЅРёР¶РµРЅРёРµ РєРѕРЅС‚СЂР°С‚Р°РєРё
 						if ((arUnitPower[1-AA][Unit][5]>0)||(arUnitPower[1-AA][Unit][6]>0))
 						{
-				//			StopLog("КонтрАтака:",Unit);
+				//			StopLog("РљРѕРЅС‚СЂРђС‚Р°РєР°:",Unit);
 							if ((abs(SpellPower)>Target->GetCounterAttack())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetCounterAttack()-1)*Duration;
@@ -1551,10 +1551,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};
 						};
 						break;
-					case 4:	//Снижение защиты
+					case 4:	//РЎРЅРёР¶РµРЅРёРµ Р·Р°С‰РёС‚С‹
 						if (arUnitPower[1-AA][Unit][6]>0)
 						{
-				//			StopLog("Защита:",Unit);
+				//			StopLog("Р—Р°С‰РёС‚Р°:",Unit);
 							if ((abs(SpellPower)>Target->GetDefence())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetDefence())*Duration;
@@ -1565,10 +1565,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};
 						};
 						break;
-					case 5:	//Снижение дистанционной защиты
+					case 5:	//РЎРЅРёР¶РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅРѕР№ Р·Р°С‰РёС‚С‹
 						if (arUnitPower[1-AA][Unit][4]>0)
 						{
-				//			StopLog("ДистЗащита:",Unit);
+				//			StopLog("Р”РёСЃС‚Р—Р°С‰РёС‚Р°:",Unit);
 							if ((abs(SpellPower)>Target->GetRangedDefence())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetRangedDefence())*Duration;
@@ -1579,10 +1579,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};
 						};
 						break;
-					case 6:	//Снижение сопротивления
+					case 6:	//РЎРЅРёР¶РµРЅРёРµ СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёСЏ
 						if ((arUnitPower[1-AA][Unit][3]>0)||(arUnitPower[1-AA][Unit][5]>0))
 						{
-				//			StopLog("Сопрот:",Unit);
+				//			StopLog("РЎРѕРїСЂРѕС‚:",Unit);
 							if ((abs(SpellPower)>Target->GetResist())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetResist())*Duration;
@@ -1593,10 +1593,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};								
 						};
 						break;
-					case 7:	//Замедление
+					case 7:	//Р—Р°РјРµРґР»РµРЅРёРµ
 						if ((Target->GetSpeed()>1)&&(arUnitPower[1-AA][Unit][0]==0)&&(arUnitPower[1-AA][Unit][1]==0)&&(arUnitPower[1-AA][Unit][0]==0)&&(arUnitPower[1-AA][Unit][2]==0))
 						{
-				//			StopLog("Скор:",Unit);
+				//			StopLog("РЎРєРѕСЂ:",Unit);
 							if ((abs(SpellPower)>Target->GetSpeed())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetResist()+Target->GetAttack()/5)*Duration;
@@ -1607,10 +1607,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};								
 						};
 						break;
-					case 8:	//Снижение дистанционной атаки
+					case 8:	//РЎРЅРёР¶РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅРѕР№ Р°С‚Р°РєРё
 						if (arUnitPower[1-AA][Unit][1]==2)
 						{
-				//			StopLog("ДистАтака:",Unit);
+				//			StopLog("Р”РёСЃС‚РђС‚Р°РєР°:",Unit);
 							if ((abs(SpellPower)>Target->GetRangedAttack())&&(SpellPower<0))
 							{
 								Buff+=(Target->GetRangedAttack()-1)*Duration;
@@ -1622,10 +1622,10 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						};
 						break;
 					case 36:
-					case 38:	//Запрет атаки или обездвиживание
+					case 38:	//Р—Р°РїСЂРµС‚ Р°С‚Р°РєРё РёР»Рё РѕР±РµР·РґРІРёР¶РёРІР°РЅРёРµ
 						if ((arUnitPower[1-AA][Unit][1]==2)||(arUnitPower[1-AA][Unit][2]==2))
 						{
-				//			StopLog("ДистАтака:",Unit);							
+				//			StopLog("Р”РёСЃС‚РђС‚Р°РєР°:",Unit);							
 							iGainSpellDamage+=(Target->GetAttack()+Target->GetRangedAttack());
 							Buff+=Target->GetLife()*Duration;							
 						}
@@ -1644,7 +1644,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 	};
 							
 	int MyTaste=Buff;
-	//Не вредить подчинённым
+	//РќРµ РІСЂРµРґРёС‚СЊ РїРѕРґС‡РёРЅС‘РЅРЅС‹Рј
 	if ((iGainSpellDamage>0)&&(bPosessed)&&(Target->GetEffectDuration(73)>0)&&(Target->GetEffectDuration(73)<3))
 	{iGainSpellDamage=-iGainSpellDamage;};
 	if (iGainSpellDamage>=Target->iLife)
@@ -1660,7 +1660,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 	else
 	{		
 		iGainSpellDamage+=SelfHeal;
-		//Снижение эффективности повреждений по спящей цели
+		//РЎРЅРёР¶РµРЅРёРµ СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚Рё РїРѕРІСЂРµР¶РґРµРЅРёР№ РїРѕ СЃРїСЏС‰РµР№ С†РµР»Рё
 		if (Target->GetEffectDuration(70)>1)
 		{MyTaste+=iGainSpellDamage/Target->GetEffectDuration(70);}
 		else
@@ -1682,7 +1682,7 @@ int AI_GetEnemySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 };
 
 
-//Вычисление эффективности заклинания на дружественном юните
+//Р’С‹С‡РёСЃР»РµРЅРёРµ СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚Рё Р·Р°РєР»РёРЅР°РЅРёСЏ РЅР° РґСЂСѓР¶РµСЃС‚РІРµРЅРЅРѕРј СЋРЅРёС‚Рµ
 int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 {
 	clSpell *SP=pFirstSpell+ipSpell;
@@ -1739,14 +1739,14 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 			case 1:									
 				if (SP->arEffect[2][i]==-1)
 				{
-					//Повреждение
+					//РџРѕРІСЂРµР¶РґРµРЅРёРµ
 					if((SP->bNegative)&&(!bFriendlyFire))
 					{
 						Hit=GetHit(SpellPower,Resist*SP->bResistPower+Target->GetDefence()*SP->bDefencePower);
 						iGainSpellDamage-=Hit;					
 					}
 					else
-					//Лечение
+					//Р›РµС‡РµРЅРёРµ
 					{
 						iGainSpellDamage=SpellPower;						
 					};
@@ -1757,7 +1757,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Пополнение снарядов
+					//РџРѕРїРѕР»РЅРµРЅРёРµ СЃРЅР°СЂСЏРґРѕРІ
 							if ((arUnitPower[AA][Unit][0]>0)||(arUnitPower[AA][Unit][1]>0))
 							{
 								if (Target->GetAmmo()-Target->iAmmo>SpellPower)
@@ -1780,7 +1780,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};			
 					break;
@@ -1791,7 +1791,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Пополнение энергии
+					//РџРѕРїРѕР»РЅРµРЅРёРµ СЌРЅРµСЂРіРёРё
 							if (Target->GetStamina()-Target->iStamina>SpellPower)
 							{
 								Hit=SpellPower;
@@ -1825,7 +1825,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};
 					};
@@ -1837,7 +1837,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					{
 						if (SP->arEffect[2][i]==-1)
 						{
-					//Воодушевление
+					//Р’РѕРѕРґСѓС€РµРІР»РµРЅРёРµ
 							if (SpellPower>Target->GetMorale()-Target->iMorale)
 							{SpellPower=Target->GetMorale()-Target->iMorale;};
 							if (SpellPower<0)
@@ -1854,13 +1854,13 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 						}
 						else
 						{
-					//Постоянный эффект
+					//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 						};
 					};	
 					};
 					break;
 				case 31:
-					//Снятие чар
+					//РЎРЅСЏС‚РёРµ С‡Р°СЂ
 					if (ActiveUnit->pHero)
 					{
 						SpellPower=SP->arEffect[1][i]+ActiveUnit->pHero->CheckHeroBonus(908);
@@ -1886,7 +1886,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					bFriendlyFire=true;
 					break;
 				case 75:
-				//Дополнительный ход
+				//Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ С…РѕРґ
 					if ((!Target->CheckSkill(36))&&(Target->iMorale>0)&&(!Target->bCanAct))
 					{
 						if (arUnitPower[AA][Unit][0]==2)
@@ -1904,7 +1904,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					};
 				break;
 				case 89:
-				//Телепорт
+				//РўРµР»РµРїРѕСЂС‚
 					if ((Target->GetAttack()>5)&&(Target->iAmmo==0)&&(arUnitPower[AA][Unit][2]<2)&&(Target->bCanAct))
 					{
 						int BigHit=0;
@@ -1921,12 +1921,12 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					}
 					break;
 				case 91:
-				//Темный пакт
+				//РўРµРјРЅС‹Р№ РїР°РєС‚
 					if ((Target->iLife<=Target->GetLife()/4)&&((arUnitPower[AA][Unit][5]>0)||(arUnitPower[AA][Unit][6]>0)))
 					{
 						iGainSpellDamage=5+(Target->pUnit->pType()->iLevel-1)*10;
 						Buff+=Target->pUnit->pType()->iLevel*50;
-			//			textprintf(screen,Font1,0,0,COLOR_2,"Темный Пакт на %s. Дамаг: %d, Бафф: %d               ",(pFirstUnitType+Target->pUnit->ipType)->sName,iGainSpellDamage,Buff);
+			//			textprintf(screen,Font1,0,0,COLOR_2,"РўРµРјРЅС‹Р№ РџР°РєС‚ РЅР° %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",(pFirstUnitType+Target->pUnit->ipType)->sName,iGainSpellDamage,Buff);
 			//			readkey();
 					};
 					break;
@@ -1956,7 +1956,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 					};
 					switch (Index)
 					{
-					case -1: //Регенерация
+					case -1: //Р РµРіРµРЅРµСЂР°С†РёСЏ
 						if (Target->iLife<Target->GetLife())
 						{
 							Buff+=Target->GetRangedAttack()*Target->iAmmo/20;
@@ -1967,56 +1967,56 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 							};
 						};						
 						break;
-					case 2:	//Повышение атаки
+					case 2:	//РџРѕРІС‹С€РµРЅРёРµ Р°С‚Р°РєРё
 						if (arUnitPower[AA][Unit][2]==2)
 						{
-				//			StopLog("Атака:",Unit);
+				//			StopLog("РђС‚Р°РєР°:",Unit);
 							Buff+=Duration*SpellPower;
 						};
 						break;
-					case 3:	//Повышение контратаки
+					case 3:	//РџРѕРІС‹С€РµРЅРёРµ РєРѕРЅС‚СЂР°С‚Р°РєРё
 						if ((arUnitPower[AA][Unit][5]>0)||(arUnitPower[AA][Unit][6]>0))
 						{
-				//			StopLog("КонтрАтака:",Unit);
+				//			StopLog("РљРѕРЅС‚СЂРђС‚Р°РєР°:",Unit);
 							Buff+=Duration*SpellPower;						
 						};
 						break;
-					case 4:	//Повышение защиты
+					case 4:	//РџРѕРІС‹С€РµРЅРёРµ Р·Р°С‰РёС‚С‹
 						if (arUnitPower[AA][Unit][6]>0)
 						{
-				//			StopLog("Защита:",Unit);
+				//			StopLog("Р—Р°С‰РёС‚Р°:",Unit);
 							Buff+=Duration*SpellPower;							
 						};
 						break;
-					case 5:	//Повышение дистанционной защиты
+					case 5:	//РџРѕРІС‹С€РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅРѕР№ Р·Р°С‰РёС‚С‹
 						if (arUnitPower[AA][Unit][4]>0)
 						{
-				//			StopLog("ДистЗащита:",Unit);
+				//			StopLog("Р”РёСЃС‚Р—Р°С‰РёС‚Р°:",Unit);
 							Buff+=Duration*SpellPower;			
 						};
 						break;
-					case 6:	//Повышение сопротивления
+					case 6:	//РџРѕРІС‹С€РµРЅРёРµ СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёСЏ
 						if ((arUnitPower[AA][Unit][3]>0)||(arUnitPower[AA][Unit][5]>0))
 						{
-				//			StopLog("Сопрот:",Unit);
+				//			StopLog("РЎРѕРїСЂРѕС‚:",Unit);
 							Buff+=Duration*SpellPower;														
 						};
 						break;
-					case 7:	//Ускорение
+					case 7:	//РЈСЃРєРѕСЂРµРЅРёРµ
 						if ((arUnitPower[AA][Unit][0]==0)&&(arUnitPower[AA][Unit][1]==0)&&(arUnitPower[AA][Unit][0]==0)&&(arUnitPower[AA][Unit][2]==0))
 						{
-				//			StopLog("Скор:",Unit);
+				//			StopLog("РЎРєРѕСЂ:",Unit);
 							Buff+=Duration*(SpellPower+Target->GetAttack()/5);
 						};
 						break;
-					case 8:	//Повышение дистанционной атаки
+					case 8:	//РџРѕРІС‹С€РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅРѕР№ Р°С‚Р°РєРё
 						if (arUnitPower[AA][Unit][1]==2)
 						{
-				//			StopLog("ДистАтака:",Unit);
+				//			StopLog("Р”РёСЃС‚РђС‚Р°РєР°:",Unit);
 							Buff+=Duration*SpellPower;							
 						};
 						break;
-					case 68: //Вампиризм
+					case 68: //Р’Р°РјРїРёСЂРёР·Рј
 						if ((Target->iLife<Target->GetLife())&&(arUnitPower[AA][Unit][2]==2))
 						{							
 							Buff+=Target->GetAttack()*SpellPower/100*Duration;
@@ -2071,7 +2071,7 @@ int AI_GetAllySpellTaste(int ipSpell, BF_Unit *Target, int Unit)
 	return MyTaste;
 };
 
-//Изменение пользы заклинания в зависимости от цены вызова, поиск жертв
+//РР·РјРµРЅРµРЅРёРµ РїРѕР»СЊР·С‹ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С†РµРЅС‹ РІС‹Р·РѕРІР°, РїРѕРёСЃРє Р¶РµСЂС‚РІ
 int AI_CalcSpellPenalty(clSpell *SP, int Spell)
 {
 	int MyTaste=0;
@@ -2137,7 +2137,7 @@ int AI_CalcSpellPenalty(clSpell *SP, int Spell)
 };
 
 
-//Активирует следующего юнита. Активный юнит выбирает и совершает действие. Если CanMove истинно, он может просто двигаться к цели, иначе будет ожидать следующего обращения. Возвращает время задержки на проигрыш анимации
+//РђРєС‚РёРІРёСЂСѓРµС‚ СЃР»РµРґСѓСЋС‰РµРіРѕ СЋРЅРёС‚Р°. РђРєС‚РёРІРЅС‹Р№ СЋРЅРёС‚ РІС‹Р±РёСЂР°РµС‚ Рё СЃРѕРІРµСЂС€Р°РµС‚ РґРµР№СЃС‚РІРёРµ. Р•СЃР»Рё CanMove РёСЃС‚РёРЅРЅРѕ, РѕРЅ РјРѕР¶РµС‚ РїСЂРѕСЃС‚Рѕ РґРІРёРіР°С‚СЊСЃСЏ Рє С†РµР»Рё, РёРЅР°С‡Рµ Р±СѓРґРµС‚ РѕР¶РёРґР°С‚СЊ СЃР»РµРґСѓСЋС‰РµРіРѕ РѕР±СЂР°С‰РµРЅРёСЏ. Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЂРµРјСЏ Р·Р°РґРµСЂР¶РєРё РЅР° РїСЂРѕРёРіСЂС‹С€ Р°РЅРёРјР°С†РёРё
 int AI_Main(bool CanMove)
 {
 	WriteLog("                                             ");
@@ -2163,16 +2163,16 @@ int AI_Main(bool CanMove)
 			{ActiveNum=i;};
 		};
 
-		//Поиск целей
+		//РџРѕРёСЃРє С†РµР»РµР№
 		//***********
 
-//Магия
+//РњР°РіРёСЏ
 //*****		
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
 			arCanCast[i][0]=0;
 		};
-	//Составление списка доступных заклинаний
+	//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С… Р·Р°РєР»РёРЅР°РЅРёР№
 		int arCast[SPELLBOOK_SIZE][2];
 		for (int i=0; i<SPELLBOOK_SIZE; i++)
 		{
@@ -2211,7 +2211,7 @@ int AI_Main(bool CanMove)
 				};				
 			};
 		};
-		//Выбор заклинания
+		//Р’С‹Р±РѕСЂ Р·Р°РєР»РёРЅР°РЅРёСЏ
 		int ChoosenSpell=-1, SpellTaste=0, SpellTarget1=-1, SpellTarget2=-1, SpellHit=0;
 		if (SpellCount>0)
 		{
@@ -2226,10 +2226,10 @@ int AI_Main(bool CanMove)
 					if ((!SP->bSacrifice)||(SideCanCast[AA]>1))
 					{
 					int SpellPower;
-					//Одиночная цель
+					//РћРґРёРЅРѕС‡РЅР°СЏ С†РµР»СЊ
 					if (SP->iTarget==1)
 					{
-						//Противник
+						//РџСЂРѕС‚РёРІРЅРёРє
 						if (SP->bOnEnemy)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -2240,7 +2240,7 @@ int AI_Main(bool CanMove)
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 								{
-	//								textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+	//								textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 	//								readkey();
 									SpellTaste=MyTaste;
 									SpellHit=iGainSpellDamage;
@@ -2251,7 +2251,7 @@ int AI_Main(bool CanMove)
 							};
 							};
 						};
-						//Союзник
+						//РЎРѕСЋР·РЅРёРє
 						if (SP->bOnAlly)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -2262,7 +2262,7 @@ int AI_Main(bool CanMove)
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 								{
-			//						textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+			//						textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 			//						readkey();
 									SpellTaste=MyTaste;
 									SpellHit=iGainSpellDamage;
@@ -2274,7 +2274,7 @@ int AI_Main(bool CanMove)
 							};
 						};
 					};
-					//Вызов заклятья без цели (на все поле)
+					//Р’С‹Р·РѕРІ Р·Р°РєР»СЏС‚СЊСЏ Р±РµР· С†РµР»Рё (РЅР° РІСЃРµ РїРѕР»Рµ)
 					if ((SP->iTarget==0)&&(SP->iArea==2))
 					{
 						int MyTaste=0, MyDamage=0;						
@@ -2284,7 +2284,7 @@ int AI_Main(bool CanMove)
 							{
 								if ((Squad[AA][k].pUnit)&&(Squad[AA][k].iLife>0))
 								{									
-								//Найден свой подходящий юнит
+								//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									iGainSpellDamage=0;
 									MyTaste+=AI_GetAllySpellTaste(arCast[Spell][0],&Squad[AA][k],k);
 									MyDamage+=iGainSpellDamage;
@@ -2297,7 +2297,7 @@ int AI_Main(bool CanMove)
 							{
 								if ((Squad[1-AA][k].pUnit)&&(Squad[1-AA][k].iLife>0))
 								{						
-								//Найден вражеский подходящий юнит
+								//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									iGainSpellDamage=0;
 									MyTaste+=AI_GetEnemySpellTaste(arCast[Spell][0],&Squad[1-AA][k],k);
 									MyDamage+=iGainSpellDamage;
@@ -2306,18 +2306,18 @@ int AI_Main(bool CanMove)
 						};
 						iGainSpellDamage=MyDamage;
 						MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
-	//					textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+	//					textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 	//					readkey();
 						if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 						{
-					//		textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+					//		textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 					//		readkey();
 							SpellTaste=MyTaste;
 							SpellHit=iGainSpellDamage;
 							ChoosenSpell=Spell;							
 						};
 					};
-					//На себя
+					//РќР° СЃРµР±СЏ
 					if ((SP->iTarget==0)&&(SP->iArea==0))
 					{
 						int MyTaste=AI_GetAllySpellTaste(arCast[Spell][0],ActiveUnit,ActiveNum);
@@ -2329,10 +2329,10 @@ int AI_Main(bool CanMove)
 							ChoosenSpell=Spell;
 						}
 					}
-					//Труп юнита
+					//РўСЂСѓРї СЋРЅРёС‚Р°
 					if ((SP->iTarget==2)||(SP->iTarget==4))
 					{
-						//Противник
+						//РџСЂРѕС‚РёРІРЅРёРє
 						if (SP->bOnEnemy)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -2366,7 +2366,7 @@ int AI_Main(bool CanMove)
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((Damage>0)||(Buff>0)))
 								{
-		//							textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+		//							textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 		//							readkey();
 									SpellTaste=MyTaste;
 									SpellHit=Damage;
@@ -2406,7 +2406,7 @@ int AI_Main(bool CanMove)
 										{Damage=1;};
 									};
 								};
-//								Воскрешение
+//								Р’РѕСЃРєСЂРµС€РµРЅРёРµ
 								if (SP->arEffect[0][0]==1)
 								{
 									Buff=(Squad[AA][Uni].pUnit->pType()->iLevel)*15+Squad[AA][Uni].pUnit->iLevel*2;
@@ -2417,7 +2417,7 @@ int AI_Main(bool CanMove)
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((Damage>0)||(Buff>0)))
 								{
-			//						textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+			//						textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 			//						readkey();
 									SpellTaste=MyTaste;
 									SpellHit=Damage;
@@ -2429,7 +2429,7 @@ int AI_Main(bool CanMove)
 							};
 						};
 					};
-					//Вызов заклинания в свободном тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРІРѕР±РѕРґРЅРѕРј С‚Р°Р№Р»Рµ
 					if (SP->iTarget==5)
 					{
 						for (int i=0; i<8; i++){
@@ -2472,7 +2472,7 @@ int AI_Main(bool CanMove)
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((Damage>0)||(Buff>0)))
 								{
-			//						textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+			//						textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 			//						readkey();
 									SpellTaste=MyTaste;
 									SpellHit=Damage;
@@ -2488,7 +2488,7 @@ int AI_Main(bool CanMove)
 						};
 						};
 					};
-					//Вызов заклинания в тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С‚Р°Р№Р»Рµ
 					if (SP->iTarget==3)
 					{
 					for (int i=0; i<8; i++){
@@ -2519,7 +2519,7 @@ int AI_Main(bool CanMove)
 										{
 											if ((Squad[AA][k].pUnit)&&(Squad[AA][k].iLife>0)&&(Squad[AA][k].x==x)&&(Squad[AA][k].y==y))
 											{												
-											//Найден свой подходящий юнит
+											//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 												iGainSpellDamage=0;
 												MyTaste+=AI_GetAllySpellTaste(arCast[Spell][0],&Squad[AA][k],k);												
 												MyDamage+=iGainSpellDamage;
@@ -2532,7 +2532,7 @@ int AI_Main(bool CanMove)
 										{
 											if ((Squad[1-AA][k].pUnit)&&(Squad[1-AA][k].iLife>0)&&(Squad[1-AA][k].x==x)&&(Squad[1-AA][k].y==y))
 											{
-											//Найден вражеский подходящий юнит
+											//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 												iGainSpellDamage=0;
 												MyTaste+=AI_GetEnemySpellTaste(arCast[Spell][0],&Squad[1-AA][k],k);
 												MyDamage+=iGainSpellDamage;
@@ -2551,7 +2551,7 @@ int AI_Main(bool CanMove)
 							{
 								if ((Field[x][y].Shoot>0)||((x==i)&&(y==j)))
 								{
-							//Найден тайл для заклинания
+							//РќР°Р№РґРµРЅ С‚Р°Р№Р» РґР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏ
 								};
 							};
 						};
@@ -2560,7 +2560,7 @@ int AI_Main(bool CanMove)
 					MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 					if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 					{
-		//				textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+		//				textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 		//				readkey();
 						SpellTaste=MyTaste;
 						SpellHit=iGainSpellDamage;
@@ -2578,7 +2578,7 @@ int AI_Main(bool CanMove)
 			{SpellHit=SpellTaste/10;};
 		};
 
-//Лечение
+//Р›РµС‡РµРЅРёРµ
 //*******
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
@@ -2588,7 +2588,7 @@ int AI_Main(bool CanMove)
 		if ((ActiveUnit->CheckSkill(24))&&(ActiveUnit->iAmmo>0))
 		{
 			AI_SelectUnit(ActiveUnit,true);
-		//Поиск целей с места
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°
 			for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 			{
 				if ((Squad[AA][i].iLife>0)&&(Field[Squad[AA][i].x][Squad[AA][i].y].Shoot)
@@ -2600,7 +2600,7 @@ int AI_Main(bool CanMove)
 						arHealCoord[i][1]=ActiveUnit->y;						
 				};
 			};
-		//Карта проходимости
+		//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
 			if (ActiveUnit->iSpeed>1)
 			{
 			for (int i=0; i<8; i++){
@@ -2638,7 +2638,7 @@ int AI_Main(bool CanMove)
 				};
 				};
 
-				//Влияние холмов на дальность
+				//Р’Р»РёСЏРЅРёРµ С…РѕР»РјРѕРІ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ
 				int CurrRange=ActiveUnit->GetShootingRange();
 				if ((ActiveUnit->GetShootingRange()>1)&&(ActiveUnit->CheckSkill(14)<=0))
 				{
@@ -2651,7 +2651,7 @@ int AI_Main(bool CanMove)
 						CurrRange++;
 					};
 				};
-				//Поиск целей с подходом
+				//РџРѕРёСЃРє С†РµР»РµР№ СЃ РїРѕРґС…РѕРґРѕРј
 				ShootMap(x,y,-1,CurrRange);
 				for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 				{		
@@ -2670,13 +2670,13 @@ int AI_Main(bool CanMove)
 			};
 		};
 
-//Стрельба
+//РЎС‚СЂРµР»СЊР±Р°
 //********
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
 			arCanRange[i]=0;
 		};
-		//Поиск целей с места		
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°		
 		if ((ActiveUnit->iAmmo>0)&&(ActiveUnit->GetRangedAttack()>0))
 		{
 			AI_SelectUnit(ActiveUnit,true);
@@ -2689,7 +2689,7 @@ int AI_Main(bool CanMove)
 					arRangeCoord[i][1]=ActiveUnit->y;
 				};
 			};
-			//Карта проходимости
+			//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
 			if (ActiveUnit->iSpeed>1)
 			{
 			for (int i=0; i<8; i++){
@@ -2727,7 +2727,7 @@ int AI_Main(bool CanMove)
 					Field[i][j].Shoot=0;
 				};
 				};
-				//Влияние холмов на дальность
+				//Р’Р»РёСЏРЅРёРµ С…РѕР»РјРѕРІ РЅР° РґР°Р»СЊРЅРѕСЃС‚СЊ
 				int CurrRange=ActiveUnit->GetShootingRange();
 				if ((ActiveUnit->GetShootingRange()>1)&&(ActiveUnit->CheckSkill(14)<=0))
 				{
@@ -2740,7 +2740,7 @@ int AI_Main(bool CanMove)
 						CurrRange++;
 					};
 				}
-				//Поиск целей с подходом
+				//РџРѕРёСЃРє С†РµР»РµР№ СЃ РїРѕРґС…РѕРґРѕРј
 				ShootMap(x,y,-1,CurrRange);
 				for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 				{		
@@ -2756,12 +2756,12 @@ int AI_Main(bool CanMove)
 			};			
 			};
 		};
-//Рукопашная
+//Р СѓРєРѕРїР°С€РЅР°СЏ
 //**********
 		AI_SelectUnit(ActiveUnit,true);
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
-		//Выбор тайла для атаки
+		//Р’С‹Р±РѕСЂ С‚Р°Р№Р»Р° РґР»СЏ Р°С‚Р°РєРё
 			arCanMelee[i]=0;
 			if (Squad[1-AA][i].iLife)
 			{
@@ -2843,10 +2843,10 @@ int AI_Main(bool CanMove)
 			{OurArmy++;};
 		};
 
-		//Оценка целей
+		//РћС†РµРЅРєР° С†РµР»РµР№
 		//************
 
-		//Лечение
+		//Р›РµС‡РµРЅРёРµ
 		if ((ActiveUnit->CheckSkill(24))&&(ActiveUnit->iAmmo>0))
 		{
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -2873,7 +2873,7 @@ int AI_Main(bool CanMove)
 		};
 		};
 		
-		//Выстрел
+		//Р’С‹СЃС‚СЂРµР»
 		if ((ActiveUnit->GetRangedAttack()>0)&&(ActiveUnit->iAmmo>0))
 		{
 		Taste=-1000;
@@ -2882,7 +2882,7 @@ int AI_Main(bool CanMove)
 			if (arCanRange[i]>0)
 			{	
 				int MyTaste=0, MyHit=0;
-				//Паутина
+				//РџР°СѓС‚РёРЅР°
 				if (ActiveUnit->CheckSkill(47)>0)
 				{
 					if (OurArmy>2)
@@ -2910,7 +2910,7 @@ int AI_Main(bool CanMove)
 				}
 				else
 				{
-					//Окаменение
+					//РћРєР°РјРµРЅРµРЅРёРµ
 					if (ActiveUnit->CheckSkill(46)>0)
 					{
 						if ((Squad[1-AA][i].CheckSkill(36)==0)&&(OurArmy>2)&&(ActiveUnit->CheckSkill(46)>Squad[1-AA][i].GetResist()))
@@ -2933,15 +2933,15 @@ int AI_Main(bool CanMove)
 					}
 					else
 					{
-						//Обычный выстрел
+						//РћР±С‹С‡РЅС‹Р№ РІС‹СЃС‚СЂРµР»
 						MyHit=AI_CalcRangedHit(ActiveUnit,&Squad[1-AA][i]);
-						//Двойной выстрел
+						//Р”РІРѕР№РЅРѕР№ РІС‹СЃС‚СЂРµР»
 						if ((MyHit<Squad[1-AA][i].iLife)&&(arCanRange[i]==3)&&(ActiveUnit->CheckSkill(20)>0)&&(ActiveUnit->iStamina>=ActiveUnit->CheckSkill(20)))
 						{
 							MyHit*=2;
 							arCanRange[i]=4;
 						};
-						//Ядовитый выстрел
+						//РЇРґРѕРІРёС‚С‹Р№ РІС‹СЃС‚СЂРµР»
 						if ((Squad[1-AA][i].CheckSkill(42)==0)&&(MyHit<Squad[1-AA][i].iLife))
 						{MyHit+=ActiveUnit->CheckSkill(78)*2;};
 
@@ -2964,7 +2964,7 @@ int AI_Main(bool CanMove)
 						if (arCanRange[i]==1)
 						{MyTaste/=2;};
 
-						//Не бить подчинённых
+						//РќРµ Р±РёС‚СЊ РїРѕРґС‡РёРЅС‘РЅРЅС‹С…
 						if ((Squad[1-AA][i].GetEffectDuration(73)>0)&&(Squad[1-AA][i].GetEffectDuration(73)<3))
 						{MyTaste=-2000;};
 
@@ -2994,7 +2994,7 @@ int AI_Main(bool CanMove)
 		if (!ActiveUnit->CheckSkill(38))
 		{
 
-		//Рукопашная
+		//Р СѓРєРѕРїР°С€РЅР°СЏ
 		Taste=-1000;
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{ 
@@ -3008,7 +3008,7 @@ int AI_Main(bool CanMove)
 					buttCrush.bPress=false;
 					arCanMelee[i]=5;
 				};
-				//Проверка вампиризма на ответной атаке
+				//РџСЂРѕРІРµСЂРєР° РІР°РјРїРёСЂРёР·РјР° РЅР° РѕС‚РІРµС‚РЅРѕР№ Р°С‚Р°РєРµ
 				if (((Hit<Squad[1-AA][i].iLife)||(Squad[1-AA][i].CheckSkill(16)))&&(Squad[1-AA][i].CheckSkill(68)>0)&&(ActiveUnit->CheckSkill(26)==0)&&(ActiveUnit->GetUnitKind()!=2)&&(ActiveUnit->GetUnitKind()!=4)&&(Squad[1-AA][i].iStamina>0)&&(!Squad[1-AA][i].bResting))
 				{
 					if (Squad[1-AA][i].CheckSkill(27))
@@ -3022,26 +3022,26 @@ int AI_Main(bool CanMove)
 					{Hit-=Antihit;};
 				};
 				int MyTaste=Hit*2-abs(Hit-Squad[1-AA][i].iLife-1);
-				//Не бить подчинённых
+				//РќРµ Р±РёС‚СЊ РїРѕРґС‡РёРЅС‘РЅРЅС‹С…
 				if ((Squad[1-AA][i].GetEffectDuration(73)>0)&&(Squad[1-AA][i].GetEffectDuration(73)<3))
 				{MyTaste=-2000;};
 				
 				if (Hit<Squad[1-AA][i].iLife)
 				{
-					//Проверка яда
+					//РџСЂРѕРІРµСЂРєР° СЏРґР°
 					if (Squad[1-AA][i].CheckSkill(42)==0)
 					{MyTaste+=ActiveUnit->CheckSkill(41)*3;}
-					//Не бить превращённых в драконов
+					//РќРµ Р±РёС‚СЊ РїСЂРµРІСЂР°С‰С‘РЅРЅС‹С… РІ РґСЂР°РєРѕРЅРѕРІ
 					if ((Squad[1-AA][i].pUnit->GetUnitType()==60)&&(Squad[1-AA][i].pUnit!=Squad[1-AA][i].pTrueForm)&&(Hit<20))
 					{MyTaste=-2000;};
 				};
-				//Проверка топтания
+				//РџСЂРѕРІРµСЂРєР° С‚РѕРїС‚Р°РЅРёСЏ
 				if ((Hit<Squad[1-AA][i].iLife)&&(ActiveUnit->CheckSkill(63)>=Squad[1-AA][i].iLife-Hit)&&(Squad[1-AA][i].CheckSkill(14)==0))
 				{
 					Hit=Squad[1-AA][i].iLife;
 					MyTaste=Hit*2;
 				};
-				//Учёт вытягивания жизни из врагов
+				//РЈС‡С‘С‚ РІС‹С‚СЏРіРёРІР°РЅРёСЏ Р¶РёР·РЅРё РёР· РІСЂР°РіРѕРІ
 				if ((Hit>0)&&(Squad[1-AA][i].GetUnitKind()!=2)&&(Squad[1-AA][i].GetUnitKind()!=4)&&(ActiveUnit->iLife<ActiveUnit->GetLife()))
 				{
 					if (ActiveUnit->CheckSkill(68)>0)
@@ -3053,7 +3053,7 @@ int AI_Main(bool CanMove)
 						MyTaste+=GetMin(ActiveUnit->CheckSkill(57),ActiveUnit->GetLife()-ActiveUnit->iLife)*2;
 					};
 				};
-				//Круговая атака
+				//РљСЂСѓРіРѕРІР°СЏ Р°С‚Р°РєР°
 				if ((ActiveUnit->CheckSkill(65)>0)||((ActiveUnit->CheckSkill(66)>0)&&(ActiveUnit->iStamina>ActiveUnit->CheckSkill(66))))
 				{					
 					int OldX=ActiveUnit->x;
@@ -3128,13 +3128,13 @@ int AI_Main(bool CanMove)
 		};
 		
 
-		//Выбор действия
+		//Р’С‹Р±РѕСЂ РґРµР№СЃС‚РІРёСЏ
 		//**************
 
-		//Заклинание
+		//Р—Р°РєР»РёРЅР°РЅРёРµ
 		if ((ChoosenSpell>=0)&&(SpellHit>=ShootHit)&&(SpellHit>=MeleeHit)&&(SpellHit>=HealHit))
 		{
-			WriteLog("Заклинание");
+			WriteLog("Р—Р°РєР»РёРЅР°РЅРёРµ");
 			IndexAI=-1;
 			clSpell *SP=(pFirstSpell+arCast[ChoosenSpell][0]);
 			if (bShowAnim)
@@ -3147,7 +3147,7 @@ int AI_Main(bool CanMove)
 			case 1:
 				if (SP->arEffect[0][0]==89)
 				{
-					//Телепорт
+					//РўРµР»РµРїРѕСЂС‚
 					int BigHit=0, spX, spY;
 					for (int x=0; x<8; x++)
 					{
@@ -3213,7 +3213,7 @@ int AI_Main(bool CanMove)
 											};
 											if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 											{													
-										//Найден свой подходящий юнит
+										//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 												Squad[AA][k].UnderSpell(SP,ActiveUnit,AA);												
 											};
 										};
@@ -3237,7 +3237,7 @@ int AI_Main(bool CanMove)
 											};
 											if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 											{
-									//Найден вражеский подходящий юнит
+									//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 												Squad[1-AA][k].UnderSpell(SP,ActiveUnit,AA);
 											};
 										};
@@ -3255,7 +3255,7 @@ int AI_Main(bool CanMove)
 						{
 							if ((Field[x][y].Shoot>0)||((x==SpellTarget1)&&(y==SpellTarget2)))
 							{
-						//Найден тайл для заклинания
+						//РќР°Р№РґРµРЅ С‚Р°Р№Р» РґР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏ
 							};
 						};
 					};
@@ -3282,7 +3282,7 @@ int AI_Main(bool CanMove)
 								};
 								if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 								{													
-							//Найден свой подходящий юнит
+							//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									Squad[AA][k].UnderSpell(SP,ActiveUnit,AA);												
 								};
 							};
@@ -3306,7 +3306,7 @@ int AI_Main(bool CanMove)
 								};
 								if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 								{
-						//Найден вражеский подходящий юнит
+						//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									Squad[1-AA][k].UnderSpell(SP,ActiveUnit,AA);
 								};
 							};
@@ -3321,7 +3321,7 @@ int AI_Main(bool CanMove)
 			return 1;
 		};
 
-		//Лечение
+		//Р›РµС‡РµРЅРёРµ
 		if ((WillHeal>=0)&&(HealHit>=ShootHit)&&(HealHit>=MeleeHit))
 		{
 			IndexAI=-1;
@@ -3347,7 +3347,7 @@ int AI_Main(bool CanMove)
 		};
 		
 
-		//Стрельба
+		//РЎС‚СЂРµР»СЊР±Р°
 		if ((WillShoot>=0)&&((ShootHit>=MeleeHit)||(KillShoot)||((ActiveUnit->GetAmmo()>3)&&(ActiveUnit->GetAttack()<ActiveUnit->GetRangedAttack())&&(ShootHit>=MeleeHit/2)))&&((!KillMelee)||(KillShoot)))
 		{
 			IndexAI=-1;
@@ -3384,13 +3384,13 @@ int AI_Main(bool CanMove)
 		}
 		else
 		{
-			//Рукопашная
+			//Р СѓРєРѕРїР°С€РЅР°СЏ
 			if (WillStrike>=0)
 			{
-				WriteLog("Рукопашная");
+				WriteLog("Р СѓРєРѕРїР°С€РЅР°СЏ");
 				IndexAI=-1;
 //				clear_keybuf();
-//				textprintf(screen,Font1,10,10,COLOR_2,"Рукопашная: %d (%d) Выстрел: %d (%d)",MeleeHit, WillStrike, ShootHit, WillStrike);
+//				textprintf(screen,Font1,10,10,COLOR_2,"Р СѓРєРѕРїР°С€РЅР°СЏ: %d (%d) Р’С‹СЃС‚СЂРµР»: %d (%d)",MeleeHit, WillStrike, ShootHit, WillStrike);
 //				readkey();
 				if (arCanMelee[WillStrike]==1)
 				{					
@@ -3413,12 +3413,12 @@ int AI_Main(bool CanMove)
 			}
 		};
 			
-		//Цель не найдена
+		//Р¦РµР»СЊ РЅРµ РЅР°Р№РґРµРЅР°
 		//***************
 		if (CanMove)
 		{
 			
-			//Сбор снарядов
+			//РЎР±РѕСЂ СЃРЅР°СЂСЏРґРѕРІ
 			if ((ActiveUnit->CheckSkill(23))&&(ActiveUnit->iAmmo==0))
 			{
 				ActiveUnit->iSpeed=0;
@@ -3445,7 +3445,7 @@ int AI_Main(bool CanMove)
 				return 0;
 			};
 			
-			//Медитация
+			//РњРµРґРёС‚Р°С†РёСЏ
 			if ((ActiveUnit->CheckSkill(22))&&(ActiveUnit->iAmmo==0))
 			{
 				ActiveUnit->iSpeed=0;
@@ -3455,10 +3455,10 @@ int AI_Main(bool CanMove)
 				return 0;
 			};
 
-			//Отдых
+			//РћС‚РґС‹С…
 			if ((ActiveUnit->iStamina<=ActiveUnit->GetStamina()/2)&&(ActiveUnit->iSpeed==ActiveUnit->GetSpeed())&&(arUnitPower[AA][ActiveNum][3]==0)&&(arUnitPower[AA][ActiveNum][4]==0))
 			{
-				WriteLog("Отдых");
+				WriteLog("РћС‚РґС‹С…");
 				ActiveUnit->iSpeed=0;
 				ActiveUnit->bCanAct=false;
 				ActiveUnit->bResting=true;
@@ -3466,10 +3466,10 @@ int AI_Main(bool CanMove)
 				return 0;
 			};
 
-			//Первая помощь
+			//РџРµСЂРІР°СЏ РїРѕРјРѕС‰СЊ
 			if ((ActiveUnit->iLife<ActiveUnit->GetLife())&&(ActiveUnit->iSpeed==ActiveUnit->GetSpeed())&&(ActiveUnit->CheckSkill(35))&&(arUnitPower[AA][ActiveNum][3]==0)&&(arUnitPower[AA][ActiveNum][4]==0))
 			{
-				WriteLog("Первая помощь");
+				WriteLog("РџРµСЂРІР°СЏ РїРѕРјРѕС‰СЊ");
 				ActiveUnit->iSpeed=0;
 				ActiveUnit->bCanAct=false;
 				ActiveUnit->bResting=true;
@@ -3477,7 +3477,7 @@ int AI_Main(bool CanMove)
 				return 0;
 			};
 
-			//Трупоедство
+			//РўСЂСѓРїРѕРµРґСЃС‚РІРѕ
 			if ((ActiveUnit->CheckSkill(49))&&(ActiveUnit->iLife<=ActiveUnit->GetLife()/2))
 			{
 				int Corpse=FindCorpse(1-AA,ActiveUnit->x,ActiveUnit->y);
@@ -3619,7 +3619,7 @@ int AI_Main(bool CanMove)
 			};
 			
 
-//Построение карты поиска пути
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 			if (ActiveUnit->iSpeed<1)
 			{
 				ActiveUnit->bCanAct=false;
@@ -3649,14 +3649,14 @@ int AI_Main(bool CanMove)
 			{CanPass[2]=4;};
 
 			
-	//		WriteLog("Строю карту");
-			if (ActiveUnit->CheckSkill(14)) //Летающий
+	//		WriteLog("РЎС‚СЂРѕСЋ РєР°СЂС‚Сѓ");
+			if (ActiveUnit->CheckSkill(14)) //Р›РµС‚Р°СЋС‰РёР№
 			{
 				FlyAIMap(ActiveUnit->x,ActiveUnit->y,-1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,true);
 			}
 			else
 			{
-				if (ActiveUnit->CheckSkill(15)) //Низколетающий
+				if (ActiveUnit->CheckSkill(15)) //РќРёР·РєРѕР»РµС‚Р°СЋС‰РёР№
 				{
 					FlyAIMap(ActiveUnit->x,ActiveUnit->y,-1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,false);
 				}
@@ -3665,8 +3665,8 @@ int AI_Main(bool CanMove)
 					StepAIMap(ActiveUnit->x,ActiveUnit->y,-1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,0,80);
 				};
 			};
-//			WriteLog("Карта создана");
-		//Поиск тайла для движения
+//			WriteLog("РљР°СЂС‚Р° СЃРѕР·РґР°РЅР°");
+		//РџРѕРёСЃРє С‚Р°Р№Р»Р° РґР»СЏ РґРІРёР¶РµРЅРёСЏ
 			for (int i=0; i<8; i++){
 			for (int j=0; j<8; j++)
 			{
@@ -3699,7 +3699,7 @@ int AI_Main(bool CanMove)
 					ActiveUnit->y=y;					
 					if ((ActiveUnit->CheckSkill(24)*ActiveUnit->iAmmo<=0)||(ActiveUnit->GetAttack()+ActiveUnit->GetRangedAttack()*ActiveUnit->iAmmo>ActiveUnit->CheckSkill(24)*ActiveUnit->iAmmo)||(Army<=1))
 					{
-						//Поиск цели для выстрела
+						//РџРѕРёСЃРє С†РµР»Рё РґР»СЏ РІС‹СЃС‚СЂРµР»Р°
 						if (ActiveUnit->GetRangedAttack()*ActiveUnit->iAmmo>0)
 						{
 							for (int i=0; i<8; i++){
@@ -3720,7 +3720,7 @@ int AI_Main(bool CanMove)
 								};
 							};
 						};
-						//Поиск цели для рукопашной
+						//РџРѕРёСЃРє С†РµР»Рё РґР»СЏ СЂСѓРєРѕРїР°С€РЅРѕР№
 						int NEI=ActiveUnit->FindNeighbour(1-AA);
 						for (int i=0; i<NEI; i++)
 						{
@@ -3737,7 +3737,7 @@ int AI_Main(bool CanMove)
 					}
 					else
 					{
-						//Поиск цели для лечения
+						//РџРѕРёСЃРє С†РµР»Рё РґР»СЏ Р»РµС‡РµРЅРёСЏ
 						bNeedGo=false;
 						for (int i=0; i<8; i++){
 						for (int j=0; j<8; j++)
@@ -3808,7 +3808,7 @@ int AI_Main(bool CanMove)
 				};
 			};
 			if (x1<8)
-		//Движение
+		//Р”РІРёР¶РµРЅРёРµ
 			{					
 				for (int i=0; i<8; i++){
 				for (int j=0; j<8; j++)
@@ -3820,7 +3820,7 @@ int AI_Main(bool CanMove)
 				};
 				};
 
-	//Построение карты поиска пути
+	//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 				for (int i=0; i<3; i++)
 				{CanPass[i]=0;};
 				bFirstMove=(ActiveUnit->iSpeed>=ActiveUnit->GetSpeed());
@@ -3833,14 +3833,14 @@ int AI_Main(bool CanMove)
 				if (ActiveUnit->CheckSkill(34))
 				{CanPass[2]=4;};
 			
-		//		WriteLog("Строю карту");
-				if (ActiveUnit->CheckSkill(14)) //Летающий
+		//		WriteLog("РЎС‚СЂРѕСЋ РєР°СЂС‚Сѓ");
+				if (ActiveUnit->CheckSkill(14)) //Р›РµС‚Р°СЋС‰РёР№
 				{
 					FlyAIMap(ActiveUnit->x,ActiveUnit->y,-1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,true);
 				}
 				else
 				{
-					if (ActiveUnit->CheckSkill(15)) //Низколетающий
+					if (ActiveUnit->CheckSkill(15)) //РќРёР·РєРѕР»РµС‚Р°СЋС‰РёР№
 					{
 						FlyAIMap(ActiveUnit->x,ActiveUnit->y,-1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,false);
 					}
@@ -3866,7 +3866,7 @@ int AI_Main(bool CanMove)
 					FlyAIPath(ActiveUnit->x,ActiveUnit->y,-1,NULL,x1,y1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed);
 					if (TruePath)
 					{
-					{WriteLog("Путь найден");};
+					{WriteLog("РџСѓС‚СЊ РЅР°Р№РґРµРЅ");};
 					DeadEnd=TruePath;
 					AI_SelectUnit(ActiveUnit,false);
 					int GoSpeed=ActiveUnit->iSpeed;
@@ -3877,7 +3877,7 @@ int AI_Main(bool CanMove)
 						{
 							if ((Step)&&(Step->pPrev))
 							{
-								Step=Step->pPrev; //вылет!!!!
+								Step=Step->pPrev; //РІС‹Р»РµС‚!!!!
 							};
 						};
 				//		Step=TruePath;
@@ -3925,7 +3925,7 @@ int AI_Main(bool CanMove)
 					StepAIPath(ActiveUnit->x,ActiveUnit->y,-1,NULL,x1,y1,ActiveUnit->GetSpeed(),ActiveUnit->iSpeed,0,80);
 					if (TruePath)
 					{
-						WriteLog("Путь найден");
+						WriteLog("РџСѓС‚СЊ РЅР°Р№РґРµРЅ");
 					};
 					Step=TruePath;
 					DeadEnd=TruePath;
@@ -3975,9 +3975,9 @@ int AI_Main(bool CanMove)
 			}
 			else
 			{
-				//Установка флага выхода из цикла
-		//		textprintf(screen,Font1,0,0,COLOR_2,"Нет пути, сторона");
-		//		textprintf(screen1,Font1,0,0,COLOR_2,"Нет пути, сторона");
+				//РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіР° РІС‹С…РѕРґР° РёР· С†РёРєР»Р°
+		//		textprintf(screen,Font1,0,0,COLOR_2,"РќРµС‚ РїСѓС‚Рё, СЃС‚РѕСЂРѕРЅР°");
+		//		textprintf(screen1,Font1,0,0,COLOR_2,"РќРµС‚ РїСѓС‚Рё, СЃС‚РѕСЂРѕРЅР°");
 				/*int x1=ActiveUnit->x, y1=ActiveUnit->y, Nei;
 				for (int x=0; x<8; x++)
 				{
@@ -3988,8 +3988,8 @@ int AI_Main(bool CanMove)
 						int Nei=ActiveUnit->FindNeighbour(1-AA);
 						if (x>4)
 						{
-							textprintf(screen,Font1,(x-4)*200,y*20,COLOR_2,"(%d, %d): П: %d С: %d",x,y,GoMap[x][y],Nei);
-							textprintf(screen1,Font1,(x-4)*200,y*20,COLOR_2,"(%d, %d): П: %d С: %d",x,y,GoMap[x][y],Nei);
+							textprintf(screen,Font1,(x-4)*200,y*20,COLOR_2,"(%d, %d): Рџ: %d РЎ: %d",x,y,GoMap[x][y],Nei);
+							textprintf(screen1,Font1,(x-4)*200,y*20,COLOR_2,"(%d, %d): Рџ: %d РЎ: %d",x,y,GoMap[x][y],Nei);
 						};
 					};
 				};
@@ -4037,16 +4037,16 @@ void AI_Simulate()
 			{ActiveNum=i;};
 		};
 
-		//Поиск целей
+		//РџРѕРёСЃРє С†РµР»РµР№
 		//***********
 
-//Магия
+//РњР°РіРёСЏ
 //*****		
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
 			arCanCast[i][0]=0;
 		};
-	//Составление списка доступных заклинаний
+	//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С… Р·Р°РєР»РёРЅР°РЅРёР№
 		int arCast[SPELLBOOK_SIZE][2];
 		for (int i=0; i<SPELLBOOK_SIZE; i++)
 		{
@@ -4082,7 +4082,7 @@ void AI_Simulate()
 				};				
 			};
 		};
-		//Выбор заклинания
+		//Р’С‹Р±РѕСЂ Р·Р°РєР»РёРЅР°РЅРёСЏ
 		int ChoosenSpell=-1, SpellTaste=0, SpellTarget1=-1, SpellTarget2=-1, SpellHit=0;
 		if (SpellCount>0)
 		{
@@ -4095,10 +4095,10 @@ void AI_Simulate()
 				{
 					clSpell *SP=(pFirstSpell+arCast[Spell][0]);
 					int SpellPower;
-					//Одиночная цель
+					//РћРґРёРЅРѕС‡РЅР°СЏ С†РµР»СЊ
 					if (SP->iTarget==1)
 					{
-						//Противник
+						//РџСЂРѕС‚РёРІРЅРёРє
 						if (SP->bOnEnemy)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -4109,7 +4109,7 @@ void AI_Simulate()
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 								{
-	//								textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+	//								textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 	//								readkey();
 									SpellTaste=MyTaste;
 									SpellHit=iGainSpellDamage;
@@ -4120,7 +4120,7 @@ void AI_Simulate()
 							};
 							};
 						};
-						//Союзник
+						//РЎРѕСЋР·РЅРёРє
 						if (SP->bOnAlly)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -4131,7 +4131,7 @@ void AI_Simulate()
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 								{
-			//						textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+			//						textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 			//						readkey();
 									SpellTaste=MyTaste;
 									SpellHit=iGainSpellDamage;
@@ -4143,7 +4143,7 @@ void AI_Simulate()
 							};
 						};
 					};
-					//Вызов заклятья без цели (на все поле)
+					//Р’С‹Р·РѕРІ Р·Р°РєР»СЏС‚СЊСЏ Р±РµР· С†РµР»Рё (РЅР° РІСЃРµ РїРѕР»Рµ)
 					if ((SP->iTarget==0)&&(SP->iArea==2))
 					{
 						int MyTaste=0, MyDamage=0;
@@ -4153,7 +4153,7 @@ void AI_Simulate()
 							{
 								if ((Squad[AA][k].pUnit)&&(Squad[AA][k].iLife>0))
 								{									
-								//Найден свой подходящий юнит
+								//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									iGainSpellDamage=0;
 									MyTaste+=AI_GetAllySpellTaste(arCast[Spell][0],&Squad[AA][k],k);
 									MyDamage+=iGainSpellDamage;
@@ -4166,7 +4166,7 @@ void AI_Simulate()
 							{
 								if ((Squad[1-AA][k].pUnit)&&(Squad[1-AA][k].iLife>0))
 								{						
-								//Найден вражеский подходящий юнит
+								//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									iGainSpellDamage=0;
 									MyTaste+=AI_GetEnemySpellTaste(arCast[Spell][0],&Squad[1-AA][k],k);
 									MyDamage+=iGainSpellDamage;
@@ -4175,18 +4175,18 @@ void AI_Simulate()
 						};
 						iGainSpellDamage=MyDamage;
 						MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
-	//					textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+	//					textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 	//					readkey();
 						if ((MyTaste>SpellTaste)&&((iGainSpellDamage>0)||(MyTaste>0)))
 						{
-					//		textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+					//		textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 					//		readkey();
 							SpellTaste=MyTaste;
 							SpellHit=iGainSpellDamage;
 							ChoosenSpell=Spell;							
 						};
 					};
-					//На себя
+					//РќР° СЃРµР±СЏ
 					if ((SP->iTarget==0)&&(SP->iArea==0))
 					{
 						int MyTaste=AI_GetAllySpellTaste(arCast[Spell][0],ActiveUnit,ActiveNum);
@@ -4198,10 +4198,10 @@ void AI_Simulate()
 							ChoosenSpell=Spell;
 						}
 					}
-					//Труп юнита
+					//РўСЂСѓРї СЋРЅРёС‚Р°
 					if ((SP->iTarget==2)||(SP->iTarget==4))
 					{
-						//Противник
+						//РџСЂРѕС‚РёРІРЅРёРє
 						if (SP->bOnEnemy)
 						{
 							for (int Uni=0; Uni<MAX_SQUAD+MAX_SUMMONS; Uni++)
@@ -4234,7 +4234,7 @@ void AI_Simulate()
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((Damage>0)||(Buff>0)))
 								{
-		//							textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+		//							textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 		//							readkey();
 									SpellTaste=MyTaste;
 									SpellHit=Damage;
@@ -4273,7 +4273,7 @@ void AI_Simulate()
 										{Damage=1;};
 									};
 								};
-//								Воскрешение
+//								Р’РѕСЃРєСЂРµС€РµРЅРёРµ
 								if (SP->arEffect[0][0]==1)
 								{
 									Buff=(Squad[AA][Uni].pUnit->pType()->iLevel)*15+Squad[AA][Uni].pUnit->iLevel*2;
@@ -4284,7 +4284,7 @@ void AI_Simulate()
 								MyTaste+=AI_CalcSpellPenalty(SP,arCast[Spell][0]);
 								if ((MyTaste>SpellTaste)&&((Damage>0)||(Buff>0)))
 								{
-			//						textprintf(screen,Font1,0,0,COLOR_2,"Заклинание %s. Дамаг: %d, Бафф: %d               ",SP->sName,iGainSpellDamage,MyTaste);
+			//						textprintf(screen,Font1,0,0,COLOR_2,"Р—Р°РєР»РёРЅР°РЅРёРµ %s. Р”Р°РјР°Рі: %d, Р‘Р°С„С„: %d               ",SP->sName,iGainSpellDamage,MyTaste);
 			//						readkey();
 									SpellTaste=MyTaste;
 									SpellHit=Damage;
@@ -4296,7 +4296,7 @@ void AI_Simulate()
 							};
 						};
 					};
-					//Вызов заклинания в свободном тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРІРѕР±РѕРґРЅРѕРј С‚Р°Р№Р»Рµ
 					if (SP->iTarget==5)
 					{
 						for (int i=0; i<8; i++){
@@ -4349,7 +4349,7 @@ void AI_Simulate()
 						};
 						};
 					};
-					//Вызов заклинания в тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С‚Р°Р№Р»Рµ
 					if (SP->iTarget==3)
 					{
 						int Side;
@@ -4427,7 +4427,7 @@ void AI_Simulate()
 			{SpellHit=SpellTaste/10;};
 		};
 
-//Лечение
+//Р›РµС‡РµРЅРёРµ
 //*******
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
@@ -4436,7 +4436,7 @@ void AI_Simulate()
 
 		if ((ActiveUnit->CheckSkill(24))&&(ActiveUnit->iAmmo>0))
 		{			
-		//Поиск целей с места
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°
 			for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 			{
 				if ((Squad[AA][i].iLife>0)&&(abs(Squad[AA][i].x-ActiveUnit->x)<ActiveUnit->GetShootingRange()+ActiveUnit->iSpeed)
@@ -4460,13 +4460,13 @@ void AI_Simulate()
 			};
 		};
 
-//Стрельба
+//РЎС‚СЂРµР»СЊР±Р°
 //********
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
 			arCanRange[i]=0;
 		};
-		//Поиск целей с места		
+		//РџРѕРёСЃРє С†РµР»РµР№ СЃ РјРµСЃС‚Р°		
 		if ((ActiveUnit->iAmmo>0)&&(ActiveUnit->GetRangedAttack()>0))
 		{			
 			for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -4489,11 +4489,11 @@ void AI_Simulate()
 				};
 			};			
 		};
-//Рукопашная
+//Р СѓРєРѕРїР°С€РЅР°СЏ
 //**********		
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
-		//Выбор тайла для атаки
+		//Р’С‹Р±РѕСЂ С‚Р°Р№Р»Р° РґР»СЏ Р°С‚Р°РєРё
 			arCanMelee[i]=0;
 			if (Squad[1-AA][i].bInBattle)
 			{
@@ -4521,10 +4521,10 @@ void AI_Simulate()
 		int Taste=-1000, Taste1;
 		bool KillShoot=false, KillMelee=false;		
 
-		//Оценка целей
+		//РћС†РµРЅРєР° С†РµР»РµР№
 		//************
 
-		//Лечение
+		//Р›РµС‡РµРЅРёРµ
 		if ((ActiveUnit->CheckSkill(24))&&(ActiveUnit->iAmmo>0))
 		{
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -4549,7 +4549,7 @@ void AI_Simulate()
 		};
 		};
 		
-		//Выстрел
+		//Р’С‹СЃС‚СЂРµР»
 		if ((ActiveUnit->GetRangedAttack()>0)&&(ActiveUnit->iAmmo>0))
 		{
 		Taste=-1000;
@@ -4653,7 +4653,7 @@ void AI_Simulate()
 		if (!ActiveUnit->CheckSkill(38))
 		{
 
-		//Рукопашная
+		//Р СѓРєРѕРїР°С€РЅР°СЏ
 		Taste=-1000;
 		for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{ 
@@ -4671,7 +4671,7 @@ void AI_Simulate()
 				if (Hit<Squad[1-AA][i].iLife)
 				{
 					MyTaste+=ActiveUnit->CheckSkill(41)*3;
-					//Не бить превращённых в драконов
+					//РќРµ Р±РёС‚СЊ РїСЂРµРІСЂР°С‰С‘РЅРЅС‹С… РІ РґСЂР°РєРѕРЅРѕРІ
 					if ((Squad[1-AA][i].pUnit->GetUnitType()==60)&&(Squad[1-AA][i].pUnit!=Squad[1-AA][i].pTrueForm)&&(Hit<20))
 					{MyTaste=-2000;};
 				};				
@@ -4680,7 +4680,7 @@ void AI_Simulate()
 					Hit=Squad[1-AA][i].iLife;
 					MyTaste=Hit*2;
 				};
-				//Круговая атака
+				//РљСЂСѓРіРѕРІР°СЏ Р°С‚Р°РєР°
 				if ((ActiveUnit->CheckSkill(65)>0)||((ActiveUnit->CheckSkill(66)>0)&&(ActiveUnit->iStamina>ActiveUnit->CheckSkill(66))))
 				{					
 					int OldX=ActiveUnit->x;
@@ -4749,13 +4749,13 @@ void AI_Simulate()
 		};
 		};
 
-		//Выбор действия
+		//Р’С‹Р±РѕСЂ РґРµР№СЃС‚РІРёСЏ
 		//**************
 
-		//Заклинание
+		//Р—Р°РєР»РёРЅР°РЅРёРµ
 		if ((ChoosenSpell>=0)&&(SpellHit>=ShootHit)&&(SpellHit>=MeleeHit)&&(SpellHit>=HealHit))
 		{
-			WriteLog("Заклинание");
+			WriteLog("Р—Р°РєР»РёРЅР°РЅРёРµ");
 			IndexAI=-1;
 			clSpell *SP=(pFirstSpell+arCast[ChoosenSpell][0]);
 			if (bShowAnim)
@@ -4768,7 +4768,7 @@ void AI_Simulate()
 			case 1:
 				if (SP->arEffect[0][0]==89)
 				{
-					//Телепорт
+					//РўРµР»РµРїРѕСЂС‚
 					int BigHit=0, spX;
 					for (int x=0; x<8; x++)
 					{
@@ -4839,7 +4839,7 @@ void AI_Simulate()
 								};
 								if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 								{													
-							//Найден свой подходящий юнит
+							//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									Squad[AA][k].UnderSpell(SP,ActiveUnit,AA);												
 								};
 							};
@@ -4863,7 +4863,7 @@ void AI_Simulate()
 								};
 								if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==arCast[ChoosenSpell][0]))
 								{
-						//Найден вражеский подходящий юнит
+						//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									Squad[1-AA][k].UnderSpell(SP,ActiveUnit,AA);
 								};
 							};
@@ -4907,7 +4907,7 @@ void AI_Simulate()
 			return;
 		};
 
-		//Лечение
+		//Р›РµС‡РµРЅРёРµ
 		if ((WillHeal>=0)&&(HealHit>=ShootHit)&&(HealHit>=MeleeHit))
 		{
 			IndexAI=-1;
@@ -4917,7 +4917,7 @@ void AI_Simulate()
 		};
 		
 
-		//Стрельба
+		//РЎС‚СЂРµР»СЊР±Р°
 		if ((WillShoot>=0)&&((ShootHit>=MeleeHit)||(KillShoot))&&((!KillMelee)||(KillShoot)))
 		{
 			IndexAI=-1;			
@@ -4929,7 +4929,7 @@ void AI_Simulate()
 			return;		
 		};
 		
-		//Рукопашная
+		//Р СѓРєРѕРїР°С€РЅР°СЏ
 		if (WillStrike>=0)
 		{
 			IndexAI=-1;
@@ -4948,10 +4948,10 @@ void AI_Simulate()
 			return;
 		};
 			
-		//Цель не найдена
+		//Р¦РµР»СЊ РЅРµ РЅР°Р№РґРµРЅР°
 		//***************
 			
-		//Сбор снарядов
+		//РЎР±РѕСЂ СЃРЅР°СЂСЏРґРѕРІ
 		if ((ActiveUnit->CheckSkill(23))&&(ActiveUnit->iAmmo==0))
 		{
 			ActiveUnit->iSpeed=0;
@@ -4961,7 +4961,7 @@ void AI_Simulate()
 			return;
 		};
 			
-		//Медитация
+		//РњРµРґРёС‚Р°С†РёСЏ
 		if ((ActiveUnit->CheckSkill(22))&&(ActiveUnit->iAmmo==0))
 		{
 			ActiveUnit->iSpeed=0;
@@ -4970,7 +4970,7 @@ void AI_Simulate()
 			return;
 		};
 
-		//Отдых
+		//РћС‚РґС‹С…
 		if ((ActiveUnit->iStamina<=ActiveUnit->GetStamina()/2)&&(ActiveUnit->iSpeed==ActiveUnit->GetSpeed())&&(arUnitPower[AA][ActiveNum][3]==0)&&(arUnitPower[AA][ActiveNum][4]==0))
 		{			
 			ActiveUnit->iSpeed=0;
@@ -4980,7 +4980,7 @@ void AI_Simulate()
 			return;
 		};
 
-		//Первая помощь
+		//РџРµСЂРІР°СЏ РїРѕРјРѕС‰СЊ
 		if ((ActiveUnit->iLife<ActiveUnit->GetLife())&&(ActiveUnit->iSpeed==ActiveUnit->GetSpeed())&&(ActiveUnit->CheckSkill(35))&&(arUnitPower[AA][ActiveNum][3]==0)&&(arUnitPower[AA][ActiveNum][4]==0))
 		{
 			ActiveUnit->iSpeed=0;
@@ -4989,7 +4989,7 @@ void AI_Simulate()
 			return;
 		};
 
-		//Трупоедство
+		//РўСЂСѓРїРѕРµРґСЃС‚РІРѕ
 		if ((ActiveUnit->CheckSkill(49))&&(ActiveUnit->iLife<=ActiveUnit->GetLife()/2))
 		{
 			int Corpse=-1, YY=0;

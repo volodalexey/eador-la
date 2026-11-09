@@ -263,7 +263,7 @@ dcHero::~dcHero()
 {
 	if (bGameInProcess)
 	{
-	WriteLog("Запущен деструктор героя");
+	WriteLog("Р—Р°РїСѓС‰РµРЅ РґРµСЃС‚СЂСѓРєС‚РѕСЂ РіРµСЂРѕСЏ");
 	if ((ipPlayer>0)&&(ipClass1>0))
 	{
 		while (arQuest[0].Index>0)
@@ -273,7 +273,7 @@ dcHero::~dcHero()
 		{
 			if (arPlayer[ipPlayer].arHero[i]==this)
 			{
-				WriteLog("Герой найден в списке");
+				WriteLog("Р“РµСЂРѕР№ РЅР°Р№РґРµРЅ РІ СЃРїРёСЃРєРµ");
 				Found=i;
 			};
 		};
@@ -290,7 +290,7 @@ dcHero::~dcHero()
 			delete pSquad[i];
 		};
 	};
-	WriteLog("Герой удален");
+	WriteLog("Р“РµСЂРѕР№ СѓРґР°Р»РµРЅ");
 	};
 };
 
@@ -873,7 +873,7 @@ int dcHero::LevelUp()
 	if (iLevel==9)
 	{
 		SlotLimit++;
-//Переход на 10-й уровень
+//РџРµСЂРµС…РѕРґ РЅР° 10-Р№ СѓСЂРѕРІРµРЅСЊ
 		for (int i=0; i<SlotLimit; i++)
 		{
 			if (apSkill[i][1]==SkillLimit)
@@ -889,7 +889,7 @@ int dcHero::LevelUp()
 			delete (pFirstProvince+12);
 		};*/
 
-//Выбор умения из доступных старому классу
+//Р’С‹Р±РѕСЂ СѓРјРµРЅРёСЏ РёР· РґРѕСЃС‚СѓРїРЅС‹С… СЃС‚Р°СЂРѕРјСѓ РєР»Р°СЃСЃСѓ
 		ClearRoll();
 		int R=0;
 		for (int i=1; i<=MAX_HERO_SKILL; i++)
@@ -911,7 +911,7 @@ int dcHero::LevelUp()
 		};
 		arHeroLvlUp[0][0]=Roll(false);
 
-//Выбор по одному умению из новых классов
+//Р’С‹Р±РѕСЂ РїРѕ РѕРґРЅРѕРјСѓ СѓРјРµРЅРёСЋ РёР· РЅРѕРІС‹С… РєР»Р°СЃСЃРѕРІ
 		Maxes=1;
 		for (int j=1; j<5; j++)
 		{
@@ -935,8 +935,8 @@ int dcHero::LevelUp()
 	}
 	else
 	{	
-//Переход на обычный уровень
-//Определение количества доступных слотов и уровней умений
+//РџРµСЂРµС…РѕРґ РЅР° РѕР±С‹С‡РЅС‹Р№ СѓСЂРѕРІРµРЅСЊ
+//РћРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° РґРѕСЃС‚СѓРїРЅС‹С… СЃР»РѕС‚РѕРІ Рё СѓСЂРѕРІРЅРµР№ СѓРјРµРЅРёР№
 		if (iLevel>9)
 		{
 			if (ipClass1==ipClass2)
@@ -995,7 +995,7 @@ int dcHero::LevelUp()
 			SkillLimit=5;
 		};
 
-//Составление списка изученных умений
+//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРїРёСЃРєР° РёР·СѓС‡РµРЅРЅС‹С… СѓРјРµРЅРёР№
 		for (int i=0; i<SlotLimit; i++)
 		{
 			if (apSkill[i][0]>0)
@@ -1015,7 +1015,7 @@ int dcHero::LevelUp()
 
 
 		if (Uses>0)
-//Выбор из уже изученных умений
+//Р’С‹Р±РѕСЂ РёР· СѓР¶Рµ РёР·СѓС‡РµРЅРЅС‹С… СѓРјРµРЅРёР№
 		{
 			ClearRoll();
 			for (int i=0; i<Uses; i++)
@@ -1026,7 +1026,7 @@ int dcHero::LevelUp()
 			arHeroLvlUp[0][0]=Roll(true);
 
 			if (Maxes+Uses<SlotLimit)
-//Выбор из еще неизученных умений
+//Р’С‹Р±РѕСЂ РёР· РµС‰Рµ РЅРµРёР·СѓС‡РµРЅРЅС‹С… СѓРјРµРЅРёР№
 			{
 				int R=0;
 				ClearRoll();
@@ -1082,7 +1082,7 @@ int dcHero::LevelUp()
 				};
 			}
 			else
-//Выбор из уже изученных умений если нет свободных слотов
+//Р’С‹Р±РѕСЂ РёР· СѓР¶Рµ РёР·СѓС‡РµРЅРЅС‹С… СѓРјРµРЅРёР№ РµСЃР»Рё РЅРµС‚ СЃРІРѕР±РѕРґРЅС‹С… СЃР»РѕС‚РѕРІ
 			{
 				if (Uses>1)
 				{
@@ -1095,7 +1095,7 @@ int dcHero::LevelUp()
 			};
 		}
 		else
-//Выбор из новых умений если нет подходящих изученных
+//Р’С‹Р±РѕСЂ РёР· РЅРѕРІС‹С… СѓРјРµРЅРёР№ РµСЃР»Рё РЅРµС‚ РїРѕРґС…РѕРґСЏС‰РёС… РёР·СѓС‡РµРЅРЅС‹С…
 		{
 			int R=0;
 			ClearRoll();
@@ -1123,7 +1123,7 @@ int dcHero::LevelUp()
 			{arHeroLvlUp[0][2]=Roll(true);};
 		};				
 	};
-//Определение слотов для выбранных скилов
+//РћРїСЂРµРґРµР»РµРЅРёРµ СЃР»РѕС‚РѕРІ РґР»СЏ РІС‹Р±СЂР°РЅРЅС‹С… СЃРєРёР»РѕРІ
 	for (int i=0; i<4; i++)
 	{		
 		if (arHeroLvlUp[0][i]>0)
@@ -1312,7 +1312,7 @@ int dcHero::DropLoot(int * Dur, int Skill)
 
 bool dcHero::TakeLoot(int Item, int Dur)
 {
-//	StopLog("Шмотка:",Item);
+//	StopLog("РЁРјРѕС‚РєР°:",Item);
 	if ((pFirstItem+Item)->ipClass==11)
 	{
 		if (ipPlayer>0)
@@ -1770,7 +1770,7 @@ void dcHero::ChangeMorale(int Power, int dKarma)
 void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Quest, int Param1, int Param2)
 {
 	clEncounter *EN=(pFirstEncounter+Index);
-//	StopLog("Квест сайта:",Prov->arSite[Site][3]);
+//	StopLog("РљРІРµСЃС‚ СЃР°Р№С‚Р°:",Prov->arSite[Site][3]);
 	for (int i=0; i<6; i++)
 	{
 		Treasurez[i][0]=0;
@@ -1799,13 +1799,13 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 		Power=EN->GetParam1(3,4);
 		break;	
 	};
-//Изменение кармы
+//РР·РјРµРЅРµРЅРёРµ РєР°СЂРјС‹
 	arPlayer[ipPlayer].iKarma+=EN->iKarma;
 	arPlayer[ipPlayer].iKarma+=EN->CalcEffect(7,Power,Param1,Param2,this);
 
-//Воздействие эффектов
+//Р’РѕР·РґРµР№СЃС‚РІРёРµ СЌС„С„РµРєС‚РѕРІ
 	int Mult=0, Count, iWork, iWork2;
-	//Индивидуальные эффекты
+	//РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
 		switch (EN->arEffect[Eff][0])
@@ -1813,16 +1813,16 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 //		case 9:
 //			PlaceSite(EV->arEffect[Eff][1],CurGame.iCurrentTurn/20);
 //			break;
-		case 10:	//Установить значение флага переговоров
+		case 10:	//РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° РїРµСЂРµРіРѕРІРѕСЂРѕРІ
 			flgEncResult=EN->arEffect[Eff][1];
 			break;
-		case 12:	//Дать игроку чертеж постройки
+		case 12:	//Р”Р°С‚СЊ РёРіСЂРѕРєСѓ С‡РµСЂС‚РµР¶ РїРѕСЃС‚СЂРѕР№РєРё
 			if (*(arPlayer[ipPlayer].pOuterBld+EN->arEffect[Eff][1])>=0)
 			{
 				*(arPlayer[ipPlayer].pOuterBld+EN->arEffect[Eff][1])+=EN->arEffect[Eff][2];
 			};
 			break;
-		case 13:	//Дать герою свиток с заклятьем
+		case 13:	//Р”Р°С‚СЊ РіРµСЂРѕСЋ СЃРІРёС‚РѕРє СЃ Р·Р°РєР»СЏС‚СЊРµРј
 			for (int i=0; i<EN->arEffect[Eff][2]; i++)
 			{
 				if (TakeLoot(iMaxPureItem+EN->arEffect[Eff][1],1))
@@ -1840,7 +1840,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				};
 			};
 			break;
-		case 14:	//Дать герою случайный предмет
+		case 14:	//Р”Р°С‚СЊ РіРµСЂРѕСЋ СЃР»СѓС‡Р°Р№РЅС‹Р№ РїСЂРµРґРјРµС‚
 			Count=0;
 			ClearRoll();
 			for (int i=1; i<=iMaxItem; i++)
@@ -1893,10 +1893,10 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				};
 			};
 			break;
-		case 15: //Переходы к альтернативным приключениям
+		case 15: //РџРµСЂРµС…РѕРґС‹ Рє Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Рј РїСЂРёРєР»СЋС‡РµРЅРёСЏРј
 			switch (EN->arEffect[Eff][1])
 			{
-			case 1: //Армия NPC больше армии героя
+			case 1: //РђСЂРјРёСЏ NPC Р±РѕР»СЊС€Рµ Р°СЂРјРёРё РіРµСЂРѕСЏ
 				iWork=iHealth+iMagic+CheckSkill(27)*3;
 				for (int i=1; i<MAX_SQUAD; i++)
 				{
@@ -1919,44 +1919,44 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					return;
 				};
 				break;
-			case 2:	//Недостанточная дипломатия героя
+			case 2:	//РќРµРґРѕСЃС‚Р°РЅС‚РѕС‡РЅР°СЏ РґРёРїР»РѕРјР°С‚РёСЏ РіРµСЂРѕСЏ
 				if (CheckSkill(27)<EN->arEffect[Eff][2])
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 3:	//Карма игрока ниже требуемой
+			case 3:	//РљР°СЂРјР° РёРіСЂРѕРєР° РЅРёР¶Рµ С‚СЂРµР±СѓРµРјРѕР№
 				if (arPlayer[ipPlayer].iKarma<EN->arEffect[Eff][2])
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 4:	//Карма игрока выше требуемой
+			case 4:	//РљР°СЂРјР° РёРіСЂРѕРєР° РІС‹С€Рµ С‚СЂРµР±СѓРµРјРѕР№
 				if (arPlayer[ipPlayer].iKarma>EN->arEffect[Eff][2])
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 5:	//Случайное число больше указанного
+			case 5:	//РЎР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ Р±РѕР»СЊС€Рµ СѓРєР°Р·Р°РЅРЅРѕРіРѕ
 				if (Random(100)>EN->arEffect[Eff][2])
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 6:	//Отношение к игроку в провинции ниже требуемого
+			case 6:	//РћС‚РЅРѕС€РµРЅРёРµ Рє РёРіСЂРѕРєСѓ РІ РїСЂРѕРІРёРЅС†РёРё РЅРёР¶Рµ С‚СЂРµР±СѓРµРјРѕРіРѕ
 				if ((Prov)&&(Prov->arAttitude[ipPlayer][0]<EN->arEffect[Eff][2]))
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 7: //Проверка состояния квеста
-					//данной расы
-				if (EN->arEffect[Eff][2]==0)//получен этим героем
+			case 7: //РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРІРµСЃС‚Р°
+					//РґР°РЅРЅРѕР№ СЂР°СЃС‹
+				if (EN->arEffect[Eff][2]==0)//РїРѕР»СѓС‡РµРЅ СЌС‚РёРј РіРµСЂРѕРµРј
 				{
 					for (int i=0; i<HERO_QUEST_LIMIT; i++)
 					{
@@ -1967,7 +1967,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 						};
 					};
 				};
-				if (EN->arEffect[Eff][2]==1)//получен другим героем
+				if (EN->arEffect[Eff][2]==1)//РїРѕР»СѓС‡РµРЅ РґСЂСѓРіРёРј РіРµСЂРѕРµРј
 				{
 					for (int HR=0; HR<MAX_HERO; HR++)
 					{
@@ -1985,7 +1985,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 						};
 					};
 				};
-				if (EN->arEffect[Eff][2]==2)//получен в другой провинции
+				if (EN->arEffect[Eff][2]==2)//РїРѕР»СѓС‡РµРЅ РІ РґСЂСѓРіРѕР№ РїСЂРѕРІРёРЅС†РёРё
 				{
 					for (int HR=0; HR<MAX_HERO; HR++)
 					{
@@ -2004,8 +2004,8 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 
-				//текущего
-				if (EN->arEffect[Eff][2]==4)//Получен, но не выполнен
+				//С‚РµРєСѓС‰РµРіРѕ
+				if (EN->arEffect[Eff][2]==4)//РџРѕР»СѓС‡РµРЅ, РЅРѕ РЅРµ РІС‹РїРѕР»РЅРµРЅ
 				{
 					for (int i=0; i<HERO_QUEST_LIMIT; i++)
 					{
@@ -2021,8 +2021,8 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 
-				//данного сайта
-				if (EN->arEffect[Eff][2]==5)//получен этим героем
+				//РґР°РЅРЅРѕРіРѕ СЃР°Р№С‚Р°
+				if (EN->arEffect[Eff][2]==5)//РїРѕР»СѓС‡РµРЅ СЌС‚РёРј РіРµСЂРѕРµРј
 				{
 					if (Prov->arSite[Site][3]<0)
 					{
@@ -2037,7 +2037,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 
-				if (EN->arEffect[Eff][2]==6)//недоступен
+				if (EN->arEffect[Eff][2]==6)//РЅРµРґРѕСЃС‚СѓРїРµРЅ
 				{
 					if (Prov->arSite[Site][3]<=0)
 					{
@@ -2048,8 +2048,8 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 
 
 				break;
-			case 8:	//Проверка заключенных союзов
-				if (EN->arEffect[Eff][2]==0)//Заключен союз с этой расой
+			case 8:	//РџСЂРѕРІРµСЂРєР° Р·Р°РєР»СЋС‡РµРЅРЅС‹С… СЃРѕСЋР·РѕРІ
+				if (EN->arEffect[Eff][2]==0)//Р—Р°РєР»СЋС‡РµРЅ СЃРѕСЋР· СЃ СЌС‚РѕР№ СЂР°СЃРѕР№
 				{
 					if (arPlayer[ipPlayer].iUnion==Prov->ipRace)
 					{
@@ -2057,7 +2057,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 						return;
 					};
 				};
-				if (EN->arEffect[Eff][2]==1)//Заключен союз с другой расой
+				if (EN->arEffect[Eff][2]==1)//Р—Р°РєР»СЋС‡РµРЅ СЃРѕСЋР· СЃ РґСЂСѓРіРѕР№ СЂР°СЃРѕР№
 				{
 					if ((arPlayer[ipPlayer].iUnion>0)&&(arPlayer[ipPlayer].iUnion!=Prov->ipRace))
 					{
@@ -2073,14 +2073,14 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					return;
 				};
 				break;*/
-			case 10: //Случайное число с учётом дипломатии
+			case 10: //РЎР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ СЃ СѓС‡С‘С‚РѕРј РґРёРїР»РѕРјР°С‚РёРё
 				if (Random(100-CheckSkill(27)*10)>EN->arEffect[Eff][2])
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};
 				break;
-			case 11: //Проверка отсутствия постройки
+			case 11: //РџСЂРѕРІРµСЂРєР° РѕС‚СЃСѓС‚СЃС‚РІРёСЏ РїРѕСЃС‚СЂРѕР№РєРё
 				for (int i=0; i<MAX_PROVINCE_BLD; i++)
 				{
 					if (Prov->arBuilding[i]==EN->arEffect[Eff][2])
@@ -2090,7 +2090,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 				break;
-			case 12: //Проверка свободного места для постройки
+			case 12: //РџСЂРѕРІРµСЂРєР° СЃРІРѕР±РѕРґРЅРѕРіРѕ РјРµСЃС‚Р° РґР»СЏ РїРѕСЃС‚СЂРѕР№РєРё
 				{
 					bool Go=true;
 					for (int i=0; i<MAX_PROVINCE_BLD; i++)
@@ -2107,14 +2107,14 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 				break;
-			case 13: //Проверка триггера кампании
+			case 13: //РџСЂРѕРІРµСЂРєР° С‚СЂРёРіРіРµСЂР° РєР°РјРїР°РЅРёРё
 				if ((CurGame.iGameType!=2)||(Campaign.arDialog[EN->arEffect[Eff][2]]==0))
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
 					return;
 				};				
 				break;
-			case 14: //Проверка таймера события
+			case 14: //РџСЂРѕРІРµСЂРєР° С‚Р°Р№РјРµСЂР° СЃРѕР±С‹С‚РёСЏ
 				if (*(arPlayer[ipPlayer].pStory+EN->arEffect[Eff][2])<=0)
 				{
 					Encounter(EN->arEffect[Eff][3],NPC,Prov,Site,Quest,Param1,Param2);
@@ -2123,7 +2123,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				break;
 			};
 			break;
-		case 17: //Активация квеста
+		case 17: //РђРєС‚РёРІР°С†РёСЏ РєРІРµСЃС‚Р°
 			switch (EN->arEffect[Eff][1])
 			{					
 			case 1:
@@ -2132,7 +2132,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 			case 2:
 				if (Prov->arSite[Site][3]==9999)
 				{
-		//Генерация случайного квеста
+		//Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ РєРІРµСЃС‚Р°
 					int Count=0;
 					ClearRoll();
 					for (int i=1; i<=iMaxQuest; i++)
@@ -2198,8 +2198,8 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				break;
 			};
 			break;
-		case 18:	//Изменение состояния квеста
-			if (EN->arEffect[Eff][1]==0) //Получение квеста
+		case 18:	//РР·РјРµРЅРµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРІРµСЃС‚Р°
+			if (EN->arEffect[Eff][1]==0) //РџРѕР»СѓС‡РµРЅРёРµ РєРІРµСЃС‚Р°
 			{
 				int Q=0;
 				while ((Q<HERO_QUEST_LIMIT)&&(arQuest[Q].Index>0))
@@ -2229,7 +2229,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 					};
 				};
 			};
-			if (EN->arEffect[Eff][1]==1) //Выполнение квеста
+			if (EN->arEffect[Eff][1]==1) //Р’С‹РїРѕР»РЅРµРЅРёРµ РєРІРµСЃС‚Р°
 			{
 				int Q=0;
 				if ((pFirstQuest+Quest)->iType>=7)
@@ -2244,7 +2244,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				};
 				if (Q==HERO_QUEST_LIMIT)
 				{
-					StopLog("Не найден квест для сдачи! Индекс:",Quest);
+					StopLog("РќРµ РЅР°Р№РґРµРЅ РєРІРµСЃС‚ РґР»СЏ СЃРґР°С‡Рё! РРЅРґРµРєСЃ:",Quest);
 					return;
 				};
 				if ((pFirstQuest+Quest)->iType==7)
@@ -2298,7 +2298,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 		//			arQuest[Q].Index=0;					
 		//		};
 			};
-			if (EN->arEffect[Eff][1]==2) //Отказ от квеста
+			if (EN->arEffect[Eff][1]==2) //РћС‚РєР°Р· РѕС‚ РєРІРµСЃС‚Р°
 			{
 				
 				int Q=0;				
@@ -2319,13 +2319,13 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				};				
 			};
 			break;
-		case 19: //Заключить союз с расой, населяющей провинцию
+		case 19: //Р—Р°РєР»СЋС‡РёС‚СЊ СЃРѕСЋР· СЃ СЂР°СЃРѕР№, РЅР°СЃРµР»СЏСЋС‰РµР№ РїСЂРѕРІРёРЅС†РёСЋ
 			arPlayer[ipPlayer].iUnion=Prov->ipRace;
 			break;
 		case 20:
 			Prov->ChangeAttitude(ipPlayer,EN->arEffect[Eff][1]);
 			break;
-		case 21: //Получение особого предмета
+		case 21: //РџРѕР»СѓС‡РµРЅРёРµ РѕСЃРѕР±РѕРіРѕ РїСЂРµРґРјРµС‚Р°
 			if (TakeLoot(EN->arEffect[Eff][1],(pFirstItem+EN->arEffect[Eff][1])->iDurability))
 			{				
 				iWork2=0;
@@ -2346,20 +2346,20 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				Lootz++;
 			};
 			break;
-		case 22://Дать игроку договор со стражем
+		case 22://Р”Р°С‚СЊ РёРіСЂРѕРєСѓ РґРѕРіРѕРІРѕСЂ СЃРѕ СЃС‚СЂР°Р¶РµРј
 			if (*(arPlayer[ipPlayer].pDefender+EN->arEffect[Eff][1])>=0)
 			{
 				*(arPlayer[ipPlayer].pDefender+EN->arEffect[Eff][1])+=EN->arEffect[Eff][2];
 			};
 			break;
-		case 23://Исцелить героя и воинов
+		case 23://РСЃС†РµР»РёС‚СЊ РіРµСЂРѕСЏ Рё РІРѕРёРЅРѕРІ
 			for (int i=0; i<MAX_SQUAD; i++)
 			{
 				if ((pSquad[i])&&(pSquad[i]->iLife>0))
 				{pSquad[i]->iLife=pSquad[i]->GetLife();};
 			};
 			break;
-		case 24://Войти в магазин
+		case 24://Р’РѕР№С‚Рё РІ РјР°РіР°Р·РёРЅ
 			if (EN->arEffect[Eff][1]==0)
 			{
 				ScreenHeroShop(this,(pFirstShop+Prov->arSite[Site][2]));
@@ -2403,13 +2403,13 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 			};
 		//	bQuestComplete=true;
 			break;
-		case 26://Изменить боевой дух
+		case 26://РР·РјРµРЅРёС‚СЊ Р±РѕРµРІРѕР№ РґСѓС…
 			ChangeMorale(EN->arEffect[Eff][1]+Random(EN->arEffect[Eff][2]),EN->arEffect[Eff][3]);			
 			break;
-		case 28://Уничтожение текущего сайта
+		case 28://РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ СЃР°Р№С‚Р°
 			Prov->arSite[Site][0]=EN->arEffect[Eff][1];
 			break;
-		case 29://Найм юнитов
+		case 29://РќР°Р№Рј СЋРЅРёС‚РѕРІ
 			for (int i=0; i<MAX_RECRUIT; i++)
 			{
 				if (Recruitz[i]==0)
@@ -2430,7 +2430,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				delete pGarr;
 			};			
 			break;
-		case 31: //Присоединение юнита
+		case 31: //РџСЂРёСЃРѕРµРґРёРЅРµРЅРёРµ СЋРЅРёС‚Р°
 			{
 				dcUnit *UN=new dcUnit(EN->arEffect[Eff][1],GetUnitExp(EN->arEffect[Eff][1],EN->arEffect[Eff][2]+Random(EN->arEffect[Eff][3])));
 				int Slot=GetFreeUnitSlot((pFirstUnitType+EN->arEffect[Eff][1])->iLevel);
@@ -2440,19 +2440,19 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 				{ScreenHero(this,UN,false);};
 			};
 			break;
-		case 32: //Возвести постройку
+		case 32: //Р’РѕР·РІРµСЃС‚Рё РїРѕСЃС‚СЂРѕР№РєСѓ
 			if (arPlayer[ipPlayer].Control==1)
 			{Prov->ConstructBuilding(EN->arEffect[Eff][1],true,false);}
 			else
 			{Prov->ConstructBuilding(EN->arEffect[Eff][1],false,false);};
 			break;
-		case 33: //Изменение здоровья
+		case 33: //РР·РјРµРЅРµРЅРёРµ Р·РґРѕСЂРѕРІСЊСЏ
 			ChangeLife(EN->arEffect[Eff][1],EN->arEffect[Eff][2],EN->arEffect[Eff][3]);			
 			break;
-		case 34: //Добавить мобильность
+		case 34: //Р”РѕР±Р°РІРёС‚СЊ РјРѕР±РёР»СЊРЅРѕСЃС‚СЊ
 			iMoveBonus+=EN->arEffect[Eff][1];
 			break;
-		case 35: //Переместить в родовую провинцию
+		case 35: //РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІ СЂРѕРґРѕРІСѓСЋ РїСЂРѕРІРёРЅС†РёСЋ
 			{
 				dcProvince *PR=(pFirstProvince+arPlayer[ipPlayer].ipProvince);
 				bool Fizzle=true;
@@ -2488,7 +2488,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 			break;
 		};
 	};
-	//Обычные эффекты
+	//РћР±С‹С‡РЅС‹Рµ СЌС„С„РµРєС‚С‹
 	iWork=EN->CalcEffect(1,Power,Param1,Param2,this);
 	arPlayer[ipPlayer].Gold+=iWork;
 	Treasurez[0][0]=iWork;
@@ -2501,7 +2501,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 		if (EN->arEffect[0][0]==2)
 		{Mult=abs(Param1);};		
 	};
-//	StopLog("Параметр:",Param1);
+//	StopLog("РџР°СЂР°РјРµС‚СЂ:",Param1);
 
 	if (EN->GetPower(5)!=0)
 	{
@@ -2525,7 +2525,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 
 	if (EN->ipDialog)
 	{
-//Вызов диалога
+//Р’С‹Р·РѕРІ РґРёР°Р»РѕРіР°
 		int Answer;
 		if (arPlayer[ipPlayer].Control==1)
 		{		
@@ -2672,7 +2672,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 		}
 		else
 		{
-			//Выбор ответа для ИИ
+			//Р’С‹Р±РѕСЂ РѕС‚РІРµС‚Р° РґР»СЏ РР
 			Answer=0;
 		};
 		if (EN->arEncounter[Answer]>0)
@@ -2684,7 +2684,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 
 	if (EN->ipAttacker>0)
 	{
-//Вызов сражения
+//Р’С‹Р·РѕРІ СЃСЂР°Р¶РµРЅРёСЏ
 		dcProvince Fake;
 		Fake.sName=new char [3];		
 		int Lvl=EN->GetPower(27);
@@ -2729,7 +2729,7 @@ void dcHero::Encounter(int Index, dcHero *NPC, dcProvince *Prov, int Site, int Q
 			{Encounter(EN->ipEncWin,NPC,Prov,Site,Quest,Param1,Param2);};
 		};
 	};
-//Вызов следующего события
+//Р’С‹Р·РѕРІ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕР±С‹С‚РёСЏ
 
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
@@ -3366,7 +3366,7 @@ void dcHero::Arena()
 	};
 };
 
-//Возвращает плату в золоте отряду-охраннику с текущим составом юнитов
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РїР»Р°С‚Сѓ РІ Р·РѕР»РѕС‚Рµ РѕС‚СЂСЏРґСѓ-РѕС…СЂР°РЅРЅРёРєСѓ СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚Р°РІРѕРј СЋРЅРёС‚РѕРІ
 int dcHero::GetDefenderGoldPayment()
 {
 	int Result=0;
@@ -3378,7 +3378,7 @@ int dcHero::GetDefenderGoldPayment()
 	return 1+Result/20;
 };
 
-//Возвращает плату в кристаллах отряду-охраннику с текущим составом юнитов
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РїР»Р°С‚Сѓ РІ РєСЂРёСЃС‚Р°Р»Р»Р°С… РѕС‚СЂСЏРґСѓ-РѕС…СЂР°РЅРЅРёРєСѓ СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚Р°РІРѕРј СЋРЅРёС‚РѕРІ
 int dcHero::GetDefenderGemPayment()
 {
 	int Result=0;
@@ -3403,7 +3403,7 @@ void dcHero::RestoreUnits(bool bHomeLand, int ProvBonus, bool bRaise)
 	{
 		if (pSquad[k]->iLife>0)
 		{
-			//Восстановление нежити
+			//Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РЅРµР¶РёС‚Рё
 			if ((!bRaise)&&(pSquad[k]->GetUnitKind()==2))
 			{				
 				if (ipClass1>0)

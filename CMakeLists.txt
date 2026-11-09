@@ -1,15 +1,21 @@
-﻿# CMakeList.txt: файл проекта CMake верхнего уровня; проведите глобальную конфигурацию
-# и включите сюда подпроекты.
-#
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.8)
+project("GoD")
 
-# Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+# Allegro 4.4 prefix for native Linux builds (e.g. the allegro4 submodule
+# after `cmake --build --install`). Unset means only EadorServer is built.
+set(ALLEGRO4_PREFIX "" CACHE PATH "Root of an Allegro 4.4 installation")
+
+if(ALLEGRO4_PREFIX)
+  set(ALLEGRO4_INCLUDE "${ALLEGRO4_PREFIX}/include")
+  set(ALLEGRO4_LIB_DIR "${ALLEGRO4_PREFIX}/lib")
+  set(ALLEGRO4_LIBRARY "${ALLEGRO4_PREFIX}/lib/liballeg.so")
 endif()
 
-project ("GoD")
+enable_testing()
 
-# Включите подпроекты.
-add_subdirectory ("EadorServer")
+add_subdirectory("EadorServer")
+
+if(ALLEGRO4_PREFIX)
+  add_subdirectory("God")
+  add_subdirectory("EadorUnitTests")
+endif()

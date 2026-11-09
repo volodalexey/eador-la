@@ -3,7 +3,7 @@
 #include "Unit.h"
 #include "Logging.h"
 
-//Указатели на первые элементы массивов прототипов:	
+//РЈРєР°Р·Р°С‚РµР»Рё РЅР° РїРµСЂРІС‹Рµ СЌР»РµРјРµРЅС‚С‹ РјР°СЃСЃРёРІРѕРІ РїСЂРѕС‚РѕС‚РёРїРѕРІ:	
 	stString		*pFirstPhrase;
 	stString		*pName[4];
 	stString		*pFirstUnitClass;
@@ -61,7 +61,7 @@
 
 	clDipText * pHumanDiplo;
 
-//Максимальное количество прототипов
+//РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕС‚РѕС‚РёРїРѕРІ
 	int iMaxPhrases,
 		iMaxName,
 		iMaxUnitClass,
@@ -138,17 +138,17 @@ clProvinceLevel ProvLevel [MAX_PROVINCE_LEVEL+1];
 stShardSize arShardSize[MAX_SHARD_SIZE];
 clHighScore arRecords[10], arCampRecords[10];
 int *pWorkSet;
-int iHeroPriceMult;			//Множитель цены для найма героя той же профессии
-int arHeroPrice[4][2];		//Цены на найм героев с 1 по 4 (золото, кристаллы)
-int arHeroRess[2][2];		//Цена на воскрешение героя 0 уровня и добавка цены за каждый уровень
-int arStat [3][10][3];		//Параметры героев (индекс, уровень, влияние на определённую величину)
+int iHeroPriceMult;			//РњРЅРѕР¶РёС‚РµР»СЊ С†РµРЅС‹ РґР»СЏ РЅР°Р№РјР° РіРµСЂРѕСЏ С‚РѕР№ Р¶Рµ РїСЂРѕС„РµСЃСЃРёРё
+int arHeroPrice[4][2];		//Р¦РµРЅС‹ РЅР° РЅР°Р№Рј РіРµСЂРѕРµРІ СЃ 1 РїРѕ 4 (Р·РѕР»РѕС‚Рѕ, РєСЂРёСЃС‚Р°Р»Р»С‹)
+int arHeroRess[2][2];		//Р¦РµРЅР° РЅР° РІРѕСЃРєСЂРµС€РµРЅРёРµ РіРµСЂРѕСЏ 0 СѓСЂРѕРІРЅСЏ Рё РґРѕР±Р°РІРєР° С†РµРЅС‹ Р·Р° РєР°Р¶РґС‹Р№ СѓСЂРѕРІРµРЅСЊ
+int arStat [3][10][3];		//РџР°СЂР°РјРµС‚СЂС‹ РіРµСЂРѕРµРІ (РёРЅРґРµРєСЃ, СѓСЂРѕРІРµРЅСЊ, РІР»РёСЏРЅРёРµ РЅР° РѕРїСЂРµРґРµР»С‘РЅРЅСѓСЋ РІРµР»РёС‡РёРЅСѓ)
 int arStatProgress [3][20];
 int arBldGroup[MAX_BLD_GROUP];
 int arMercenary[MAX_MERC_LEVEL][MAX_MERCENARY][2];
 int arTerrLayer[MAX_TERRAIN+2][MAX_TERR_LAYER];
 int arGroupCoord[MAX_GROUP][MAX_GROUP_BUILD][2];
 int COLOR_0,COLOR_1,COLOR_2,COLOR_3;
-int arCampDiff[MAX_DIFFICULTY][5]; //Изменение уровня сложности в кампании (начальный, конечный, интервал в ходах, лимит ходов)
+int arCampDiff[MAX_DIFFICULTY][5]; //РР·РјРµРЅРµРЅРёРµ СѓСЂРѕРІРЅСЏ СЃР»РѕР¶РЅРѕСЃС‚Рё РІ РєР°РјРїР°РЅРёРё (РЅР°С‡Р°Р»СЊРЅС‹Р№, РєРѕРЅРµС‡РЅС‹Р№, РёРЅС‚РµСЂРІР°Р» РІ С…РѕРґР°С…, Р»РёРјРёС‚ С…РѕРґРѕРІ)
 
 int flgEncResult;
 bool bExitGame;
@@ -573,7 +573,7 @@ clWorldRules::~clWorldRules()
 using namespace std;
 
 //*****************************************************************************************
-//*********   Генератор ключей   **********************************************************
+//*********   Р“РµРЅРµСЂР°С‚РѕСЂ РєР»СЋС‡РµР№   **********************************************************
 //*****************************************************************************************
 
 void GenerateKeys()
@@ -661,9 +661,9 @@ void StopLog(const char * Txt, int Value)
 	};
 };
 	
-ifstream CurrentFile("var\\empty.dmb");		//Общая переменная для чтения скриптов
-int ReadInt(char &ch);	//Считывает из текущего файла целочисленную переменную
-int ReadWord(char *ch); //Считывает из текущего файла текст до символов ';' или ':', возвращает длину строки
+ifstream CurrentFile("var/empty.dmb");		//РћР±С‰Р°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С‡С‚РµРЅРёСЏ СЃРєСЂРёРїС‚РѕРІ
+int ReadInt(char &ch);	//РЎС‡РёС‚С‹РІР°РµС‚ РёР· С‚РµРєСѓС‰РµРіРѕ С„Р°Р№Р»Р° С†РµР»РѕС‡РёСЃР»РµРЅРЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ
+int ReadWord(char *ch); //РЎС‡РёС‚С‹РІР°РµС‚ РёР· С‚РµРєСѓС‰РµРіРѕ С„Р°Р№Р»Р° С‚РµРєСЃС‚ РґРѕ СЃРёРјРІРѕР»РѕРІ ';' РёР»Рё ':', РІРѕР·РІСЂР°С‰Р°РµС‚ РґР»РёРЅСѓ СЃС‚СЂРѕРєРё
 
 
 int ReadInt(char &ch)
@@ -805,7 +805,7 @@ long int StrToInt(char *Str)
 		readkey();
 		Count++;
 	};
-	textprintf(screen,Font1,0,0,COLOR_2,"Результат: %d",Result);
+	textprintf(screen,Font1,0,0,COLOR_2,"Р РµР·СѓР»СЊС‚Р°С‚: %d",Result);
 	clear_keybuf();
 	readkey();
 	return Result;
@@ -1029,8 +1029,8 @@ int LoadPhrases()
 	char *pWord= aWord;
 	int iLength;	
 //	CurrentFile.close();
-	//Загрузка фраз
-	if (OpenFile("var\\phrases.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С„СЂР°Р·
+	if (OpenFile("var/phrases.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxPhrases=ReadInt(cSymbol);
@@ -1092,8 +1092,8 @@ int Loader()
 
 
 
-	//Загрузка талантов героев и названий классов
-	if (OpenFile("var\\hero_class.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚Р°Р»Р°РЅС‚РѕРІ РіРµСЂРѕРµРІ Рё РЅР°Р·РІР°РЅРёР№ РєР»Р°СЃСЃРѕРІ
+	if (OpenFile("var/hero_class.var")==0)
 	{return 0;};
 	sKetFile[7]='e';
 	sLocFile[7]='o';
@@ -1116,8 +1116,8 @@ int Loader()
 	sKetFile[8]='y';
 	sLocFile[8]='k';
 
-	//Загрузка имен
-	if (OpenFile("var\\names.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РёРјРµРЅ
+	if (OpenFile("var/names.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxName=ReadInt(cSymbol);
@@ -1140,8 +1140,8 @@ int Loader()
 	sKetFile[1]='a';
 	sLocFile[1]='a';
 
-	//Загрузка префиксов
-	if (OpenFile("var\\prefix.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РїСЂРµС„РёРєСЃРѕРІ
+	if (OpenFile("var/prefix.var")==0)
 	{return 0;};
 	sKetFile[4]='r';
 	sLocFile[4]='r';
@@ -1171,8 +1171,8 @@ int Loader()
 
 //	int bChecker[17];
 
-	//Загрузка суффиксов
-	if (OpenFile("var\\suffix.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃСѓС„С„РёРєСЃРѕРІ
+	if (OpenFile("var/Suffix.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxSuffix=ReadInt(cSymbol);
@@ -1187,16 +1187,16 @@ int Loader()
 	CurrentFile.close();
 	sKey[2]='f';
 
-	//Загрузка описаний и иконок классов героев
+	//Р—Р°РіСЂСѓР·РєР° РѕРїРёСЃР°РЅРёР№ Рё РёРєРѕРЅРѕРє РєР»Р°СЃСЃРѕРІ РіРµСЂРѕРµРІ
 	NewProgress+=100;
-	DATAFILE* datHeroClass = load_datafile("dat\\hero_class.dat");
+	DATAFILE* datHeroClass = load_datafile("dat/Hero_class.dat");
 	if (!datHeroClass)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading hero_class.dat");		
 		readkey();
 		return 1;
 	};
-	if (OpenFile("text\\hero_class.txt")==0)
+	if (OpenFile("text/Hero_class.txt")==0)
 	{return 0;};
 	for (int i=0; i<MAX_CLASS_NAME; i++)
 	{
@@ -1206,7 +1206,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\hero_class_d.txt")==0)
+	if (OpenFile("text/Hero_class_d.txt")==0)
 	{return 0;};
 	for (int i=0; i<MAX_CLASS_NAME; i++)
 	{
@@ -1218,8 +1218,8 @@ int Loader()
 	sPath[1]='U';
 
 
-	//Загрузка названий слотов предметов
-	if (OpenFile("var\\item_slot.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°Р·РІР°РЅРёР№ СЃР»РѕС‚РѕРІ РїСЂРµРґРјРµС‚РѕРІ
+	if (OpenFile("var/item_slot.var")==0)
 	{return 0;};
 	for (int i=0; i<MAX_ITEM_SLOT_NAME; i++)
 	{
@@ -1228,8 +1228,8 @@ int Loader()
 	};
 	CurrentFile.close();
 	
-	//Загрузка родов войск
-	if (OpenFile("var\\unit_class.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂРѕРґРѕРІ РІРѕР№СЃРє
+	if (OpenFile("var/unit_class.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxUnitClass=ReadInt(cSymbol);
@@ -1245,8 +1245,8 @@ int Loader()
 
 	sKey[0]='i';
 
-	//Загрузка типов войск
-	if (OpenFile("var\\unit_type.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёРїРѕРІ РІРѕР№СЃРє
+	if (OpenFile("var/unit_type.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxUnitKind=ReadInt(cSymbol);
@@ -1262,8 +1262,8 @@ int Loader()
 
 	Randomizer();
 
-	//Загрузка типов предметов
-	if (OpenFile("var\\item_type.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёРїРѕРІ РїСЂРµРґРјРµС‚РѕРІ
+	if (OpenFile("var/item_type.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxItemType=ReadInt(cSymbol);
@@ -1279,8 +1279,8 @@ int Loader()
 
 	sPath[0]='S';
 
-	//Загрузка умений юнитов
-	/*if (OpenFile("var\\ability.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СѓРјРµРЅРёР№ СЋРЅРёС‚РѕРІ
+	/*if (OpenFile("var/ability.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxAbility=ReadInt(cSymbol);
@@ -1298,17 +1298,17 @@ int Loader()
 	};
 	CurrentFile.close();*/
 
-	//Загрузка умений героев
+	//Р—Р°РіСЂСѓР·РєР° СѓРјРµРЅРёР№ РіРµСЂРѕРµРІ
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading ability.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE *datAbility = load_datafile("dat\\ability.dat");
+	DATAFILE *datAbility = load_datafile("dat/Ability.dat");
 	if (!datAbility)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading ability.dat");
 		return 0;
 	};
-	if (OpenFile("var\\ability_num.var")==0)
+	if (OpenFile("var/ability_num.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxAbilityNum=ReadInt(cSymbol);
@@ -1331,7 +1331,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\ability.txt")==0)
+	if (OpenFile("text/ability.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxAbilityNum; i++)
 	{
@@ -1343,9 +1343,9 @@ int Loader()
 	sKey[3]='o';
 	
 
-	//Загрузка эффектов
+	//Р—Р°РіСЂСѓР·РєР° СЌС„С„РµРєС‚РѕРІ
 	
-	if (OpenFile("var\\effects.var")==0)
+	if (OpenFile("var/effects.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxEffect=ReadInt(cSymbol);
@@ -1365,7 +1365,7 @@ int Loader()
 	};			
 	CurrentFile.close();
 
-	if (OpenFile("text\\effects.txt")==0)
+	if (OpenFile("text/Effects.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxEffect; i++)
 	{
@@ -1531,8 +1531,8 @@ int Loader()
 	//al_findclose(&Fil);
 //*************************************************	
 
-	//Загрузка типов местности
-	if (OpenFile("var\\terrain.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёРїРѕРІ РјРµСЃС‚РЅРѕСЃС‚Рё
+	if (OpenFile("var/terrain.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxTerrain=ReadInt(cSymbol);
@@ -1575,8 +1575,8 @@ int Loader()
 	};
 	CurrentFile.close();	
 
-	//Загрузка объектов поля боя
-	if (OpenFile("var\\bf_object.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РѕР±СЉРµРєС‚РѕРІ РїРѕР»СЏ Р±РѕСЏ
+	if (OpenFile("var/bf_object.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxBF_Object=ReadInt(cSymbol);
@@ -1619,8 +1619,8 @@ int Loader()
 //	CurGame.iSeed=stLock[2];
 
 	
-	//Загрузка ресурсов
-	if (OpenFile("var\\resource.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂРµСЃСѓСЂСЃРѕРІ
+	if (OpenFile("var/resource.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxResource=ReadInt(cSymbol);
@@ -1652,7 +1652,7 @@ int Loader()
 	};
 	CurrentFile.close();
 	NewProgress+=100;
-	if (OpenFile("text\\resource.txt")==0)
+	if (OpenFile("text/Resource.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxResource; i++)
 	{
@@ -1661,8 +1661,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	//Загрузка рас
-	if (OpenFile("var\\race.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂР°СЃ
+	if (OpenFile("var/race.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxRace=ReadInt(cSymbol);
@@ -1731,7 +1731,7 @@ int Loader()
 //	bChecker[4]=!(stKey[4]==abs(2+stLock[4]*stLock[5])%128);
 	CurrentFile.close();
 
-	if (OpenFile("text\\races.txt")==0)
+	if (OpenFile("text/races.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxRace; i++)
 	{
@@ -1740,8 +1740,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	//Загрузка улучшений юнитов
-	if (OpenFile("var\\unit_upg.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СѓР»СѓС‡С€РµРЅРёР№ СЋРЅРёС‚РѕРІ
+	if (OpenFile("var/unit_upg.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxUnitUpg=ReadInt(cSymbol);
@@ -1786,7 +1786,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\upgrade.txt")==0)
+	if (OpenFile("text/upgrade.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxUnitUpg; i++)
 	{	
@@ -1795,25 +1795,25 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка юнитов
+	//Р—Р°РіСЂСѓР·РєР° СЋРЅРёС‚РѕРІ
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading units.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE *datUnit = load_datafile("dat\\units.dat");
+	DATAFILE *datUnit = load_datafile("dat/Units.dat");
 	if (!datUnit)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading units.dat");		
 		return 0;
 	};
 	NewProgress+=100;
-	DATAFILE *datUnitShadow = load_datafile("dat\\unit_shadow.dat");
+	DATAFILE *datUnitShadow = load_datafile("dat/Unit_shadow.dat");
 	if (!datUnitShadow)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading unit_shadow.dat");
 		return 0;
 	};
 	NewProgress+=100;
-	DATAFILE *datUnitShadowF = load_datafile("dat\\unit_shadowf.dat");
+	DATAFILE *datUnitShadowF = load_datafile("dat/Unit_shadowf.dat");
 	if (!datUnitShadowF)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading unit_shadowf.dat");
@@ -1821,7 +1821,7 @@ int Loader()
 	};
 	NewProgress+=100;
 	
-	DATAFILE *datUnitIcons = load_datafile("dat\\unit_icons.dat");
+	DATAFILE *datUnitIcons = load_datafile("dat/Unit_icons.dat");
 	if (!datUnitIcons)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading unit_icons.dat");		
@@ -1864,7 +1864,7 @@ int Loader()
 	wavDelete=(SAMPLE *)datUnitSound[158].dat;*/
 	
 
-	if (OpenFile("var\\unit.var")==0)
+	if (OpenFile("var/unit.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxUnitType=ReadInt(cSymbol);
@@ -2045,7 +2045,7 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[5]=!(stKey[5]==abs(stLock[9]+stLock[6]/3-13)%128);		
 
-	if (OpenFile("text\\unit.txt")==0)
+	if (OpenFile("text/unit.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxUnitType; i++)
 	{
@@ -2055,11 +2055,11 @@ int Loader()
 	CurrentFile.close();
 
 
-	//Загрузка заклинаний
+	//Р—Р°РіСЂСѓР·РєР° Р·Р°РєР»РёРЅР°РЅРёР№
 
 	NewProgress+=100;
 
-	if (OpenFile("var\\spell.var")==0)
+	if (OpenFile("var/spell.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxSpell=ReadInt(cSymbol);
@@ -2212,7 +2212,7 @@ int Loader()
 	};
 	CurrentFile.close();
 	
-	if (OpenFile("text\\spell.txt")==0)
+	if (OpenFile("text/Spell.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxSpell; i++)
 	{
@@ -2223,8 +2223,8 @@ int Loader()
 //	bChecker[6]=!(stKey[6]==abs(stLock[14]-stLock[15]+stLock[17]/2)%128);
 	
 
-	//Загрузка параметров героев
-	if (OpenFile("var\\stat.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РїР°СЂР°РјРµС‚СЂРѕРІ РіРµСЂРѕРµРІ
+	if (OpenFile("var/stat.var")==0)
 	{return 0;};
 	for (int i=0; i<3; i++)
 	{		
@@ -2240,8 +2240,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	//Загрузка роста параметров героев в зависимости от класса
-	if (OpenFile("var\\stat_progress.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂРѕСЃС‚Р° РїР°СЂР°РјРµС‚СЂРѕРІ РіРµСЂРѕРµРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РєР»Р°СЃСЃР°
+	if (OpenFile("var/stat_progress.var")==0)
 	{return 0;};
 	for (int i=0; i<20; i++)
 	{		
@@ -2253,8 +2253,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 	
-	//Загрузка умений героев	
-	if (OpenFile("var\\skill.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СѓРјРµРЅРёР№ РіРµСЂРѕРµРІ	
+	if (OpenFile("var/skill.var")==0)
 	{return 0;};
 	for (int i=0; i<=MAX_HERO_SKILL; i++)
 	{
@@ -2306,7 +2306,7 @@ int Loader()
 //	bChecker[7]=!(stKey[7]==abs(stLock[8]+stLock[13]+stLock[6]-stLock[5]-stLock[2])%128);
 	CurrentFile.close();
 
-	if (OpenFile("text\\skill.txt")==0)
+	if (OpenFile("text/Skill.txt")==0)
 	{return 0;};
 	for (int i=0; i<=MAX_HERO_SKILL; i++)
 	{
@@ -2316,8 +2316,8 @@ int Loader()
 	CurrentFile.close();
 
 
-	//Загрузка охранников
-	if (OpenFile("var\\guard.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РѕС…СЂР°РЅРЅРёРєРѕРІ
+	if (OpenFile("var/guard.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxGuard=ReadInt(cSymbol);
@@ -2384,8 +2384,8 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[8]=!(stKey[8]==abs(77+stLock[1]-stLock[4])%128);
 
-	//Загрузка типов охранников
-	if (OpenFile("var\\guard_type.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёРїРѕРІ РѕС…СЂР°РЅРЅРёРєРѕРІ
+	if (OpenFile("var/guard_type.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxGuardType=ReadInt(cSymbol);
@@ -2410,8 +2410,8 @@ int Loader()
 
 
 
-	//Загрузка типов провинций
-	if (OpenFile("var\\province_type.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёРїРѕРІ РїСЂРѕРІРёРЅС†РёР№
+	if (OpenFile("var/province_type.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxProvinceType=ReadInt(cSymbol);
@@ -2538,8 +2538,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка уровней провинций
-	if (OpenFile("var\\province_level.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СѓСЂРѕРІРЅРµР№ РїСЂРѕРІРёРЅС†РёР№
+	if (OpenFile("var/province_level.var")==0)
 	{return 0;};
 	for (int i=0; i<=MAX_PROVINCE_LEVEL; i++)
 	{
@@ -2556,8 +2556,8 @@ int Loader()
 //	bChecker[9]=!(stKey[9]==abs(3+stLock[0]-stLock[17]+stLock[7])%128);
 
 
-	//Загрузка названий провинций
-	if (OpenFile("var\\province_name.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°Р·РІР°РЅРёР№ РїСЂРѕРІРёРЅС†РёР№
+	if (OpenFile("var/province_name.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxProvinceName=ReadInt(cSymbol);
@@ -2604,8 +2604,8 @@ int Loader()
 
 	CurrentFile.close();
 
-	//Загрузка внешних зданий
-	if (OpenFile("var\\outer_build.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РІРЅРµС€РЅРёС… Р·РґР°РЅРёР№
+	if (OpenFile("var/outer_build.var")==0)
 	{return 0;};
 	iMaxBldItem=0;
 	iLength=ReadWord(pWord);
@@ -2763,7 +2763,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\outer_build.txt")==0)
+	if (OpenFile("text/Outer_Build.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxOuterBld; i++)
 	{
@@ -2775,7 +2775,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading outbuild.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datOutBuild = load_datafile("dat\\outbuild.dat");
+	DATAFILE* datOutBuild = load_datafile("dat/OutBuild.dat");
 	if (!datOutBuild)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading outbuild.dat");		
@@ -2787,7 +2787,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading outbld.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE *datOutBld = load_datafile("dat\\outbld.dat");
+	DATAFILE *datOutBld = load_datafile("dat/OutBld.dat");
 	if (!datOutBld)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading outbld.dat");
@@ -2802,8 +2802,8 @@ int Loader()
 	};
 
 
-	//Загрузка стражей
-	if (OpenFile("var\\defender.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃС‚СЂР°Р¶РµР№
+	if (OpenFile("var/defender.var")==0)
 	{return 0;};
 	iMaxDefItem=0;
 	iLength=ReadWord(pWord);
@@ -2942,7 +2942,7 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[11]=!(stKey[11]==abs(stLock[5]+stLock[8]-stLock[2]-4)%128);
 
-	if (OpenFile("text\\defender.txt")==0)
+	if (OpenFile("text/Defender.txt")==0)
 	{return 0;};
 
 	for (int i=0; i<=iMaxDefender; i++)
@@ -2955,7 +2955,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading defenders.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datDefender = load_datafile("dat\\defenders.dat");
+	DATAFILE* datDefender = load_datafile("dat/Defenders.dat");
 	if (!datDefender)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading defenders.dat");		
@@ -2967,8 +2967,8 @@ int Loader()
 		(pFirstDefender+i+1)->Pic=(BITMAP *)datDefender[i].dat;
 	};
 
-	//Загрузка сайтов
-	if (OpenFile("var\\site.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃР°Р№С‚РѕРІ
+	if (OpenFile("var/site.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxSite=ReadInt(cSymbol);
@@ -3075,7 +3075,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\site.txt")==0)
+	if (OpenFile("text/Site.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxSite; i++)
 	{
@@ -3084,7 +3084,7 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	if (OpenFile("text\\site1.txt")==0)
+	if (OpenFile("text/Site1.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxSite; i++)
 	{
@@ -3094,7 +3094,7 @@ int Loader()
 	CurrentFile.close();
 
 	NewProgress+=100;
-	DATAFILE* datRitual = load_datafile("dat\\ritual.dat");
+	DATAFILE* datRitual = load_datafile("dat/Ritual.dat");
 	if (!datRitual)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading ritual.dat");
@@ -3107,8 +3107,8 @@ int Loader()
 	};*/
 
 
-	//Загрузка ритуалов
-	if (OpenFile("var\\ritual.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂРёС‚СѓР°Р»РѕРІ
+	if (OpenFile("var/ritual.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxRitual=ReadInt(cSymbol);
@@ -3203,7 +3203,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\ritual.txt")==0)
+	if (OpenFile("text/Ritual.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxRitual; i++)
 	{
@@ -3214,18 +3214,18 @@ int Loader()
 //	bChecker[12]=!(stKey[12]==abs(stLock[9]+stLock[2]-stLock[13])%128);
 		
 
-	//Загрузка предметов
+	//Р—Р°РіСЂСѓР·РєР° РїСЂРµРґРјРµС‚РѕРІ
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading items.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE* datItems = load_datafile("dat\\items.dat");
+	DATAFILE* datItems = load_datafile("dat/Items.dat");
 	if (!datItems)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading items.dat");		
 		readkey();
 		return 1;
 	};
-	if (OpenFile("var\\item.var")==0)
+	if (OpenFile("var/item.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxPureItem=ReadInt(cSymbol);
@@ -3307,7 +3307,7 @@ int Loader()
 		};
 		pItem++;
 	};
-	//Заполнение массива свитков
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° СЃРІРёС‚РєРѕРІ
 	for (int i=1; i<=iMaxSpell; i++)
 	{
 		sprintf(pItem->sName,"\"%s\"",(pFirstSpell+i)->sName);
@@ -3352,7 +3352,7 @@ int Loader()
 		pItem++;
 	};
 
-	//Заполнение массива договоров с охранниками	
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° РґРѕРіРѕРІРѕСЂРѕРІ СЃ РѕС…СЂР°РЅРЅРёРєР°РјРё	
 	for (int i=1; i<=iMaxDefender; i++)
 	{
 		int ABL=-1;
@@ -3380,7 +3380,7 @@ int Loader()
 		};
 	};
 
-	//Заполнение массива чертежей	
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° С‡РµСЂС‚РµР¶РµР№	
 	for (int i=1; i<=iMaxOuterBld; i++)
 	{
 		int ABL=-1;
@@ -3408,7 +3408,7 @@ int Loader()
 		};
 	};
 
-	//Заполнение массива ритуалов
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° СЂРёС‚СѓР°Р»РѕРІ
 	for (int i=1; i<=iMaxRitual; i++)
 	{
 		sprintf(pItem->sName,"\"%s\"",(pFirstRitual+i)->sName);
@@ -3430,11 +3430,11 @@ int Loader()
 //	bChecker[13]=!(stKey[13]==abs((stLock[10]+stLock[0]+stLock[15])/3-8)%128);
 
 
-	//Загрузка иллюстраций к диалогам и событиям
+	//Р—Р°РіСЂСѓР·РєР° РёР»Р»СЋСЃС‚СЂР°С†РёР№ Рє РґРёР°Р»РѕРіР°Рј Рё СЃРѕР±С‹С‚РёСЏРј
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading illustration.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datIllustration = load_datafile("dat\\illustration.dat");
+	DATAFILE* datIllustration = load_datafile("dat/Illustration.dat");
 	if (!datIllustration)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading illustration.dat");
@@ -3448,7 +3448,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading portraits.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE* datPortrait = load_datafile("dat\\portraits.dat");
+	DATAFILE* datPortrait = load_datafile("dat/Portraits.dat");
 	if (!datPortrait)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading portraits.dat");	
@@ -3467,7 +3467,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading smallport.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE* datSmallPort = load_datafile("dat\\smallport.dat");
+	DATAFILE* datSmallPort = load_datafile("dat/SmallPort.dat");
 	if (!datSmallPort)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading smallport.dat");		
@@ -3483,8 +3483,8 @@ int Loader()
 		bmpSmallAvatar[i]=(BITMAP *)datSmallPort[i+MAX_HERO_PIC].dat;
 	};
 
-	//Загрузка диалогов
-	if (OpenFile("var\\dialog.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РґРёР°Р»РѕРіРѕРІ
+	if (OpenFile("var/dialog.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxDialog=ReadInt(cSymbol);
@@ -3523,7 +3523,7 @@ int Loader()
 //	bChecker[14]=!(stKey[14]==Random(128,stLock[0],stLock[1],stLock[7],stLock[8]));
 	CurrentFile.close();
 
-	if (OpenFile("var\\campaign_dialog.var")==0)
+	if (OpenFile("var/campaign_dialog.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxCampDialog=ReadInt(cSymbol);
@@ -3561,8 +3561,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-//Загрузка журнала
-	if (OpenFile("text\\journal.txt")==0)
+//Р—Р°РіСЂСѓР·РєР° Р¶СѓСЂРЅР°Р»Р°
+	if (OpenFile("text/journal.txt")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxJournal=ReadInt(cSymbol);
@@ -3581,7 +3581,7 @@ int Loader()
 //	bChecker[15]=!(stKey[15]==1+Random(122,stLock[2],stLock[4],stLock[9],stLock[10]));
 
 	NewProgress+=100;
-	if (OpenFile("var\\question.var")==0)
+	if (OpenFile("var/question.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxQuestion=ReadInt(cSymbol);
@@ -3605,7 +3605,7 @@ int Loader()
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading innerbld.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE* datInnerBld = load_datafile("dat\\innerbld.dat");
+	DATAFILE* datInnerBld = load_datafile("dat/InnerBld.dat");
 	if (!datInnerBld)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading innerbld.dat");
@@ -3613,8 +3613,8 @@ int Loader()
 		return 1;
 	};
 
-	//Загрузка внутренних зданий
-	if (OpenFile("var\\inner_build.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РІРЅСѓС‚СЂРµРЅРЅРёС… Р·РґР°РЅРёР№
+	if (OpenFile("var/inner_build.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxInnerBld=ReadInt(cSymbol);
@@ -3713,7 +3713,7 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[16]=!(stKey[16]==21+Random(100,stLock[5],stLock[6],stLock[13],stLock[14]));
 
-	if (OpenFile("text\\inner_build.txt")==0)
+	if (OpenFile("text/Inner_Build.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxInnerBld; i++)
 	{
@@ -3722,8 +3722,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	//Загрузка групп построек
-	if (OpenFile("var\\build_group.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РіСЂСѓРїРї РїРѕСЃС‚СЂРѕРµРє
+	if (OpenFile("var/build_group.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxBldGroup=ReadInt(cSymbol);	
@@ -3736,8 +3736,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка наемников
-	if (OpenFile("var\\mercenary.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°РµРјРЅРёРєРѕРІ
+	if (OpenFile("var/mercenary.var")==0)
 	{return 0;};	
 	for (int Lvl=0; Lvl<MAX_MERC_LEVEL; Lvl++)
 	{
@@ -3753,8 +3753,8 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[17]=!(stKey[17]==6+Random(110,stLock[15],stLock[17]));		
 
-	//Загрузка профилей игроков
-	if (OpenFile("var\\players.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РїСЂРѕС„РёР»РµР№ РёРіСЂРѕРєРѕРІ
+	if (OpenFile("var/players.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxPlayerProfile=ReadInt(cSymbol);
@@ -3860,12 +3860,12 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка дипломатической переписки
+	//Р—Р°РіСЂСѓР·РєР° РґРёРїР»РѕРјР°С‚РёС‡РµСЃРєРѕР№ РїРµСЂРµРїРёСЃРєРё
 	for (int i=0; i<=iMaxPlayerProfile; i++)
 	{
 		NewProgress+=100;
 		char sFile[100];
-		sprintf(sFile,"text\\Diplomacy\\player%d.txt",i);
+		sprintf(sFile,"text/diplomacy/Player%d.txt",i);
 		if (OpenFile(sFile)==0)
 		{return 0;};
 		cSymbol=' ';
@@ -3906,8 +3906,8 @@ int Loader()
 		CurrentFile.close();
 	};
 
-	//Загрузка сообщений
-	if (OpenFile("text\\message.txt")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃРѕРѕР±С‰РµРЅРёР№
+	if (OpenFile("text/message.txt")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxMessage=ReadInt(cSymbol);
@@ -3919,7 +3919,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\tutorial.txt")==0)
+	if (OpenFile("text/tutorial.txt")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxTutText=ReadInt(cSymbol);
@@ -3932,7 +3932,7 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[2]=!(stKey[2]==abs(44+stLock[14]-stLock[2]+stLock[9])%128);
 
-	if (OpenFile("text\\hint.txt")==0)
+	if (OpenFile("text/hint.txt")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxHint=ReadInt(cSymbol);
@@ -3944,8 +3944,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка цен героев
-	if (OpenFile("var\\heroprice.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С†РµРЅ РіРµСЂРѕРµРІ
+	if (OpenFile("var/heroPrice.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iHeroPriceMult=ReadInt(cSymbol);
@@ -3967,8 +3967,8 @@ int Loader()
 //	bChecker[0]=!(stKey[0]==abs(5+stLock[13]+stLock[17]-stLock[6])%128);
 
 	
-	//Загрузка цен героев
-	if (OpenFile("var\\campdiff.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С†РµРЅ РіРµСЂРѕРµРІ
+	if (OpenFile("var/CampDiff.var")==0)
 	{return 0;};
 //	iLength=ReadWord(pWord);	
 	for (int i=0; i<MAX_DIFFICULTY; i++)
@@ -3982,8 +3982,8 @@ int Loader()
 	};	
 	CurrentFile.close();
 
-	//Загрузка наборов предметов
-	if (OpenFile("var\\item_set.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°Р±РѕСЂРѕРІ РїСЂРµРґРјРµС‚РѕРІ
+	if (OpenFile("var/item_set.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxItemSet=ReadInt(cSymbol);
@@ -4040,8 +4040,8 @@ int Loader()
 	};
 	CurrentFile.close();	
 
-	//Загрузка наград юнитов
-	if (OpenFile("var\\medal.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°РіСЂР°Рґ СЋРЅРёС‚РѕРІ
+	if (OpenFile("var/medal.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxMedal=ReadInt(cSymbol);
@@ -4077,7 +4077,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\medal.txt")==0)
+	if (OpenFile("text/medal.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxMedal; i++)
 	{	
@@ -4086,8 +4086,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка событий
-	if (OpenFile("var\\event.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃРѕР±С‹С‚РёР№
+	if (OpenFile("var/event.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxEvent=ReadInt(cSymbol);	
@@ -4175,15 +4175,15 @@ int Loader()
 		};
 		/*if (i>135)
 		{
-			textprintf(screen,Font1,20,400,COLOR_2,"Событие: %d, Вероятность: %d",i,pEvent->iPossibility);
+			textprintf(screen,Font1,20,400,COLOR_2,"РЎРѕР±С‹С‚РёРµ: %d, Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ: %d",i,pEvent->iPossibility);
 			readkey();
 		};*/
 		pEvent++;
 	};
 	CurrentFile.close();
 
-	//Загрузка событий кампании
-	if (OpenFile("var\\camp_event.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃРѕР±С‹С‚РёР№ РєР°РјРїР°РЅРёРё
+	if (OpenFile("var/camp_event.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxCampEvent=ReadInt(cSymbol);	
@@ -4271,8 +4271,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка приключений героев
-	if (OpenFile("var\\encounter.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РїСЂРёРєР»СЋС‡РµРЅРёР№ РіРµСЂРѕРµРІ
+	if (OpenFile("var/encounter.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxEncounter=ReadInt(cSymbol);	
@@ -4359,8 +4359,8 @@ int Loader()
 	};
 	CurrentFile.close();
 	
-	//Загрузка заданий героев
-	if (OpenFile("var\\quest.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° Р·Р°РґР°РЅРёР№ РіРµСЂРѕРµРІ
+	if (OpenFile("var/quest.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxQuest=ReadInt(cSymbol);	
@@ -4468,7 +4468,7 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	if (OpenFile("text\\quest.txt")==0)
+	if (OpenFile("text/Quest.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxQuest; i++)
 	{	
@@ -4477,8 +4477,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка настроек случайной карты
-	/*if (OpenFile("var\\map.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°СЃС‚СЂРѕРµРє СЃР»СѓС‡Р°Р№РЅРѕР№ РєР°СЂС‚С‹
+	/*if (OpenFile("var/map.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	MapSet.Players=ReadInt(cSymbol);
@@ -4505,11 +4505,11 @@ int Loader()
 	CurrentFile.close();*/
 	
 
-	//Загрузка объектов карты
+	//Р—Р°РіСЂСѓР·РєР° РѕР±СЉРµРєС‚РѕРІ РєР°СЂС‚С‹
 //	textprintf_ex(screen,Font1,0,TypeLine*20,makecol(220,220,20),-1,"Loading MapObject.dat...");
 //	TypeLine++;	
 	NewProgress+=100;
-	DATAFILE* datNature = load_datafile("dat\\nature.dat");
+	DATAFILE* datNature = load_datafile("dat/Nature.dat");
 	if (!datNature)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading nature.dat");
@@ -4523,7 +4523,7 @@ int Loader()
 	{bmpMapWater[i]=(BITMAP *)datNature[253+i].dat;};
 	bmpMapDark=(BITMAP *)datNature[36].dat;
 	
-	if (OpenFile("var\\MapObject.var")==0)
+	if (OpenFile("var/mapobject.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxMapObject=ReadInt(cSymbol);	
@@ -4603,7 +4603,7 @@ int Loader()
 	CurrentFile.close();
 
 
-	if (OpenFile("var\\Landmark.var")==0)
+	if (OpenFile("var/landmark.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxLandmark=ReadInt(cSymbol);	
@@ -4667,15 +4667,15 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка графики замка
-	DATAFILE *datCastle = load_datafile("dat\\castle.dat");
+	//Р—Р°РіСЂСѓР·РєР° РіСЂР°С„РёРєРё Р·Р°РјРєР°
+	DATAFILE *datCastle = load_datafile("dat/Castle.dat");
 	NewProgress+=100;
 	if (!datCastle)
 	{
 		textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading castle.dat");
 		return 0;
 	};
-	if (OpenFile("var\\castle.var")==0)
+	if (OpenFile("var/castle.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxCastle=ReadInt(cSymbol);
@@ -4748,8 +4748,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка массива вероятности появления спрайтов на слоях карты
-	if (OpenFile("var\\terr_layer.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РјР°СЃСЃРёРІР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРѕСЏРІР»РµРЅРёСЏ СЃРїСЂР°Р№С‚РѕРІ РЅР° СЃР»РѕСЏС… РєР°СЂС‚С‹
+	if (OpenFile("var/terr_layer.var")==0)
 	{return 0;};
 	for (int i=0; i<MAX_TERRAIN+2; i++)
 	{
@@ -4762,8 +4762,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка размеров осколков
-	if (OpenFile("var\\shard.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЂР°Р·РјРµСЂРѕРІ РѕСЃРєРѕР»РєРѕРІ
+	if (OpenFile("var/shard.var")==0)
 	{return 0;};	
 	for (int i=0; i<MAX_SHARD_SIZE; i++)
 	{			
@@ -4786,7 +4786,7 @@ int Loader()
 			arGroupCoord[i][j][1]=0;
 		};
 	};
-	if (OpenFile("var\\group_coord.var")==0)
+	if (OpenFile("var/group_coord.var")==0)
 	{return 0;};	
 	for (int i=0; i<MAX_GROUP; i++)
 	{
@@ -4809,8 +4809,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка советов героев
-	if (OpenFile("var\\hero_advice.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СЃРѕРІРµС‚РѕРІ РіРµСЂРѕРµРІ
+	if (OpenFile("var/hero_advice.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxHeroAdvice=ReadInt(cSymbol);
@@ -4826,8 +4826,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка прозвищ правителей
-	if (OpenFile("var\\ruler_nick.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РїСЂРѕР·РІРёС‰ РїСЂР°РІРёС‚РµР»РµР№
+	if (OpenFile("var/ruler_nick.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxNick=ReadInt(cSymbol);
@@ -4843,8 +4843,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка титулов правителей
-	if (OpenFile("var\\ruler_title.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёС‚СѓР»РѕРІ РїСЂР°РІРёС‚РµР»РµР№
+	if (OpenFile("var/ruler_title.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxTitle=ReadInt(cSymbol);
@@ -4860,8 +4860,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка названий отношений
-	if (OpenFile("var\\attitude.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° РЅР°Р·РІР°РЅРёР№ РѕС‚РЅРѕС€РµРЅРёР№
+	if (OpenFile("var/attitude.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxAttitude=ReadInt(cSymbol);
@@ -4877,8 +4877,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка титров
-	if (OpenFile("var\\credits.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° С‚РёС‚СЂРѕРІ
+	if (OpenFile("var/credits.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxCredits=ReadInt(cSymbol);
@@ -4898,8 +4898,8 @@ int Loader()
 	CurrentFile.close();
 //	bChecker[1]=!(stKey[1]==abs(11+stLock[0]+stLock[1]+stLock[8])%128);
 
-	//Загрузка бонусов осколков
-	if (OpenFile("var\\shard_bonus.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° Р±РѕРЅСѓСЃРѕРІ РѕСЃРєРѕР»РєРѕРІ
+	if (OpenFile("var/shard_bonus.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxShardBonus=ReadInt(cSymbol);
@@ -4937,8 +4937,8 @@ int Loader()
 	};
 	CurrentFile.close();
 
-	//Загрузка уровней сложности
-	if (OpenFile("var\\difficulty.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° СѓСЂРѕРІРЅРµР№ СЃР»РѕР¶РЅРѕСЃС‚Рё
+	if (OpenFile("var/difficulty.var")==0)
 	{return 0;};	
 	for (int i=0; i<MAX_DIFFICULTY; i++)
 	{			
@@ -4973,8 +4973,8 @@ int Loader()
 
 	if (bUseWorldRules)
 	{
-//	Загрузка особых правил мира
-	if (OpenFile("var\\world_rules.var")==0)
+//	Р—Р°РіСЂСѓР·РєР° РѕСЃРѕР±С‹С… РїСЂР°РІРёР» РјРёСЂР°
+	if (OpenFile("var/world_rules.var")==0)
 	{return 0;};
 	iLength=ReadWord(pWord);
 	iMaxWorldRules=ReadInt(cSymbol);
@@ -5068,7 +5068,7 @@ int Loader()
 	};
 	CurrentFile.close();	
 
-	if (OpenFile("text\\world_rules.txt")==0)
+	if (OpenFile("text/world_rules.txt")==0)
 	{return 0;};
 	for (int i=0; i<=iMaxWorldRules; i++)
 	{
@@ -5080,8 +5080,8 @@ int Loader()
 	}
 
 #ifdef YUPLAY
-	//Загрузка лотерейных билетов
-	if (OpenFile("var\\yuplay.var")==0)
+	//Р—Р°РіСЂСѓР·РєР° Р»РѕС‚РµСЂРµР№РЅС‹С… Р±РёР»РµС‚РѕРІ
+	if (OpenFile("var/yuplay.var")==0)
 	{return 0;};
 	for (int i=0; i<MAX_TICKET_TYPE; i++)
 	{
@@ -5106,10 +5106,10 @@ int Loader()
 	NewProgress+=100;
 //	WriteKeys();
 
-	//********Загрузка звука*********
+	//********Р—Р°РіСЂСѓР·РєР° Р·РІСѓРєР°*********
 	if (bSound)
 	{
-		datMusic = load_datafile("dat\\music.dat");
+		datMusic = load_datafile("dat/music.dat");
 		if (!datMusic)
 		{
 			textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading music.dat");
@@ -5118,7 +5118,7 @@ int Loader()
 		};
 		NewProgress+=100;
 
-		datUnitSound = load_datafile("dat\\unit_sound.dat");
+		datUnitSound = load_datafile("dat/unit_sound.dat");
 		if (!datUnitSound)
 		{
 			textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading unit_sound.dat");
@@ -5126,7 +5126,7 @@ int Loader()
 		};
 		NewProgress+=100;
 
-		datSpellSound = load_datafile("dat\\spell_sound.dat");
+		datSpellSound = load_datafile("dat/spell_sound.dat");
 		if (!datSpellSound)
 		{
 			textprintf_ex(screen1,Font1,100,240,makecol(230,20,30),-1,"Error reading spell_sound.dat");
@@ -5137,25 +5137,25 @@ int Loader()
 
 	iActivePlayer=0;
 	
-	//№ Текущего игрока
-	if (al_findfirst("save\\game.con",&Fil,FA_ALL)==0)
+	//в„– РўРµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°
+	if (al_findfirst("save/game.con",&Fil,FA_ALL)==0)
 	{
-		WorkFile=pack_fopen("save\\game.con","r");
+		WorkFile=pack_fopen("save/game.con","r");
 		pack_fread(&iActivePlayer,sizeof iActivePlayer,WorkFile);
 		pack_fclose(WorkFile);
 	}
 	else
 	{
-		WorkFile=pack_fopen("save\\game.con","w");
+		WorkFile=pack_fopen("save/game.con","w");
 		pack_fwrite(&iActivePlayer,sizeof iActivePlayer,WorkFile);
 		pack_fclose(WorkFile);
 	};
 	al_findclose(&Fil);
 
-	//Таблица рекордов
-	if (al_findfirst("save\\ruler.boo",&Fil,FA_ALL)==0)
+	//РўР°Р±Р»РёС†Р° СЂРµРєРѕСЂРґРѕРІ
+	if (al_findfirst("save/ruler.boo",&Fil,FA_ALL)==0)
 	{
-		WorkFile=pack_fopen("save\\ruler.boo","rp");
+		WorkFile=pack_fopen("save/ruler.boo","rp");
 		pack_fread(arRecords,(sizeof *arRecords)*10,WorkFile);
 		pack_fclose(WorkFile);
 	}
@@ -5166,9 +5166,9 @@ int Loader()
 	};
 	al_findclose(&Fil);
 
-	if (al_findfirst("save\\eador.boo",&Fil,FA_ALL)==0)
+	if (al_findfirst("save/eador.boo",&Fil,FA_ALL)==0)
 	{
-		WorkFile=pack_fopen("save\\eador.boo","rp");
+		WorkFile=pack_fopen("save/eador.boo","rp");
 		pack_fread(arCampRecords,(sizeof *arCampRecords)*10,WorkFile);
 		pack_fclose(WorkFile);
 	}
@@ -5183,9 +5183,9 @@ int Loader()
 	al_findclose(&Fil);
 
 //	al_ffblk ProFile;
-	//Профайл текущего игрока
+	//РџСЂРѕС„Р°Р№Р» С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°
 		
-	sprintf(FileName,"save\\player%d.prf",iActivePlayer);
+	sprintf(FileName,"save/player%d.prf",iActivePlayer);
 	if (al_findfirst(FileName,&Fil,FA_ALL)==0)
 	{
 	//	PACKFILE *WorkFile;	

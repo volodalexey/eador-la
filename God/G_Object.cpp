@@ -1120,7 +1120,7 @@ clEffQue * G_Object::AddAttackUnitEffect(int ipType,int iDelay)
 	{
 	if (pAttack)
 	{
-//		WriteLog("Îáúåêò íàéäåí");
+//		WriteLog("ÐžÐ±ÑŠÐµÐºÑ‚ Ð½Ð°Ð¹Ð´ÐµÐ½");
 		clAttackAnim *Att=pAttack;
 		while (Att->pNext)
 		{
@@ -1153,7 +1153,7 @@ clEffQue * G_Object::AddAttackEnemyEffect(int ipType,int iDelay)
 	{
 	if (pAttack)
 	{
-//		WriteLog("Îáúåêò íàéäåí");
+//		WriteLog("ÐžÐ±ÑŠÐµÐºÑ‚ Ð½Ð°Ð¹Ð´ÐµÐ½");
 		clAttackAnim *Att=pAttack;
 		while (Att->pNext)
 		{
@@ -1186,7 +1186,7 @@ clEffQue * G_Object::AddAttackEnemyEffect(int ipType,int iDelay, G_Object *objTa
 	{
 	if (pAttack)
 	{
-//		WriteLog("Îáúåêò íàéäåí");
+//		WriteLog("ÐžÐ±ÑŠÐµÐºÑ‚ Ð½Ð°Ð¹Ð´ÐµÐ½");
 		clAttackAnim *Att=pAttack;
 		while (Att->pNext)
 		{
@@ -1455,7 +1455,7 @@ bool G_Object::PlayAnimation()
 		{
 			SmartLog("Attack");			
 			if (pAttack->iAttack==-1)
-		//Âûñòðåë
+		//Ð’Ñ‹ÑÑ‚Ñ€ÐµÐ»
 			{
 				int Width=1;
 				int Temp=pAttack->iHit;
@@ -1502,9 +1502,9 @@ bool G_Object::PlayAnimation()
 
 			}
 			else
-		//Ðóêîïàøíàÿ
+		//Ð ÑƒÐºÐ¾Ð¿Ð°ÑˆÐ½Ð°Ñ
 			{
-			if (pAttack->iHit<0) //Ïåðâàÿ ñòàäèÿ
+			if (pAttack->iHit<0) //ÐŸÐµÑ€Ð²Ð°Ñ ÑÑ‚Ð°Ð´Ð¸Ñ
 			{					
 				if (pAttack->pNext)
 				{
@@ -1526,7 +1526,7 @@ bool G_Object::PlayAnimation()
 					pAttack->pEnemy->Move(P1, 5, 1, true);
 				};
 			}				
-			else //Âòîðàÿ ñòàäèÿ
+			else //Ð’Ñ‚Ð¾Ñ€Ð°Ñ ÑÑ‚Ð°Ð´Ð¸Ñ
 			{
 				if (pAttack->iAttack)
 				{
@@ -1742,12 +1742,12 @@ G_Object * ShowActiveObjects(G_Object *First, int MaxLayer, bool Mouse)
 	{
 		al_ffblk Fil;	
 		char ScrName[100];
-		sprintf(ScrName,"screens\\Screen%d.bmp",iScrShot);
+		sprintf(ScrName,"screens/Screen%d.bmp",iScrShot);
 		while(al_findfirst(ScrName,&Fil,FA_ALL)==0)
 		{
 			al_findclose(&Fil);
 			iScrShot++;
-			sprintf(ScrName,"screens\\Screen%d.bmp",iScrShot);
+			sprintf(ScrName,"screens/Screen%d.bmp",iScrShot);
 		};
 		PALETTE Palet;
 		get_palette(Palet);
@@ -1912,12 +1912,12 @@ G_Object * ShowActiveObjects(G_Object *First, int MaxLayer, bool Mouse, int x, i
 	{
 		al_ffblk Fil;	
 		char ScrName[100];
-		sprintf(ScrName,"screens\\Screen%d.bmp",iScrShot);
+		sprintf(ScrName,"screens/Screen%d.bmp",iScrShot);
 		while(al_findfirst(ScrName,&Fil,FA_ALL)==0)
 		{
 			al_findclose(&Fil);
 			iScrShot++;
-			sprintf(ScrName,"screens\\Screen%d.bmp",iScrShot);
+			sprintf(ScrName,"screens/Screen%d.bmp",iScrShot);
 		};
 		PALETTE Palet;
 		get_palette(Palet);

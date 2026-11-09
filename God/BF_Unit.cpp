@@ -1,17 +1,17 @@
 #include "Battlefield.h"
 //#include <string.h>
 
-int MinWeight;		//Минимальная длина пути (в единицах скорости)
-int MinStamina;		//Необходимая стамина для найденного пути
-BITMAP *bmpPathPic;	//Картинка движущегося юнита
+int MinWeight;		//РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїСѓС‚Рё (РІ РµРґРёРЅРёС†Р°С… СЃРєРѕСЂРѕСЃС‚Рё)
+int MinStamina;		//РќРµРѕР±С…РѕРґРёРјР°СЏ СЃС‚Р°РјРёРЅР° РґР»СЏ РЅР°Р№РґРµРЅРЅРѕРіРѕ РїСѓС‚Рё
+BITMAP *bmpPathPic;	//РљР°СЂС‚РёРЅРєР° РґРІРёР¶СѓС‰РµРіРѕСЃСЏ СЋРЅРёС‚Р°
 int CanPass[3];
-bool bGoBerz;		//Флаг берсерка
-dcHero * Heroes[2];	//Участвующие в бою герои
-clPath *TruePath;	//Указатель на найденный путь
+bool bGoBerz;		//Р¤Р»Р°Рі Р±РµСЂСЃРµСЂРєР°
+dcHero * Heroes[2];	//РЈС‡Р°СЃС‚РІСѓСЋС‰РёРµ РІ Р±РѕСЋ РіРµСЂРѕРё
+clPath *TruePath;	//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°Р№РґРµРЅРЅС‹Р№ РїСѓС‚СЊ
 BF_Unit *arNeigh [6];
 int iMoves;
 
-//Преобразование координат юнита в координаты графического объекта
+//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚ СЋРЅРёС‚Р° РІ РєРѕРѕСЂРґРёРЅР°С‚С‹ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р°
 
 int TransX(int x, int y, int w)
 {
@@ -115,7 +115,7 @@ void SimulatePath (int x, int y, int Weight, clPath *Path, int x1, int y1, int S
 	clPath *pRoad=new clPath(x, y, Path);
 	if ((x==x1)&&(y==y1))
 	{
-		if (((TruePath)&&(Weight<MinWeight))||((!TruePath)&&(Weight==MinWeight))) //Потом вес заменить на стамину
+		if (((TruePath)&&(Weight<MinWeight))||((!TruePath)&&(Weight==MinWeight))) //РџРѕС‚РѕРј РІРµСЃ Р·Р°РјРµРЅРёС‚СЊ РЅР° СЃС‚Р°РјРёРЅСѓ
 		{	
 			clPath *P1, *P2, *P3;
 			if (TruePath)
@@ -162,7 +162,7 @@ void SimulatePath (int x, int y, int Weight, clPath *Path, int x1, int y1, int S
 
 
 //**************************************************
-//***  Поиск пути **********************************
+//***  РџРѕРёСЃРє РїСѓС‚Рё **********************************
 //**************************************************
 
 int GetMoveCost(int x, int y)
@@ -182,7 +182,7 @@ int GetStamCost(int x, int y)
 };
 
 
-//Проверка соседней клетки для создания карты
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹
 
 bool TryXYmap(int x, int y, int Weight, int Stam, int Speed)
 {	
@@ -205,7 +205,7 @@ bool TryXYmap(int x, int y, int Weight, int Stam, int Speed)
 	return 0;
 };
 
-//Рекурсивная функция для создания карты поиска пути
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 
 int StepMap (int x, int y, int Weight, int Speed, int StamCost, int StamLeft)
 {
@@ -259,7 +259,7 @@ int StepMap (int x, int y, int Weight, int Speed, int StamCost, int StamLeft)
 	return 0;
 };
 
-//Проверка соседней клетки для поиска пути
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё
 
 bool TryXYpath(int x, int y, int Weight, int Stam)
 {
@@ -279,7 +279,7 @@ bool TryXYpath(int x, int y, int Weight, int Stam)
 	return 0;
 };
 
-//Рекурсивная функция для поиска пути
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё
 
 int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCost, int StamLeft)
 {
@@ -298,7 +298,7 @@ int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCo
 	clPath *pRoad=new clPath(x, y, Path);
 	if ((x==x1)&&(y==y1))
 	{
-		if (((TruePath)&&(Weight<MinWeight))||(!TruePath)) //Потом вес заменить на стамину
+		if (((TruePath)&&(Weight<MinWeight))||(!TruePath)) //РџРѕС‚РѕРј РІРµСЃ Р·Р°РјРµРЅРёС‚СЊ РЅР° СЃС‚Р°РјРёРЅСѓ
 		{	
 			clPath *P1, *P2, *P3;
 			if (TruePath)
@@ -356,7 +356,7 @@ int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCo
 
 
 
-//Проверка соседней клетки для создания карты (для летающих юнитов)
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ (РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ)
 
 bool FlyXYmap(int x, int y, int Weight, bool Over)
 {
@@ -373,7 +373,7 @@ bool FlyXYmap(int x, int y, int Weight, bool Over)
 	return 0;
 };
 
-//Рекурсивная функция для создания карты поиска пути для летающих юнитов
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ
 
 int FlyMap (int x, int y, int Weight, int Speed, bool Over)
 {
@@ -426,7 +426,7 @@ int FlyMap (int x, int y, int Weight, int Speed, bool Over)
 	return 0;
 };
 
-//Проверка соседней клетки для поиска пути (для летающих юнитов)
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё (РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ)
 
 bool FlyXYpath(int x, int y, int Weight)
 {
@@ -441,7 +441,7 @@ bool FlyXYpath(int x, int y, int Weight)
 	return 0;
 };
 
-//Поиск пути для летающих юнитов
+//РџРѕРёСЃРє РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ
 
 int FlyPath (int x, int y, int Weight, clPath *Path, int x1, int y1)
 {
@@ -515,7 +515,7 @@ int FlyPath (int x, int y, int Weight, clPath *Path, int x1, int y1)
 	return 0;
 };
 
-//Проверка соседней клетки для создания карты дальности выстрела
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃРµРґРЅРµР№ РєР»РµС‚РєРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё РІС‹СЃС‚СЂРµР»Р°
 
 bool ShootXYmap(int x, int y, int Weight)
 {
@@ -529,7 +529,7 @@ bool ShootXYmap(int x, int y, int Weight)
 	return 0;
 };
 
-//Рекурсивная функция для создания карты дальности выстрела
+//Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё РІС‹СЃС‚СЂРµР»Р°
 
 int ShootMap (int x, int y, int Weight, int Range)
 {
@@ -634,10 +634,10 @@ int GetMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 	int Def=Defender->GetDefence();
 	if (!bAttacking)
 	{Att=Attacker->GetCounterAttack();};
-	//Сокрушающий удар
+	//РЎРѕРєСЂСѓС€Р°СЋС‰РёР№ СѓРґР°СЂ
 	if ((bAttacking)&&(buttCrush.bPress))
 	{Att+=Att/2;};
-	//Сокрушение зла
+	//РЎРѕРєСЂСѓС€РµРЅРёРµ Р·Р»Р°
 	if ((Attacker->CheckSkill(61)>0)&&(Defender->pUnit->pType()->iKarma<0))
 	{
 		Att+=Attacker->CheckSkill(61)*abs(Defender->pUnit->pType()->iKarma);
@@ -646,24 +646,24 @@ int GetMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 	{
 		Att+=Attacker->CheckSkill(200)*Defender->pUnit->pType()->iKarma;
 	};
-	//Магический удар
+	//РњР°РіРёС‡РµСЃРєРёР№ СѓРґР°СЂ
 	if (Attacker->CheckSkill(27))
 	{
 		Def=Defender->GetResist();
 	}
 	else
 	{
-		//Бронебойный удар
+		//Р‘СЂРѕРЅРµР±РѕР№РЅС‹Р№ СѓРґР°СЂ
 		if (Attacker->CheckSkill(39))
 		{
 			Def/=2;
 		};
-		//Парирование
+		//РџР°СЂРёСЂРѕРІР°РЅРёРµ
 		if ((bAttacking)&&(Defender->bParry)&&(Defender->iStamina>0)&&(!Defender->bResting)&&(Defender->CheckSkill(36)==0))
 		{
 			Def+=Defender->CheckSkill(53);
 		};
-		//Точный удар
+		//РўРѕС‡РЅС‹Р№ СѓРґР°СЂ
 		if (bAttacking)
 		{Def-=Attacker->CheckSkill(76);};		
 	};
@@ -674,25 +674,25 @@ int GetMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 int GetRangedHit(BF_Unit * Attacker, BF_Unit * Defender)
 {	
 	int Result;
-	//Магический выстрел
+	//РњР°РіРёС‡РµСЃРєРёР№ РІС‹СЃС‚СЂРµР»
 	if (Attacker->CheckSkill(28))
 	{
 		return GetHit(Attacker->GetRangedAttack(),Defender->GetResist()-Attacker->CheckSkill(95));
 	}
 	else
 	{
-		//Бронебойный выстрел
+		//Р‘СЂРѕРЅРµР±РѕР№РЅС‹Р№ РІС‹СЃС‚СЂРµР»
 		if (Attacker->CheckSkill(17))
 		{
 			Result=GetHit(Attacker->GetRangedAttack(),Defender->GetRangedDefence()/2-Attacker->CheckSkill(77));
 		}
 		else
-		//Обычный выстрел
+		//РћР±С‹С‡РЅС‹Р№ РІС‹СЃС‚СЂРµР»
 		{
 			Result=GetHit(Attacker->GetRangedAttack(),Defender->GetRangedDefence()-Attacker->CheckSkill(77));
 		};
 	};
-	//Огненные стрелы
+	//РћРіРЅРµРЅРЅС‹Рµ СЃС‚СЂРµР»С‹
 	if (Attacker->CheckSkill(60)>Defender->GetResist())
 	{
 		Result+=Attacker->CheckSkill(60)-Defender->GetResist();
@@ -706,10 +706,10 @@ int CalcMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 	int Def=Defender->GetDefence();
 	if (!bAttacking)
 	{Att=Attacker->GetCounterAttack();};
-	//Сокрушающий удар
+	//РЎРѕРєСЂСѓС€Р°СЋС‰РёР№ СѓРґР°СЂ
 	if ((bAttacking)&&(Attacker->CheckSkill(59)>0)&&(Attacker->iStamina>Attacker->CheckSkill(59)))
 	{Att+=Att/2;};
-	//Сокрушение зла
+	//РЎРѕРєСЂСѓС€РµРЅРёРµ Р·Р»Р°
 	if ((Attacker->CheckSkill(61)>0)&&(Defender->pUnit->GetKarma()<0))
 	{
 		Att+=Attacker->CheckSkill(61)*abs(Defender->pUnit->GetKarma());
@@ -718,24 +718,24 @@ int CalcMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 	{
 		Att+=Attacker->CheckSkill(200)*Defender->pUnit->GetKarma();
 	};
-	//Магический удар
+	//РњР°РіРёС‡РµСЃРєРёР№ СѓРґР°СЂ
 	if (Attacker->CheckSkill(27))
 	{
 		Def=Defender->GetResist();
 	}
 	else
 	{
-		//Бронебойный удар
+		//Р‘СЂРѕРЅРµР±РѕР№РЅС‹Р№ СѓРґР°СЂ
 		if (Attacker->CheckSkill(39))
 		{
 			Def/=2;
 		};
-		//Парирование
+		//РџР°СЂРёСЂРѕРІР°РЅРёРµ
 		if ((bAttacking)&&(Defender->bParry)&&(Defender->iStamina>0)&&(!Defender->bResting))
 		{
 			Def+=Defender->CheckSkill(53);
 		};
-		//Точный удар
+		//РўРѕС‡РЅС‹Р№ СѓРґР°СЂ
 		if (bAttacking)
 		{Def-=Attacker->CheckSkill(76);};		
 	};
@@ -751,7 +751,7 @@ int CalcMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking)
 int CalcRangedHit(BF_Unit * Attacker, BF_Unit * Defender)
 {	
 	int Result;
-	//Магический выстрел
+	//РњР°РіРёС‡РµСЃРєРёР№ РІС‹СЃС‚СЂРµР»
 	if (Attacker->CheckSkill(28))
 	{
 		int Def=Defender->GetResist()-Attacker->CheckSkill(95);
@@ -761,20 +761,20 @@ int CalcRangedHit(BF_Unit * Attacker, BF_Unit * Defender)
 	else
 	{
 		int Def;
-		//Бронебойный выстрел
+		//Р‘СЂРѕРЅРµР±РѕР№РЅС‹Р№ РІС‹СЃС‚СЂРµР»
 		if (Attacker->CheckSkill(17))
 		{
 			Def=Defender->GetRangedDefence()/2-Attacker->CheckSkill(77);
 		}
 		else
-		//Обычный выстрел
+		//РћР±С‹С‡РЅС‹Р№ РІС‹СЃС‚СЂРµР»
 		{
 			Def=Defender->GetRangedDefence()-Attacker->CheckSkill(77);
 		};
 		if (Def<0)
 		{Def=0;};
 		Result=Attacker->GetRangedAttack()-Def;
-		//Огненные стрелы
+		//РћРіРЅРµРЅРЅС‹Рµ СЃС‚СЂРµР»С‹
 		if (Attacker->CheckSkill(60)>Defender->GetResist())
 		{
 			Result+=Attacker->CheckSkill(60)-Defender->GetResist();
@@ -790,7 +790,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 	if (bCanRound)
 	{Vampire=0;};
 	BF_Effect * Eff;
-	//Ядовитый удар
+	//РЇРґРѕРІРёС‚С‹Р№ СѓРґР°СЂ
 	if ((Attacker->CheckSkill(41))&&(!Defender->CheckSkill(42)))
 	{
 		Defender->pEffect=new BF_Effect(Defender->pEffect,1,-Attacker->CheckSkill(41),POISON_DURATION);
@@ -798,7 +798,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		Defender->pEffect->pAbility=(pFirstUnitUpg+71);
 	};
 
-	//Ядовитая плоть
+	//РЇРґРѕРІРёС‚Р°СЏ РїР»РѕС‚СЊ
 	if ((!Attacker->CheckSkill(42))&&(Defender->CheckSkill(96)))
 	{
 		Attacker->pEffect=new BF_Effect(Attacker->pEffect,1,-Defender->CheckSkill(96),POISON_DURATION);
@@ -806,13 +806,13 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		Attacker->pEffect->pAbility=(pFirstUnitUpg+71);
 	};
 
-	//Оглушающий удар
+	//РћРіР»СѓС€Р°СЋС‰РёР№ СѓРґР°СЂ
 	if (Attacker->CheckSkill(40))
 	{
 		Defender->UseStamina(Attacker->CheckSkill(40));
 	};
 
-	//Устрашение
+	//РЈСЃС‚СЂР°С€РµРЅРёРµ
 	if (Attacker->CheckSkill(50))
 	{
 		Defender->ChangeMorale(-Attacker->CheckSkill(50));		
@@ -821,7 +821,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 	if (Attacker!=Defender)
 	{
 
-	//Кража снарядов
+	//РљСЂР°Р¶Р° СЃРЅР°СЂСЏРґРѕРІ
 	if ((Attacker->CheckSkill(44))&&(Defender->iAmmo>0))
 	{
 		if (Attacker->CheckSkill(44)>Defender->iAmmo)
@@ -852,7 +852,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 //		Defender->G_Obj->Make_Stars(Defender->G_Obj,20,20,10,0,44,40,150,200,50);		
 	};
 
-	//Повреждение брони
+	//РџРѕРІСЂРµР¶РґРµРЅРёРµ Р±СЂРѕРЅРё
 	if (Attacker->CheckSkill(45))
 	{
 		Defender->pEffect=new BF_Effect(Defender->pEffect,4,-1,Attacker->CheckSkill(45));
@@ -881,7 +881,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		};
 	};
 
-	//Корни
+	//РљРѕСЂРЅРё
 	if ((Attacker->CheckSkill(67))&&(Defender->iLife>Hit)&&(Defender->CheckSkill(203)==0))
 	{
 		BF_Effect *EF=Defender->pEffect;
@@ -918,7 +918,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		};		
 	};
 
-	//Повреждение оружия
+	//РџРѕРІСЂРµР¶РґРµРЅРёРµ РѕСЂСѓР¶РёСЏ
 	if (Attacker->CheckSkill(52))
 	{
 		Defender->pEffect=new BF_Effect(Defender->pEffect,2,-1,Attacker->CheckSkill(52));
@@ -949,7 +949,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		};
 	};
 
-	//Калечащий укус
+	//РљР°Р»РµС‡Р°С‰РёР№ СѓРєСѓСЃ
 	if (Attacker->CheckSkill(51))
 	{
 		bool WillCurse=true;
@@ -972,7 +972,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 	};
 
 
-	//Проклятие
+	//РџСЂРѕРєР»СЏС‚РёРµ
 	if ((Attacker->CheckSkill(43)>Defender->GetResist())&&(!Defender->CheckSkill(60)))
 	{
 		bool WillCurse=true;
@@ -1021,20 +1021,20 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 //		Defender->G_Obj->Make_Stars(Defender->G_Obj,20,20,10,0,44,40,150,200,50);
 	};
 
-	//Уязвимость
+	//РЈСЏР·РІРёРјРѕСЃС‚СЊ
 	if ((Attacker->CheckSkill(79)>0)&&((pFirstSpell+21)->arEffect[2][0]>=Defender->GetResist())&&(Defender->CheckSkill(60)==0))
 	{		
 		Defender->UnderSpell((pFirstSpell+21),Attacker,Attacker->iSide);
 	};
 
-	//Болезнь
+	//Р‘РѕР»РµР·РЅСЊ
 	if ((Attacker->CheckSkill(80)>0)&&((pFirstSpell+30)->arEffect[2][0]>=Defender->GetResist())&&(Defender->CheckSkill(60)==0)&&
 		(Defender->GetUnitKind()!=2)&&(Defender->GetUnitKind()!=4))
 	{		
 		Defender->UnderSpell((pFirstSpell+30),Attacker,Attacker->iSide);
 	};
 
-	//Удар+заклинание
+	//РЈРґР°СЂ+Р·Р°РєР»РёРЅР°РЅРёРµ
 	if (Attacker->CheckSkill(206)>0)
 	{
 		int Spell=Attacker->CheckSkill(206);
@@ -1057,7 +1057,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		}
 	}
 
-	//Круговая атака
+	//РљСЂСѓРіРѕРІР°СЏ Р°С‚Р°РєР°
 	if ((bCanRound)&&((Attacker->CheckSkill(65))||((Attacker->CheckSkill(66))&&(buttRoundAtt.bPress)&&(bAtt))))
 	{
 		bool bEffect=false;
@@ -1137,7 +1137,7 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 		};
 	};
 
-	//Вампиризм
+	//Р’Р°РјРїРёСЂРёР·Рј
 	if ((Attacker->CheckSkill(68))&&(Defender->pUnit->GetUnitKind()!=2)
 		&&(Defender->pUnit->GetUnitKind()!=4)&&(Attacker->iLife<Attacker->GetLife()))
 	{
@@ -1174,12 +1174,12 @@ void HitEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit, bool bAtt, bool 
 	};
 
 
-	}; //Суицид
+	}; //РЎСѓРёС†РёРґ
 };
 
 void ShootEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit)
 {	
-	//Ядовитый выстрел
+	//РЇРґРѕРІРёС‚С‹Р№ РІС‹СЃС‚СЂРµР»
 	if ((Attacker->CheckSkill(78))&&(!Defender->CheckSkill(42)))
 	{
 		Defender->pEffect=new BF_Effect(Defender->pEffect,1,-Attacker->CheckSkill(78),POISON_DURATION);
@@ -1187,7 +1187,7 @@ void ShootEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit)
 		Defender->pEffect->pAbility=(pFirstUnitUpg+71);
 	};
 
-	//Тяжелые снаряды
+	//РўСЏР¶РµР»С‹Рµ СЃРЅР°СЂСЏРґС‹
 	if (Attacker->CheckSkill(69))
 	{
 		Defender->pEffect=new BF_Effect(Defender->pEffect,5,-1,Attacker->CheckSkill(69));
@@ -1207,7 +1207,7 @@ void ShootEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit)
 		};
 	};
 
-		//Выстрел+заклинание
+		//Р’С‹СЃС‚СЂРµР»+Р·Р°РєР»РёРЅР°РЅРёРµ
 	if (Attacker->CheckSkill(207)>0)
 	{
 		int Spell=Attacker->CheckSkill(207);
@@ -1233,7 +1233,7 @@ void ShootEffect(BF_Unit * Attacker, BF_Unit * Defender, int Hit)
 };
 
 //***********************************************************
-//*****  Методы BF_Effect  **********************************
+//*****  РњРµС‚РѕРґС‹ BF_Effect  **********************************
 //***********************************************************
 
 BF_Effect::BF_Effect(BF_Effect *prEffect, int Type, int Power, int Time)
@@ -1270,7 +1270,7 @@ BF_Effect::~BF_Effect()
 
 
 //***********************************************************
-//*****  Методы BF_Unit  ************************************
+//*****  РњРµС‚РѕРґС‹ BF_Unit  ************************************
 //***********************************************************
 
 
@@ -1348,7 +1348,7 @@ G_Object * BF_Unit::Init(dcUnit *Un, G_Object *Obj, int Sider, int Numm)
 	{iMorale=1;};
 	if (iLife>GetLife())
 	{iLife=GetLife();};
-	//Врождённая реинкарнация
+	//Р’СЂРѕР¶РґС‘РЅРЅР°СЏ СЂРµРёРЅРєР°СЂРЅР°С†РёСЏ
 	if (CheckSkill(97)>0)
 	{
 		pEffect=new BF_Effect(pEffect,74,1,0);
@@ -1438,7 +1438,7 @@ G_Object * BF_Unit::Summon(int U_Type, int Power, int sx, int sy, G_Object *Obj)
 	{iMorale=1;};
 	if (iLife>GetLife())
 	{iLife=GetLife();};
-	//Врождённая реинкарнация
+	//Р’СЂРѕР¶РґС‘РЅРЅР°СЏ СЂРµРёРЅРєР°СЂРЅР°С†РёСЏ
 	if (CheckSkill(97)>0)
 	{
 		pEffect=new BF_Effect(pEffect,74,1,0);
@@ -1784,7 +1784,7 @@ void BF_Unit::Death()
 		};
 	};	
 	
-//Изменение боевого духа соседей
+//РР·РјРµРЅРµРЅРёРµ Р±РѕРµРІРѕРіРѕ РґСѓС…Р° СЃРѕСЃРµРґРµР№
 	int Nei=FindNeighbour(iSide);
 	if (Nei)
 	{
@@ -1804,7 +1804,7 @@ void BF_Unit::Death()
 		};
 	};
 
-//Удаление всех эффектов
+//РЈРґР°Р»РµРЅРёРµ РІСЃРµС… СЌС„С„РµРєС‚РѕРІ
 	BF_Effect *Temp;
 	int iChangeSide=-1;
 	bool bReincarnate=false, bDarkPact=false;
@@ -1939,7 +1939,7 @@ void BF_Unit::Death()
 		};
 //		bInBattle=false;
 		Clear();
-		iSurvived=1;	//Отметка для запрета повторного использования в этом бою
+		iSurvived=1;	//РћС‚РјРµС‚РєР° РґР»СЏ Р·Р°РїСЂРµС‚Р° РїРѕРІС‚РѕСЂРЅРѕРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ СЌС‚РѕРј Р±РѕСЋ
 	}
 	else
 	{
@@ -1972,7 +1972,7 @@ void BF_Unit::Panic()
 	{
 		if (x!=iSide*7)
 		{
-		//Построение карты поиска пути
+		//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 		for (int i=0; i<8; i++){
 			for (int j=0; j<8; j++)
 			{
@@ -1982,13 +1982,13 @@ void BF_Unit::Panic()
 			};
 		};
 		bFirstMove=true;
-		if (CheckSkill(14)) //Летающий
+		if (CheckSkill(14)) //Р›РµС‚Р°СЋС‰РёР№
 		{
 			FlyMap(x,y,-1,iSpeed,true);
 		}
 		else
 		{
-			if (CheckSkill(15)) //Низколетающий
+			if (CheckSkill(15)) //РќРёР·РєРѕР»РµС‚Р°СЋС‰РёР№
 			{
 				FlyMap(x,y,-1,iSpeed,false);
 			}
@@ -2027,7 +2027,7 @@ void BF_Unit::Panic()
 	else
 	{
 		G_Obj->AnimText(1, makecol(220,50,20));
-		//Убег
+		//РЈР±РµРі
 	};
 	};
 	iSpeed=0;
@@ -2129,7 +2129,7 @@ void BF_Unit::ChangeSide(int NewNum)
 };
 
 
-//Воздействие заклинаний
+//Р’РѕР·РґРµР№СЃС‚РІРёРµ Р·Р°РєР»РёРЅР°РЅРёР№
 int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 {
 	G_Object *objDeath=G_Obj;
@@ -2197,7 +2197,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Повреждение
+			//РџРѕРІСЂРµР¶РґРµРЅРёРµ
 					Hit=GetHit(SpellPower,Resist*Spell->bResistPower+GetDefence()*Spell->bDefencePower);
 					if (Hit>iLife)
 					{Hit=iLife;};					
@@ -2235,7 +2235,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if ((Spell->arEffect[2][i]==-1)&&((pUnit->GetUnitKind()==1)||(((pUnit->GetUnitKind()==3)||(pUnit->GetUnitKind()==5))&&(Spell->iLifeCost==0))))
 				{
-			//Лечение
+			//Р›РµС‡РµРЅРёРµ
 					Hit=SpellPower;
 					if (Hit>GetLife()-iLife)
 					{
@@ -2251,7 +2251,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Сжигание снарядов
+			//РЎР¶РёРіР°РЅРёРµ СЃРЅР°СЂСЏРґРѕРІ
 					Hit=GetHit(SpellPower,Resist*Spell->bResistPower);
 					if (iAmmo<Hit)
 					{
@@ -2281,14 +2281,14 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				}
 				else
 				{
-			//Постоянный эффект
+			//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 				};
 			}
 			else
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Пополнение снарядов					
+			//РџРѕРїРѕР»РЅРµРЅРёРµ СЃРЅР°СЂСЏРґРѕРІ					
 					if ((Spell->bRestoreOnly)&&(SpellPower>GetAmmo()-iAmmo))
 					{
 						SpellPower=GetAmmo()-iAmmo;
@@ -2303,7 +2303,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				}
 				else
 				{
-			//Постоянный эффект
+			//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 				};
 			};
 			break;
@@ -2312,7 +2312,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Понижение энергии
+			//РџРѕРЅРёР¶РµРЅРёРµ СЌРЅРµСЂРіРёРё
 					Hit=SpellPower-Resist*Spell->bResistPower;
 					if (Hit>0)
 					{UseStamina(Hit);}
@@ -2325,7 +2325,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Повышение энергии					
+			//РџРѕРІС‹С€РµРЅРёРµ СЌРЅРµСЂРіРёРё					
 					if ((Spell->bRestoreOnly)&&(SpellPower>GetStamina()-iStamina))
 					{
 						SpellPower=GetStamina()-iStamina;
@@ -2345,7 +2345,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Страх
+			//РЎС‚СЂР°С…
 					Hit=SpellPower-Resist*Spell->bResistPower;
 					if (Hit>0)
 					{ChangeMorale(-Hit);};
@@ -2353,14 +2353,14 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				}
 				else
 				{
-			//Постоянный эффект
+			//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 				};
 			}
 			else
 			{
 				if (Spell->arEffect[2][i]==-1)
 				{
-			//Воодушевление	
+			//Р’РѕРѕРґСѓС€РµРІР»РµРЅРёРµ	
 					if (Spell->bRestoreOnly)
 					{
 						if (SpellPower>GetMorale()-iMorale)
@@ -2373,13 +2373,13 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				}
 				else
 				{
-			//Постоянный эффект
+			//РџРѕСЃС‚РѕСЏРЅРЅС‹Р№ СЌС„С„РµРєС‚
 				};
 
 			};
 			break;
 		case 31:
-		//Снятие чар
+		//РЎРЅСЏС‚РёРµ С‡Р°СЂ
 
 			SpellPower+=Hero->CheckSkill(908);
 			/*if (Hero->pHero)
@@ -2387,7 +2387,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				SpellPower+=Hero->pHero->CheckHeroBonus(908);
 			};*/
 			if (Caster==iSide)
-			//С дружественного юнита
+			//РЎ РґСЂСѓР¶РµСЃС‚РІРµРЅРЅРѕРіРѕ СЋРЅРёС‚Р°
 			{
 				Eff=pEffect;				
 				bool bDestroy=bDemo;
@@ -2443,7 +2443,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 				};
 			}
 			else
-			//С вражеского юнита
+			//РЎ РІСЂР°Р¶РµСЃРєРѕРіРѕ СЋРЅРёС‚Р°
 			{
 				Eff=pEffect;				
 				bool bDestroy=bDemo;
@@ -2503,7 +2503,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 						Eff=Eff->pNext;
 					};
 				};
-			//Повреждения вызванным существам
+			//РџРѕРІСЂРµР¶РґРµРЅРёСЏ РІС‹Р·РІР°РЅРЅС‹Рј СЃСѓС‰РµСЃС‚РІР°Рј
 				if ((bSummoned)&&(SpellPower+Spell->arEffect[1][i]*2>Resist))
 				{
 					Hit=GetHit(SpellPower+Spell->arEffect[1][i]*2,Resist);
@@ -2532,7 +2532,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			};
 			break;			
 		case 47:
-		//Паутина
+		//РџР°СѓС‚РёРЅР°
 			if ((Resist>3)||(CheckSkill(201)>0))
 			{
 				G_Obj->AnimText(4, makecol(250,150,20));				
@@ -2583,7 +2583,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			bFriendlyFire=true;
 			break;
 		case 73:
-		//Подчинение
+		//РџРѕРґС‡РёРЅРµРЅРёРµ
 			if (Spell->arEffect[2][i]==-1)
 			{
 				if (SpellPower>=Resist)
@@ -2695,7 +2695,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			};			
 			break;
 		case 75:
-		//Дополнительный ход
+		//Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ С…РѕРґ
 			if (!CheckSkill(36))
 			{
 				bCanAct=true;
@@ -2749,7 +2749,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			};
 			break;
 		case 92:
-		//Суицид
+		//РЎСѓРёС†РёРґ
 			if (Resist*Spell->bResistPower<=SpellPower)
 			{
 				Hit=GetMeleeHit(this,this,true)*2;			
@@ -2783,7 +2783,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 			};
 			break;
 		case 93:
-		//Снятие яда
+		//РЎРЅСЏС‚РёРµ СЏРґР°
 			Eff=pEffect;								
 			while (Eff)
 			{
@@ -2887,7 +2887,7 @@ int BF_Unit::UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster)
 						{iSpeed=0;};
 						if (Spell->arEffect[0][i]==38)
 						{bCanAct=false;};
-						//Полиморф
+						//РџРѕР»РёРјРѕСЂС„
 						if (Spell->arEffect[0][i]>1000)
 						{
 							pEffect->iType=90;
@@ -3052,7 +3052,7 @@ void BF_Unit::Shoot(BF_Unit *Enemy)
 	if (nShots>iAmmo)
 	{nShots=iAmmo;};
 
-	//Окаменение
+	//РћРєР°РјРµРЅРµРЅРёРµ
 	if (CheckSkill(46))
 	{
 	if (bShowAnim)
@@ -3118,7 +3118,7 @@ void BF_Unit::Shoot(BF_Unit *Enemy)
 		nShots=0;
 	};
 
-	//Паутина
+	//РџР°СѓС‚РёРЅР°
 	if (CheckSkill(47))
 	{	
 		
@@ -3284,7 +3284,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 	AttBonus=0;
 	if ((x1!=x)||(y1!=y))
 	{
-//атака с разбега	
+//Р°С‚Р°РєР° СЃ СЂР°Р·Р±РµРіР°	
 		if (CheckSkill(37))
 		{
 			AttBonus=abs(x-Enemy->x)+abs(y-Enemy->y)-2;
@@ -3294,7 +3294,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 		};
 		Move(x1,y1);
 	};
-//первый удар у противника
+//РїРµСЂРІС‹Р№ СѓРґР°СЂ Сѓ РїСЂРѕС‚РёРІРЅРёРєР°
 	if ((Enemy->CheckSkill(16))&&(!CheckSkill(16))&&(!CheckSkill(26))&&(!Enemy->CheckSkill(38))&&(!Enemy->bResting))
 	{
 		if (Enemy->iStamina>0)
@@ -3358,7 +3358,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 		{
 			Enemy->ChangeMorale(1);
 			Enemy->iEnemySlayed++;
-			//Похищение души
+			//РџРѕС…РёС‰РµРЅРёРµ РґСѓС€Рё
 			int Heal=Enemy->SoulSteal(this);
 			if ((bShowAnim)&&(Heal>0))
 			{
@@ -3383,7 +3383,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 			{
 				Hit=Enemy->iLife;
 			};
-			//Топчет		
+			//РўРѕРїС‡РµС‚		
 			if ((Enemy->iLife-Hit<CheckSkill(63))&&(Enemy->CheckSkill(14)==0)&&(CheckSkill(88)==0))
 			{
 				Hit=Enemy->iLife;
@@ -3415,7 +3415,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 					Eff->wavSound=wavCrush;
 				};
 			};
-			//Топчет		
+			//РўРѕРїС‡РµС‚		
 			if ((Enemy->iLife==Hit)&&(CheckSkill(63)>0)&&(bShowAnim)&&(Enemy->CheckSkill(74)==0)&&(Enemy->CheckSkill(91)==0)&&(Enemy->CheckSkill(14)==0)&&(CheckSkill(88)==0))
 			{			
 				clAttackAnim *Att=G_Obj->pAttack;
@@ -3454,7 +3454,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 				iEnemySlayed++;
 				ChangeMorale(1);
 				arGrid[x][y].Pass=0;
-				//Похищение души
+				//РџРѕС…РёС‰РµРЅРёРµ РґСѓС€Рё
 				int Heal=SoulSteal(Enemy);					
 				if ((bShowAnim)&&(Heal>0))
 				{
@@ -3477,7 +3477,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 		};
 	}
 	else
-//первый удар у этого юнита
+//РїРµСЂРІС‹Р№ СѓРґР°СЂ Сѓ СЌС‚РѕРіРѕ СЋРЅРёС‚Р°
 	{
 		Hit=GetMeleeHit(this,Enemy,1);
 		Hit+=AttBonus;
@@ -3486,7 +3486,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 		{
 			Hit=Enemy->iLife;
 		};
-		//Топчет
+		//РўРѕРїС‡РµС‚
 		if ((Enemy->iLife-Hit<CheckSkill(63))&&(Enemy->CheckSkill(14)==0)&&(CheckSkill(88)==0))
 		{
 			Hit=Enemy->iLife;
@@ -3557,7 +3557,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 			iEnemySlayed++;
 			ChangeMorale(1);
 			arGrid[x][y].Pass=0;
-			//Похищение души
+			//РџРѕС…РёС‰РµРЅРёРµ РґСѓС€Рё
 			int Heal=SoulSteal(Enemy);				
 			if ((bShowAnim)&&(Heal>0))
 			{
@@ -3629,7 +3629,7 @@ int BF_Unit::Attack(int x1, int y1, BF_Unit *Enemy)
 				{			
 					Enemy->ChangeMorale(1);
 					Enemy->iEnemySlayed++;
-					//Похищение души
+					//РџРѕС…РёС‰РµРЅРёРµ РґСѓС€Рё
 					int Heal=Enemy->SoulSteal(this);						
 					if ((bShowAnim)&&(Heal>0))
 					{
@@ -3699,7 +3699,7 @@ void BF_Unit::Replace(int x1, int y1)
 	arGrid[x][y].Pass=0;
 };
 
-//Возвращает изменение атаки в % в зависимости от текущего боевого духа
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёР·РјРµРЅРµРЅРёРµ Р°С‚Р°РєРё РІ % РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРєСѓС‰РµРіРѕ Р±РѕРµРІРѕРіРѕ РґСѓС…Р°
 int GetMoraleBonus(int Morale)
 {
 	int Result=0;
@@ -4051,14 +4051,14 @@ void BF_Unit::MakeParamHint(int Param)
 		int Work, Current, Current1;
 		switch (Param)
 		{
-		case 1:	//жизнь		
+		case 1:	//Р¶РёР·РЅСЊ		
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+1)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, GetLife());
 			blit(bmpGUI_ParamHint,bmpHint,0,bmpGUI_ParamHint->h-29,0,HintH,HintW,29);
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, iLife);
 			break;
-		case 2: //атака
+		case 2: //Р°С‚Р°РєР°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+2)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetAttack());
 			if (CheckSkill(38))
@@ -4142,7 +4142,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetAttack());
 			break;
-		case 3: //контратака
+		case 3: //РєРѕРЅС‚СЂР°С‚Р°РєР°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+3)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetCounterAttack());
 			if (CheckSkill(38))
@@ -4255,7 +4255,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetCounterAttack());
 			break;
-		case 4: //защита
+		case 4: //Р·Р°С‰РёС‚Р°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+4)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetDefence());
 			Work=CheckEffect(4);
@@ -4328,7 +4328,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetDefence());
 			break;
-		case 5: //защита от выстрела
+		case 5: //Р·Р°С‰РёС‚Р° РѕС‚ РІС‹СЃС‚СЂРµР»Р°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+5)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetRangedDefence());
 			Work=CheckEffect(5);
@@ -4403,7 +4403,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetRangedDefence());
 			break;
-		case 6: //сопротивление
+		case 6: //СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёРµ
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+6)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetResist());
 			Work=CheckEffect(6);
@@ -4435,7 +4435,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetResist());
 			break;
-		case 7: //скорость
+		case 7: //СЃРєРѕСЂРѕСЃС‚СЊ
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+7)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetSpeed());
 			Work=CheckEffect(7);
@@ -4484,7 +4484,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, iSpeed);
 			break;
-		case 8: //Дистанционная атака
+		case 8: //Р”РёСЃС‚Р°РЅС†РёРѕРЅРЅР°СЏ Р°С‚Р°РєР°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+8)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetRangedAttack());
 			if (pUnit->GetRangedAttack()>0)
@@ -4591,7 +4591,7 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetRangedAttack());
 			break;
-		case 9: //дальность выстрела
+		case 9: //РґР°Р»СЊРЅРѕСЃС‚СЊ РІС‹СЃС‚СЂРµР»Р°
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+9)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, pUnit->GetShootingRange());			
 			Current=pUnit->GetShootingRange();
@@ -4651,21 +4651,21 @@ void BF_Unit::MakeParamHint(int Param)
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, GetShootingRange());
 			break;
-		case 10: //снаряды			
+		case 10: //СЃРЅР°СЂСЏРґС‹			
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+10)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, GetAmmo());
 			blit(bmpGUI_ParamHint,bmpHint,0,bmpGUI_ParamHint->h-29,0,HintH,HintW,29);
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, iAmmo);
 			break;
-		case 11: //выносливость
+		case 11: //РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+11)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, GetStamina());
 			blit(bmpGUI_ParamHint,bmpHint,0,bmpGUI_ParamHint->h-29,0,HintH,HintW,29);
 			HintH+=29;
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,HintH-22,COLOR_2,-1,"%s: %d",(pFirstPhrase+497)->str, iStamina);
 			break;
-		case 12: //боевой дух
+		case 12: //Р±РѕРµРІРѕР№ РґСѓС…
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,16,COLOR_1,-1,(pFirstAbilityNum+12)->sName);
 			textprintf_centre_ex(bmpHint,Font1,HintW/2,45,COLOR_2,-1,"%s: %d",(pFirstPhrase+496)->str, GetMorale());
 			blit(bmpGUI_ParamHint,bmpHint,0,bmpGUI_ParamHint->h-29,0,HintH,HintW,29);
@@ -4677,7 +4677,7 @@ void BF_Unit::MakeParamHint(int Param)
 };
 
 //***************************************************
-//*** Окно информации о юните ***********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЋРЅРёС‚Рµ ***********************
 //***************************************************
 void BF_Unit::ShowInfoScreen()
 {
@@ -4707,7 +4707,7 @@ void BF_Unit::ShowInfoScreen()
 	UI_Mask arMedalMask[3];
 	int Medals=0;
 
-	//Награды
+	//РќР°РіСЂР°РґС‹
 	for (int i=0; i<3; i++)
 	{
 		if (pUnit->arMedal[i]>0)
@@ -4721,7 +4721,7 @@ void BF_Unit::ShowInfoScreen()
 	UI_TextBox TextBox;
 	WObj=TextBox.Init(x+407,y+73,303,324,2,COLOR_1,Font2,WObj,542+x,44+y,542+x,410+y);	
 
-	//Параметры
+	//РџР°СЂР°РјРµС‚СЂС‹
 	if (pUnit->pHero)
 	{
 		draw_sprite(bmpWindow,ClassPic[pUnit->pHero->ipClass1-1],323,91);
@@ -4858,7 +4858,7 @@ void BF_Unit::ShowInfoScreen()
 	arParamMask2[3].Init(x+170,y+200,126,20,1);
 	arParamMask2[4].Init(x+170,y+224,126,20,1);
 
-	//Свойства юнита
+	//РЎРІРѕР№СЃС‚РІР° СЋРЅРёС‚Р°
 	textprintf_centre_ex(bmpWindow,Font1,169,256,COLOR_1,-1,"%s",(pFirstPhrase+84)->str);	
 	int iAbil=0, MaxAbilMask=0;
 	int arAbil[50];
@@ -4914,7 +4914,7 @@ void BF_Unit::ShowInfoScreen()
 	else
 	{buttScrollDown1.Activate(1);};
 
-	//Активные эффекты
+	//РђРєС‚РёРІРЅС‹Рµ СЌС„С„РµРєС‚С‹
 	textprintf_centre_ex(bmpWindow,Font1,169,354,COLOR_1,-1,"%s",(pFirstPhrase+85)->str);
 	int iEff=0, MaxEffMask=0;
 	BF_Effect *arEff[50];
@@ -5142,8 +5142,8 @@ void BF_Unit::ShowInfoScreen()
 			};
 		};
 
-		//Подсказки о параметрах текущего состояния
-		//жизнь
+		//РџРѕРґСЃРєР°Р·РєРё Рѕ РїР°СЂР°РјРµС‚СЂР°С… С‚РµРєСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ
+		//Р¶РёР·РЅСЊ
 		int Check=arParamMask2[0].Check();
 		if (Check>1)
 		{
@@ -5157,7 +5157,7 @@ void BF_Unit::ShowInfoScreen()
 			WindowAbilityInfo(1,iLife);
 		};
 
-		//выносливость
+		//РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ
 		Check=arParamMask2[1].Check();
 		if (Check>1)
 		{
@@ -5171,7 +5171,7 @@ void BF_Unit::ShowInfoScreen()
 			WindowAbilityInfo(11,iStamina);
 		};
 
-		//боевой дух
+		//Р±РѕРµРІРѕР№ РґСѓС…
 		Check=arParamMask2[2].Check();
 		if (Check>1)
 		{
@@ -5185,7 +5185,7 @@ void BF_Unit::ShowInfoScreen()
 			WindowAbilityInfo(12,iMorale);
 		};
 
-		//скорость
+		//СЃРєРѕСЂРѕСЃС‚СЊ
 		Check=arParamMask2[3].Check();
 		if (Check>1)
 		{
@@ -5199,7 +5199,7 @@ void BF_Unit::ShowInfoScreen()
 			WindowAbilityInfo(7,iSpeed);
 		};
 
-		//запас выстрелов
+		//Р·Р°РїР°СЃ РІС‹СЃС‚СЂРµР»РѕРІ
 		Check=arParamMask2[4].Check();
 		if (Check>1)
 		{

@@ -262,7 +262,7 @@ int dcUnit::GetRank()
 
 int dcUnit::GetExpMod()
 {
-//**!!НЕ ИСПОЛЬЗОВАТЬ В ТЕЛЕ ЭТОЙ ФУНКЦИИ CheckUpg() ВО ИЗБЕЖАНИЕ РЕКУРСИИ!!**
+//**!!РќР• РРЎРџРћР›Р¬Р—РћР’РђРўР¬ Р’ РўР•Р›Р• Р­РўРћР™ Р¤РЈРќРљР¦РР CheckUpg() Р’Рћ РР—Р‘Р•Р–РђРќРР• Р Р•РљРЈР РЎРР!!**
 	int Result=UnitType(ipType)->iExpMod;
 	return Result;
 };
@@ -382,7 +382,7 @@ int dcUnit::LevelUp(int Level, int Exclude)
 {
 	ClearRoll();
 	clUnitType * UN=pFirstUnitType+ipType;
-	char Up_Num[MAX_ROLL]; //Массив количества возможных повышений
+	char Up_Num[MAX_ROLL]; //РњР°СЃСЃРёРІ РєРѕР»РёС‡РµСЃС‚РІР° РІРѕР·РјРѕР¶РЅС‹С… РїРѕРІС‹С€РµРЅРёР№
 	int RNum;
 	for (int i=0; i<MAX_ROLL; i++)
 	{Up_Num[i]=0;};
@@ -390,7 +390,7 @@ int dcUnit::LevelUp(int Level, int Exclude)
 	for (int Lv=0; Lv<Level; Lv++)
 	{
 
-//Вычитание выбранного на предыдущем уровне повышения
+//Р’С‹С‡РёС‚Р°РЅРёРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РЅР° РїСЂРµРґС‹РґСѓС‰РµРј СѓСЂРѕРІРЅРµ РїРѕРІС‹С€РµРЅРёСЏ
 		if (Lv>0)
 		{
 			RNum=0;
@@ -407,11 +407,11 @@ int dcUnit::LevelUp(int Level, int Exclude)
 			};
 			/*else
 			{
-				FileLog("!!!Неверное повышение юнита!!!");
+				FileLog("!!!РќРµРІРµСЂРЅРѕРµ РїРѕРІС‹С€РµРЅРёРµ СЋРЅРёС‚Р°!!!");
 			};*/
 		};
 		
-//Вероятности старых повышений +1
+//Р’РµСЂРѕСЏС‚РЅРѕСЃС‚Рё СЃС‚Р°СЂС‹С… РїРѕРІС‹С€РµРЅРёР№ +1
 		RNum=0;
 		while (RollerN[RNum]>0)
 		{
@@ -421,7 +421,7 @@ int dcUnit::LevelUp(int Level, int Exclude)
 			};
 			RNum++;
 		};
-//Вероятности повышений на текущем уровне
+//Р’РµСЂРѕСЏС‚РЅРѕСЃС‚Рё РїРѕРІС‹С€РµРЅРёР№ РЅР° С‚РµРєСѓС‰РµРј СѓСЂРѕРІРЅРµ
 		if (Lv<20)
 		{
 			for (int Up=0; Up<MAX_UPG_PER_LVL; Up++)

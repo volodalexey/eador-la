@@ -2,8 +2,8 @@
 int iMaxShop;
 dcShop *pFirstShop;
 
-//Заполняет таблицу вероятностей для магазина типа iShop предметами уровня не выше iLevel (Если bEqual истинно, то только указанного уровня)
-//iShop: 1, 2, 9 Оружие и щиты, 3 Луки и стрелы, 4 Жезлы и сферы, 5 Знамёна, 6 кожа и пояса, 7 Кольчуги, 8 Латы, 10 Свитки, -1 Одежда, -2 Украшения
+//Р—Р°РїРѕР»РЅСЏРµС‚ С‚Р°Р±Р»РёС†Сѓ РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№ РґР»СЏ РјР°РіР°Р·РёРЅР° С‚РёРїР° iShop РїСЂРµРґРјРµС‚Р°РјРё СѓСЂРѕРІРЅСЏ РЅРµ РІС‹С€Рµ iLevel (Р•СЃР»Рё bEqual РёСЃС‚РёРЅРЅРѕ, С‚Рѕ С‚РѕР»СЊРєРѕ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ)
+//iShop: 1, 2, 9 РћСЂСѓР¶РёРµ Рё С‰РёС‚С‹, 3 Р›СѓРєРё Рё СЃС‚СЂРµР»С‹, 4 Р–РµР·Р»С‹ Рё СЃС„РµСЂС‹, 5 Р—РЅР°РјС‘РЅР°, 6 РєРѕР¶Р° Рё РїРѕСЏСЃР°, 7 РљРѕР»СЊС‡СѓРіРё, 8 Р›Р°С‚С‹, 10 РЎРІРёС‚РєРё, -1 РћРґРµР¶РґР°, -2 РЈРєСЂР°С€РµРЅРёСЏ
 int ShopRoller(int iShop, int iLevel, int iRare, bool bEqual)
 {
 	int CN=0;
@@ -136,9 +136,9 @@ void dcProvince::PlaceGuard(int Guardian, int Karma)
 	if (pGuard)
 	{DismissDefender();};
 	pGuard = new dcHero;
-	pGuard->iExp=Guardian;			//Сохраняем тип охранника для выдачи трофеев
+	pGuard->iExp=Guardian;			//РЎРѕС…СЂР°РЅСЏРµРј С‚РёРї РѕС…СЂР°РЅРЅРёРєР° РґР»СЏ РІС‹РґР°С‡Рё С‚СЂРѕС„РµРµРІ
 	pGuard->ipName=Karma;
-	pGuard->iTask=Grd->Quick+Random(Grd->QuickAdd+1); //Инициатива
+	pGuard->iTask=Grd->Quick+Random(Grd->QuickAdd+1); //РРЅРёС†РёР°С‚РёРІР°
 	for (int i=0; i<Grd->Num; i++)
 	{
 
@@ -218,7 +218,7 @@ void dcProvince::PlaceDefender(int Defender)
 	pGuard->ipPlayer=ipPlayer;
 	iDefender=Defender;
 	pGuard->iTask=Def->iInitiative;
-	pGuard->iExp=-Defender;			//Сохраняем тип стража для выдачи трофеев (отрицательный для стражей, положительный для охранников)
+	pGuard->iExp=-Defender;			//РЎРѕС…СЂР°РЅСЏРµРј С‚РёРї СЃС‚СЂР°Р¶Р° РґР»СЏ РІС‹РґР°С‡Рё С‚СЂРѕС„РµРµРІ (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ РґР»СЏ СЃС‚СЂР°Р¶РµР№, РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Р№ РґР»СЏ РѕС…СЂР°РЅРЅРёРєРѕРІ)
 	for (int i=0; i<MAX_GUARD_UNIT; i++)
 	{
 		int UType=0;		
@@ -261,7 +261,7 @@ void dcProvince::PlaceSiteGuard(int Guardian, int Site, int Karma)
 	if (arSiteGuard[Site])
 	{DismissSiteGuard(Site);};
 	arSiteGuard[Site] = new dcHero;
-	arSiteGuard[Site]->iExp=Guardian;			//Сохраняем тип стража для выдачи трофеев
+	arSiteGuard[Site]->iExp=Guardian;			//РЎРѕС…СЂР°РЅСЏРµРј С‚РёРї СЃС‚СЂР°Р¶Р° РґР»СЏ РІС‹РґР°С‡Рё С‚СЂРѕС„РµРµРІ
 //	arSiteGuard[Site]->ipName=Karma;
 	arSiteGuard[Site]->iTask=Grd->Quick+Random(Grd->QuickAdd+1);
 	for (int i=0; i<Grd->Num; i++)
@@ -370,20 +370,20 @@ int dcProvince::GetGoldIncome()
 	int Result=iGoldInc;
 	if (Result<=0)
 	{Result=1;};
-//Уровень провинции
+//РЈСЂРѕРІРµРЅСЊ РїСЂРѕРІРёРЅС†РёРё
 	Result+=Result*ProvLevel[GetLevel()].iIncome/100;
 	if (Result==0)
 	{return 0;};
 	Result=Result*(pFirstRace+ipRace)->iGold/100;
-//Настроение жителей
+//РќР°СЃС‚СЂРѕРµРЅРёРµ Р¶РёС‚РµР»РµР№
 	Result+=Result*GetMood()/20;
-//Исследованная территория
+//РСЃСЃР»РµРґРѕРІР°РЅРЅР°СЏ С‚РµСЂСЂРёС‚РѕСЂРёСЏ
 	Result-=Result*(100-iExplore)/500;
 	if (iExplore==100)
 	{
 		Result+=2;
 	};
-//Родовая провинция
+//Р РѕРґРѕРІР°СЏ РїСЂРѕРІРёРЅС†РёСЏ
 	if (arPlayer[ipPlayer].ipProvince==iNumber)
 	{
 		/*for (int i=0; i<iMaxInnerBld; i++)
@@ -402,7 +402,7 @@ int dcProvince::GetGoldIncome()
 	}
 	else
 	{
-//Постройки в провинции
+//РџРѕСЃС‚СЂРѕР№РєРё РІ РїСЂРѕРІРёРЅС†РёРё
 	for (int i=0; i<MAX_PROVINCE_BLD; i++)
 	{
 		if (arBuilding[i]>0)
@@ -426,7 +426,7 @@ int dcProvince::GetGoldIncome()
 	};
 	};
 
-//Постройки в замке
+//РџРѕСЃС‚СЂРѕР№РєРё РІ Р·Р°РјРєРµ
 	for (int i=0; i<iMaxInnerBld; i++)
 	{
 		if (arPlayer[ipPlayer].arBld[i])
@@ -445,7 +445,7 @@ int dcProvince::GetGoldIncome()
 	};
 	Result+=arPlayer[ipPlayer].GetBldParam2(49,ipRace);
 
-//Сайты
+//РЎР°Р№С‚С‹
 	for (int i=0; i<MAX_PROVINCE_SITE; i++)
 	{
 		if ((arSite[i][0]>0)&&
@@ -464,7 +464,7 @@ int dcProvince::GetGoldIncome()
 	};
 	Result+=GetRitualBonus(1,6);
 
-//Постройки в провинции (доход в %)
+//РџРѕСЃС‚СЂРѕР№РєРё РІ РїСЂРѕРІРёРЅС†РёРё (РґРѕС…РѕРґ РІ %)
 	for (int i=0; i<MAX_PROVINCE_BLD; i++)
 	{
 		if (arBuilding[i]>0)
@@ -472,7 +472,7 @@ int dcProvince::GetGoldIncome()
 			Result+=Result*(pFirstOuterBld+arBuilding[i])->iGoldPerc/100;
 		};
 	};
-//Страж
+//РЎС‚СЂР°Р¶
 	if (iDefender>0)
 	{
 		for (int i=0; i<MAX_DEFENDER_ABILITY; i++)
@@ -508,13 +508,13 @@ int dcProvince::GetGemIncome()
 	};
 	int Result=iGemInc;	
 	int Perc=0;
-//Уровень провинции
+//РЈСЂРѕРІРµРЅСЊ РїСЂРѕРІРёРЅС†РёРё
 	Result+=Result*ProvLevel[GetLevel()].iIncome/100;
 	Result=Result*(pFirstRace+ipRace)->iGem/100;
 	Result+=Result*GetMood()/20;	
-//Исследованная территория
+//РСЃСЃР»РµРґРѕРІР°РЅРЅР°СЏ С‚РµСЂСЂРёС‚РѕСЂРёСЏ
 	Result-=Result*(100-iExplore)/500;
-//Настроение жителей
+//РќР°СЃС‚СЂРѕРµРЅРёРµ Р¶РёС‚РµР»РµР№
 	Result+=Result*GetMood()/20;
 
 	if (arPlayer[ipPlayer].ipProvince==iNumber)
@@ -535,7 +535,7 @@ int dcProvince::GetGemIncome()
 	}
 	else
 	{
-//Постройки в провинции
+//РџРѕСЃС‚СЂРѕР№РєРё РІ РїСЂРѕРІРёРЅС†РёРё
 	for (int i=0; i<MAX_PROVINCE_BLD; i++)
 	{
 		if (arBuilding[i]>0)
@@ -546,7 +546,7 @@ int dcProvince::GetGemIncome()
 	};
 	};
 	Result+=arPlayer[ipPlayer].GetBldParam2(55,ipRace);
-//Сайты
+//РЎР°Р№С‚С‹
 	for (int i=0; i<MAX_PROVINCE_SITE; i++)
 	{
 		if ((arSite[i][0]>0)&&
@@ -564,7 +564,7 @@ int dcProvince::GetGemIncome()
 		};
 	};
 	Result+=GetRitualBonus(2,6);
-//Страж
+//РЎС‚СЂР°Р¶
 	if (iDefender>0)
 	{
 		for (int i=0; i<MAX_DEFENDER_ABILITY; i++)
@@ -1107,10 +1107,10 @@ int dcProvince::GetEventPoss(int ipEvent)
 	bool bExit;
 	if (GetSiegeIndex()>=0)
 	{return 0;};
-	//Отмена атаки, если вокруг провинции барьер
+	//РћС‚РјРµРЅР° Р°С‚Р°РєРё, РµСЃР»Рё РІРѕРєСЂСѓРі РїСЂРѕРІРёРЅС†РёРё Р±Р°СЂСЊРµСЂ
 	if (((pFirstEvent+ipEvent)->ipAttacker>0)&&(GetRitualBonus(1,12)>0))
 	{return 0;};
-	//Проверка условий, необходимых для события
+	//РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёР№, РЅРµРѕР±С…РѕРґРёРјС‹С… РґР»СЏ СЃРѕР±С‹С‚РёСЏ
 	for (int i=0; i<MAX_EVENT_EFFECT; i++)
 	{
 		if ((pFirstEvent+ipEvent)->arEffect[i][0]==8)
@@ -1305,9 +1305,9 @@ int dcProvince::GetEventPoss(int ipEvent)
 			};
 		};
 	};
-	//Глобальная вероятность
+	//Р“Р»РѕР±Р°Р»СЊРЅР°СЏ РІРµСЂРѕСЏС‚РЅРѕСЃС‚СЊ
 	int Result=(pFirstEvent+ipEvent)->iPossibility;
-	//Инициируемые соседями
+	//РРЅРёС†РёРёСЂСѓРµРјС‹Рµ СЃРѕСЃРµРґСЏРјРё
 	for (int j=0; j<MAX_NEIGHBOUR; j++)
 	{
 		if ((arNeighbour[j]>0)&&((pFirstProvince+arNeighbour[j])->ipPlayer==0))
@@ -1321,10 +1321,10 @@ int dcProvince::GetEventPoss(int ipEvent)
 			};
 		};
 	};
-	//Инициируемые сайтами
+	//РРЅРёС†РёРёСЂСѓРµРјС‹Рµ СЃР°Р№С‚Р°РјРё
 	Result+=GetSiteParam2(4,ipEvent);
 
-	//Изменение вероятности в зависимости от правил мира
+	//РР·РјРµРЅРµРЅРёРµ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїСЂР°РІРёР» РјРёСЂР°
 	if (WorldRules.iMode>0)
 	{
 		for (int k=0; k<MAX_WORLD_EVENTS; k++)
@@ -1336,7 +1336,7 @@ int dcProvince::GetEventPoss(int ipEvent)
 
 	if (Result<=0)
 	{return 0;};
-	//Изменение вероятности в зависимости от построек
+	//РР·РјРµРЅРµРЅРёРµ РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРѕСЃС‚СЂРѕРµРє
 	if (arPlayer[ipPlayer].ipProvince==iNumber)
 	{
 		Result+=Result*arPlayer[ipPlayer].GetBldParam2(45,ipEvent)/100;
@@ -1406,7 +1406,7 @@ int dcProvince::AttackDefender(dcHero *Attacker, int DX, int DefCount)
 	};
 	if ((Power>180+Random(10))&&((pFirstDefender+iDefender)->CheckAbility(11)==0)&&(arPlayer[ipPlayer].ipProvince!=iNumber))
 	{
-		//Отступление
+		//РћС‚СЃС‚СѓРїР»РµРЅРёРµ
 		sprintf(sText,(pFirstDialog+1240)->sText,Attacker->pstName->str,sName,arPlayer[ipPlayer].GetName(),GuardsNum,sArmy);
 		Answer=(pFirstDialog+1240)->Show(1,1,0,0,Pic,sText)-1;
 	}
@@ -1414,7 +1414,7 @@ int dcProvince::AttackDefender(dcHero *Attacker, int DX, int DefCount)
 	{
 		bAn[0]=0; bAn[1]=0;
 		
-		//Разведка
+		//Р Р°Р·РІРµРґРєР°
 		if (Attacker->CheckSkill(24)>0)
 		{
 			iScouting=SCOUTING_PRICE;
@@ -1425,7 +1425,7 @@ int dcProvince::AttackDefender(dcHero *Attacker, int DX, int DefCount)
 			{bAn[0]=1;};
 		};
 
-		//Подкуп
+		//РџРѕРґРєСѓРї
 		if ((DefCount<2)&&(!pGarrison)&&((pFirstDefender+iDefender)->CheckAbility(12)==0)&&(Power>160+Random(10)-Attacker->CheckSkill(27)*2))
 		{
 			iBribe=(pFirstDefender+iDefender)->iGoldCost*4+(pFirstDefender+iDefender)->iGemCost*10;
@@ -1506,7 +1506,7 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 		int DefPlayer=GetSiegeIndex();
 		if (arPlayer[DefPlayer].Control==1)
 		{
-		//Осаждает игрок
+		//РћСЃР°Р¶РґР°РµС‚ РёРіСЂРѕРє
 			char sText[500], sArmy[500];
 			int GuardsNum=Attacker->MakeDescription(sArmy);
 			sprintf(sText,(pFirstDialog+1464)->sText,sName,GuardsNum,sArmy);
@@ -1518,7 +1518,7 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 
 			while ((DefCount>0)&&(Result==1))
 			{
-		//Выбор защитника
+		//Р’С‹Р±РѕСЂ Р·Р°С‰РёС‚РЅРёРєР°
 				DefCount=0;
 				for (int i=0; i<MAX_HERO; i++)
 				{
@@ -1693,11 +1693,11 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 		}
 		else
 		{
-		//Осаждат ИИ
+		//РћСЃР°Р¶РґР°С‚ РР
 			bool bFight=true;
 			while ((DefCount>0)&&(Result==1))
 			{
-		//Выбор защитника
+		//Р’С‹Р±РѕСЂ Р·Р°С‰РёС‚РЅРёРєР°
 				DefCount=0;
 				int Select=-100;
 				dcHero *Defender=NULL;
@@ -1735,7 +1735,7 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 				}
 				if ((Defender)&&(DefCount>0))
 				{
-			//Атака нейтралов
+			//РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»РѕРІ
 				if (Attacker->ipPlayer==0)
 				{
 					Result=InitBattle(this,NULL,Attacker,Defender,0,false);
@@ -1763,7 +1763,7 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 				else
 				{
 					if (arPlayer[Attacker->ipPlayer].Control==1)
-		//Атака игрока
+		//РђС‚Р°РєР° РёРіСЂРѕРєР°
 					{
 						char sText[500], sArmy[500];
 						int GuardsNum=Defender->MakeDescription(sArmy);
@@ -1834,7 +1834,7 @@ int dcProvince::AttackSiege(dcHero *Attacker, int DX)
 						}
 					
 					else
-		//Атака AI
+		//РђС‚Р°РєР° AI
 					{
 						if (CompareStrength1(Attacker,Defender)>100)
 						{
@@ -1913,7 +1913,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 		if (Result!=1)
 		{return Result;}
 	}
-	//Ожидание помощи при атаке родовой провинции слабым отрядом
+	//РћР¶РёРґР°РЅРёРµ РїРѕРјРѕС‰Рё РїСЂРё Р°С‚Р°РєРµ СЂРѕРґРѕРІРѕР№ РїСЂРѕРІРёРЅС†РёРё СЃР»Р°Р±С‹Рј РѕС‚СЂСЏРґРѕРј
 	if ((Attacker->ipPlayer>0)&&(ipPlayer>0)&&(arPlayer[Attacker->ipPlayer].Control>1)&&(iNumber==arPlayer[ipPlayer].ipProvince))
 	{
 		int PL=Attacker->ipPlayer, HNum=0;		
@@ -1938,9 +1938,9 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 		};
 	};
 	if (arPlayer[ipPlayer].Control==1)
-//Нападение на провинцию игрока
+//РќР°РїР°РґРµРЅРёРµ РЅР° РїСЂРѕРІРёРЅС†РёСЋ РёРіСЂРѕРєР°
 	{
-	//Сообщение при атаке противника
+	//РЎРѕРѕР±С‰РµРЅРёРµ РїСЂРё Р°С‚Р°РєРµ РїСЂРѕС‚РёРІРЅРёРєР°
 	if (Attacker->ipPlayer!=0)
 	{
 		char sText[500], sArmy[500];
@@ -1953,7 +1953,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 
 	while ((DefCount>0)&&(Result==1))
 	{
-//Выбор защитника
+//Р’С‹Р±РѕСЂ Р·Р°С‰РёС‚РЅРёРєР°
 		DefCount=0;
 		if ((iDefender>0)&&(pGuard->ipPlayer!=Attacker->ipPlayer))
 		{
@@ -2038,7 +2038,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 		if (DefCount>0)
 		{
 			if (arDef[Select]<0)
-	//Выбран стражник
+	//Р’С‹Р±СЂР°РЅ СЃС‚СЂР°Р¶РЅРёРє
 			{
 				if (arPlayer[Attacker->ipPlayer].Control==1)
 				{
@@ -2083,7 +2083,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 				};
 			}
 			else
-	//Выбран герой
+	//Р’С‹Р±СЂР°РЅ РіРµСЂРѕР№
 			{
 				if (arPlayer[Attacker->ipPlayer].Control==1)
 				{
@@ -2200,18 +2200,18 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 	};
 	}
 	else
-//Нападение на провинцию AI
+//РќР°РїР°РґРµРЅРёРµ РЅР° РїСЂРѕРІРёРЅС†РёСЋ AI
 	{
 //		bool bFight=true;
 		while ((DefCount>0)&&(Result==1))
 		{
-	//Выбор защитника
+	//Р’С‹Р±РѕСЂ Р·Р°С‰РёС‚РЅРёРєР°
 			DefCount=0;
 			int Select=-100;
 			dcHero *Defender=NULL;
 			if ((iDefender>0)&&(pGuard->ipPlayer!=Attacker->ipPlayer))
 			{
-				WriteLog("Защитник...");
+				WriteLog("Р—Р°С‰РёС‚РЅРёРє...");
 				DefCount++;
 				if (CompareStrength(pGuard,Attacker)>100)
 				{
@@ -2232,7 +2232,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 				{
 					if ((arPlayer[ipPlayer].arHero[i])&&(arPlayer[ipPlayer].arHero[i]->pProvince==this)&&(arPlayer[ipPlayer].arHero[i]->iDead<0))
 					{
-						WriteLog("Герой...");
+						WriteLog("Р“РµСЂРѕР№...");
 				//		DefCount++;
 						if ((Select==-100)||(CompareStrength(arPlayer[ipPlayer].arHero[i],Attacker)>CompareStrength(arPlayer[ipPlayer].arHero[Select],Attacker)))
 						{
@@ -2242,7 +2242,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 					};
 				};
 			};
-			WriteLog("Или Защитник?...");
+			WriteLog("РР»Рё Р—Р°С‰РёС‚РЅРёРє?...");
 			if ((Select!=-1)&&(iDefender>0)&&((Select==-100)||(CompareStrength(arPlayer[ipPlayer].arHero[Select],Attacker)<100)))
 			{
 				Select=-1;
@@ -2250,7 +2250,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 			};
 			if ((Defender)&&(DefCount>0))
 			{
-		//Атака нейтралов
+		//РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»РѕРІ
 				if (Attacker->ipPlayer==0)
 				{
 					Result=InitBattle(this,NULL,Attacker,Defender,0,false);
@@ -2290,7 +2290,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 				else
 				{
 					if (arPlayer[Attacker->ipPlayer].Control==1)
-		//Атака игрока
+		//РђС‚Р°РєР° РёРіСЂРѕРєР°
 					{
 						if (Select==-1)
 						{
@@ -2401,7 +2401,7 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 						};
 					}
 					else
-		//Атака AI
+		//РђС‚Р°РєР° AI
 					{
 						if ((bCrazyAttack)||(CompareStrength1(Attacker,Defender)>100))
 						{
@@ -2457,8 +2457,8 @@ int dcProvince::UnderAttack(dcHero *Attacker, int DX)
 
 void dcProvince::StaticEvent(int Index, int Player)
 {
-	//textprintf(screen,Font1,100,100,COLOR_2,"Событие: %d",Index);
-	//textprintf(screen1,Font1,100,100,COLOR_2,"Событие: %d",Index);
+	//textprintf(screen,Font1,100,100,COLOR_2,"РЎРѕР±С‹С‚РёРµ: %d",Index);
+	//textprintf(screen1,Font1,100,100,COLOR_2,"РЎРѕР±С‹С‚РёРµ: %d",Index);
 	//clear_keybuf();
 	//readkey();
 	clEvent *EV=(pFirstEvent+Index);
@@ -2474,13 +2474,13 @@ void dcProvince::StaticEvent(int Index, int Player)
 	};
 	int Lootz=1;
 	
-//Изменение кармы
+//РР·РјРµРЅРµРЅРёРµ РєР°СЂРјС‹
 	arPlayer[ipPlayer].iKarma+=EV->iKarma;
 	arPlayer[ipPlayer].iKarma+=EV->CalcEffect(7,1,arPlayer[ipPlayer].iKarma);
 
-//Воздействие эффектов
+//Р’РѕР·РґРµР№СЃС‚РІРёРµ СЌС„С„РµРєС‚РѕРІ
 	long int Mult=0, Count, iWork;
-	//Индивидуальные эффекты
+	//РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
 		switch (EV->arEffect[Eff][0])
@@ -2893,11 +2893,11 @@ void dcProvince::StaticEvent(int Index, int Player)
 
 		};
 	};
-	//Обычные эффекты
+	//РћР±С‹С‡РЅС‹Рµ СЌС„С„РµРєС‚С‹
 	iWork=EV->CalcEffect(1,GetLevel(),arPlayer[ipPlayer].Gold);
 	if ((iWork<0)&&(bGuardGold))
 	{iWork-=iWork*arPlayer[ipPlayer].GetBldParam1(33)/10;};
-//	StopLog("Золото:", iWork);
+//	StopLog("Р—РѕР»РѕС‚Рѕ:", iWork);
 	arPlayer[ipPlayer].Gold+=iWork;
 	Treasurez[0][0]=iWork;
 	if (EV->arEffect[0][0]==1)
@@ -2942,7 +2942,7 @@ void dcProvince::StaticEvent(int Index, int Player)
 
 	if (EV->ipDialog)
 	{
-//Вызов диалога
+//Р’С‹Р·РѕРІ РґРёР°Р»РѕРіР°
 		Mult=abs(Mult);
 		if (Mult==0)
 		{Mult=1;};
@@ -3031,11 +3031,11 @@ void dcProvince::StaticEvent(int Index, int Player)
 			Answer=(pFirstDialog+EV->ipDialog)->Show(An[0],An[1],An[2],An[3],NULL,Mess)-1;
 		}
 		else
-//Выбор ответа для ИИ
+//Р’С‹Р±РѕСЂ РѕС‚РІРµС‚Р° РґР»СЏ РР
 		{
 			switch (Index)
 			{
-			case 925:	//Дары небес
+			case 925:	//Р”Р°СЂС‹ РЅРµР±РµСЃ
 				Answer=2;
 				if (GetMood()<-2)
 				{Answer=3;};
@@ -3058,7 +3058,7 @@ void dcProvince::StaticEvent(int Index, int Player)
 
 	if (EV->ipAttacker>0)
 	{
-//Вызов сражения
+//Р’С‹Р·РѕРІ СЃСЂР°Р¶РµРЅРёСЏ
 		dcProvince Fake;
 		Fake.sName=new char [3];		
 		int Lvl=Random(CurGame.iCurrentTurn)/50;
@@ -3117,7 +3117,7 @@ void dcProvince::StaticEvent(int Index, int Player)
 			{StaticEvent(EV->ipEventWin,Player);};
 		};
 	};
-//Вызов следующего события
+//Р’С‹Р·РѕРІ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕР±С‹С‚РёСЏ
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
 		if  (EV->arEffect[Eff][0]==11)
@@ -3205,7 +3205,7 @@ int dcProvince::PlaceSite(int Index, int Level, int Quest, int Hidden, int Guard
 {
 	if (Level<0)
 	{Level=0;};
-	//Поиск места в провинции
+	//РџРѕРёСЃРє РјРµСЃС‚Р° РІ РїСЂРѕРІРёРЅС†РёРё
 	int Place=0;
 	while ((arSite[Place][0]>0)&&(Place<MAX_PROVINCE_SITE))
 	{Place++;};
@@ -3231,7 +3231,7 @@ int dcProvince::PlaceSite(int Index, int Level, int Quest, int Hidden, int Guard
 	arSite[Place][3]=Quest;
 	arSite[Place][4]=0;
 	arSite[Place][5]=0;	
-	//Установка охраны
+	//РЈСЃС‚Р°РЅРѕРІРєР° РѕС…СЂР°РЅС‹
 	if (((Guard>0)&&(pSite->iGuarded>0))||((Random(100)<pSite->iGuarded)&&(Guard>=0)))
 	{
 		ClearRoll();
@@ -3275,14 +3275,14 @@ int dcProvince::PlaceSite(int Index, int Level, int Quest, int Hidden, int Guard
 		}
 		GrdPower=(pFirstGuard+(pFirstGuardType+Grd)->arGuard[GrdLvl])->Power;				
 		arSite[Place][2]=GrdPower+pSite->iTreasure;
-//		textprintf(screen,Font1,10,500,COLOR_2,"Охранник:%d Уровень:%d (%d)       ",arSite[Place][4],GrdLvl,(pFirstGuardType+arSite[Place][4])->arGuard[GrdLvl]);
+//		textprintf(screen,Font1,10,500,COLOR_2,"РћС…СЂР°РЅРЅРёРє:%d РЈСЂРѕРІРµРЅСЊ:%d (%d)       ",arSite[Place][4],GrdLvl,(pFirstGuardType+arSite[Place][4])->arGuard[GrdLvl]);
 		PlaceSiteGuard((pFirstGuardType+arSite[Place][4])->arGuard[GrdLvl],Place,(pFirstGuardType+arSite[Place][4])->iKarma);
 		if (abs(arSite[Place][2])>100)
 		{
 			FileLog("Site Loot!!!");
 		};
 	};
-	//Установка рандомных квестов
+	//РЈСЃС‚Р°РЅРѕРІРєР° СЂР°РЅРґРѕРјРЅС‹С… РєРІРµСЃС‚РѕРІ
 	if (Quest==0)
 	{
 		for (int i=0; i<MAX_SITE_ABILITY; i++)
@@ -3313,7 +3313,7 @@ int dcProvince::PlaceSite(int Index, int Level, int Quest, int Hidden, int Guard
 			};
 		};
 	};
-	//Заполнение магазина
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°РіР°Р·РёРЅР°
 	int iShop=-999, iLevel, Items=8, Prices=300;
 	for (int k=0; k<MAX_SITE_ABILITY; k++)
 	{

@@ -1,41 +1,41 @@
 #include "Battlefield.h"
 
-strHexx arGrid [8] [8];		//Карта проходимости
-strHexx Field [8] [8];		//Карта для поиска пути
-UI_Mask Grid [8] [8];		//Маски тайлов
-BF_Unit Squad[2][MAX_SQUAD+MAX_SUMMONS];//Отряды
+strHexx arGrid [8] [8];		//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
+strHexx Field [8] [8];		//РљР°СЂС‚Р° РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё
+UI_Mask Grid [8] [8];		//РњР°СЃРєРё С‚Р°Р№Р»РѕРІ
+BF_Unit Squad[2][MAX_SQUAD+MAX_SUMMONS];//РћС‚СЂСЏРґС‹
 bool IsPlayed[2];
-int Spells[2][2][SPELLBOOK_SIZE];		//Заклинания
+int Spells[2][2][SPELLBOOK_SIZE];		//Р—Р°РєР»РёРЅР°РЅРёСЏ
 int ActiveSpell=-1;
 int ActivePlayer;
-int FearVictory;						//Флаг сбежавших противников
-bool bInPanic;							//Флаг того, что все враги запуганы
-int BF_Player[2];						//Игроки
-//dcHero * Herr[2];						//Герои
-int LifeMod[2];							//Изменение максиума жизни нейтралов в завасимость от сложности (в %)
-int SummonExp[2]={0, 0};				//Опыт, получаемый противником за вызванных юнитов
-int SummonSurv[2]={0, 0};				//Сколько суммоны прожили
-int SummonWork[2]={0, 0};				//Сколько суммоны заработали опыта
-int GemSpent[2];						//Сколько кристаллов потрачено за бой
+int FearVictory;						//Р¤Р»Р°Рі СЃР±РµР¶Р°РІС€РёС… РїСЂРѕС‚РёРІРЅРёРєРѕРІ
+bool bInPanic;							//Р¤Р»Р°Рі С‚РѕРіРѕ, С‡С‚Рѕ РІСЃРµ РІСЂР°РіРё Р·Р°РїСѓРіР°РЅС‹
+int BF_Player[2];						//РРіСЂРѕРєРё
+//dcHero * Herr[2];						//Р“РµСЂРѕРё
+int LifeMod[2];							//РР·РјРµРЅРµРЅРёРµ РјР°РєСЃРёСѓРјР° Р¶РёР·РЅРё РЅРµР№С‚СЂР°Р»РѕРІ РІ Р·Р°РІР°СЃРёРјРѕСЃС‚СЊ РѕС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё (РІ %)
+int SummonExp[2]={0, 0};				//РћРїС‹С‚, РїРѕР»СѓС‡Р°РµРјС‹Р№ РїСЂРѕС‚РёРІРЅРёРєРѕРј Р·Р° РІС‹Р·РІР°РЅРЅС‹С… СЋРЅРёС‚РѕРІ
+int SummonSurv[2]={0, 0};				//РЎРєРѕР»СЊРєРѕ СЃСѓРјРјРѕРЅС‹ РїСЂРѕР¶РёР»Рё
+int SummonWork[2]={0, 0};				//РЎРєРѕР»СЊРєРѕ СЃСѓРјРјРѕРЅС‹ Р·Р°СЂР°Р±РѕС‚Р°Р»Рё РѕРїС‹С‚Р°
+int GemSpent[2];						//РЎРєРѕР»СЊРєРѕ РєСЂРёСЃС‚Р°Р»Р»РѕРІ РїРѕС‚СЂР°С‡РµРЅРѕ Р·Р° Р±РѕР№
 int SideCanCast[2];	
 clSpell *pCast, *pCast1;
-int iSacVictim;				//Цель жертвоприношения
-int iTarget;				//Враг под курсором
-int ProvinceMoraleBonus;	//Бонус боевого духа охранникам провинции
-//	iTowerShoot;			//Сила выстрела из башни
-BF_Unit * ActiveUnit=NULL;	//Указатель на активный юнит
-BITMAP *jPanel, *objPanel, 	//Боковая панель (изображение и объект вывода данных)
-*bmpUnitBar,				//Статус-бар юнита
-*bmpCorpse,					//Труп юнита
+int iSacVictim;				//Р¦РµР»СЊ Р¶РµСЂС‚РІРѕРїСЂРёРЅРѕС€РµРЅРёСЏ
+int iTarget;				//Р’СЂР°Рі РїРѕРґ РєСѓСЂСЃРѕСЂРѕРј
+int ProvinceMoraleBonus;	//Р‘РѕРЅСѓСЃ Р±РѕРµРІРѕРіРѕ РґСѓС…Р° РѕС…СЂР°РЅРЅРёРєР°Рј РїСЂРѕРІРёРЅС†РёРё
+//	iTowerShoot;			//РЎРёР»Р° РІС‹СЃС‚СЂРµР»Р° РёР· Р±Р°С€РЅРё
+BF_Unit * ActiveUnit=NULL;	//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° Р°РєС‚РёРІРЅС‹Р№ СЋРЅРёС‚
+BITMAP *jPanel, *objPanel, 	//Р‘РѕРєРѕРІР°СЏ РїР°РЅРµР»СЊ (РёР·РѕР±СЂР°Р¶РµРЅРёРµ Рё РѕР±СЉРµРєС‚ РІС‹РІРѕРґР° РґР°РЅРЅС‹С…)
+*bmpUnitBar,				//РЎС‚Р°С‚СѓСЃ-Р±Р°СЂ СЋРЅРёС‚Р°
+*bmpCorpse,					//РўСЂСѓРї СЋРЅРёС‚Р°
 *bmpFlipCorpse,
 *bmpGrid,
-*bmpSelect,					//Выделение юнита
-*bmpTarget,					//Выделение цели
-*bmpTargetH,				//Выделение цели для лечнгия
-*bmpSpellbook,				//Книга заклинаний
-*bmpSpellShadow,			//Затенение заклинания
-*bmpSpellPanel,				//Боковая панель вызова заклинания
-*bmpEmptyPanel,				//Пустая боковая панель
+*bmpSelect,					//Р’С‹РґРµР»РµРЅРёРµ СЋРЅРёС‚Р°
+*bmpTarget,					//Р’С‹РґРµР»РµРЅРёРµ С†РµР»Рё
+*bmpTargetH,				//Р’С‹РґРµР»РµРЅРёРµ С†РµР»Рё РґР»СЏ Р»РµС‡РЅРіРёСЏ
+*bmpSpellbook,				//РљРЅРёРіР° Р·Р°РєР»РёРЅР°РЅРёР№
+*bmpSpellShadow,			//Р—Р°С‚РµРЅРµРЅРёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ
+*bmpSpellPanel,				//Р‘РѕРєРѕРІР°СЏ РїР°РЅРµР»СЊ РІС‹Р·РѕРІР° Р·Р°РєР»РёРЅР°РЅРёСЏ
+*bmpEmptyPanel,				//РџСѓСЃС‚Р°СЏ Р±РѕРєРѕРІР°СЏ РїР°РЅРµР»СЊ
 *bmpWarMenu,
 *bmpCheckBox,
 *bmpCheckBird,
@@ -67,7 +67,7 @@ BITMAP *jPanel, *objPanel, 	//Боковая панель (изображение и объект вывода данных
 *bmpBFChasm[2],
 *bmpBFThicket[2],
 *bmpBFForest[2],
-*bmpMissile[MAX_MISSILE];	//Картинки снарядов
+*bmpMissile[MAX_MISSILE];	//РљР°СЂС‚РёРЅРєРё СЃРЅР°СЂСЏРґРѕРІ
 
 //SAMPLE *wawHeal, *wavBerz, *wavMarch, *wavGather, *wavRound, *wavCrush, *wavSoul, *wavEat, *wavTrample, *wavRoot, *wavArmor, *wavWeapon, *wawEat;
 
@@ -77,24 +77,24 @@ clBF_Object *pBF_Obj;
 G_Object *objSelect;
 G_Object *objLowString;
 G_Object *objSideBar;
-G_Object *objMain;			//Ссылка на основной список графики
-G_Object *objTarget[8][8];		//Массив подсветок для целей
-G_Object *objTargetH[8][8];		//Массив подсветок для целей лечения
-G_Object *objGrid[8][8];		//Массив с сеткой
-//int MinWeight, MinStamina;	//Минимальная длина пути (в единицах скорости) и необходимая стамина для найденного пути
-bool bFirstMove,			//Флаг истинный, если активный юнит еще не двигался
-	bArchmage,				//Флаг истинный, если герой может вызывать 2 заклинания в ход
-	bFastDraw,				//Герой может сменить оружие
-	bShowBattle,			//Истинна если в бою есть игрок-человек
-	bShowAnim,				//Флаг видимости для графических объектов
-	bAutoCombat,			//Флаг автобоя, включаемый игроком
-	bCastle,				//Истинно, если это штурм замка
+G_Object *objMain;			//РЎСЃС‹Р»РєР° РЅР° РѕСЃРЅРѕРІРЅРѕР№ СЃРїРёСЃРѕРє РіСЂР°С„РёРєРё
+G_Object *objTarget[8][8];		//РњР°СЃСЃРёРІ РїРѕРґСЃРІРµС‚РѕРє РґР»СЏ С†РµР»РµР№
+G_Object *objTargetH[8][8];		//РњР°СЃСЃРёРІ РїРѕРґСЃРІРµС‚РѕРє РґР»СЏ С†РµР»РµР№ Р»РµС‡РµРЅРёСЏ
+G_Object *objGrid[8][8];		//РњР°СЃСЃРёРІ СЃ СЃРµС‚РєРѕР№
+//int MinWeight, MinStamina;	//РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїСѓС‚Рё (РІ РµРґРёРЅРёС†Р°С… СЃРєРѕСЂРѕСЃС‚Рё) Рё РЅРµРѕР±С…РѕРґРёРјР°СЏ СЃС‚Р°РјРёРЅР° РґР»СЏ РЅР°Р№РґРµРЅРЅРѕРіРѕ РїСѓС‚Рё
+bool bFirstMove,			//Р¤Р»Р°Рі РёСЃС‚РёРЅРЅС‹Р№, РµСЃР»Рё Р°РєС‚РёРІРЅС‹Р№ СЋРЅРёС‚ РµС‰Рµ РЅРµ РґРІРёРіР°Р»СЃСЏ
+	bArchmage,				//Р¤Р»Р°Рі РёСЃС‚РёРЅРЅС‹Р№, РµСЃР»Рё РіРµСЂРѕР№ РјРѕР¶РµС‚ РІС‹Р·С‹РІР°С‚СЊ 2 Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С…РѕРґ
+	bFastDraw,				//Р“РµСЂРѕР№ РјРѕР¶РµС‚ СЃРјРµРЅРёС‚СЊ РѕСЂСѓР¶РёРµ
+	bShowBattle,			//РСЃС‚РёРЅРЅР° РµСЃР»Рё РІ Р±РѕСЋ РµСЃС‚СЊ РёРіСЂРѕРє-С‡РµР»РѕРІРµРє
+	bShowAnim,				//Р¤Р»Р°Рі РІРёРґРёРјРѕСЃС‚Рё РґР»СЏ РіСЂР°С„РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ
+	bAutoCombat,			//Р¤Р»Р°Рі Р°РІС‚РѕР±РѕСЏ, РІРєР»СЋС‡Р°РµРјС‹Р№ РёРіСЂРѕРєРѕРј
+	bCastle,				//РСЃС‚РёРЅРЅРѕ, РµСЃР»Рё СЌС‚Рѕ С€С‚СѓСЂРј Р·Р°РјРєР°
 	bAltFlag,
-	bSimulate=false;		//Флаг симуляции битвы
-//clPath *TruePath;			//Указатель на найденный путь
+	bSimulate=false;		//Р¤Р»Р°Рі СЃРёРјСѓР»СЏС†РёРё Р±РёС‚РІС‹
+//clPath *TruePath;			//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°Р№РґРµРЅРЅС‹Р№ РїСѓС‚СЊ
 //int Found;
-int AA=0,					//Активный игрок
-	iTurn=0,				//Счетчик передач хода
+int AA=0,					//РђРєС‚РёРІРЅС‹Р№ РёРіСЂРѕРє
+	iTurn=0,				//РЎС‡РµС‚С‡РёРє РїРµСЂРµРґР°С‡ С…РѕРґР°
 	IndexAI;
 UI_Button1 buttRest, buttNext, buttEndTurn, buttGather, buttSpell, buttCancelSpell, buttChange,
 buttMarch, buttEat, buttStart, buttGrid, buttMenu;
@@ -102,19 +102,19 @@ UI_Button2 buttHeal, buttCrush, buttDoubleShot, buttRoundAtt;
 UI_TextBox txtSpName, txtSpTarget, txtSpDesc, txtTutorial;
 UI_Mask mskEff[6];
 BF_Effect *arEff[6];		
-dcUnit *unTower;	//Эмуляция башни
+dcUnit *unTower;	//Р­РјСѓР»СЏС†РёСЏ Р±Р°С€РЅРё
 BF_Unit bfTower;
 G_Object *objTower;
-BF_Unit *Gomunculus;	//Ссылка на только что призванного юнита
+BF_Unit *Gomunculus;	//РЎСЃС‹Р»РєР° РЅР° С‚РѕР»СЊРєРѕ С‡С‚Рѕ РїСЂРёР·РІР°РЅРЅРѕРіРѕ СЋРЅРёС‚Р°
 UI_Mask1 mskParam[13];
 
 int MagTower;
-dcUnit *unMagTower[3];	//Эмуляция магических башен
+dcUnit *unMagTower[3];	//Р­РјСѓР»СЏС†РёСЏ РјР°РіРёС‡РµСЃРєРёС… Р±Р°С€РµРЅ
 BF_Unit bfMagTower[3];
 G_Object *objMagTower[3];
 int MagTowerCoord[3]={470, 290, 650};
-clSpell Teleport;			//Прототип заклинания телепортации с целеуказанием на свободный тайл
-BF_Unit *pTeleportUnit;		//Указатель на телепортируемого юнита
+clSpell Teleport;			//РџСЂРѕС‚РѕС‚РёРї Р·Р°РєР»РёРЅР°РЅРёСЏ С‚РµР»РµРїРѕСЂС‚Р°С†РёРё СЃ С†РµР»РµСѓРєР°Р·Р°РЅРёРµРј РЅР° СЃРІРѕР±РѕРґРЅС‹Р№ С‚Р°Р№Р»
+BF_Unit *pTeleportUnit;		//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° С‚РµР»РµРїРѕСЂС‚РёСЂСѓРµРјРѕРіРѕ СЋРЅРёС‚Р°
 G_Object *objSim;
 G_Object *objTutorial;
 UI_Mask mskTutorial;
@@ -124,7 +124,7 @@ int TutQue, TutMode;
 void LoadBFPics()
 {
 	objSim=new G_Object(NULL,0,0,0,bmpEmpty);
-	DATAFILE *datBF=load_datafile("dat\\battlefield.dat");
+	DATAFILE *datBF=load_datafile("dat/Battlefield.dat");
 
 	mskParam[0].Init(895,98,61,21,1);
 
@@ -443,7 +443,7 @@ int FindCorpse(int Side, int x, int y)
 	return -1;
 };
 
-int GetTileType(int x, int y) //Возвращает тип тайла, в котором находится точка с координатами x,y
+int GetTileType(int x, int y) //Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РёРї С‚Р°Р№Р»Р°, РІ РєРѕС‚РѕСЂРѕРј РЅР°С…РѕРґРёС‚СЃСЏ С‚РѕС‡РєР° СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё x,y
 {
 	int j=(y-y%90)/90;
 	if (j%2){x-=52;};
@@ -485,7 +485,7 @@ void MakeBackground(int iNum)
 			};
 		};
 	};
-	//Текстура болота
+	//РўРµРєСЃС‚СѓСЂР° Р±РѕР»РѕС‚Р°
 	for (int y=0; y<768; y+=5)	
 	{
 		for (int x=0; x<884; x+=4)		
@@ -954,7 +954,7 @@ void EndBattleScreen(int Result, int Win)
 };
 
 
-//Конец сражения
+//РљРѕРЅРµС† СЃСЂР°Р¶РµРЅРёСЏ
 void EndBattle(int Win, int Site)
 {
 	if (bTutHint)
@@ -976,7 +976,7 @@ void EndBattle(int Win, int Site)
 					Eff1=Eff->pNext;
 					if (Eff->iType==73)
 					{
-						//Возврат захваченных юнитов
+						//Р’РѕР·РІСЂР°С‚ Р·Р°С…РІР°С‡РµРЅРЅС‹С… СЋРЅРёС‚РѕРІ
 						iFound=Eff->iPower;
 						if (!Eff->pPrev)
 						{
@@ -990,7 +990,7 @@ void EndBattle(int Win, int Site)
 					{
 						if (Eff->iType==90)
 						{	
-							//Снятие полиморфа
+							//РЎРЅСЏС‚РёРµ РїРѕР»РёРјРѕСЂС„Р°
 							Squad[k][i].iLife=Squad[k][i].iLife*Squad[k][i].pTrueForm->GetLife()/Squad[k][i].pUnit->GetLife();
 							if (Squad[k][i].iLife<=0)
 							{Squad[k][i].iLife=1;};						
@@ -1019,7 +1019,7 @@ void EndBattle(int Win, int Site)
 			};
 		};
 	};
-//Стираем графику при автобое
+//РЎС‚РёСЂР°РµРј РіСЂР°С„РёРєСѓ РїСЂРё Р°РІС‚РѕР±РѕРµ
 	if (bShowBattle){objLowString->iLayer=-1;};
 	if ((!bShowBattle)&&(!bAIBattle))
 	{
@@ -1053,11 +1053,11 @@ void EndBattle(int Win, int Site)
 		Exp[i]=0;
 		Reward[i]=0;
 	};
-//Подсчет общего опыта за бой
+//РџРѕРґСЃС‡РµС‚ РѕР±С‰РµРіРѕ РѕРїС‹С‚Р° Р·Р° Р±РѕР№
 	int ExpPool=SummonExp[1-Win];
 	TrophyGold=0, TrophyGem=0;
 	
-//Бонус за вражеского героя	
+//Р‘РѕРЅСѓСЃ Р·Р° РІСЂР°Р¶РµСЃРєРѕРіРѕ РіРµСЂРѕСЏ	
 	if ((Heroes[1-Win]->ipClass1>0)&&(Squad[1-Win][0].iLife==0))
 	{
 		ExpPool+=Heroes[1-Win]->iLevel*10;
@@ -1079,7 +1079,7 @@ void EndBattle(int Win, int Site)
 			ExpPool+=(Squad[1-Win][i].pUnit->pType()->iExp+Squad[1-Win][i].pUnit->pType()->iExp*Squad[1-Win][i].pUnit->iLevel/10);
 			TrophyGold+=Squad[1-Win][i].pUnit->pType()->iGoldPrice+Squad[1-Win][i].pUnit->pType()->iGoldPrice*Squad[1-Win][i].pUnit->iLevel/10;
 			TrophyGem+=Squad[1-Win][i].pUnit->pType()->iGemPrice+Squad[1-Win][i].pUnit->pType()->iGemPrice*Squad[1-Win][i].pUnit->iLevel/10;			
-	//Проверка квестов			
+	//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ			
 			if (Heroes[Win]->ipClass1>0)
 			{
 				for (int Q=0; Q<HERO_QUEST_LIMIT; Q++)
@@ -1133,14 +1133,14 @@ void EndBattle(int Win, int Site)
 				WorldRules.arTrigger[3]=BF_Player[Win];
 			}
 		};
-		//Немного опыта за сбежавших
+		//РќРµРјРЅРѕРіРѕ РѕРїС‹С‚Р° Р·Р° СЃР±РµР¶Р°РІС€РёС…
 		if ((Squad[1-Win][i].pUnit)&&(Squad[1-Win][i].iLife>0)&&(FearVictory>0))
 		{
 			ExpPool+=(Squad[1-Win][i].pUnit->pType()->iExp+Squad[1-Win][i].pUnit->pType()->iExp*Squad[1-Win][i].pUnit->iLevel/10)/10;
 			if (Squad[1-Win][i].iLife<Squad[1-Win][i].GetLife())
 			{ExpPool+=(Squad[1-Win][i].pUnit->pType()->iExp+Squad[1-Win][i].pUnit->pType()->iExp*Squad[1-Win][i].pUnit->iLevel/10)*(Squad[1-Win][i].GetLife()-Squad[1-Win][i].iLife)/Squad[1-Win][i].GetLife()/2;}
 		};
-		//Проверка квестов для проигравшей стороны
+		//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ РґР»СЏ РїСЂРѕРёРіСЂР°РІС€РµР№ СЃС‚РѕСЂРѕРЅС‹
 		if ((Squad[Win][i].pUnit)&&(Squad[Win][i].iLife==0))
 		{
 			if (Heroes[1-Win]->ipClass1>0)
@@ -1195,18 +1195,18 @@ void EndBattle(int Win, int Site)
 
 		};
 	};
-	//Бонус опыта за особые умения
+	//Р‘РѕРЅСѓСЃ РѕРїС‹С‚Р° Р·Р° РѕСЃРѕР±С‹Рµ СѓРјРµРЅРёСЏ
 	if ((Squad[Win][0].iLife>0)&&(Heroes[Win]->ipClass1>0))
 	{
 		ExpPool+=ExpPool*Squad[Win][0].CheckSkill(990)/100;		
 	};	
 
-	//30% опыта герою
+	//30% РѕРїС‹С‚Р° РіРµСЂРѕСЋ
 	if (Heroes[Win]->ipClass1>0)
 	{Exp[0]+=ExpPool*3/10;};
 	ExpPool-=ExpPool*3/10;
 
-	//28% опыта всем за участие	
+	//28% РѕРїС‹С‚Р° РІСЃРµРј Р·Р° СѓС‡Р°СЃС‚РёРµ	
 	int Work=SummonSurv[Win];
 	for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 	{
@@ -1225,7 +1225,7 @@ void EndBattle(int Win, int Site)
 	};
 	ExpPool-=ExpPool*4/10;
 
-	//42% опыта за проделанную работу	
+	//42% РѕРїС‹С‚Р° Р·Р° РїСЂРѕРґРµР»Р°РЅРЅСѓСЋ СЂР°Р±РѕС‚Сѓ	
 	Work=SummonWork[Win];
 	for (int i=0; i<MAX_SQUAD+MAX_SUMMONS; i++)
 	{
@@ -1249,38 +1249,38 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 			if (((i>0)||(Heroes[Win]->ipClass1==0))&&(Squad[Win][i].iLife>0)&&(Squad[Win][i].pUnit->GetUnitKind()!=2))
 			{
 			int GotIt;
-			//За рвение
+			//Р—Р° СЂРІРµРЅРёРµ
 			if (Squad[Win][i].iStaminaUsed>=Squad[Win][i].pUnit->GetStamina())
 			{
 				if (Random(21+Squad[Win][i].iStaminaUsed-Squad[Win][i].pUnit->GetStamina())>=20)
 				{Reward[i]=5;};
 			};
 		
-			//Медаль за отвагу
+			//РњРµРґР°Р»СЊ Р·Р° РѕС‚РІР°РіСѓ
 			if ((Squad[Win][i].iMorale-Squad[Win][i].GetMorale()-Heroes[Win]->pSquad[i]->iMorale/2>5)&&(Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>0))
 			{
 				if (Random(21+Squad[Win][i].iMorale-Squad[Win][i].GetMorale())>30)
 				{Reward[i]=1;};
 			};
-			//Медаль за сноровку
+			//РњРµРґР°Р»СЊ Р·Р° СЃРЅРѕСЂРѕРІРєСѓ
 			if ((Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>0)&&(Squad[Win][i].iRangeDamageTaken>Squad[Win][i].iLife/2))
 			{
 				if (Random(21+Squad[Win][i].iRangeDamageTaken-Squad[Win][i].iLife/2)>20)
 				{Reward[i]=11;};				
 			};
-			//Орден Защитника 
+			//РћСЂРґРµРЅ Р—Р°С‰РёС‚РЅРёРєР° 
 			if ((Squad[Win][i].iEnemySlayed>0)&&(Squad[Win][i].iMeleeDamageTaken>Squad[Win][i].iLife/2))
 			{
 				if (Random(21+Squad[Win][i].iMeleeDamageTaken-Squad[Win][i].iLife/2)>20)
 				{Reward[i]=12;};				
 			};
-			//Медаль за непоколебимость
+			//РњРµРґР°Р»СЊ Р·Р° РЅРµРїРѕРєРѕР»РµР±РёРјРѕСЃС‚СЊ
 			if ((Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>0)&&(Squad[Win][i].iSpellDamageTaken>Squad[Win][i].iLife/2))
 			{
 				if (Random(21+Squad[Win][i].iSpellDamageTaken-Squad[Win][i].iLife/2)>20)
 				{Reward[i]=13;};				
 			};
-			//Орден Победителя
+			//РћСЂРґРµРЅ РџРѕР±РµРґРёС‚РµР»СЏ
 			if (Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>0)
 			{
 				int Survived=0, Count=0;
@@ -1304,19 +1304,19 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 				else
 				{FileLog("!!!!!Error: Survived!!!!");};
 			};
-			//За стойкость
+			//Р—Р° СЃС‚РѕР№РєРѕСЃС‚СЊ
 			if ((Squad[Win][i].iMeleeDamageTaken+Squad[Win][i].iRangeDamageTaken+Squad[Win][i].iSpellDamageTaken+Squad[Win][i].iPoisonDamageTaken>=Squad[Win][i].GetLife())&&(Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>0))
 			{
 				if (Random(21+Squad[Win][i].iMeleeDamageTaken+Squad[Win][i].iRangeDamageTaken+Squad[Win][i].iSpellDamageTaken+Squad[Win][i].iPoisonDamageTaken-Squad[Win][i].GetLife())>=20)
 				{Reward[i]=2;};
 			};
-			//За волю к победе
+			//Р—Р° РІРѕР»СЋ Рє РїРѕР±РµРґРµ
 			if (Squad[Win][i].iMeleeDamageDone>(Squad[Win][i].pUnit->GetAttack()+Squad[Win][i].pUnit->GetCounterAttack())*3)
 			{
 				if (Random(21+Squad[Win][i].iMeleeDamageDone-(Squad[Win][i].pUnit->GetAttack()+Squad[Win][i].pUnit->GetCounterAttack())*3)>20)
 				{Reward[i]=4;};
 			};
-			//Медаль Целителя
+			//РњРµРґР°Р»СЊ Р¦РµР»РёС‚РµР»СЏ
 			if ((Squad[Win][i].iDamageHealed>=Squad[Win][i].CheckSkill(24)*3)&&(Squad[Win][i].CheckSkill(24)>0))
 			{
 				if (Random(21+Squad[Win][i].iDamageHealed-Squad[Win][i].CheckSkill(24)*3)>=20)
@@ -1331,7 +1331,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					{Reward[i]=9;};
 				};
 			};
-			//Орден снайпера
+			//РћСЂРґРµРЅ СЃРЅР°Р№РїРµСЂР°
 			if ((Squad[Win][i].pUnit->GetAmmo()>2)&&(Squad[Win][i].pUnit->GetRangedAttack()>0)&&(Squad[Win][i].iRangeDamageDone>=Squad[Win][i].pUnit->GetRangedAttack()*3)&&(Squad[Win][i].CheckSkill(28)==0)&&(Squad[Win][i].CheckSkill(46)==0)&&(Squad[Win][i].CheckSkill(47)==0)&&(Squad[Win][i].iEnemyShotted>1))
 			{
 				if (Random(21+Squad[Win][i].iRangeDamageDone+Squad[Win][i].iEnemyShotted*5-Squad[Win][i].pUnit->GetRangedAttack()*3)>=30)
@@ -1346,7 +1346,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					{Reward[i]=3;};
 				};
 			};
-			//Знак Чародея
+			//Р—РЅР°Рє Р§Р°СЂРѕРґРµСЏ
 			if ((Squad[Win][i].iSpellCast>=3)&&(Squad[Win][i].iEnemyShotted>0))
 			{
 				if (Random(10+Squad[Win][i].iSpellCast+Squad[Win][i].iEnemyShotted)>=10)
@@ -1361,7 +1361,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					{Reward[i]=14;};
 				};
 			};
-			//Звезда Мага
+			//Р—РІРµР·РґР° РњР°РіР°
 			if ((Squad[Win][i].iRangeDamageDone>=Squad[Win][i].pUnit->GetRangedAttack()*3)&&(Squad[Win][i].CheckSkill(28)>0)&&(Squad[Win][i].iEnemyShotted>1))
 			{
 				if (Random(21+Squad[Win][i].iRangeDamageDone+Squad[Win][i].iEnemyShotted*5-Squad[Win][i].pUnit->GetRangedAttack()*3)>=30)
@@ -1376,14 +1376,14 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					{Reward[i]=7;};
 				};
 			};
-			//Крест Героя
+			//РљСЂРµСЃС‚ Р“РµСЂРѕСЏ
 			if ((Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed>4)&&
 				(Squad[Win][i].iMeleeDamageTaken+Squad[Win][i].iRangeDamageTaken+Squad[Win][i].iSpellDamageTaken+Squad[Win][i].iPoisonDamageTaken>=Squad[Win][i].GetLife()*2/3))
 			{
 				if (Random(11+Squad[Win][i].iEnemyShotted+Squad[Win][i].iEnemySlayed)>=13)
 				{Reward[i]=8;};
 			};
-			//Вымпел Пламени
+			//Р’С‹РјРїРµР» РџР»Р°РјРµРЅРё
 			if ((Squad[Win][i].pUnit->GetAmmo()>2)&&(Squad[Win][i].pUnit->GetRangedAttack()>0)&&(Squad[Win][i].iRangeDamageDone>=Squad[Win][i].pUnit->GetRangedAttack()*3)&&(Squad[Win][i].CheckSkill(28)==0)&&(Squad[Win][i].iEnemyShotted>1)&&
 				(Squad[Win][i].iMeleeDamageTaken+Squad[Win][i].iRangeDamageTaken+Squad[Win][i].iSpellDamageTaken+Squad[Win][i].iPoisonDamageTaken>=Squad[Win][i].GetLife()*2/3))
 			{
@@ -1402,7 +1402,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 			};
 		};
 	};
-	//Бонус герою за особые умения
+	//Р‘РѕРЅСѓСЃ РіРµСЂРѕСЋ Р·Р° РѕСЃРѕР±С‹Рµ СѓРјРµРЅРёСЏ
 	if ((Squad[Win][0].iLife>0)&&(Heroes[Win]->ipClass1>0))
 	{
 		Exp[0]+=Exp[0]*Squad[Win][0].CheckSkill(991)/100;
@@ -1412,7 +1412,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 	TrophyGold+=TrophyGold*arPlayer[BF_Player[Win]].GetBldParam1(41)/100;
 	TrophyGem+=TrophyGem*arPlayer[BF_Player[Win]].GetBldParam1(41)/100;
 
-//Раздача опыта и изменение жизни и боевого духа
+//Р Р°Р·РґР°С‡Р° РѕРїС‹С‚Р° Рё РёР·РјРµРЅРµРЅРёРµ Р¶РёР·РЅРё Рё Р±РѕРµРІРѕРіРѕ РґСѓС…Р°
 	for (int i=0; i<MAX_SQUAD; i++)
 	{
 		if ((Heroes[Win]->pSquad[i])&&(Squad[Win][i].pUnit))
@@ -1466,7 +1466,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 		Heroes[Win]->iExp+=Exp[0];
 	};
 
-//Генерация лута	
+//Р“РµРЅРµСЂР°С†РёСЏ Р»СѓС‚Р°	
 	int Looter=0;
 	if ((Squad[Win][0].iLife>0)&&(Heroes[Win]->ipClass1>0))
 	{
@@ -1617,7 +1617,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 		};
 	};
 		
-//Проверка квестов
+//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ
 	if (Heroes[Win]->ipClass1>0)
 	{
 		for (int Q=0; Q<HERO_QUEST_LIMIT; Q++)
@@ -1670,7 +1670,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 		{
 			if ((i==0)&&(Heroes[Win]->ipClass1>0))
 			{
-	//Повышение героя
+	//РџРѕРІС‹С€РµРЅРёРµ РіРµСЂРѕСЏ
 				while (Heroes[Win]->iLevel<Heroes[Win]->CountLevel())
 				{
 					if (arPlayer[BF_Player[Win]].Control==1)
@@ -1685,7 +1685,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 			}
 			else
 			{
-		//Повышение юнитов
+		//РџРѕРІС‹С€РµРЅРёРµ СЋРЅРёС‚РѕРІ
 				while (Heroes[Win]->pSquad[i]->iLevel<Heroes[Win]->pSquad[i]->CountLevel())
 				{
 					if ((bShowBattle)&&(arPlayer[BF_Player[Win]].Control==1))
@@ -1775,7 +1775,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 		};
 	};
 
-	//Удаление мертвых воинов
+	//РЈРґР°Р»РµРЅРёРµ РјРµСЂС‚РІС‹С… РІРѕРёРЅРѕРІ
 	for (int i=0; i<MAX_SQUAD; i++)
 	{
 		if ((Heroes[Win]->pSquad[i])&&(Heroes[Win]->pSquad[i]->iLife==0)&&((Heroes[Win]->ipClass1>0)||(bCastle)))
@@ -1797,7 +1797,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 			};
 		};
 	};
-	//Некромантия
+	//РќРµРєСЂРѕРјР°РЅС‚РёСЏ
 		if ((Squad[Win][0].iLife>0)&&(Heroes[Win]->ipClass1>0)&&(Heroes[Win]->CheckSkill(21)+Heroes[Win]->CheckHeroBonus(910)>0))
 		{
 			bool bNecro=false;
@@ -1809,7 +1809,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					arNecro[i][j]=0;
 				};
 			};
-			//Поиск подходящих мертвяков
+			//РџРѕРёСЃРє РїРѕРґС…РѕРґСЏС‰РёС… РјРµСЂС‚РІСЏРєРѕРІ
 			for (int i=1; i<MAX_SQUAD+MAX_SUMMONS; i++)
 			{
 				int Lvl=0;
@@ -1852,10 +1852,10 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 					};					
 				};
 			};
-			WriteLog("Некромантия");
+			WriteLog("РќРµРєСЂРѕРјР°РЅС‚РёСЏ");
 	//		clear_keybuf();
 	//		readkey();
-			//Создание окна некромантии
+			//РЎРѕР·РґР°РЅРёРµ РѕРєРЅР° РЅРµРєСЂРѕРјР°РЅС‚РёРё
 			if ((bNecro)&&(arPlayer[BF_Player[Win]].Control==1))
 			{
 				int x=512-bmpGUI_Necro->w/2;
@@ -2017,7 +2017,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 			{
 				if (bNecro)
 				{
-		//Некромантия для AI
+		//РќРµРєСЂРѕРјР°РЅС‚РёСЏ РґР»СЏ AI
 					bool bEvil=false, bGood=false;
 					for (int i=1; i<MAX_SQUAD; i++)
 					{
@@ -2070,9 +2070,9 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 		};
 	}
 	else
-//Ничья
+//РќРёС‡СЊСЏ
 	{
-		WriteLog("Ничья");
+		WriteLog("РќРёС‡СЊСЏ");
 		for (int j=0; j<2; j++)
 		{			
 			for (int i=0; i<MAX_SQUAD; i++)
@@ -2125,7 +2125,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 				EndBattleScreen(-1,1);
 			};
 		};
-		//Проверка квестов
+		//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ
 		for (int j=0; j<2; j++)
 		{
 			if (Heroes[j]->ipClass1>0)
@@ -2230,7 +2230,7 @@ Squad[Win][i].iStaminaUsed+1)/Work;
 };
 
 //****************************************************
-//**** Выбор заклинания ******************************
+//**** Р’С‹Р±РѕСЂ Р·Р°РєР»РёРЅР°РЅРёСЏ ******************************
 //****************************************************
 
 int Spellbook()
@@ -2512,7 +2512,7 @@ int Spellbook()
 	return Result;
 };
 
-//Ищет способного действовать юнита и возвращает ссылку на него.
+//РС‰РµС‚ СЃРїРѕСЃРѕР±РЅРѕРіРѕ РґРµР№СЃС‚РІРѕРІР°С‚СЊ СЋРЅРёС‚Р° Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° РЅРµРіРѕ.
 BF_Unit * FindNextUnit()
 {	
 	int Found=-1;
@@ -2568,7 +2568,7 @@ int CalcColor(int Curr, int Max)
 
 void ShowEnemy(BF_Unit *Unit)
 {
-//Вывод информационной панели
+//Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ РїР°РЅРµР»Рё
 	blit(jPanel,bmpSideBar,0,0,0,0,jPanel->w,700);
 	draw_sprite(bmpSideBar,Unit->pUnit->pType()->Pic,7,15);
 	textprintf_centre_ex(bmpSideBar,Font1,115,26,CalcColor(Unit->iLife,Unit->GetLife()),-1,"%d",Unit->iLife);
@@ -2649,13 +2649,13 @@ void ShowEnemy(BF_Unit *Unit)
 
 
 //***********************************************************
-//*****  Выбор активного юнита  *****************************
+//*****  Р’С‹Р±РѕСЂ Р°РєС‚РёРІРЅРѕРіРѕ СЋРЅРёС‚Р°  *****************************
 //***********************************************************
 
 
 void ShowUnit(BF_Unit *Unit)
 {
-//Вывод информационной панели
+//Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ РїР°РЅРµР»Рё
 	blit(jPanel,objPanel,0,0,0,0,jPanel->w,jPanel->h);
 	draw_sprite(objPanel,Unit->pUnit->pType()->Pic,7,15);
 	textprintf_centre_ex(objPanel,Font1,115,26,CalcColor(Unit->iLife,Unit->GetLife()),-1,"%d",Unit->iLife);
@@ -2701,7 +2701,7 @@ void ShowUnit(BF_Unit *Unit)
 
 void SelectUnit(BF_Unit *Unit)
 {
-//Вывод информационной панели
+//Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ РїР°РЅРµР»Рё
 	ShowUnit(Unit);
 	iTarget=-1;
 	/*blit(jPanel,objPanel,0,0,0,0,jPanel->w,jPanel->h);
@@ -2867,7 +2867,7 @@ void SelectUnit(BF_Unit *Unit)
 		};
 	};
 
-//Построение карты дальности выстрела
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё РІС‹СЃС‚СЂРµР»Р°
 	HideTargets();
 
 	if ((Unit->GetShootingRange())&&(Unit->iAmmo))
@@ -2892,7 +2892,7 @@ void SelectUnit(BF_Unit *Unit)
 
 
 
-//Построение карты поиска пути
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
 	bFirstMove=(Unit->iSpeed>=Unit->GetSpeed());	
 	if ((!Unit->bMarch)&&(Unit->iSpeed<=Unit->GetSpeed()))
 	{bFirstMove=false;};
@@ -2913,13 +2913,13 @@ void SelectUnit(BF_Unit *Unit)
 
 	if ((Unit->iSpeed>0)&&(Unit->iStamina>0))
 	{
-		if (Unit->CheckSkill(14)) //Летающий
+		if (Unit->CheckSkill(14)) //Р›РµС‚Р°СЋС‰РёР№
 		{
 			FlyMap(Unit->x,Unit->y,-1,Unit->iSpeed,true);
 		}
 		else
 		{
-			if (Unit->CheckSkill(15)) //Низколетающий
+			if (Unit->CheckSkill(15)) //РќРёР·РєРѕР»РµС‚Р°СЋС‰РёР№
 			{
 				FlyMap(Unit->x,Unit->y,-1,Unit->iSpeed,false);
 			}
@@ -2946,10 +2946,10 @@ void SelectUnit(BF_Unit *Unit)
 	//};
 
 
-//***** Инициализация кнопок *****
+//***** РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРЅРѕРїРѕРє *****
 	
 	
-//Отдых
+//РћС‚РґС‹С…
 	if (Unit->bResting)
 	{
 		buttRest.Activate(-2);
@@ -2970,7 +2970,7 @@ void SelectUnit(BF_Unit *Unit)
 		};
 	};
 
-//Следующий юнит
+//РЎР»РµРґСѓСЋС‰РёР№ СЋРЅРёС‚
 	if (FindNextUnit())
 	{
 		buttNext.Activate(1);
@@ -2983,7 +2983,7 @@ void SelectUnit(BF_Unit *Unit)
 	int ButtUsed=2;
 	dX=1024-jPanel->w+14, dY=247, dW=62, dH=56;
 
-//Магия
+//РњР°РіРёСЏ
 	bool bMagic=false;
 	if (((Unit->pHero)&&(Unit->pHero->ipClass1>0))||(Unit->CheckCaster()))
 	{bMagic=true;};
@@ -2999,7 +2999,7 @@ void SelectUnit(BF_Unit *Unit)
 	else
 	{buttSpell.Activate(-1);};
 
-//Смена оружия
+//РЎРјРµРЅР° РѕСЂСѓР¶РёСЏ
 	if ((Unit->pHero)&&(Unit->pHero->ipClass1>0))
 	{
 		ButtUsed++;
@@ -3011,7 +3011,7 @@ void SelectUnit(BF_Unit *Unit)
 	else
 	{buttChange.Activate(-1);};
 
-//Лечение
+//Р›РµС‡РµРЅРёРµ
 	if (Unit->CheckSkill(24))
 	{
 		buttHeal.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3025,7 +3025,7 @@ void SelectUnit(BF_Unit *Unit)
 	{buttHeal.Activate(-1, 0);};
 
 
-//Сбор снарядов
+//РЎР±РѕСЂ СЃРЅР°СЂСЏРґРѕРІ
 	if (Unit->CheckSkill(23))
 	{
 		buttGather.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3040,7 +3040,7 @@ void SelectUnit(BF_Unit *Unit)
 		buttGather.Activate(-1);
 	};
 
-//Марш-бросок
+//РњР°СЂС€-Р±СЂРѕСЃРѕРє
 	if (Unit->CheckSkill(29))
 	{
 		buttMarch.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3055,7 +3055,7 @@ void SelectUnit(BF_Unit *Unit)
 		buttMarch.Activate(-1);
 	};
 
-//Трупоедство
+//РўСЂСѓРїРѕРµРґСЃС‚РІРѕ
 	if (Unit->CheckSkill(49))
 	{
 		buttEat.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3071,7 +3071,7 @@ void SelectUnit(BF_Unit *Unit)
 		buttEat.Activate(-1);
 	};
 
-//Сокрушающий удар
+//РЎРѕРєСЂСѓС€Р°СЋС‰РёР№ СѓРґР°СЂ
 	if (Unit->CheckSkill(59))
 	{
 		buttCrush.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3084,7 +3084,7 @@ void SelectUnit(BF_Unit *Unit)
 	else
 	{buttCrush.Activate(-1, 0);};
 
-//Круговая атака удар
+//РљСЂСѓРіРѕРІР°СЏ Р°С‚Р°РєР° СѓРґР°СЂ
 	if (Unit->CheckSkill(66))
 	{
 		buttRoundAtt.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3097,7 +3097,7 @@ void SelectUnit(BF_Unit *Unit)
 	else
 	{buttRoundAtt.Activate(-1, 0);};
 
-//Двойной выстрел
+//Р”РІРѕР№РЅРѕР№ РІС‹СЃС‚СЂРµР»
 	if (Unit->CheckSkill(20))
 	{
 		buttDoubleShot.Replace(dX+(ButtUsed%2)*dW,dY+((ButtUsed-ButtUsed%2)/2*dH));
@@ -3113,7 +3113,7 @@ void SelectUnit(BF_Unit *Unit)
 //	buttUnitBar.Activate(1,buttUnitBar.bPress);
 	buttMenu.Activate(1);
 
-	//Подсказка о поломке оружмя
+	//РџРѕРґСЃРєР°Р·РєР° Рѕ РїРѕР»РѕРјРєРµ РѕСЂСѓР¶РјСЏ
 	if ((Tutorial.Mode)&&(!bTutHint)&&(Unit->pHero)&&(Unit->bCanAct)&&(Unit->pHero->ipClass1>0)&&(Tutorial.Broken==1)&&(
 	((Unit->pHero->arInventory[1][0]>0)&&(Unit->pHero->arInventory[1][1]==0))||
 	((Unit->pHero->arInventory[2][0]>0)&&(Unit->pHero->arInventory[2][1]==0)) ) )
@@ -3131,7 +3131,7 @@ void SelectUnit(BF_Unit *Unit)
 
 
 //***********************************************************
-//*****  Конец хода  ****************************************
+//*****  РљРѕРЅРµС† С…РѕРґР°  ****************************************
 //***********************************************************
 
 bool EndTurn(bool bNext, bool bAutoEnd)
@@ -3255,7 +3255,7 @@ bool EndTurn(bool bNext, bool bAutoEnd)
 
 			int Hit=0;
 
-			//Отдых
+			//РћС‚РґС‹С…
 			if ((Squad[AA][i].bResting)||((Squad[AA][i].bCanAct)&&(Squad[AA][i].iSpeed==Squad[AA][i].GetSpeed())))
 			{
 				Squad[AA][i].iStamina+=(2+Squad[AA][i].CheckSkill(21));
@@ -3276,7 +3276,7 @@ bool EndTurn(bool bNext, bool bAutoEnd)
 
 			
 
-			//Таймеры эффектов
+			//РўР°Р№РјРµСЂС‹ СЌС„С„РµРєС‚РѕРІ
 			while (Eff)
 			{	
 				if (Eff->iType==1)
@@ -3333,7 +3333,7 @@ bool EndTurn(bool bNext, bool bAutoEnd)
 				};
 				Eff=Eff1;				
 			};
-			//Исчезновение визуальных эффектов
+			//РСЃС‡РµР·РЅРѕРІРµРЅРёРµ РІРёР·СѓР°Р»СЊРЅС‹С… СЌС„С„РµРєС‚РѕРІ
 			if ((Squad[AA][i].G_Obj->iWeb>0)||(Squad[AA][i].G_Obj->iRoot>0)||(Squad[AA][i].G_Obj->iIce>0)||(Squad[AA][i].G_Obj->bmpStone))
 			{
 				bool bNoWeb=true, bNoRoot=true, bNoIce=true, bNoStone=true;
@@ -3384,7 +3384,7 @@ bool EndTurn(bool bNext, bool bAutoEnd)
 
 			Hit+=Squad[AA][i].CheckSkill(48);
 
-			//Яд/регенерация
+			//РЇРґ/СЂРµРіРµРЅРµСЂР°С†РёСЏ
 			if (Hit+Squad[AA][i].iLife<0)
 			{
 				Hit=-Squad[AA][i].iLife;
@@ -3709,7 +3709,7 @@ bool EndTurn(bool bNext, bool bAutoEnd)
 	return 1;
 };
 
-bool CanAttack(int x, int y) // Возвращает истину, если активный юнит может атаковать с данной клетки
+bool CanAttack(int x, int y) // Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё Р°РєС‚РёРІРЅС‹Р№ СЋРЅРёС‚ РјРѕР¶РµС‚ Р°С‚Р°РєРѕРІР°С‚СЊ СЃ РґР°РЅРЅРѕР№ РєР»РµС‚РєРё
 {
 	if ((x>=0)&&(x<8)&&(y>=0)&&(y<8)&&ActiveUnit->bCanAct)
 	{
@@ -3723,7 +3723,7 @@ bool CanAttack(int x, int y) // Возвращает истину, если активный юнит может атак
 };
 
 
-//Стандартные действия после вызова заклинания героем
+//РЎС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° Р·Р°РєР»РёРЅР°РЅРёСЏ РіРµСЂРѕРµРј
 void SpellCast()
 {
 	if (ActiveSpell==30000)
@@ -3803,7 +3803,7 @@ void SpellCast()
 	ActiveUnit->DrawBar();
 	if (!ActiveUnit->bCanAct)
 	{
-//	WriteLog("Ищем замену");
+//	WriteLog("РС‰РµРј Р·Р°РјРµРЅСѓ");
 	if (Gomunculus)
 	{
 		SelectUnit(Gomunculus);
@@ -3831,10 +3831,10 @@ void SpellCast()
 };
 
 
-//Вызов заклинания на трупе юнита
+//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РЅР° С‚СЂСѓРїРµ СЋРЅРёС‚Р°
 void CorpseSpell(clSpell *Spell, BF_Unit *Corpse)
 {	
-//Вызов	
+//Р’С‹Р·РѕРІ	
 	if (Spell->arEffect[0][0]>1000)
 	{
 		for (int i=MAX_SQUAD; i<MAX_SQUAD+MAX_SUMMONS; i++)
@@ -3869,7 +3869,7 @@ void CorpseSpell(clSpell *Spell, BF_Unit *Corpse)
 			};
 		};
 	};
-//Воскрешение
+//Р’РѕСЃРєСЂРµС€РµРЅРёРµ
 	if (Spell->arEffect[0][0]==1)
 	{
 		Gomunculus=Corpse;
@@ -3902,12 +3902,12 @@ void CorpseSpell(clSpell *Spell, BF_Unit *Corpse)
 	};
 };
 
-//Вызов заклинания в тайле
+//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С‚Р°Р№Р»Рµ
 void TileSpell(clSpell *Spell, int x, int y)
 {
 	if (Spell->arEffect[0][0]>1000)
 	{
-		//Вызов
+		//Р’С‹Р·РѕРІ
 		for (int i=MAX_SQUAD; i<MAX_SQUAD+MAX_SUMMONS; i++)
 		{
 			if ((Squad[AA][i].pUnit==NULL)&&(Squad[AA][i].iSurvived==0))
@@ -3935,7 +3935,7 @@ void TileSpell(clSpell *Spell, int x, int y)
 	};
 	if (Spell->arEffect[0][0]==89)		
 	{
-		//Телепорт
+		//РўРµР»РµРїРѕСЂС‚
 		pTeleportUnit->Replace(x,y);
 		pTeleportUnit->G_Obj->Make_Stars(pTeleportUnit->G_Obj,50,40,10,0,44,40,10,200,200);
 	};
@@ -3943,7 +3943,7 @@ void TileSpell(clSpell *Spell, int x, int y)
 
 void SpellPrepare(int ipSpell)
 {
-//Построение карты дальности заклинания	
+//РџРѕСЃС‚СЂРѕРµРЅРёРµ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё Р·Р°РєР»РёРЅР°РЅРёСЏ	
 	if ((pCast->iTarget==5)||(pCast->iTarget==3))
 	{
 		HideTargets();
@@ -3980,7 +3980,7 @@ void SpellPrepare(int ipSpell)
 	};
 	if (pCast->iTarget==0)
 	{
-//Вызов заклятья без цели (на все поле)
+//Р’С‹Р·РѕРІ Р·Р°РєР»СЏС‚СЊСЏ Р±РµР· С†РµР»Рё (РЅР° РІСЃРµ РїРѕР»Рµ)
 		if (pCast->iArea==2)
 		{
 			if (pCast->bOnAlly)
@@ -4001,7 +4001,7 @@ void SpellPrepare(int ipSpell)
 						};
 						if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==ipSpell))
 						{
-				//Найден свой подходящий юнит
+				//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 							Squad[AA][k].UnderSpell(pCast, ActiveUnit, AA);
 						};
 					};
@@ -4025,25 +4025,25 @@ void SpellPrepare(int ipSpell)
 						};
 						if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==ipSpell))
 						{
-				//Найден вражеский подходящий юнит
+				//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 							Squad[1-AA][k].UnderSpell(pCast, ActiveUnit, AA);														
 						};
 					};
 				};
 			};
 		};
-//Вызов заклятья на себя
+//Р’С‹Р·РѕРІ Р·Р°РєР»СЏС‚СЊСЏ РЅР° СЃРµР±СЏ
 		if (pCast->iArea==0)
 		{ActiveUnit->UnderSpell(pCast, ActiveUnit, AA);}
 
 		SpellCast();
-//		WriteLog("Вернулись в основной процесс");
+//		WriteLog("Р’РµСЂРЅСѓР»РёСЃСЊ РІ РѕСЃРЅРѕРІРЅРѕР№ РїСЂРѕС†РµСЃСЃ");
 	};
 };
 
 
 //*********************************************
-//*** Расстановка войск ***********************
+//*** Р Р°СЃСЃС‚Р°РЅРѕРІРєР° РІРѕР№СЃРє ***********************
 //*********************************************
 
 void UnitPlacement (int Side)
@@ -4345,7 +4345,7 @@ void UnitPlacement (int Side)
 			Check=Grid[i][j].Check();
 			switch (Check)
 			{
-case 30:	//Клик по тайлу					
+case 30:	//РљР»РёРє РїРѕ С‚Р°Р№Р»Сѓ					
 			if (bMouseReleased)
 			{
 				NeedUse=true;
@@ -4354,7 +4354,7 @@ case 30:	//Клик по тайлу
 					if ((Squad[Side][k].iLife)&&(Squad[Side][k].x==i)&&(Squad[Side][k].y==j))
 					{		
 						if (ActiveUnit)
-		//Перемещение юнита в занятый тайл
+		//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ Р·Р°РЅСЏС‚С‹Р№ С‚Р°Р№Р»
 						{
 							Squad[Side][k].Replace(ActiveUnit->x,ActiveUnit->y);
 							ActiveUnit->Replace(i,j);
@@ -4364,7 +4364,7 @@ case 30:	//Клик по тайлу
 							break;
 						}					
 						else
-		//Выбор юнита
+		//Р’С‹Р±РѕСЂ СЋРЅРёС‚Р°
 						{
 							ShowUnit(&Squad[Side][k]);							
 						};
@@ -4373,7 +4373,7 @@ case 30:	//Клик по тайлу
 				};
 				if ((ActiveUnit)&&(NeedUse))
 				{
-		//Перемещение юнита в свободный тайл
+		//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ С‚Р°Р№Р»
 					ActiveUnit->Replace(i,j);
 					ActiveUnit->G_Obj->RemoveCargo(objSelect);
 					ActiveUnit=NULL;
@@ -4383,7 +4383,7 @@ case 30:	//Клик по тайлу
 			};
 			break;
 	case 40:
-		//Инфо-клик
+		//РРЅС„Рѕ-РєР»РёРє
 		for (int k=0; k<MAX_SQUAD+MAX_SUMMONS; k++)
 		{
 			if ((Squad[Side][k].pUnit)&&(Squad[Side][k].iLife>0)&&(Squad[Side][k].x==i)&&(Squad[Side][k].y==j))
@@ -4399,7 +4399,7 @@ case 30:	//Клик по тайлу
 		};
 		break;
 	case 2:					
-	case 3:			//Курсор над тайлом
+	case 3:			//РљСѓСЂСЃРѕСЂ РЅР°Рґ С‚Р°Р№Р»РѕРј
 		for (int k=0; k<MAX_SQUAD+MAX_SUMMONS; k++)
 		{
 			if (((key[KEY_ALT])||(key[KEY_ALTGR]))&&(Squad[Side][k].iLife)&&(Squad[Side][k].x==i)&&(Squad[Side][k].y==j)&&(ActiveUnit!=&Squad[Side][k]))
@@ -4495,7 +4495,7 @@ case 30:	//Клик по тайлу
 	else		
 	{
 
-//Расстановка войск АИ
+//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° РІРѕР№СЃРє РђР
 		bool arPlace[MAX_SQUAD];
 		int sqNN=0, sqNN2=0, Side2= (Side>0?0:1), sqConst=0;//new
 		for (int i=0; i<MAX_SQUAD; i++)
@@ -4527,7 +4527,7 @@ case 30:	//Клик по тайлу
 		//
 
 		#define MODDD(x,y) (x-y>0?x-y:y-x)
-		//Расстановка стрелков
+		//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЃС‚СЂРµР»РєРѕРІ
 		while (Range>2)
 		{
 			Range=2; Choosen=-1;
@@ -4542,7 +4542,7 @@ case 30:	//Клик по тайлу
 
 			if (Choosen>=0)
 			{
-				//На холмах
+				//РќР° С…РѕР»РјР°С…
 				for (int x=0; x<2; x++)
 				{
 					for (int y=Pos0; MODDD((Pos2+dPos),y) > 0 ; y+=dPos)//new
@@ -4565,7 +4565,7 @@ case 30:	//Клик по тайлу
 						};
 					};
 				};
-				//Во втором ряду
+				//Р’Рѕ РІС‚РѕСЂРѕРј СЂСЏРґСѓ
 				if (arPlace[Choosen])
 				{
 					for (int x=0; x<2; x++)
@@ -4593,7 +4593,7 @@ case 30:	//Клик по тайлу
 				};
 			};
 		};
-		//Помещение героев командира или мага в задний ряд
+		//РџРѕРјРµС‰РµРЅРёРµ РіРµСЂРѕРµРІ РєРѕРјР°РЅРґРёСЂР° РёР»Рё РјР°РіР° РІ Р·Р°РґРЅРёР№ СЂСЏРґ
 		if ((arPlace[0])&&(Heroes[Side]->ipClass1>2))
 		{
 			for (int x=0; x<2; x++)
@@ -4620,7 +4620,7 @@ case 30:	//Клик по тайлу
 			};
 		};
 		Choosen=1;
-		//Расстановка рукопашных войск
+		//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЂСѓРєРѕРїР°С€РЅС‹С… РІРѕР№СЃРє
 		while (Choosen>=0)
 		{
 			Choosen=-1;
@@ -4711,7 +4711,7 @@ case 30:	//Клик по тайлу
 	//	if (Side)
 	//	{Rx[0]=7; Rx[1]=6;} else {Rx[0]=0; Rx[1]=1;};
 	//	int Choosen=-1, Range=3;
-	//	//Расстановка стрелков
+	//	//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЃС‚СЂРµР»РєРѕРІ
 	//	while (Range>2)
 	//	{
 	//		Range=2; Choosen=-1;
@@ -4725,7 +4725,7 @@ case 30:	//Клик по тайлу
 	//		};
 	//		if (Choosen>=0)
 	//		{
-	//			//На холмах
+	//			//РќР° С…РѕР»РјР°С…
 	//			for (int x=0; x<2; x++)
 	//			{
 	//				for (int y=0; y<8; y++)
@@ -4747,7 +4747,7 @@ case 30:	//Клик по тайлу
 	//					};
 	//				};
 	//			};
-	//			//Во втором ряду
+	//			//Р’Рѕ РІС‚РѕСЂРѕРј СЂСЏРґСѓ
 	//			if (arPlace[Choosen])
 	//			{
 	//				for (int x=0; x<2; x++)
@@ -4774,7 +4774,7 @@ case 30:	//Клик по тайлу
 	//			};
 	//		};
 	//	};
-	//	//Помещение героев командира или мага в задний ряд
+	//	//РџРѕРјРµС‰РµРЅРёРµ РіРµСЂРѕРµРІ РєРѕРјР°РЅРґРёСЂР° РёР»Рё РјР°РіР° РІ Р·Р°РґРЅРёР№ СЂСЏРґ
 	//	if ((arPlace[0])&&(Heroes[Side]->ipClass1>2))
 	//	{
 	//		for (int x=0; x<2; x++)
@@ -4800,7 +4800,7 @@ case 30:	//Клик по тайлу
 	//		};
 	//	};
 	//	Choosen=1;
-	//	//Расстановка рукопашных войск
+	//	//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЂСѓРєРѕРїР°С€РЅС‹С… РІРѕР№СЃРє
 	//	while (Choosen>=0)
 	//	{
 	//		Choosen=-1;
@@ -5198,10 +5198,10 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 
 	
 
-//textprintf(screen,Font1,100,100,COLOR_2,"Генерация поля боя");	
-//Генерация поля боя
+//textprintf(screen,Font1,100,100,COLOR_2,"Р“РµРЅРµСЂР°С†РёСЏ РїРѕР»СЏ Р±РѕСЏ");	
+//Р“РµРЅРµСЂР°С†РёСЏ РїРѕР»СЏ Р±РѕСЏ
 	if (Prov2)
-	//На границе провинций
+	//РќР° РіСЂР°РЅРёС†Рµ РїСЂРѕРІРёРЅС†РёР№
 	{		
 		int LeftPass, LeftImpass, RightPass, RightImpass;
 		LeftPass=(pFirstTerrain+Prov1->ipTerrain)->iBF_Pass;
@@ -5209,7 +5209,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		RightPass=(pFirstTerrain+Prov2->ipTerrain)->iBF_Pass;
 		RightImpass=(pFirstTerrain+Prov2->ipTerrain)->iBF_Impass;
 
-	//Столбцы 0,1
+	//РЎС‚РѕР»Р±С†С‹ 0,1
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;
@@ -5234,7 +5234,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-	//Столбец 2
+	//РЎС‚РѕР»Р±РµС† 2
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;
@@ -5262,7 +5262,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			arGrid[2][j].Pass=1;
 		};
 
-	//Столбец 3
+	//РЎС‚РѕР»Р±РµС† 3
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;
@@ -5290,7 +5290,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			arGrid[3][j].Pass=1;
 		};
 
-	//Столбцы 6,7
+	//РЎС‚РѕР»Р±С†С‹ 6,7
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;		
@@ -5315,7 +5315,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-	//Столбец 5		
+	//РЎС‚РѕР»Р±РµС† 5		
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;		
@@ -5343,7 +5343,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			arGrid[5][j].Pass=1;
 		};
 		
-	//Столбец 4
+	//РЎС‚РѕР»Р±РµС† 4
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;		
@@ -5372,13 +5372,13 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};
 	}
 	else		
-//Внутри провинции
+//Р’РЅСѓС‚СЂРё РїСЂРѕРІРёРЅС†РёРё
 	{
 		int Pass, Impass;
 		Pass=(pFirstTerrain+Prov1->ipTerrain)->iBF_Pass;
 		Impass=(pFirstTerrain+Prov1->ipTerrain)->iBF_Impass;		
 
-	//Столбцы 0,1,6,7
+	//РЎС‚РѕР»Р±С†С‹ 0,1,6,7
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;		
@@ -5425,7 +5425,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-	//Столбцы 2-5
+	//РЎС‚РѕР»Р±С†С‹ 2-5
 		ClearRoll();
 		RollerN[0]=1;
 		RollerP[0]=45;
@@ -5460,7 +5460,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-	//Получение данных об укреплениях
+	//РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… РѕР± СѓРєСЂРµРїР»РµРЅРёСЏС…
 		if (bCastle)
 		{
 			int Towerz, Fort, Build=0;			
@@ -5479,12 +5479,12 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							Build=Prov1->arBuilding[i];
 					};
 				};
-//				textprintf(screen,Font1,10,100,COLOR_2,"провинция %s, игрок %d",Prov1->sName,Prov1->ipPlayer);
+//				textprintf(screen,Font1,10,100,COLOR_2,"РїСЂРѕРІРёРЅС†РёСЏ %s, РёРіСЂРѕРє %d",Prov1->sName,Prov1->ipPlayer);
 				Fort=100*Prov1->iFort/(pFirstOuterBld+Build)->iWall;
 				Towerz=(pFirstOuterBld+Build)->iTowerType;
 				TowerShoot=(pFirstOuterBld+Build)->iTowerShoot;
 			};
-	//Эмуляция башен
+	//Р­РјСѓР»СЏС†РёСЏ Р±Р°С€РµРЅ
 			if (TowerShoot>0)
 			{
 				unTower=new dcUnit(4,0);
@@ -5501,7 +5501,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				bfTower.bSummoned=true;
 				objTower->x=1025;
 			};
-	//Линия укреплений
+	//Р›РёРЅРёСЏ СѓРєСЂРµРїР»РµРЅРёР№
 			if (Fort==0)
 			{arGrid[5][0].Land=11;}
 			else
@@ -5583,7 +5583,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		{arGrid[i][Clear].Land=1;};
 	};
 	
-//Визуализация поля боя
+//Р’РёР·СѓР°Р»РёР·Р°С†РёСЏ РїРѕР»СЏ Р±РѕСЏ
 	Background=create_bitmap(1024,768);
 	if (bShowAnim)
 	{
@@ -5770,10 +5770,10 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 	};	
 	
 	
-//Получение информации о юнитах и расстановка войск
+//РџРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЋРЅРёС‚Р°С… Рё СЂР°СЃСЃС‚Р°РЅРѕРІРєР° РІРѕР№СЃРє
 	
 
-//Модификаторы жизни нейтралов в зависимости от сложности!
+//РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ Р¶РёР·РЅРё РЅРµР№С‚СЂР°Р»РѕРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё!
 	LifeMod[0]=100;
 	LifeMod[1]=100;
 	for (int i=0; i<2; i++)
@@ -5807,7 +5807,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		UnitPlacement(1);
 	};
 	FileLog("Unit placement end");
-	//Диверсии
+	//Р”РёРІРµСЂСЃРёРё
 	if ((Heroes[0])&&(Squad[0][0].iLife>0)&&(Heroes[0]->ipClass1>0)&&((Heroes[0]->CheckSkill(24)>1)||(Squad[0][0].CheckSkill(981)>0)))
 	{
 		int Div[3];
@@ -5944,7 +5944,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 	buttEndTurn.Activate(1);
 
 	
-//Получение информации о заклинаниях
+//РџРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р·Р°РєР»РёРЅР°РЅРёСЏС…
 
 	for (int Sd=0; Sd<2; Sd++)
 	{
@@ -5966,7 +5966,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 	};
 
 
-//Основной процесс
+//РћСЃРЅРѕРІРЅРѕР№ РїСЂРѕС†РµСЃСЃ
 
 	clear_keybuf();
 
@@ -6137,7 +6137,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};
 		
 
-///Проверка состояния кнопок
+///РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРЅРѕРїРѕРє
 ///*************************
 
 		if (buttGrid.Check())
@@ -6150,7 +6150,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		int ipSpell;
 
 
-//Вызов заклинания
+//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ
 		if (ActiveSpell>=0)
 		{
 			if (buttCancelSpell.Check())
@@ -6178,7 +6178,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		}
 		else
 		{
-//Отдых
+//РћС‚РґС‹С…
 		if (buttRest.Check())
 		{
 			ActiveUnit->bResting=true;
@@ -6191,13 +6191,13 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			{SelectUnit(ActiveUnit);};
 		};
 
-//Следующий
+//РЎР»РµРґСѓСЋС‰РёР№
 		if (buttNext.Check())
 		{
 			SelectUnit(FindNextUnit());
 		};
 
-//Смена оружия
+//РЎРјРµРЅР° РѕСЂСѓР¶РёСЏ
 		if (buttChange.Check())
 		{
 			buttChange.bBlink=false;
@@ -6234,7 +6234,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-//Сбор снарядов
+//РЎР±РѕСЂ СЃРЅР°СЂСЏРґРѕРІ
 		if (buttGather.Check())
 		{
 	//		play_sample(wavGather,iSoundVolume,128,1000,0);
@@ -6252,7 +6252,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			{SelectUnit(ActiveUnit);};
 		};
 
-//Кнопки-переключатели (Лечение, Сокрушающий удар, Двойной выстрел)
+//РљРЅРѕРїРєРё-РїРµСЂРµРєР»СЋС‡Р°С‚РµР»Рё (Р›РµС‡РµРЅРёРµ, РЎРѕРєСЂСѓС€Р°СЋС‰РёР№ СѓРґР°СЂ, Р”РІРѕР№РЅРѕР№ РІС‹СЃС‚СЂРµР»)
 		bool bHL=buttHeal.bPress;
 		buttHeal.Check();
 		if (bHL!=buttHeal.bPress)
@@ -6294,7 +6294,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};
 
 		
-//Маски эффектов
+//РњР°СЃРєРё СЌС„С„РµРєС‚РѕРІ
 		for (int i=0; i<6; i++)
 		{
 			if (arEff[i])
@@ -6309,7 +6309,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				};
 			};
 		};
-//Маски параметров
+//РњР°СЃРєРё РїР°СЂР°РјРµС‚СЂРѕРІ
 		for (int i=0; i<13; i++)
 		{
 			Check=mskParam[i].Check();
@@ -6374,7 +6374,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			};
 		};
 
-//Марш-бросок
+//РњР°СЂС€-Р±СЂРѕСЃРѕРє
 		if (buttMarch.Check())
 		{
 	//		play_sample(wavMarch,iSoundVolume,128,1000,0);
@@ -6386,7 +6386,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};
 
 		
-//Трупоедство
+//РўСЂСѓРїРѕРµРґСЃС‚РІРѕ
 		if (buttEat.Check())
 		{
 			int Corpse=FindCorpse(1-AA,ActiveUnit->x,ActiveUnit->y);
@@ -6418,7 +6418,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			{SelectUnit(ActiveUnit);};
 		};
 
-//Заклинание		
+//Р—Р°РєР»РёРЅР°РЅРёРµ		
 		if (buttSpell.Check())
 		{
 			ActiveSpell=Spellbook();
@@ -6478,7 +6478,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 	//		{
 			if (Check==30)
 			{
-//case 30:	//Клик по тайлу		
+//case 30:	//РљР»РёРє РїРѕ С‚Р°Р№Р»Сѓ		
 			NeedUse=true;
 			if (!bMouseReleased)
 			{
@@ -6490,11 +6490,11 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 			{
 			if (ActiveSpell>=0)				
 			{				
-//ЗАКЛИНАНИЕ*******
+//Р—РђРљР›РРќРђРќРР•*******
 				switch (pCast->iTarget)
 				{
 				case 3:
-					//Вызов заклинания в тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С‚Р°Р№Р»Рµ
 					for (int x=0; x<8; x++){
 					for (int y=0; y<8; y++)
 					{
@@ -6530,7 +6530,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 												};
 												if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==ipSpell))
 												{
-										//Найден свой подходящий юнит
+										//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 													Squad[AA][k].UnderSpell(pCast, ActiveUnit, AA);															
 												};
 											};
@@ -6554,7 +6554,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 												};
 												if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==ipSpell))
 												{
-										//Найден вражеский подходящий юнит
+										//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 													Squad[1-AA][k].UnderSpell(pCast, ActiveUnit, AA);														
 												};
 											};
@@ -6572,7 +6572,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							{
 								if ((Field[x][y].Shoot>0)||((x==i)&&(y==j)))
 								{
-							//Найден тайл для заклинания
+							//РќР°Р№РґРµРЅ С‚Р°Р№Р» РґР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏ
 								};
 							};
 						};
@@ -6582,7 +6582,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				case 5:
 					if ((Field[i][j].Shoot>0)&&(arGrid[i][j].Pass)&&((pFirstBF_Obj+arGrid[i][j].Land)->iMoveCost>0))
 					{
-					//Вызов заклинания в свободном тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРІРѕР±РѕРґРЅРѕРј С‚Р°Р№Р»Рµ
 						TileSpell(pCast,i,j);
 						SpellCast();
 					};
@@ -6597,7 +6597,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							{
 								if ((pCast->iTarget==2)||(arGrid[i][j].Pass))
 								{
-									//Найден свой подходящий труп
+									//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ С‚СЂСѓРї
 									CorpseSpell(pCast,&Squad[AA][k]);
 									SpellCast();					
 									break;
@@ -6613,7 +6613,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							{
 								if ((pCast->iTarget==2)||(arGrid[i][j].Pass))
 								{
-									//Найден вражеский подходящий труп
+									//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ С‚СЂСѓРї
 									CorpseSpell(pCast,&Squad[1-AA][k]);
 									SpellCast();
 									break;
@@ -6644,10 +6644,10 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 								if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==ipSpell))
 								{
-							//Найден свой подходящий юнит
+							//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									if (bSacrifice)
 									{
-										//Жертва
+										//Р–РµСЂС‚РІР°
 										iSacVictim=k;
 										bSacrifice=false;
 										delete pCast;
@@ -6659,7 +6659,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 									{
 										if (pCast->arEffect[0][0]==89)										
 										{
-											//Телепорт
+											//РўРµР»РµРїРѕСЂС‚
 											Teleport=*pCast;
 											Teleport.iTarget=5;
 											pCast=&Teleport;
@@ -6667,7 +6667,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 										}
 										else
 										{
-											//Обычное заклинание
+											//РћР±С‹С‡РЅРѕРµ Р·Р°РєР»РёРЅР°РЅРёРµ
 											Squad[AA][k].UnderSpell(pCast, ActiveUnit, AA);
 											SpellCast();
 										};
@@ -6694,10 +6694,10 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 								if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==ipSpell))
 								{
-								//Найден вражеский подходящий юнит
+								//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 									if (pCast->arEffect[0][0]==89)										
 									{		
-										//Телепорт
+										//РўРµР»РµРїРѕСЂС‚
 										if (ActiveUnit->CheckSkill(908)>=Squad[1-AA][k].GetResist())
 										{
 											Teleport=*pCast;
@@ -6733,7 +6733,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				{
 					if ((Squad[1-AA][k].iLife)&&(Squad[1-AA][k].x==i)&&(Squad[1-AA][k].y==j))
 					{
-////ВЫСТРЕЛ*********
+////Р’Р«РЎРўР Р•Р›*********
 						if ((ActiveUnit->bCanAct)&&(ActiveUnit->iAmmo)&&(Field[i][j].Shoot>1)&&(!key[KEY_LCONTROL])&&(!key[KEY_RCONTROL])
 							&&((ActiveUnit->iSpeed>0)||(ActiveUnit->CheckSkill(88)))&&(ActiveUnit->iStamina>0)&&(ActiveUnit->GetRangedAttack()>0))
 						{					
@@ -6746,7 +6746,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 						}
 						else
 						{
-//Поиск тайла для атаки*****
+//РџРѕРёСЃРє С‚Р°Р№Р»Р° РґР»СЏ Р°С‚Р°РєРё*****
 							if (!ActiveUnit->CheckSkill(38))
 							{
 							int goX=8, goY=8, Choose=0;
@@ -6810,7 +6810,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 							};
 
-///АТАКА*************
+///РђРўРђРљРђ*************
 							if (goX<8)
 							{
 								if (ActiveUnit->Attack(goX,goY,&Squad[1-AA][k]))
@@ -6842,7 +6842,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							}
 							else
 							{
-							//Клик по врагу на недоступном тайле							
+							//РљР»РёРє РїРѕ РІСЂР°РіСѓ РЅР° РЅРµРґРѕСЃС‚СѓРїРЅРѕРј С‚Р°Р№Р»Рµ							
 							};							
 							NeedUse=false;
 							};
@@ -6856,7 +6856,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 					{
 						if ((Squad[AA][k].iLife)&&(Squad[AA][k].x==i)&&(Squad[AA][k].y==j))
 						{
-//ЛЕЧЕНИЕ*****************
+//Р›Р•Р§Р•РќРР•*****************
 							if (buttHeal.Check())
 							{
 								NeedUse=false;
@@ -6871,7 +6871,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 							}
 							else
-//ВЫБОР ЮНИТА*******
+//Р’Р«Р‘РћР  Р®РќРРўРђ*******
 							{
 								SelectUnit(&Squad[AA][k]);
 								NeedUse=false;
@@ -6883,7 +6883,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				{
 					if (NeedUse)
 					{
-//ДВИЖЕНИЕ***********
+//Р”Р’РР–Р•РќРР•***********
 						if (Field[i][j].Pass)
 						{
 							ActiveUnit->Move(i,j);
@@ -6901,7 +6901,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		if (Check==40)
 		{
 //	case 40:
-		//Инфо-кнопка
+		//РРЅС„Рѕ-РєРЅРѕРїРєР°
 //		{
 			objMain=ShowActiveObjects(objMain,10,false);
 			bool bTerra=true;
@@ -6947,7 +6947,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 
 		if (Check>1)
 //	case 2:					
-//	case 3:			//Курсор над тайлом
+//	case 3:			//РљСѓСЂСЃРѕСЂ РЅР°Рґ С‚Р°Р№Р»РѕРј
 		{
 			NeedUse=true;
 			for (int Side=0; Side<2; Side++)
@@ -6972,7 +6972,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				switch (pCast->iTarget)
 				{					
 				case 3:
-					//Вызов заклинания в тайле
+					//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С‚Р°Р№Р»Рµ
 					set_mouse_sprite(bmpMousePointer[15]);
 					mouse_pointer=15;
 					if ((!bSacrifice)&&(pCast->iRadius>0)&&((OldX!=i)||(OldY!=j)))
@@ -7001,7 +7001,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 				case 5:
 					if ((Field[i][j].Shoot>0)&&(arGrid[i][j].Pass)&&((pFirstBF_Obj+arGrid[i][j].Land)->iMoveCost>0))
 					{
-						//Вызов заклинания в свободном тайле
+						//Р’С‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРІРѕР±РѕРґРЅРѕРј С‚Р°Р№Р»Рµ
 						if(mouse_pointer!=15)
 						{
 							set_mouse_sprite(bmpMousePointer[15]);
@@ -7019,7 +7019,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							{
 								if ((pCast->iTarget==2)||(arGrid[i][j].Pass))
 								{
-									//Найден свой подходящий труп
+									//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ С‚СЂСѓРї
 									if(mouse_pointer!=15)
 									{
 										set_mouse_sprite(bmpMousePointer[15]);
@@ -7037,7 +7037,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 							{
 								if ((pCast->iTarget==2)||(arGrid[i][j].Pass))
 								{
-									//Найден вражеский подходящий труп
+									//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ С‚СЂСѓРї
 									if(mouse_pointer!=15)
 									{
 										set_mouse_sprite(bmpMousePointer[15]);
@@ -7067,7 +7067,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 								if ((!AntiSkill)||(Squad[AA][k].CheckSkill(205)==ipSpell))
 								{
-							//Найден свой подходящий юнит
+							//РќР°Р№РґРµРЅ СЃРІРѕР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 								if(mouse_pointer!=15)
 								{
 									set_mouse_sprite(bmpMousePointer[15]);
@@ -7095,7 +7095,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 								};
 								if ((!AntiSkill)||(Squad[1-AA][k].CheckSkill(205)==ipSpell))
 								{
-								//Найден вражеский подходящий юнит
+								//РќР°Р№РґРµРЅ РІСЂР°Р¶РµСЃРєРёР№ РїРѕРґС…РѕРґСЏС‰РёР№ СЋРЅРёС‚
 								if(mouse_pointer!=15)
 								{
 									set_mouse_sprite(bmpMousePointer[15]);
@@ -7312,7 +7312,7 @@ int InitBattle(dcProvince *Prov1, dcProvince *Prov2, dcHero *Hero1, dcHero *Hero
 		};
 		if (ActiveSpell<0)
 		{
-		//Конец хода
+		//РљРѕРЅРµС† С…РѕРґР°
 			if (buttEndTurn.flag==0)
 			{buttEndTurn.Activate(1);};
 			if (buttEndTurn.Check())

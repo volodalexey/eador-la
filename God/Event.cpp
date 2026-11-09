@@ -214,7 +214,7 @@ dcEvent* EnterEnemyLand(int Player1, int Player2, dcHero *Hero1, dcHero *Hero2, 
 {
 	dcEvent *EV;
 	if (Prov2->ipPlayer==0)
-	//Генерация события при атаке героем нейтральной провинции
+	//Р“РµРЅРµСЂР°С†РёСЏ СЃРѕР±С‹С‚РёСЏ РїСЂРё Р°С‚Р°РєРµ РіРµСЂРѕРµРј РЅРµР№С‚СЂР°Р»СЊРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 	{
 		EV=new dcEvent(1,&arPlayer[Player1].pEvent,(pFirstProvinceType+Prov2->ipType)->arGuard[Prov2->iDefender][2],Player1,0,Hero1,Prov2->pGuard,Prov1,Prov2,arPlayer[Player1].pEvent);
 		return EV;
@@ -222,7 +222,7 @@ dcEvent* EnterEnemyLand(int Player1, int Player2, dcHero *Hero1, dcHero *Hero2, 
 	}
 	else
 	{
-		//Проверка наличия осаждающего отряда в провинции
+		//РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ РѕСЃР°Р¶РґР°СЋС‰РµРіРѕ РѕС‚СЂСЏРґР° РІ РїСЂРѕРІРёРЅС†РёРё
 		int Siege=Prov2->GetSiegeIndex();
 		if (Siege>=0)
 		{
@@ -305,7 +305,7 @@ void EventServer(int Player)
 		{
 			dcProvince *PR=EV->Prov2;
 			dcHero *pHero=EV->Hero1;			
-			//Генерация события при попытке войти в заблокированную провинцию
+			//Р“РµРЅРµСЂР°С†РёСЏ СЃРѕР±С‹С‚РёСЏ РїСЂРё РїРѕРїС‹С‚РєРµ РІРѕР№С‚Рё РІ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅРЅСѓСЋ РїСЂРѕРІРёРЅС†РёСЋ
 			/*dcRitual *RR=pRitual;
 			bool bBlocked=false;
 			while (RR)
@@ -330,9 +330,9 @@ void EventServer(int Player)
 			}
 			else
 			{			
-			//Проверка конфликта при одновременной атаке провинции разными игроками
+			//РџСЂРѕРІРµСЂРєР° РєРѕРЅС„Р»РёРєС‚Р° РїСЂРё РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕР№ Р°С‚Р°РєРµ РїСЂРѕРІРёРЅС†РёРё СЂР°Р·РЅС‹РјРё РёРіСЂРѕРєР°РјРё
 				dcEvent *EVBattle=NULL;
-				//Составление списка событий атаки данной провинции другими игроками
+				//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРїРёСЃРєР° СЃРѕР±С‹С‚РёР№ Р°С‚Р°РєРё РґР°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё РґСЂСѓРіРёРјРё РёРіСЂРѕРєР°РјРё
 				for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 				{
 					if (PL!=Player)
@@ -356,9 +356,9 @@ void EventServer(int Player)
 				if (EVBattle)
 				{
 					/*clear_keybuf();
-					textprintf(screen,Font1,0,0,COLOR_2,"Найден оппонент");
+					textprintf(screen,Font1,0,0,COLOR_2,"РќР°Р№РґРµРЅ РѕРїРїРѕРЅРµРЅС‚");
 					readkey();*/
-					//Добавление в список событий текущего игрока						
+					//Р”РѕР±Р°РІР»РµРЅРёРµ РІ СЃРїРёСЃРѕРє СЃРѕР±С‹С‚РёР№ С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°						
 					dcEvent *EVtmp=arPlayer[Player].pEvent;
 					while (EVtmp)
 					{	
@@ -375,7 +375,7 @@ void EventServer(int Player)
 							EVtmp=EVtmp->pNext;
 						};
 					};						
-					//Отсев слабейших героев АИ и удаление их из общего списка						
+					//РћС‚СЃРµРІ СЃР»Р°Р±РµР№С€РёС… РіРµСЂРѕРµРІ РђР Рё СѓРґР°Р»РµРЅРёРµ РёС… РёР· РѕР±С‰РµРіРѕ СЃРїРёСЃРєР°						
 					dcEvent *EVStrong=NULL;
 					EVtmp=EVBattle;
 					while (EVtmp)
@@ -402,8 +402,8 @@ void EventServer(int Player)
 							EVtmp=EVtmp->pNext;
 						};									
 					};
-					//Спарринг героев живых игроков
-					/*textprintf(screen,Font1,0,0,COLOR_2,"Поиск соперников");
+					//РЎРїР°СЂСЂРёРЅРі РіРµСЂРѕРµРІ Р¶РёРІС‹С… РёРіСЂРѕРєРѕРІ
+					/*textprintf(screen,Font1,0,0,COLOR_2,"РџРѕРёСЃРє СЃРѕРїРµСЂРЅРёРєРѕРІ");
 					readkey();*/
 					int arPL[MAX_PLAYERS];
 					int PLCount=10;						
@@ -427,7 +427,7 @@ void EventServer(int Player)
 						{PLCount++;};
 						if (PLCount>0)
 						{
-							//Поиск пары с наименьшей инициативой
+							//РџРѕРёСЃРє РїР°СЂС‹ СЃ РЅР°РёРјРµРЅСЊС€РµР№ РёРЅРёС†РёР°С‚РёРІРѕР№
 							EVtmp=EVBattle;
 							while (EVtmp)
 							{
@@ -472,7 +472,7 @@ void EventServer(int Player)
 								};									
 								EVtmp=EVtmp->pNext;									
 							};							
-							//Исключение сражающихся из списка
+							//РСЃРєР»СЋС‡РµРЅРёРµ СЃСЂР°Р¶Р°СЋС‰РёС…СЃСЏ РёР· СЃРїРёСЃРєР°
 							EVtmp=EVBattle;
 							while (EVtmp)
 							{
@@ -500,7 +500,7 @@ void EventServer(int Player)
 										};
 									};
 								};
-								/*textprintf(screen,Font1,0,0,COLOR_2,"Вызов события");
+								/*textprintf(screen,Font1,0,0,COLOR_2,"Р’С‹Р·РѕРІ СЃРѕР±С‹С‚РёСЏ");
 								readkey();*/
 								dcEvent *EVCombat=new dcEvent(16,NULL,832,EVHero1->Player1,EVHero2->Player1,EVHero1->Hero1,EVHero2->Hero1,EVHero1->Prov2,EVHero2->Hero1->pProvince,NULL);
 								EVCombat->iParam1=EVHero1->Prov1->iNumber+EVHero2->Prov1->iNumber;
@@ -534,7 +534,7 @@ void EventServer(int Player)
 				/*	clear_keybuf();
 					textprintf(screen,Font1,0,0,COLOR_2,"Stopped...");
 					readkey();*/
-					//Создание события для победителя
+					//РЎРѕР·РґР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ РґР»СЏ РїРѕР±РµРґРёС‚РµР»СЏ
 					if (EVHero1)
 					{
 						while (EVHero1)
@@ -595,7 +595,7 @@ void EventServer(int Player)
 		}
 		else
 		{
-			//Штурм игроком игрока
+			//РЁС‚СѓСЂРј РёРіСЂРѕРєРѕРј РёРіСЂРѕРєР°
 			if  ((arPlayer[EV->Player1].Control==1)&&(arPlayer[EV->Player2].Control==1)&&((EV->Index==11)||(EV->Index==12)))
 			{
 				bHourGlass=false;
@@ -616,24 +616,24 @@ void EventServer(int Player)
 };
 
 int dcEvent::Call(int DX)
-//Возможные типы событий, в зависимости от Index:
-// 1 - вход в нейтральную провинцию
-// 2 - вход в охраняемый сайт
-// 3 - исследование провинции
-// 4 - вход в сайт без охраны
-// 5 - атака стражника своей провинции
-// 6 - грабёж обычный
-// 7 - грабёж финальный
-//10 - атака чужой провинции
-//11 - осада, укрепления разрушены
-//12 - осада, есть брешь
-//13 - осада, нет бреши
-//14 - отака осаждающего отряда нейтралов
-//15 - атака осаждающего отряда другого игрока
-//16 - атака одной провинции двумя героями
-//17 - захват крепости без боя при уходе гарнизона
-//18 - сдача крепости без боя при уходе гарнизона
-//20 - выдача диалога
+//Р’РѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ СЃРѕР±С‹С‚РёР№, РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Index:
+// 1 - РІС…РѕРґ РІ РЅРµР№С‚СЂР°Р»СЊРЅСѓСЋ РїСЂРѕРІРёРЅС†РёСЋ
+// 2 - РІС…РѕРґ РІ РѕС…СЂР°РЅСЏРµРјС‹Р№ СЃР°Р№С‚
+// 3 - РёСЃСЃР»РµРґРѕРІР°РЅРёРµ РїСЂРѕРІРёРЅС†РёРё
+// 4 - РІС…РѕРґ РІ СЃР°Р№С‚ Р±РµР· РѕС…СЂР°РЅС‹
+// 5 - Р°С‚Р°РєР° СЃС‚СЂР°Р¶РЅРёРєР° СЃРІРѕРµР№ РїСЂРѕРІРёРЅС†РёРё
+// 6 - РіСЂР°Р±С‘Р¶ РѕР±С‹С‡РЅС‹Р№
+// 7 - РіСЂР°Р±С‘Р¶ С„РёРЅР°Р»СЊРЅС‹Р№
+//10 - Р°С‚Р°РєР° С‡СѓР¶РѕР№ РїСЂРѕРІРёРЅС†РёРё
+//11 - РѕСЃР°РґР°, СѓРєСЂРµРїР»РµРЅРёСЏ СЂР°Р·СЂСѓС€РµРЅС‹
+//12 - РѕСЃР°РґР°, РµСЃС‚СЊ Р±СЂРµС€СЊ
+//13 - РѕСЃР°РґР°, РЅРµС‚ Р±СЂРµС€Рё
+//14 - РѕС‚Р°РєР° РѕСЃР°Р¶РґР°СЋС‰РµРіРѕ РѕС‚СЂСЏРґР° РЅРµР№С‚СЂР°Р»РѕРІ
+//15 - Р°С‚Р°РєР° РѕСЃР°Р¶РґР°СЋС‰РµРіРѕ РѕС‚СЂСЏРґР° РґСЂСѓРіРѕРіРѕ РёРіСЂРѕРєР°
+//16 - Р°С‚Р°РєР° РѕРґРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё РґРІСѓРјСЏ РіРµСЂРѕСЏРјРё
+//17 - Р·Р°С…РІР°С‚ РєСЂРµРїРѕСЃС‚Рё Р±РµР· Р±РѕСЏ РїСЂРё СѓС…РѕРґРµ РіР°СЂРЅРёР·РѕРЅР°
+//18 - СЃРґР°С‡Р° РєСЂРµРїРѕСЃС‚Рё Р±РµР· Р±РѕСЏ РїСЂРё СѓС…РѕРґРµ РіР°СЂРЅРёР·РѕРЅР°
+//20 - РІС‹РґР°С‡Р° РґРёР°Р»РѕРіР°
 {
 	if (!arPlayer[Player1].bInGame)
 	{return 0;};
@@ -655,7 +655,7 @@ int dcEvent::Call(int DX)
 		if (Prov2->GetSiegeIndex()<0)
 		{Index=10;};
 	};
-	StopLog("Индекс: ",Index);
+	StopLog("РРЅРґРµРєСЃ: ",Index);
 	if ((Index==1)||(Index==10))
 	{
 		if (Prov2->ipPlayer==0)
@@ -678,7 +678,7 @@ int dcEvent::Call(int DX)
 	int Result=0;
 	if ((IsHeroInGame(Hero1))&&(Hero1->iDead<0))
 	{
-	//Атака чужой провинции
+	//РђС‚Р°РєР° С‡СѓР¶РѕР№ РїСЂРѕРІРёРЅС†РёРё
 	if (Index==10)
 	{
 		if (Prov2->ipPlayer==Player1)
@@ -691,7 +691,7 @@ int dcEvent::Call(int DX)
 		}
 		else
 		{
-		sprintf(txtLog,"Герой %s игрока %d атакует провинцию %s          ",Hero1->pstName->str,Player1,Prov2->sName);
+		sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %d Р°С‚Р°РєСѓРµС‚ РїСЂРѕРІРёРЅС†РёСЋ %s          ",Hero1->pstName->str,Player1,Prov2->sName);
 		DFileLog(txtLog);
 		bool Fight=true;
 		if (arPlayer[Player1].Control==1)
@@ -873,7 +873,7 @@ int dcEvent::Call(int DX)
 		};
 	};	
 
-	//Одновременная атака одной провинции двумя игорками
+	//РћРґРЅРѕРІСЂРµРјРµРЅРЅР°СЏ Р°С‚Р°РєР° РѕРґРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё РґРІСѓРјСЏ РёРіРѕСЂРєР°РјРё
 	if (Index==16)
 	{
 		Result=100;
@@ -1000,7 +1000,7 @@ int dcEvent::Call(int DX)
 		};
 	};
 
-//Атака осаждающего отряда
+//РђС‚Р°РєР° РѕСЃР°Р¶РґР°СЋС‰РµРіРѕ РѕС‚СЂСЏРґР°
 	if (Index==15)
 	{
 		Player2=Prov2->GetSiegeIndex();
@@ -1015,7 +1015,7 @@ int dcEvent::Call(int DX)
 		while (bCycle)
 		{
 			if (arPlayer[Player2].Control==1)
-			//Игрока
+			//РРіСЂРѕРєР°
 			{
 				char sArmy[500];
 				int iAtt=Hero1->MakeDescription(sArmy);
@@ -1341,7 +1341,7 @@ int dcEvent::Call(int DX)
 	};	
 	if (Index==1)
 	{
-		//Атака нейтральной провинции
+		//РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»СЊРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 		if (Prov2->ipPlayer==0)
 		{
 		DialogDX=DX;
@@ -1358,7 +1358,7 @@ int dcEvent::Call(int DX)
 		int MaxGuards=Prov2->pGuard->MakeDescription(txtSquad);										
 		sprintf(sMessage,(pFirstDialog+ipDialog)->sText,Hero1->pstName->str,Prov2->sName,MaxGuards,txtSquad);
 		int Answer;
-	//	StopLog("Оценка сил:",CompareStrength(Hero1,Hero2));
+	//	StopLog("РћС†РµРЅРєР° СЃРёР»:",CompareStrength(Hero1,Hero2));
 		if ((arPlayer[Player1].iUnion==Prov2->ipRace)&&((pFirstProvinceType+Prov2->ipType)->ipRace==Prov2->ipRace))
 		{Answer=3;}
 		else
@@ -1434,7 +1434,7 @@ int dcEvent::Call(int DX)
 			}
 			else
 			{
-				//Преобразование охранника в стража
+				//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РѕС…СЂР°РЅРЅРёРєР° РІ СЃС‚СЂР°Р¶Р°
 				Prov2->iDefender=flgEncResult;
 				Prov2->pGuard->ipPlayer=Player1;
 			};
@@ -1453,8 +1453,8 @@ int dcEvent::Call(int DX)
 	};	
 	if (Index==2)
 	{
-		//Сражение с охраной сайта
-	//	StopLog("Оценка сил:",CompareStrength1(Hero1,Hero2));
+		//РЎСЂР°Р¶РµРЅРёРµ СЃ РѕС…СЂР°РЅРѕР№ СЃР°Р№С‚Р°
+	//	StopLog("РћС†РµРЅРєР° СЃРёР»:",CompareStrength1(Hero1,Hero2));
 		if (Prov1->arSiteGuard[iParam1])
 		{
 		DialogDX=DX;
@@ -1519,7 +1519,7 @@ int dcEvent::Call(int DX)
 				{Prov1->StaticEvent((pFirstWorldRules+WorldRules.iMode)->ipSiteEvent,Player1);}
 				if (bExitGame)
 				{return 0;}
-				//Обыск алтаря смерти в кампании
+				//РћР±С‹СЃРє Р°Р»С‚Р°СЂСЏ СЃРјРµСЂС‚Рё РІ РєР°РјРїР°РЅРёРё
 				if ((CurGame.iGameType==2)&&(Prov1->arSite[iParam1][0]==26)&&(Hero1->pSquad[0]->iLife>0))
 				{
 					int Choise=0;
@@ -1544,7 +1544,7 @@ int dcEvent::Call(int DX)
 							Choise++;
 						};
 					};
-					//Поиск амфоры
+					//РџРѕРёСЃРє Р°РјС„РѕСЂС‹
 					if (Choise==1)
 					{
 						Hero1->pSquad[0]->iLife=0;
@@ -1558,7 +1558,7 @@ int dcEvent::Call(int DX)
 						else
 						{(pFirstDialog+1223)->Show(1,1,0,0,NULL,NULL);};
 					};
-					//Поиск Ключа
+					//РџРѕРёСЃРє РљР»СЋС‡Р°
 					if (Choise==2)
 					{
 						(pFirstDialog+1219)->Show(1,0,0,0,NULL,NULL);
@@ -1592,12 +1592,12 @@ int dcEvent::Call(int DX)
 				{
 					WindowTreasure(Prov1->arSite[iParam1][2],Player1,Hero1,Prov1->arSite[iParam1][0], iParam1);
 				};				
-				//Проверки квестов
+				//РџСЂРѕРІРµСЂРєРё РєРІРµСЃС‚РѕРІ
 		//		bQuestComplete=false;
 				arPlayer[Player1].CheckCampQuest(Prov1->iNumber,iParam1);
 				for (int i=0; i<HERO_QUEST_LIMIT; i++)
 				{
-					if ((pFirstQuest+Hero1->arQuest[i].Index)->iType==1) //Обыск сайта
+					if ((pFirstQuest+Hero1->arQuest[i].Index)->iType==1) //РћР±С‹СЃРє СЃР°Р№С‚Р°
 					{
 						for (int j=0; j<MAX_QUEST_TASK; j++)
 						{
@@ -1657,7 +1657,7 @@ int dcEvent::Call(int DX)
 		
 		}
 		else
-	//Никогда не охраняемый сайт
+	//РќРёРєРѕРіРґР° РЅРµ РѕС…СЂР°РЅСЏРµРјС‹Р№ СЃР°Р№С‚
 		{
 			int Site=Prov1->arSite[iParam1][0];
 			if ((Site>0)&&((pFirstSite+Site)->iGuarded==0))
@@ -1724,7 +1724,7 @@ int dcEvent::Call(int DX)
 	
 	if (Index==3)
 	{
-		//Исследование провинции
+		//РСЃСЃР»РµРґРѕРІР°РЅРёРµ РїСЂРѕРІРёРЅС†РёРё
 		DialogDX=DX;
 		switch ((pFirstDialog+ipDialog)->Show(bAnswer[0],bAnswer[1],bAnswer[2],bAnswer[3],NULL,sMessage))
 		{			
@@ -1773,7 +1773,7 @@ int dcEvent::Call(int DX)
 	};
 	if (Index==4)
 	{
-		//Найден сайт без охраны
+		//РќР°Р№РґРµРЅ СЃР°Р№С‚ Р±РµР· РѕС…СЂР°РЅС‹
 		DialogDX=DX;
 		if ((pFirstDialog+ipDialog)->Show(bAnswer[0],bAnswer[1],bAnswer[2],bAnswer[3],NULL,sMessage)==2)
 		{
@@ -1782,7 +1782,7 @@ int dcEvent::Call(int DX)
 	};
 	if (Index==5)
 	{
-		//Атака стражника своей провинции
+		//РђС‚Р°РєР° СЃС‚СЂР°Р¶РЅРёРєР° СЃРІРѕРµР№ РїСЂРѕРІРёРЅС†РёРё
 		if (Prov1->pGuard)
 		{
 			Prov1->pGuard->ipPlayer=0;
@@ -1801,7 +1801,7 @@ int dcEvent::Call(int DX)
 			}
 			else
 			{
-			//Изменить тип в зависимости от стража
+			//РР·РјРµРЅРёС‚СЊ С‚РёРї РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃС‚СЂР°Р¶Р°
 				if (Tutorial.Map)
 				{
 					Hero1->pProvince=(pFirstProvince+arPlayer[Player1].ipProvince);
@@ -1853,7 +1853,7 @@ int dcEvent::Call(int DX)
 			};			
 		};
 	};
-//Грабеж провинции обычный
+//Р“СЂР°Р±РµР¶ РїСЂРѕРІРёРЅС†РёРё РѕР±С‹С‡РЅС‹Р№
 	if (Index==6)
 	{
 		DialogDX=DX;
@@ -1864,7 +1864,7 @@ int dcEvent::Call(int DX)
 		while (Hero1->iLevel<Hero1->CountLevel())
 		{WindowHeroLvlUp(Hero1);}
 	};
-//Грабеж провинции финальный
+//Р“СЂР°Р±РµР¶ РїСЂРѕРІРёРЅС†РёРё С„РёРЅР°Р»СЊРЅС‹Р№
 	if (Index==7)
 	{
 		Hero1->iTask=0;
@@ -1888,7 +1888,7 @@ int dcEvent::Call(int DX)
 	};
 	if ((Index==6)||(Index==7))
 	{
-		//Проверка квестов грабежа
+		//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ РіСЂР°Р±РµР¶Р°
 	//	bQuestComplete=false;
 		for (int i=0; i<HERO_QUEST_LIMIT; i++)
 		{
@@ -1942,9 +1942,9 @@ int dcEvent::Call(int DX)
 			{
 				Hero1->Death(Win);
 			};
-//			StopLog("Шаг ",1);
+//			StopLog("РЁР°Рі ",1);
 		};
-//		StopLog("Шаг ",2);
+//		StopLog("РЁР°Рі ",2);
 	};
 	if ((Index==13)&&(Prov1->ipPlayer==Player2))
 	{
@@ -1959,7 +1959,7 @@ int dcEvent::Call(int DX)
 		(pFirstDialog+ipDialog)->Show(bAnswer[0],bAnswer[1],bAnswer[2],bAnswer[3],NULL,sMessage);
 		Prov1->Conquer(Player1,Hero1);
 	};
-//	StopLog("Шаг ",3);
+//	StopLog("РЁР°Рі ",3);
 	if ((Index==14)&&(Prov2->GetSiegeIndex()==0))
 	{
 		Hero2=Prov2->pGuard;
@@ -1997,7 +1997,7 @@ int dcEvent::Call(int DX)
 			};
 		};		
 	};
-//Выдача диалога
+//Р’С‹РґР°С‡Р° РґРёР°Р»РѕРіР°
 	if (Index==20)
 	{
 		DialogDX=DX;
@@ -2005,14 +2005,14 @@ int dcEvent::Call(int DX)
 	};
 	}	
 	else
-//*****Обработка событий компьютерным игроком
+//*****РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№ РєРѕРјРїСЊСЋС‚РµСЂРЅС‹Рј РёРіСЂРѕРєРѕРј
 	{		
 	if (Index==1)
 	{
-		sprintf(txtLog,"Герой %s игрока %s атакует провинцию %s",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov2->sName);
+		sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %s Р°С‚Р°РєСѓРµС‚ РїСЂРѕРІРёРЅС†РёСЋ %s",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov2->sName);
 		WriteLog(txtLog);
 		FileLog(txtLog);
-		//Атака нейтральной провинции
+		//РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»СЊРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 		if (Prov2->ipPlayer!=Player1)
 		{
 		if ((arPlayer[Player1].iUnion==0)&&(arPlayer[Player1].AIUnion[0]==Prov2->ipRace)&&(arPlayer[Player1].AIUnion[1]==0))
@@ -2075,13 +2075,13 @@ int dcEvent::Call(int DX)
 		{
 	//		bHourGlass=false;
 		//	char Txt[500];
-		//	sprintf(Txt, "Оценка сил: %d",CompareStrength1(Hero1,Hero2));
+		//	sprintf(Txt, "РћС†РµРЅРєР° СЃРёР»: %d",CompareStrength1(Hero1,Hero2));
 		//	FileLog(Txt);
 			int Win=InitBattle(Prov1,Prov2,Hero1,Hero2,0,false);
 			Hero1->NiB=0;
 			if (Win==1)
 			{
-				FileLog("Победа");
+				FileLog("РџРѕР±РµРґР°");
 				Prov2->Conquer(Player1,Hero1);
 				Prov2->DismissDefender();				
 			};
@@ -2092,7 +2092,7 @@ int dcEvent::Call(int DX)
 		};		
 		if (flgEncResult>0)
 		{
-			FileLog("Присоединение");
+			FileLog("РџСЂРёСЃРѕРµРґРёРЅРµРЅРёРµ");
 			Prov2->ipPlayer=Player1;
 			if (flgEncResult==9999)
 			{
@@ -2100,7 +2100,7 @@ int dcEvent::Call(int DX)
 			}
 			else
 			{
-				//Преобразование охранника в стража
+				//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РѕС…СЂР°РЅРЅРёРєР° РІ СЃС‚СЂР°Р¶Р°
 				Prov2->iDefender=flgEncResult;
 				Prov2->pGuard->ipPlayer=Player1;
 			};
@@ -2118,10 +2118,10 @@ int dcEvent::Call(int DX)
 	};
 	if (Index==2)
 	{
-		sprintf(txtLog,"Герой %s игрока %s входит в сайт %s в провинции %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),(pFirstSite+Prov1->arSite[iParam1][0])->sName,Prov1->sName);
+		sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %s РІС…РѕРґРёС‚ РІ СЃР°Р№С‚ %s РІ РїСЂРѕРІРёРЅС†РёРё %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),(pFirstSite+Prov1->arSite[iParam1][0])->sName,Prov1->sName);
 		WriteLog(txtLog);
 		FileLog(txtLog);
-		//Сражение с охраной сайта
+		//РЎСЂР°Р¶РµРЅРёРµ СЃ РѕС…СЂР°РЅРѕР№ СЃР°Р№С‚Р°
 		if (Prov1->arSiteGuard[iParam1])
 		{
 			if (CompareStrength1(Hero1,Hero2)>=110-Hero1->NiB)
@@ -2130,7 +2130,7 @@ int dcEvent::Call(int DX)
 			Hero1->NiB=0;
 			if (Win==1)
 			{
-				FileLog("Победа");
+				FileLog("РџРѕР±РµРґР°");
 				Prov1->DismissSiteGuard(iParam1);				
 				if (Prov1->arSite[iParam1][2]>0)
 				{					
@@ -2143,7 +2143,7 @@ int dcEvent::Call(int DX)
 			}
 			else
 			{
-				FileLog("Поражение");				
+				FileLog("РџРѕСЂР°Р¶РµРЅРёРµ");				
 			};
 			if (Hero1->pSquad[0]->iLife==0)
 			{				
@@ -2159,7 +2159,7 @@ int dcEvent::Call(int DX)
 		}
 		else
 		{
-	//Никогда не охраняемый сайт
+	//РќРёРєРѕРіРґР° РЅРµ РѕС…СЂР°РЅСЏРµРјС‹Р№ СЃР°Р№С‚
 			int Site=Prov1->arSite[iParam1][0];
 			if ((Site>0)&&((pFirstSite+Site)->iGuarded==0))
 			{
@@ -2202,8 +2202,8 @@ int dcEvent::Call(int DX)
 	};	
 	if (Index==3)
 	{
-		//Исследование провинции
-		sprintf(txtLog,"Герой %s игрока %s исследует провинцию %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
+		//РСЃСЃР»РµРґРѕРІР°РЅРёРµ РїСЂРѕРІРёРЅС†РёРё
+		sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %s РёСЃСЃР»РµРґСѓРµС‚ РїСЂРѕРІРёРЅС†РёСЋ %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
 		WriteLog(txtLog);
 		FileLog(txtLog);
 		while (Hero1->iLevel<Hero1->CountLevel())
@@ -2216,11 +2216,11 @@ int dcEvent::Call(int DX)
 	};
 	if (Index==4)
 	{
-		//Найден сайт без охраны		
+		//РќР°Р№РґРµРЅ СЃР°Р№С‚ Р±РµР· РѕС…СЂР°РЅС‹		
 	};
 	if (Index==5)
 	{
-		//Атака стражника своей провинции
+		//РђС‚Р°РєР° СЃС‚СЂР°Р¶РЅРёРєР° СЃРІРѕРµР№ РїСЂРѕРІРёРЅС†РёРё
 		if (Prov1->pGuard)
 		{	
 			Prov1->pGuard->ipPlayer=0;
@@ -2266,12 +2266,12 @@ int dcEvent::Call(int DX)
 			};
 		};
 	};
-//Грабеж провинции обычный
+//Р“СЂР°Р±РµР¶ РїСЂРѕРІРёРЅС†РёРё РѕР±С‹С‡РЅС‹Р№
 	if (Index==6)
 	{
 			
 	};
-//Грабеж провинции финальный
+//Р“СЂР°Р±РµР¶ РїСЂРѕРІРёРЅС†РёРё С„РёРЅР°Р»СЊРЅС‹Р№
 	if (Index==7)
 	{
 		Hero1->iTask=0;
@@ -2292,7 +2292,7 @@ int dcEvent::Call(int DX)
 	};
 	if ((Index==6)||(Index==7))
 	{
-		//Проверка квестов грабежа
+		//РџСЂРѕРІРµСЂРєР° РєРІРµСЃС‚РѕРІ РіСЂР°Р±РµР¶Р°
 		/*for (int i=0; i<HERO_QUEST_LIMIT; i++)
 		{
 			if (((pFirstQuest+Hero1->arQuest[i].Index)->iType==6)&&(!Hero1->arQuest[i].bComplete))
@@ -2339,7 +2339,7 @@ int dcEvent::Call(int DX)
 	{		
 		if ((CompareStrength1(Hero1,Hero2)>100)||(Prov1->iFort=0))
 		{
-			sprintf(txtLog,"Герой %s игрока %s штурмует замок в провинции %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
+			sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %s С€С‚СѓСЂРјСѓРµС‚ Р·Р°РјРѕРє РІ РїСЂРѕРІРёРЅС†РёРё %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
 			WriteLog(txtLog);
 			FileLog(txtLog);
 			int iBattle;
@@ -2355,7 +2355,7 @@ int dcEvent::Call(int DX)
 			Hero1->NiB=0;
 			if (iBattle==1)
 			{
-				FileLog("Победа");
+				FileLog("РџРѕР±РµРґР°");
 				if (arPlayer[Player2].Control==1)
 				{
 					sprintf(sMessage,(pFirstDialog+382)->sText,Prov1->sName);
@@ -2366,7 +2366,7 @@ int dcEvent::Call(int DX)
 			}
 			else
 			{
-				FileLog("Поражение");
+				FileLog("РџРѕСЂР°Р¶РµРЅРёРµ");
 			};			
 			if (Hero1->pSquad[0]->iLife==0)
 			{
@@ -2375,7 +2375,7 @@ int dcEvent::Call(int DX)
 		}
 		else
 		{
-			sprintf(txtLog,"Герой %s игрока %s осаждает замок в провинции %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
+			sprintf(txtLog,"Р“РµСЂРѕР№ %s РёРіСЂРѕРєР° %s РѕСЃР°Р¶РґР°РµС‚ Р·Р°РјРѕРє РІ РїСЂРѕРІРёРЅС†РёРё %s          ",Hero1->pstName->str,arPlayer[Player1].GetName(),Prov1->sName);
 			WriteLog(txtLog);
 			FileLog(txtLog);
 			if (arPlayer[Player2].Control==1)
@@ -2439,7 +2439,7 @@ void Rebel(dcProvince *PR, int DX)
 	}
 	else
 	{
-		sprintf(Mess,"Восстание в провинции %s игрока %s",PR->sName,arPlayer[PR->ipPlayer].GetName());
+		sprintf(Mess,"Р’РѕСЃСЃС‚Р°РЅРёРµ РІ РїСЂРѕРІРёРЅС†РёРё %s РёРіСЂРѕРєР° %s",PR->sName,arPlayer[PR->ipPlayer].GetName());
 		WriteLog(Mess);
 		FileLog(Mess);
 	};
@@ -2481,7 +2481,7 @@ void Rebel(dcProvince *PR, int DX)
 
 
 	clear_keybuf();
-	WriteLog("Отряд создан");
+	WriteLog("РћС‚СЂСЏРґ СЃРѕР·РґР°РЅ");
 	
 	Result=PR->UnderAttack(Fake.pGuard,DX);
 	if (Result==1)
@@ -2510,7 +2510,7 @@ void Rebel(dcProvince *PR, int DX)
 		PR->iDefender=0;
 		Fake.pGuard=NULL;
 	};
-	WriteLog("Конец");
+	WriteLog("РљРѕРЅРµС†");
 //	return Result;
 };
 
@@ -2528,11 +2528,11 @@ long int clEvent::CalcEffect(int Index, int Mult, long int Value)
 				break;
 			case 2:
 				{
-			//		StopLog("Было золота:", Value);
+			//		StopLog("Р‘С‹Р»Рѕ Р·РѕР»РѕС‚Р°:", Value);
 					long int Perc=(arEffect[i][1]+Random(arEffect[i][2]));
-			//		StopLog("Множитель:        ",Perc);
+			//		StopLog("РњРЅРѕР¶РёС‚РµР»СЊ:        ",Perc);
 					Result=Result+Value*Perc/100;
-			//		StopLog("Результат:", Result);
+			//		StopLog("Р РµР·СѓР»СЊС‚Р°С‚:", Result);
 				};
 				break;
 			default:			

@@ -1,4 +1,4 @@
-#include "../GoD/AsBinary.hpp"
+#include "../God/AsBinary.hpp"
 #include "doctest-configured.h"
 #include <sstream>
 

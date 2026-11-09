@@ -2,7 +2,7 @@
 
 bool bWorldRulesTest=false;
 
-BITMAP *bmpShard[MAX_SHARD_PIC];	//Изображения осколков
+BITMAP *bmpShard[MAX_SHARD_PIC];	//РР·РѕР±СЂР°Р¶РµРЅРёСЏ РѕСЃРєРѕР»РєРѕРІ
 BITMAP *bmpShardSelect[MAX_SHARD_PIC];
 BITMAP *bmpMainShard;
 BITMAP *bmpMainShardSelect;
@@ -14,13 +14,13 @@ dcShard * pFirstShard=NULL;
 dcCampaign Campaign;
 dcTutorial Tutorial;
 const int DIALOG_ALLOWED=6;
-bool bInvasion;	//Флаг вторжения
+bool bInvasion;	//Р¤Р»Р°Рі РІС‚РѕСЂР¶РµРЅРёСЏ
 bool bCycle, bTurn, bJournal, bShowRecords;
 //int WorldSize;
 
 bool PickBonusScreen(dcShard *Shard, int Mode);
 
-//Возвращает размер мира указанного игрока
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЂР°Р·РјРµСЂ РјРёСЂР° СѓРєР°Р·Р°РЅРЅРѕРіРѕ РёРіСЂРѕРєР°
 int GetWorldSize(int Player)	
 {
 	int Result=Campaign.arCampPlayer[Player].iSizeBonus;
@@ -47,7 +47,7 @@ int GetWorldSize(int Player)
 	return Result;
 };
 
-//Возвращает 0 для недоступной постройки, 1 для доступной (или расположенной на нейтральном осколке) и 2 для уже имеющейся у игрока
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ 0 РґР»СЏ РЅРµРґРѕСЃС‚СѓРїРЅРѕР№ РїРѕСЃС‚СЂРѕР№РєРё, 1 РґР»СЏ РґРѕСЃС‚СѓРїРЅРѕР№ (РёР»Рё СЂР°СЃРїРѕР»РѕР¶РµРЅРЅРѕР№ РЅР° РЅРµР№С‚СЂР°Р»СЊРЅРѕРј РѕСЃРєРѕР»РєРµ) Рё 2 РґР»СЏ СѓР¶Рµ РёРјРµСЋС‰РµР№СЃСЏ Сѓ РёРіСЂРѕРєР°
 int GetBuildingStatus(int Build, int Player)
 {
 	if ((pFirstInnerBld+Build)->iLevel<1)
@@ -520,7 +520,7 @@ dcShard::dcShard(dcShard * Next, int Terra, int Bld, int Lvl)
 dcShard::~dcShard()
 {};
 
-//Заполнение массива бонусов новых осколков
+//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° Р±РѕРЅСѓСЃРѕРІ РЅРѕРІС‹С… РѕСЃРєРѕР»РєРѕРІ
 void dcShard::FillBonus()
 {
 	if (arBonus[0][0]==0)
@@ -620,7 +620,7 @@ void dcShard::FillBonus()
 //	return Result;
 //};
 
-//Возвращает доход энергии с мира игрока
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРѕС…РѕРґ СЌРЅРµСЂРіРёРё СЃ РјРёСЂР° РёРіСЂРѕРєР°
 int GetEnergyIncome()
 {
 	int Result=0;
@@ -679,7 +679,7 @@ void BanishPlayer(int Player)
 	};
 	Campaign.arCampPlayer[Player].bInGame=false;
 
-	//Сплетня о Дариоле
+	//РЎРїР»РµС‚РЅСЏ Рѕ Р”Р°СЂРёРѕР»Рµ
 	if ((Player==5)||(Player==14))
 	{Campaign.arDialog[646]=1;};
 	for (int i=1; i<MAX_PLAYERS; i++)
@@ -696,8 +696,8 @@ bool bFinish;
 
 void FinishCampaign(int Index)
 {
-	//0 - сдался, 1 - поражение при защите своего мира, 2 - подчинился другому правителю, 3 - Уль-Даган разрушил мир, 4 - стал слугой Белеза, 5 - уничтожил всех Разрушителем
-	//6 - подчинил всех Разрушителем, 7 - собрал все Ключи Истины, 8 - победил всех оппонентов, 9 - уничтожил всё живое, 10 - собрал Оберег, 11 - вторжение демонов
+	//0 - СЃРґР°Р»СЃСЏ, 1 - РїРѕСЂР°Р¶РµРЅРёРµ РїСЂРё Р·Р°С‰РёС‚Рµ СЃРІРѕРµРіРѕ РјРёСЂР°, 2 - РїРѕРґС‡РёРЅРёР»СЃСЏ РґСЂСѓРіРѕРјСѓ РїСЂР°РІРёС‚РµР»СЋ, 3 - РЈР»СЊ-Р”Р°РіР°РЅ СЂР°Р·СЂСѓС€РёР» РјРёСЂ, 4 - СЃС‚Р°Р» СЃР»СѓРіРѕР№ Р‘РµР»РµР·Р°, 5 - СѓРЅРёС‡С‚РѕР¶РёР» РІСЃРµС… Р Р°Р·СЂСѓС€РёС‚РµР»РµРј
+	//6 - РїРѕРґС‡РёРЅРёР» РІСЃРµС… Р Р°Р·СЂСѓС€РёС‚РµР»РµРј, 7 - СЃРѕР±СЂР°Р» РІСЃРµ РљР»СЋС‡Рё РСЃС‚РёРЅС‹, 8 - РїРѕР±РµРґРёР» РІСЃРµС… РѕРїРїРѕРЅРµРЅС‚РѕРІ, 9 - СѓРЅРёС‡С‚РѕР¶РёР» РІСЃС‘ Р¶РёРІРѕРµ, 10 - СЃРѕР±СЂР°Р» РћР±РµСЂРµРі, 11 - РІС‚РѕСЂР¶РµРЅРёРµ РґРµРјРѕРЅРѕРІ
 	if (bFinish)
 	{return;};
 	bFinish=true;
@@ -820,13 +820,13 @@ void FinishCampaign(int Index)
 	};
 	pFirstShard=NULL;
 	char sFile[100];
-	sprintf(sFile,"save\\game%d.cmp",arHumans[0].iFileIndex);
+	sprintf(sFile,"save/game%d.cmp",arHumans[0].iFileIndex);
 	delete_file(sFile);
-	sprintf(sFile,"save\\map%d.cmp",arHumans[0].iFileIndex);
+	sprintf(sFile,"save/map%d.cmp",arHumans[0].iFileIndex);
 	delete_file(sFile);
 };
 
-//Проверка поражения и победы в кампании. Возвращает индекс проигрыша.
+//РџСЂРѕРІРµСЂРєР° РїРѕСЂР°Р¶РµРЅРёСЏ Рё РїРѕР±РµРґС‹ РІ РєР°РјРїР°РЅРёРё. Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРґРµРєСЃ РїСЂРѕРёРіСЂС‹С€Р°.
 void IsEndGame()
 {
 	if (bFinish)
@@ -912,23 +912,23 @@ void IsEndGame()
 //void WinCampaign(int Index)
 //{};
 
-//****Вызов событий в кампании
+//****Р’С‹Р·РѕРІ СЃРѕР±С‹С‚РёР№ РІ РєР°РјРїР°РЅРёРё
 void RunCampaignEvent(int Index, int Player, int Param)
 {	
 	clEvent *EV=(pFirstCampEvent+Index);
 	char Mess[1000];
 	
-//Изменение кармы
+//РР·РјРµРЅРµРЅРёРµ РєР°СЂРјС‹
 	Campaign.arCampPlayer[0].iKarma+=EV->iKarma;	
 
-//Воздействие эффектов
+//Р’РѕР·РґРµР№СЃС‚РІРёРµ СЌС„С„РµРєС‚РѕРІ
 	long int Mult=0, iWork;
-	//Индивидуальные эффекты
+	//РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
 		switch (EV->arEffect[Eff][0])
 		{
-		case 1: //Получение энергии
+		case 1: //РџРѕР»СѓС‡РµРЅРёРµ СЌРЅРµСЂРіРёРё
 			iWork=EV->arEffect[Eff][1]+Random(EV->arEffect[Eff][2]);
 			Campaign.arCampPlayer[EV->arEffect[Eff][3]].iEnergy+=iWork;
 			if (Eff==0)
@@ -936,17 +936,17 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			blit(bmpGUI_AstralLow,bmpLowPanel,0,0,0,0,bmpGUI_AstralLow->w,bmpGUI_AstralLow->h);
 			textprintf_ex(bmpLowPanel,Font1,135,79,COLOR_2,-1,"%d",Campaign.arCampPlayer[0].iEnergy);
 			break;
-		case 2: //Изменение отношений
+		case 2: //РР·РјРµРЅРµРЅРёРµ РѕС‚РЅРѕС€РµРЅРёР№
 			if (EV->arEffect[Eff][2]==0)
 			{Campaign.arCampPlayer[Player].arAttitude[EV->arEffect[Eff][3]]+=EV->arEffect[Eff][1];}
 			else
 			{Campaign.arCampPlayer[EV->arEffect[Eff][2]].arAttitude[EV->arEffect[Eff][3]]+=EV->arEffect[Eff][1];};
 			break;
-		case 3: //Изменение флага состояния
+		case 3: //РР·РјРµРЅРµРЅРёРµ С„Р»Р°РіР° СЃРѕСЃС‚РѕСЏРЅРёСЏ
 			if ((EV->arEffect[Eff][3]==0)||(Campaign.arDialog[EV->arEffect[Eff][3]]>0))
 			{Campaign.arDialog[EV->arEffect[Eff][1]]=EV->arEffect[Eff][2];};
 			break;
-		case 5: //Изменение дохода энергии
+		case 5: //РР·РјРµРЅРµРЅРёРµ РґРѕС…РѕРґР° СЌРЅРµСЂРіРёРё
 			iWork=EV->arEffect[Eff][1]+Random(EV->arEffect[Eff][2]);
 			if (iWork>0)
 			{Campaign.arCampPlayer[EV->arEffect[Eff][3]].iEnergyBonus+=iWork;}
@@ -955,13 +955,13 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			if (Eff==0)
 			{Mult=iWork;};
 			break;
-		case 6: //Изменение внутреннего параметра
+		case 6: //РР·РјРµРЅРµРЅРёРµ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РїР°СЂР°РјРµС‚СЂР°
 			Param=EV->arEffect[Eff][1];
 			break;
-		case 7: //Изменение кармы
+		case 7: //РР·РјРµРЅРµРЅРёРµ РєР°СЂРјС‹
 			Campaign.arCampPlayer[EV->arEffect[Eff][3]].iKarma+=EV->arEffect[Eff][1]+Random(EV->arEffect[Eff][2]);
 			break;
-		case 12: //Изменение Treaty
+		case 12: //РР·РјРµРЅРµРЅРёРµ Treaty
 			Campaign.arCampPlayer[EV->arEffect[Eff][1]].iTreaty=EV->arEffect[Eff][2];
 			break;
 		case 13:
@@ -1003,12 +1003,12 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			};
 			Campaign.Events[0]=EV->arEffect[Eff][1];
 			break;
-		//Уничтожить игрока
+		//РЈРЅРёС‡С‚РѕР¶РёС‚СЊ РёРіСЂРѕРєР°
 		case 18:
 			BanishPlayer(EV->arEffect[Eff][1]);
 			break;
 		case 19:
-		//Переход к событию, если владыка жив
+		//РџРµСЂРµС…РѕРґ Рє СЃРѕР±С‹С‚РёСЋ, РµСЃР»Рё РІР»Р°РґС‹РєР° Р¶РёРІ
 			if (Campaign.arCampPlayer[EV->arEffect[Eff][2]].bInGame)
 			{
 				RunCampaignEvent(EV->arEffect[Eff][1], Player, Param);
@@ -1016,38 +1016,38 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			};
 			break;
 		case 21:
-		//Нападение на игрока
+		//РќР°РїР°РґРµРЅРёРµ РЅР° РёРіСЂРѕРєР°
 			bTurn=true;
 			PickBonusScreen(NULL,-EV->arEffect[Eff][1]);
 			break;
 		case 22: 
-		//Понижение дохода энергии в %
+		//РџРѕРЅРёР¶РµРЅРёРµ РґРѕС…РѕРґР° СЌРЅРµСЂРіРёРё РІ %
 			iWork=EV->arEffect[Eff][1]+Random(EV->arEffect[Eff][2]);
 			Campaign.arCampPlayer[0].iEnergyLose+=iWork;			
 			if (Eff==0)
 			{Mult=iWork;};
 			break;
 		case 23:
-		//Запись в журнале			
+		//Р—Р°РїРёСЃСЊ РІ Р¶СѓСЂРЅР°Р»Рµ			
 			Campaign.arJournal[EV->arEffect[Eff][1]]=EV->arEffect[Eff][2];
 			if (EV->arEffect[Eff][2]>0)
 			{bJournal=true;};
 			break;
 		case 24:
-		//Дополнение времени
+		//Р”РѕРїРѕР»РЅРµРЅРёРµ РІСЂРµРјРµРЅРё
 			Campaign.iTimeBonus+=EV->arEffect[Eff][1];			
 			break;
 		case 25:
-		//Изменение славы
+		//РР·РјРµРЅРµРЅРёРµ СЃР»Р°РІС‹
 			Campaign.arCampPlayer[0].iMapScore+=EV->arEffect[Eff][1];			
 			break;
 		};
 	};
-	//Обычные эффекты	
+	//РћР±С‹С‡РЅС‹Рµ СЌС„С„РµРєС‚С‹	
 
 	if (EV->ipDialog)
 	{
-//Вызов диалога
+//Р’С‹Р·РѕРІ РґРёР°Р»РѕРіР°
 		if (EV->iDlgParam1>=10)
 		{
 			int arAnswer[4], arEvent[4];
@@ -1168,8 +1168,8 @@ void RunCampaignEvent(int Index, int Player, int Param)
 		};
 	};
 	
-//Вызов следующего события
-	//Переход по отношениям
+//Р’С‹Р·РѕРІ СЃР»РµРґСѓСЋС‰РµРіРѕ СЃРѕР±С‹С‚РёСЏ
+	//РџРµСЂРµС…РѕРґ РїРѕ РѕС‚РЅРѕС€РµРЅРёСЏРј
 	for (int Eff=0; Eff<MAX_EVENT_EFFECT; Eff++)
 	{
 		if  (EV->arEffect[Eff][0]==9)
@@ -1181,7 +1181,7 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			};			
 		};
 
-	//Переход по триггерам	
+	//РџРµСЂРµС…РѕРґ РїРѕ С‚СЂРёРіРіРµСЂР°Рј	
 		if  (EV->arEffect[Eff][0]==10)
 		{
 			if (Campaign.arDialog[EV->arEffect[Eff][1]]>0)
@@ -1202,7 +1202,7 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			};
 		};
 
-	//Случайный или безусловный переход	
+	//РЎР»СѓС‡Р°Р№РЅС‹Р№ РёР»Рё Р±РµР·СѓСЃР»РѕРІРЅС‹Р№ РїРµСЂРµС…РѕРґ	
 		if  (EV->arEffect[Eff][0]==11)
 		{
 			if ((EV->arEffect[Eff][2]>0)&&(Random(100)>EV->arEffect[Eff][3]))
@@ -1212,7 +1212,7 @@ void RunCampaignEvent(int Index, int Player, int Param)
 			return;
 		};
 
-	//Переход по славе	
+	//РџРµСЂРµС…РѕРґ РїРѕ СЃР»Р°РІРµ	
 		if  (EV->arEffect[Eff][0]==26)
 		{
 			if (Campaign.arCampPlayer[0].iMapScore>=EV->arEffect[Eff][1])
@@ -1232,7 +1232,7 @@ void RunCampaignEvent(int Index, int Player, int Param)
 				};
 			};
 		};
-	//Завершение кампании
+	//Р—Р°РІРµСЂС€РµРЅРёРµ РєР°РјРїР°РЅРёРё
 		if  (EV->arEffect[Eff][0]==20)
 		{		
 			FinishCampaign(EV->arEffect[Eff][1]);
@@ -1374,7 +1374,7 @@ void MakeShards(int Player)
 	}
 	else
 	{	
-		//Генерация осколков после получения всех зданий
+		//Р“РµРЅРµСЂР°С†РёСЏ РѕСЃРєРѕР»РєРѕРІ РїРѕСЃР»Рµ РїРѕР»СѓС‡РµРЅРёСЏ РІСЃРµС… Р·РґР°РЅРёР№
 		if (Build>=iMaxInnerBld-3)
 		{
 			Allow=1+Random(3);
@@ -1517,7 +1517,7 @@ void NewCampaign()
 		arHumans[0].Save();
 		iActivePlayer=arHumans[0].iFileIndex;
 		PACKFILE *WorkFile;
-		WorkFile=pack_fopen("save\\game.con","w");
+		WorkFile=pack_fopen("save/game.con","w");
 		pack_fwrite(&iActivePlayer,sizeof iActivePlayer,WorkFile);
 		pack_fclose(WorkFile);
 		arPlayer[1].MakeFlags();
@@ -1733,7 +1733,7 @@ void AttackPlayer(int Attacker, int Defender)
 	arPlayer[1].iKarma=Campaign.arCampPlayer[0].iKarma;
 	if (Campaign.arDialog[40]>0)
 	{arPlayer[1].iUnion=5;};
-	//Получение зданий не воюющими властителями
+	//РџРѕР»СѓС‡РµРЅРёРµ Р·РґР°РЅРёР№ РЅРµ РІРѕСЋСЋС‰РёРјРё РІР»Р°СЃС‚РёС‚РµР»СЏРјРё
 	for (int i=1; i<MAX_PLAYERS; i++)
 	{
 		if ((Campaign.arCampPlayer[i].bInGame)&&(Campaign.arCampPlayer[i].bFirstMeet)&&(i!=abs(Attacker))&&(i!=abs(Defender)))
@@ -1747,7 +1747,7 @@ void AttackPlayer(int Attacker, int Defender)
 void AttackShard(dcShard *SH)
 {
 //	int Result=0;
-	//Таймеры квестовых событий	
+	//РўР°Р№РјРµСЂС‹ РєРІРµСЃС‚РѕРІС‹С… СЃРѕР±С‹С‚РёР№	
 	if (Campaign.arDialog[50]>0)
 	{
 		if (Campaign.arDialog[50]==1)
@@ -1780,7 +1780,7 @@ void AttackShard(dcShard *SH)
 	};
 	if (Campaign.arDialog[92]>1)
 	{Campaign.arDialog[92]--;};
-//Инициализация квестов
+//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєРІРµСЃС‚РѕРІ
 	for (int Q=1; Q<=iMaxQuest; Q++)
 	{
 		if (((pFirstQuest+Q)->iGiver<0)&&(abs((pFirstQuest+Q)->iGiver)<=GetWorldSize(0)))
@@ -1854,7 +1854,7 @@ void AttackShard(dcShard *SH)
 	};
 
 	int arBLD[16], NeedBld=0;
-//Получение зданий не воюющими властителями
+//РџРѕР»СѓС‡РµРЅРёРµ Р·РґР°РЅРёР№ РЅРµ РІРѕСЋСЋС‰РёРјРё РІР»Р°СЃС‚РёС‚РµР»СЏРјРё
 	for (int i=0; i<Count+SH->Map.Players; i++)
 	{
 		if ((RollerN[i]>0)&&(RollerP[i]>0))
@@ -1869,7 +1869,7 @@ void AttackShard(dcShard *SH)
 	for (int i=0; i<NeedBld; i++)
 	{Campaign.arCampPlayer[arBLD[i]].AddBuild();};
 
-//Создание местных лордов
+//РЎРѕР·РґР°РЅРёРµ РјРµСЃС‚РЅС‹С… Р»РѕСЂРґРѕРІ
 	for (int i=2; i<=SH->Map.Players; i++)
 	{
 		if (arPlayer[i].Control==3)
@@ -1965,7 +1965,7 @@ int GetResourceEnergy(int ipResource)
 
 
 //******************************************************************
-//******** Экран выбора бонусов для вторжения **********************
+//******** Р­РєСЂР°РЅ РІС‹Р±РѕСЂР° Р±РѕРЅСѓСЃРѕРІ РґР»СЏ РІС‚РѕСЂР¶РµРЅРёСЏ **********************
 //******************************************************************
 
 bool PickBonusScreen(dcShard *Shard, int Mode)
@@ -2094,7 +2094,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 		SH=SH->pNext;		
 	};
 
-//Упорядочиваем списки
+//РЈРїРѕСЂСЏРґРѕС‡РёРІР°РµРј СЃРїРёСЃРєРё
 	int U; bool bChange;
 	for (int i=0; i<MaxUnit-1; i++)
 	{
@@ -2245,7 +2245,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 				};
 			};
 		};
-//Полоска юнитов	
+//РџРѕР»РѕСЃРєР° СЋРЅРёС‚РѕРІ	
 		if (bUnitShow)
 		{
 			blit(bmpGUI_PickBonus,bmpScr,54,191,54,191,915,110);
@@ -2292,7 +2292,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			bUnitShow=true;
 		};
 
-//Полоска предметов
+//РџРѕР»РѕСЃРєР° РїСЂРµРґРјРµС‚РѕРІ
 		if (bItemShow)
 		{
 			blit(bmpGUI_PickBonus,bmpScr,54,338,54,338,915,95);
@@ -2339,7 +2339,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			bItemShow=true;
 		};
 
-//Полоска зданий
+//РџРѕР»РѕСЃРєР° Р·РґР°РЅРёР№
 		if (bBuildShow)
 		{
 			blit(bmpGUI_PickBonus,bmpScr,54,468,54,468,915,95);
@@ -2386,7 +2386,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			bBuildShow=true;
 		};
 
-//Полоска спец бонусов
+//РџРѕР»РѕСЃРєР° СЃРїРµС† Р±РѕРЅСѓСЃРѕРІ
 		if (bStuffShow)
 		{
 			blit(bmpGUI_PickBonus,bmpScr,54,598,54,598,915,95);
@@ -2449,7 +2449,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			bStuffShow=true;
 		};
 
-//Маски
+//РњР°СЃРєРё
 		for (int i=0; i<UnitMask; i++)
 		{
 			Check=mskUnit[i].Check();
@@ -2560,7 +2560,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			};
 		};		
 
-// Окна ввода
+// РћРєРЅР° РІРІРѕРґР°
 		for (int i=0; i<4; i++)
 		{
 			int Check=scrRes[i].Check();
@@ -2615,7 +2615,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			};
 		};
 
-//Ввод значений
+//Р’РІРѕРґ Р·РЅР°С‡РµРЅРёР№
 		if (iClick>-2)
 		{
 			for (int i=0; i<4; i++)
@@ -2654,7 +2654,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 			iClick=-2;
 		};
 
-//Вычисление цены
+//Р’С‹С‡РёСЃР»РµРЅРёРµ С†РµРЅС‹
 		if (bChangePrice)
 		{
 			EnergySpent=0;
@@ -2737,12 +2737,12 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 		objGUI=Temp;
 	};	
 	destroy_bitmap(bmpScr);
-	//Вторжение
+	//Р’С‚РѕСЂР¶РµРЅРёРµ
 	if (bAttack)
 	{
 		if (Mode<0)
 		{
-			//В Мир игрока
+			//Р’ РњРёСЂ РёРіСЂРѕРєР°
 			AttackPlayer(abs(Mode),0);
 			arPlayer[1].Gold+=MaxRes[0];
 			arPlayer[1].Gem+=MaxRes[1];
@@ -2793,7 +2793,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 		}
 		else
 		{
-			//На нейтральный осколок или в мир врага
+			//РќР° РЅРµР№С‚СЂР°Р»СЊРЅС‹Р№ РѕСЃРєРѕР»РѕРє РёР»Рё РІ РјРёСЂ РІСЂР°РіР°
 			SaveGame(0);
 			Campaign.arCampPlayer[0].iEnergy-=EnergySpent;
 			if (Mode==0)
@@ -2855,7 +2855,7 @@ bool PickBonusScreen(dcShard *Shard, int Mode)
 	return Result;
 };
 
-//Поиск оппонента и атака мира игрока
+//РџРѕРёСЃРє РѕРїРїРѕРЅРµРЅС‚Р° Рё Р°С‚Р°РєР° РјРёСЂР° РёРіСЂРѕРєР°
 void WorldAttack()
 {
 	ClearRoll();
@@ -2917,7 +2917,7 @@ void AstralTurn(bool bSkip)
 	};
 	if (Campaign.arDialog[38]>1)
 	{Campaign.arDialog[38]--;};
-	//Триггеры рекламы
+	//РўСЂРёРіРіРµСЂС‹ СЂРµРєР»Р°РјС‹
 	if (Campaign.arDialog[44]>1)
 	{Campaign.arDialog[44]--;}
 	else
@@ -2930,7 +2930,7 @@ void AstralTurn(bool bSkip)
 
 
 //***********************************************************************************************************
-//************ ОСНОВНОЙ ПРОЦЕСС АСТРАЛА *********************************************************************
+//************ РћРЎРќРћР’РќРћР™ РџР РћР¦Р•РЎРЎ РђРЎРўР РђР›Рђ *********************************************************************
 //***********************************************************************************************************
 
 int Astral()
@@ -3017,7 +3017,7 @@ int Astral()
 	int WorldSize=GetWorldSize(0);
 	AddY=(WorldSize-1)*50;
 
-//Активизация вопросов Зарру в зависимости от размера мира
+//РђРєС‚РёРІРёР·Р°С†РёСЏ РІРѕРїСЂРѕСЃРѕРІ Р—Р°СЂСЂСѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЂР°Р·РјРµСЂР° РјРёСЂР°
 	switch (WorldSize)
 	{
 	case 2:
@@ -3099,7 +3099,7 @@ int Astral()
 	objMain->PlaceOnMap(400,768-200);
 	objMain=mskPlayer[0].Init(0,0,1,Campaign.arCampPlayer[0].ShardPic,Campaign.arCampPlayer[0].ShardMask,objMain,3);
 	objMain->PlaceOnMap(400,768-200);
-//Запланированные события
+//Р—Р°РїР»Р°РЅРёСЂРѕРІР°РЅРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ
 	for (int i=1; i<=iMaxCampEvent; i++)
 	{
 		if (((pFirstCampEvent+i)->iPossibility>0)&&((pFirstCampEvent+i)->iPossibility<=WorldSize)&&(Campaign.arDialog[i]==0))
@@ -3110,7 +3110,7 @@ int Astral()
 	if ((Campaign.arDialog[92]==1)&&(Campaign.arDialog[78]<1))
 	{AddEvent(1188);};
 
-//Появление новых владык
+//РџРѕСЏРІР»РµРЅРёРµ РЅРѕРІС‹С… РІР»Р°РґС‹Рє
 	for (int i=1; i<MAX_PLAYERS; i++)
 	{
 		if (((Campaign.arCampPlayer[i].Y<=AddY)||(Campaign.arCampPlayer[i].bFirstMeet))&&(Campaign.arCampPlayer[i].bInGame))
@@ -3248,14 +3248,14 @@ int Astral()
 			
 			if (Campaign.iActiveShard<0)
 			{
-			//После атаки мира
+			//РџРѕСЃР»Рµ Р°С‚Р°РєРё РјРёСЂР°
 				if (Campaign.bDefender)
 				{
-					//Игрок защищался
+					//РРіСЂРѕРє Р·Р°С‰РёС‰Р°Р»СЃСЏ
 
 					if (iExitFlag==1)
 					{	
-					//Поражение
+					//РџРѕСЂР°Р¶РµРЅРёРµ
 						FinishCampaign(1);
 						bCycle=false;
 						bRedraw=true;
@@ -3264,7 +3264,7 @@ int Astral()
 
 					if (iExitFlag==2)
 					{	
-					//Победа
+					//РџРѕР±РµРґР°
 						Campaign.arCampPlayer[0].iSizeBonus++;
 						MakeShards(0);
 						AstralTurn(false);
@@ -3276,17 +3276,17 @@ int Astral()
 				}
 				else
 				{
-					//Игрок атаковал
+					//РРіСЂРѕРє Р°С‚Р°РєРѕРІР°Р»
 					if (iExitFlag==1)
 					{	
-					//Поражение
+					//РџРѕСЂР°Р¶РµРЅРёРµ
 						bLoseEnergy=true;
 						AstralTurn(false);
 					};
 
 					if (iExitFlag==2)
 					{	
-					//Победа
+					//РџРѕР±РµРґР°
 						/*for (int k=0; k<MAX_PLAYER_DIALOG; k++)
 						{
 							if ((pFirstPlayerProfile+abs(Campaign.iActiveShard))->arExitDlg[k]>0)
@@ -3310,10 +3310,10 @@ int Astral()
 			}
 			else
 			{
-			//После атаки осколка
+			//РџРѕСЃР»Рµ Р°С‚Р°РєРё РѕСЃРєРѕР»РєР°
 				if (iExitFlag==1)
 				{			
-				//Поражение
+				//РџРѕСЂР°Р¶РµРЅРёРµ
 					bLostShard=true;
 					dcShard* SH1;
 					SH=pFirstShard;
@@ -3346,7 +3346,7 @@ int Astral()
 
 				if (iExitFlag==2)
 				{	
-				//Победа
+				//РџРѕР±РµРґР°
 					Campaign.GetActiveShard()->ipPlayer=0;
 					/*SH=pFirstShard;
 					while (SH)
@@ -3361,7 +3361,7 @@ int Astral()
 
 				if (iExitFlag==4)
 				{
-				//Пройдена первая миссия
+				//РџСЂРѕР№РґРµРЅР° РїРµСЂРІР°СЏ РјРёСЃСЃРёСЏ
 					if (Campaign.arDialog[125]>0)
 					{AddEvent(129);}
 					else
@@ -3470,7 +3470,7 @@ int Astral()
 		if (buttZarr.Check())
 		{
 			if (Campaign.arDialog[256])
-			{//Триггер с вопросом о демонах
+			{//РўСЂРёРіРіРµСЂ СЃ РІРѕРїСЂРѕСЃРѕРј Рѕ РґРµРјРѕРЅР°С…
 				if ((Campaign.arDialog[257])||(Campaign.arDialog[258]))
 				{
 					Campaign.arDialog[256]=0;
@@ -3876,16 +3876,16 @@ int Astral()
 
 			IsEndGame();
 			
-			//Проверка состояния квестов
+			//РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРІРµСЃС‚РѕРІ
 			if (bCycle)
 			{
-				//Вести о Гарросе
+				//Р’РµСЃС‚Рё Рѕ Р“Р°СЂСЂРѕСЃРµ
 				if (Campaign.arDialog[38]==1)
 				{AddEvent(1451);};
-				//Собраны все части разрушителя для Уль-Дагана
+				//РЎРѕР±СЂР°РЅС‹ РІСЃРµ С‡Р°СЃС‚Рё СЂР°Р·СЂСѓС€РёС‚РµР»СЏ РґР»СЏ РЈР»СЊ-Р”Р°РіР°РЅР°
 				if (Campaign.arItems[2]==6)
 				{AddEvent(972);};
-				//Собраны все части разрушителя
+				//РЎРѕР±СЂР°РЅС‹ РІСЃРµ С‡Р°СЃС‚Рё СЂР°Р·СЂСѓС€РёС‚РµР»СЏ
 				if ((Campaign.arDialog[34]==0)&&(Campaign.arItems[1]==6))
 				{AddEvent(1296);};
 				if (Campaign.arDialog[31]>0)
@@ -3894,16 +3894,16 @@ int Astral()
 					AddEvent(1226);
 				};
 
-				//***Сообщения Зарра***
+				//***РЎРѕРѕР±С‰РµРЅРёСЏ Р—Р°СЂСЂР°***
 				if (Campaign.arDialog[78]==0)
 				{
-					//Предупреждение об атаке демонов
+					//РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ РѕР± Р°С‚Р°РєРµ РґРµРјРѕРЅРѕРІ
 					if ((Campaign.arDialog[98]==0)&&(Campaign.iCurrentTurn>=Campaign.arJournal[978]-10+Campaign.iTimeBonus))
 					{AddEvent(1302);};
-					//Реклама
+					//Р РµРєР»Р°РјР°
 					if ((Campaign.arDialog[41]==0)&&(Campaign.arCampPlayer[0].iMapScore>2000))
 					{AddEvent(1452);};
-					//Реклама (возвращение)
+					//Р РµРєР»Р°РјР° (РІРѕР·РІСЂР°С‰РµРЅРёРµ)
 					if (Campaign.arDialog[44]==1)
 					{AddEvent(1467);};
 					if ((!Campaign.arCampPlayer[10].bInGame)&&(Campaign.arCampPlayer[16].bInGame)&&(Campaign.iCurrentTurn>49))
@@ -3924,19 +3924,19 @@ int Astral()
 						Campaign.arQuest[i][1]=3;
 					};
 				};
-				//Атака лАншара
+				//РђС‚Р°РєР° Р»РђРЅС€Р°СЂР°
 				if ((Campaign.arCampPlayer[7].bInGame)&&(Campaign.arDialog[359]==0)&&(Campaign.arDialog[350]==0)&&(GetWorldSize(0)==24))
 				{AddEvent(1310);};
 
-				//Финал лАншара
+				//Р¤РёРЅР°Р» Р»РђРЅС€Р°СЂР°
 				if ((Campaign.arCampPlayer[7].bInGame)&&(Campaign.arDialog[360]==0)&&(Campaign.arDialog[350]>0)&&(GetWorldSize(0)>=46))
 				{AddEvent(1313);};
 
-				//Финал Белеза
+				//Р¤РёРЅР°Р» Р‘РµР»РµР·Р°
 				if ((Campaign.arCampPlayer[3].bInGame)&&(Campaign.arDialog[103]>0)&&(Campaign.arItems[4]>6))
 				{AddEvent(1316);};
 			};
-			//Проверка атаки мира
+			//РџСЂРѕРІРµСЂРєР° Р°С‚Р°РєРё РјРёСЂР°
 			if ((Campaign.iReserv<GetWorldSize(0))&&(bCycle)&&(!bRedraw)&&(NoEvents()))
 			{
 				if ((Campaign.arDialog[73]==0)&&(GetWorldSize(0)==12))

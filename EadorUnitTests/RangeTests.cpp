@@ -1,4 +1,4 @@
-#include "../GoD/Range.hpp"
+#include "../God/Range.hpp"
 #include "doctest-configured.h"
 #include <sstream>
 

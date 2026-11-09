@@ -2,6 +2,7 @@
 #define ALLEGRO_NO_MAGIC_MAIN
 #endif
 #include "Mapper.h"
+#include <algorithm>
 
 bool bFullLogMode=false;
 char stVersion[16];
@@ -29,18 +30,18 @@ bool bLakeShip=false;
 bool bStaticLoot=false;
 bool bStaticEvent=false;
 bool bShowWallpaper=true;
-int RES_BUY_CHANGE=5;		//Изменение цены на ресурс при его покупке в %
-int MAX_PROFIT=500;			//Максимальный доход в процентах от золота игрока
-int MERCENARY_TIME=7;		//Через сколько ходов сменяются наемники
-int EVENT_POSSIBILITY=30;	//Вероятность случайных событий (из 1000)
-int MAX_BATTLE_DURATION=40;	//Максимальная продолжительность боя в ходах (после чего наступает ничья)
-int MAX_ILLUSTRATION=107;	//Максимум картинок для диалогов и событий
+int RES_BUY_CHANGE=5;		//РР·РјРµРЅРµРЅРёРµ С†РµРЅС‹ РЅР° СЂРµСЃСѓСЂСЃ РїСЂРё РµРіРѕ РїРѕРєСѓРїРєРµ РІ %
+int MAX_PROFIT=500;			//РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РґРѕС…РѕРґ РІ РїСЂРѕС†РµРЅС‚Р°С… РѕС‚ Р·РѕР»РѕС‚Р° РёРіСЂРѕРєР°
+int MERCENARY_TIME=7;		//Р§РµСЂРµР· СЃРєРѕР»СЊРєРѕ С…РѕРґРѕРІ СЃРјРµРЅСЏСЋС‚СЃСЏ РЅР°РµРјРЅРёРєРё
+int EVENT_POSSIBILITY=30;	//Р’РµСЂРѕСЏС‚РЅРѕСЃС‚СЊ СЃР»СѓС‡Р°Р№РЅС‹С… СЃРѕР±С‹С‚РёР№ (РёР· 1000)
+int MAX_BATTLE_DURATION=40;	//РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р±РѕСЏ РІ С…РѕРґР°С… (РїРѕСЃР»Рµ С‡РµРіРѕ РЅР°СЃС‚СѓРїР°РµС‚ РЅРёС‡СЊСЏ)
+int MAX_ILLUSTRATION=107;	//РњР°РєСЃРёРјСѓРј РєР°СЂС‚РёРЅРѕРє РґР»СЏ РґРёР°Р»РѕРіРѕРІ Рё СЃРѕР±С‹С‚РёР№
 int MAX_PATH=10;
 
 int iAntisleep=0;
 int iAntisleepDelay=0;
 
-int Timer=false;		//Флаг опроса таймера
+int Timer=false;		//Р¤Р»Р°Рі РѕРїСЂРѕСЃР° С‚Р°Р№РјРµСЂР°
 int Tick=0;
 int mouse_pointer=0;
 
@@ -78,7 +79,7 @@ int iExitFlag;
 //SAMPLE *musTrack[MAX_MUSIC];
 bool bButtonDelay=false;
 bool bAIBattle=false;
-int flgEnglish=0; //0 - старая рус. версия, 1  - английская, 2 - новая рус.
+int flgEnglish=0; //0 - СЃС‚Р°СЂР°СЏ СЂСѓСЃ. РІРµСЂСЃРёСЏ, 1  - Р°РЅРіР»РёР№СЃРєР°СЏ, 2 - РЅРѕРІР°СЏ СЂСѓСЃ.
 
 bool bGameInProcess=true;
 bool bScrShot=false;
@@ -99,10 +100,10 @@ int iDialogButt=0;
 //AudioDevicePtr soundDevice;
 //OutputStreamPtr Track[2];
 //OutputStreamPtr Music[MAX_MUSIC];
-int	iGameMode=-1,			//Текущий режим игры (-1 - загрузка и заставка, 0 - меню, 1 - астрал, 2 - основной, 3 - битва, 4 - перед битвой, 5 - титры, 6 - победа, 7 - поражение)
-	iActiveTrack=0,			//№ текущего трека
-	iPause=100;				//Длительность паузы
-float fFading=0;			//Затухание звука
+int	iGameMode=-1,			//РўРµРєСѓС‰РёР№ СЂРµР¶РёРј РёРіСЂС‹ (-1 - Р·Р°РіСЂСѓР·РєР° Рё Р·Р°СЃС‚Р°РІРєР°, 0 - РјРµРЅСЋ, 1 - Р°СЃС‚СЂР°Р», 2 - РѕСЃРЅРѕРІРЅРѕР№, 3 - Р±РёС‚РІР°, 4 - РїРµСЂРµРґ Р±РёС‚РІРѕР№, 5 - С‚РёС‚СЂС‹, 6 - РїРѕР±РµРґР°, 7 - РїРѕСЂР°Р¶РµРЅРёРµ)
+	iActiveTrack=0,			//в„– С‚РµРєСѓС‰РµРіРѕ С‚СЂРµРєР°
+	iPause=100;				//Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїР°СѓР·С‹
+float fFading=0;			//Р—Р°С‚СѓС…Р°РЅРёРµ Р·РІСѓРєР°
 unsigned int iSeed=1;
 int arHerbColors[MAX_HERB_COLOR][3]=
 	{	
@@ -131,7 +132,7 @@ int main(int argc, char** argv)
 #endif
 {
 	sprintf(stVersion,"1.05.1");
-	//Инициализация Аллегро
+	//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РђР»Р»РµРіСЂРѕ
 	LoadConfig();
 	set_uformat(U_ASCII);
 	if (allegro_init()!=0)
@@ -199,7 +200,7 @@ int main(int argc, char** argv)
 				if (flgEnglish==1)
 				{set_window_title("Eador. Genesis");}
 				else
-				{set_window_title("Эадор. Сотворение");}
+				{set_window_title("Р­Р°РґРѕСЂ. РЎРѕС‚РІРѕСЂРµРЅРёРµ");}
 				if (bBackgroundMode)
 				{set_display_switch_mode(SWITCH_BACKGROUND);};
 			};
@@ -288,7 +289,7 @@ int main(int argc, char** argv)
 	rectfill(screen,0,0,1024,768,COLOR_1);
 	rectfill(screen1,0,0,1024,768,COLOR_1);
 	FileLog("Loading Interface.dat...");
-	DATAFILE *datGUI=load_datafile("dat\\interface.dat");
+	DATAFILE *datGUI=load_datafile("dat/Interface.dat");
 	if (!datGUI)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading interface.dat");		
@@ -436,7 +437,7 @@ int main(int argc, char** argv)
 	bmpGUI_Credits=(BITMAP *)datGUI[140].dat;
 
 	FileLog("Loading Anim.dat...");
-	DATAFILE* datAnim = load_datafile("dat\\anim.dat");
+	DATAFILE* datAnim = load_datafile("dat/Anim.dat");
 	if (!datAnim)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading anim.dat");
@@ -487,7 +488,7 @@ int main(int argc, char** argv)
 	RunHourGlass(153,0);
 
 	FileLog("Loading Prototypes...");
-//Загрузка прототипов
+//Р—Р°РіСЂСѓР·РєР° РїСЂРѕС‚РѕС‚РёРїРѕРІ
 	
 	if (!(Loader()))
 	{
@@ -501,7 +502,7 @@ int main(int argc, char** argv)
 	for (int i=0; i<MAX_MUSIC; i++)
 	{
 		char sFile[50];
-		sprintf(sFile,"sound\\track0%d.wav",i+1);
+		sprintf(sFile,"sound/track0%d.wav",i+1);
 		musTrack[i]=load_sample(sFile);
 	};*/
 
@@ -510,7 +511,7 @@ int main(int argc, char** argv)
 	NewProgress+=100;
 	FileLog("Loading mouse.dat...");
 	
-	DATAFILE* datMouse = load_datafile("dat\\mouse.dat");
+	DATAFILE* datMouse = load_datafile("dat/Mouse.dat");
 	if (!datMouse)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading mouse.dat");		
@@ -524,7 +525,7 @@ int main(int argc, char** argv)
 	};
 	NewProgress+=100;
 
-	DATAFILE* datButtons = load_datafile("dat\\buttons.dat");
+	DATAFILE* datButtons = load_datafile("dat/Buttons.dat");
 	if (!datButtons)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading buttons.dat");		
@@ -539,7 +540,7 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading spells.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datSpells = load_datafile("dat\\spells.dat");
+	DATAFILE* datSpells = load_datafile("dat/Spells.dat");
 	if (!datSpells)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading spells.dat");		
@@ -554,7 +555,7 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading resource.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datResource = load_datafile("dat\\resource.dat");
+	DATAFILE* datResource = load_datafile("dat/Resource.dat");
 	if (!datResource)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading resource.dat");		
@@ -570,7 +571,7 @@ int main(int argc, char** argv)
 
 	NewProgress+=100;
 	FileLog("Loading skills.dat...");
-	DATAFILE* datSkills = load_datafile("dat\\skills.dat");
+	DATAFILE* datSkills = load_datafile("dat/Skills.dat");
 	if (!datSkills)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading skills.dat");		
@@ -585,7 +586,7 @@ int main(int argc, char** argv)
 	//readkey();
 
 	NewProgress+=100;
-	DATAFILE* datHeroSkills = load_datafile("dat\\heroskills.dat");
+	DATAFILE* datHeroSkills = load_datafile("dat/HeroSkills.dat");
 	if (!datHeroSkills)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading heroskills.dat");		
@@ -599,7 +600,7 @@ int main(int argc, char** argv)
 
 	NewProgress+=100;
 	FileLog("Loading stuff.dat...");
-	DATAFILE* datStuff = load_datafile("dat\\stuff.dat");
+	DATAFILE* datStuff = load_datafile("dat/Stuff.dat");
 	if (!datStuff)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading stuff.dat");		
@@ -616,7 +617,7 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading medal.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datMedal = load_datafile("dat\\medal.dat");
+	DATAFILE* datMedal = load_datafile("dat/Medal.dat");
 	if (!datMedal)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading medal.dat");
@@ -627,7 +628,7 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading medal_small.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datSmallMedal = load_datafile("dat\\medal_small.dat");
+	DATAFILE* datSmallMedal = load_datafile("dat/Medal_Small.dat");
 	if (!datSmallMedal)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading medal_small.dat");
@@ -649,7 +650,7 @@ int main(int argc, char** argv)
 	{
 
 	NewProgress+=100;
-	DATAFILE* datRaces = load_datafile("dat\\races.dat");
+	DATAFILE* datRaces = load_datafile("dat/Races.dat");
 	if (!datRaces)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading races.dat");		
@@ -667,7 +668,7 @@ int main(int argc, char** argv)
 //	TypeLine++;
 	NewProgress+=100;
 	FileLog("Loading site.dat...");
-	DATAFILE* datSite = load_datafile("dat\\site.dat");
+	DATAFILE* datSite = load_datafile("dat/Site.dat");
 	if (!datSite)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading site.dat");		
@@ -684,7 +685,7 @@ int main(int argc, char** argv)
 
 	//	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading mapobj.dat...");
 //	TypeLine++;
-	DATAFILE* datMapObj = load_datafile("dat\\mapobj.dat");
+	DATAFILE* datMapObj = load_datafile("dat/MapObj.dat");
 	if (!datMapObj)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading mapobj.dat");
@@ -737,14 +738,25 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading herb.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datHerb = load_datafile("dat\\herb.dat");
+	DATAFILE* datHerb = load_datafile("dat/Herb.dat");
 	if (!datHerb)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading herb.dat");
 		readkey();
 		return 1;
 	};	
-	for (int i=0; i<iMaxHerbSign; i++)
+	int HerbSignCount=0;
+	while ((HerbSignCount<MAX_HERB_SIGN)&&(datHerb[HerbSignCount].type!=DAT_END))
+	{
+		HerbSignCount++;
+	};
+	if (HerbSignCount==0)
+	{
+		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"No herb signs in herb.dat");
+		readkey();
+		return 1;
+	};
+	for (int i=0; i<HerbSignCount; i++)
 	{
 		bmpHerbSign[i]=(BITMAP *)datHerb[i].dat;
 	};
@@ -752,22 +764,48 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading herbS.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datHerbS = load_datafile("dat\\herbS.dat");
+	DATAFILE* datHerbS = load_datafile("dat/HerbS.dat");
 	if (!datHerbS)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading herbS.dat");
 		readkey();
 		return 1;
 	};	
+	int HerbSmallSignCount=0;
+	while ((HerbSmallSignCount<MAX_HERB_SIGN)&&(datHerbS[HerbSmallSignCount].type!=DAT_END))
+	{
+		HerbSmallSignCount++;
+	};
+	if (HerbSmallSignCount==0)
+	{
+		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"No herb signs in herbS.dat");
+		readkey();
+		return 1;
+	};
+	if (iMaxHerbSign<1)
+	{
+		iMaxHerbSign=1;
+	};
+	iMaxHerbSign=std::min(iMaxHerbSign,std::min(HerbSignCount,HerbSmallSignCount));
 	for (int i=0; i<iMaxHerbSign; i++)
 	{
 		bmpHerbSignS[i]=(BITMAP *)datHerbS[i].dat;
+	};
+	for (int i=0; i<MAX_PLAYERS; i++)
+	{
+		if ((arHumans[i].iSign<0)||(arHumans[i].iSign>=iMaxHerbSign))
+		{arHumans[i].iSign=abs(arHumans[i].iSign)%iMaxHerbSign;};
+	};
+	for (int i=0; i<=iMaxPlayerProfile; i++)
+	{
+		if (((pFirstPlayerProfile+i)->iSign<0)||((pFirstPlayerProfile+i)->iSign>=iMaxHerbSign))
+		{(pFirstPlayerProfile+i)->iSign=abs((pFirstPlayerProfile+i)->iSign)%iMaxHerbSign;};
 	};
 
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading flag.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datFlag = load_datafile("dat\\flag.dat");
+	DATAFILE* datFlag = load_datafile("dat/Flag.dat");
 	if (!datFlag)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading flag.dat");
@@ -805,7 +843,7 @@ int main(int argc, char** argv)
 	char sFile[50];
 	for (int i=1; i<=iMaxRace; i++)
 	{
-		sprintf(sFile,"dat\\town\\town%d.dat",i);
+		sprintf(sFile,"dat/Town/Town%d.dat",i);
 	//	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading %s...",sFile);
 	//	TypeLine++;
 		DATAFILE* datTown = load_datafile(sFile);
@@ -826,7 +864,7 @@ int main(int argc, char** argv)
 //	textprintf_ex(screen,Font1,300,TypeLine*20,makecol(220,220,20),-1,"Loading astral.dat...");
 //	TypeLine++;
 	NewProgress+=100;
-	DATAFILE* datAstral = load_datafile("dat\\astral.dat");
+	DATAFILE* datAstral = load_datafile("dat/Astral.dat");
 	if (!datAstral)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading astral.dat");
@@ -848,11 +886,11 @@ int main(int argc, char** argv)
 	draw_lit_sprite(bmpMainShardSelect,bmpMainShard,0,0,100);
 	set_trans_blender(128,128,128,128);
 
-//	extern BITMAP *bmpShard[MAX_SHARD_PIC];	//Изображения осколков
+//	extern BITMAP *bmpShard[MAX_SHARD_PIC];	//РР·РѕР±СЂР°Р¶РµРЅРёСЏ РѕСЃРєРѕР»РєРѕРІ
 //	extern BITMAP *bmpAstral;
 
 	NewProgress+=100;
-	DATAFILE* datShardBonus = load_datafile("dat\\shardbonus.dat");
+	DATAFILE* datShardBonus = load_datafile("dat/ShardBonus.dat");
 	if (!datShardBonus)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading ShardBonus.dat");
@@ -881,18 +919,18 @@ int main(int argc, char** argv)
 	{
 		char sFile[50];
 		if (i+1<10)
-		{sprintf(sFile,"Music\\track0%d.ogg",i+1);}
+		{sprintf(sFile,"Music/track0%d.ogg",i+1);}
 		else
-		{sprintf(sFile,"Music\\track%d.ogg",i+1);};
+		{sprintf(sFile,"Music/track%d.ogg",i+1);};
 		Music[i]=OpenSound(soundDevice,sFile,true);
 		NewProgress+=100;
 	};*/
 //	bSound=true;
 
-//**************Заставка*******************
+//**************Р—Р°СЃС‚Р°РІРєР°*******************
 	if (bIntro)
 	{
-	DATAFILE* datArt = load_datafile("dat\\art.dat");
+	DATAFILE* datArt = load_datafile("dat/art.dat");
 	if (!datArt)
 	{
 		textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading art.dat");
@@ -970,7 +1008,7 @@ int main(int argc, char** argv)
 			}
 			if (Count==20)
 			{
-			//	textprintf_centre_ex(screen,Font1,512,384+bmpArt[0]->h/2,COLOR_2,-1,"Совместно с...");
+			//	textprintf_centre_ex(screen,Font1,512,384+bmpArt[0]->h/2,COLOR_2,-1,"РЎРѕРІРјРµСЃС‚РЅРѕ СЃ...");
 			//	if (bBabum)
 			//	{
 			//		PlayUnitSound(48);
@@ -1009,7 +1047,7 @@ int main(int argc, char** argv)
 	};
 	set_trans_blender(128,128,128,128);
 	};
-//**************Не Заставка*******************
+//**************РќРµ Р—Р°СЃС‚Р°РІРєР°*******************
 
 	};//BF_Cheat
 

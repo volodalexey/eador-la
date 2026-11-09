@@ -27,9 +27,16 @@
 //CRegKey regMain;
 
 
+#ifdef _WIN32
 #include <windows.h>
 #include <stdio.h>
 #include <strsafe.h>
+#else
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#endif
 
 
 
@@ -145,28 +152,45 @@ void Sleeper(int Delay)
 void OpenWeb()
 {
 
+#ifdef _WIN32
 	ShellExecute(NULL, L"open", L"goweb.bat", NULL, NULL, SW_SHOWMINIMIZED);
+#else
+	// goweb.bat is Windows-specific; nothing to open on native builds.
+#endif
 };
 
 void OpenYuPlaySite()
 {
 
-	ShellExecute(NULL, L"open", L"YuPlay\\replanish.bat", NULL, NULL, SW_SHOWMINIMIZED);
+#ifdef _WIN32
+	ShellExecute(NULL, L"open", L"YuPlay/replanish.bat", NULL, NULL, SW_SHOWMINIMIZED);
+#else
+	// YuPlay integration is Windows-only.
+#endif
 };
 
 void OpenYuDownload()
 {
 
-	ShellExecute(NULL, L"open", L"YuPlay\\download.bat", NULL, NULL, SW_SHOWMINIMIZED);
+#ifdef _WIN32
+	ShellExecute(NULL, L"open", L"YuPlay/download.bat", NULL, NULL, SW_SHOWMINIMIZED);
+#else
+	// YuPlay integration is Windows-only.
+#endif
 };
 
 void RunYuInstall()
 {
-	ShellExecute(NULL, L"open", L"YuPlay\\install_yuPlay_0.4.22.exe", NULL, NULL, SW_NORMAL);
+#ifdef _WIN32
+	ShellExecute(NULL, L"open", L"YuPlay/install_yuPlay_0.4.22.exe", NULL, NULL, SW_NORMAL);
+#else
+	// YuPlay integration is Windows-only.
+#endif
 };
 
 int GetCompName(char * CompName)
 {
+#ifdef _WIN32
 	TCHAR chrComputerName[17];
 	DWORD dwBufferSize = 17;
 	if (GetComputerName(chrComputerName,&dwBufferSize))
@@ -177,14 +201,32 @@ int GetCompName(char * CompName)
 	}
 	else
 	{return 0;};
+#else
+	if (gethostname(CompName, 16)==0)
+	{return (int)strlen(CompName);}
+	return 0;
+#endif
 };
 
 void FileCopy(char *Name1, char *Name2)
 {
+#ifdef _WIN32
 	TCHAR tcName1[150], tcName2[150];
 	MultiByteToWideChar(CP_ACP,0,Name1,strlen(Name1)+1,(LPWSTR)tcName1,sizeof(tcName1)/sizeof(tcName1[0]));
 	MultiByteToWideChar(CP_ACP,0,Name2,strlen(Name2)+1,(LPWSTR)tcName2,sizeof(tcName2)/sizeof(tcName2[0]));
 	CopyFile(tcName1,tcName2,false);
+#else
+	FILE *fin=fopen(Name1,"rb");
+	if (!fin) {return;};
+	FILE *fout=fopen(Name2,"wb");
+	if (!fout) {fclose(fin); return;};
+	char Buf[65536];
+	size_t n;
+	while ((n=fread(Buf,1,sizeof(Buf),fin))>0)
+	{fwrite(Buf,1,n,fout);};
+	fclose(fin);
+	fclose(fout);
+#endif
 };
 
 long int MakeKey(char * eMail)

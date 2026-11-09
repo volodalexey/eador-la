@@ -1,6 +1,6 @@
 #include "Mapper.h"
 
-//const int BAR_SIZE=5; //Количество позиций в окне строительства
+//const int BAR_SIZE=5; //РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР·РёС†РёР№ РІ РѕРєРЅРµ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°
 //int arBuild[BAR_SIZE];
 //int arBuildNum[BAR_SIZE];
 dcWorldRules WorldRules(0);
@@ -82,10 +82,10 @@ int MakeMap (int Prov, int Weight)
 		{			
 			PR=(pFirstProvince+(pFirstProvince+Prov)->arNeighbour[i]);
 			WillGo1=true;
-			//море
+			//РјРѕСЂРµ
 			if ((PR->ipTerrain==0)||(PR->ipTerrain==7))
 			{WillGo1=false;};			
-			//уже достигнута за более короткий путь
+			//СѓР¶Рµ РґРѕСЃС‚РёРіРЅСѓС‚Р° Р·Р° Р±РѕР»РµРµ РєРѕСЂРѕС‚РєРёР№ РїСѓС‚СЊ
 			if (((*(pMoveMap+(pFirstProvince+Prov)->arNeighbour[i])>=0))&&
 				(*(pMoveMap+(pFirstProvince+Prov)->arNeighbour[i])<=Weight+1))
 			{WillGo1=false;};
@@ -122,7 +122,7 @@ int Flooder(int Province, int Poss, int Step)
 	return Step;
 };
 
-//Возвращает номер провинции, в которой находится указанная точка
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ РїСЂРѕРІРёРЅС†РёРё, РІ РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ СѓРєР°Р·Р°РЅРЅР°СЏ С‚РѕС‡РєР°
 int GetProvinceIndex(int x, int y)
 {
 	if ((y<0)||(y>MAP_SIZE)||(x<0))
@@ -191,7 +191,7 @@ int GetProvinceIndex(int x, int y)
 	/*if (key[KEY_SPACE])
 	{
 		rectfill(screen,0,720,1000,740,COLOR_1);
-		textprintf_ex(screen,Font1,100,720,COLOR_2,-1,"X: %d, Y: %d, Соседи: (%d, %d, %d) (%d, %d, %d)",x,y,
+		textprintf_ex(screen,Font1,100,720,COLOR_2,-1,"X: %d, Y: %d, РЎРѕСЃРµРґРё: (%d, %d, %d) (%d, %d, %d)",x,y,
 			BrLeft->Prov[0],BrLeft->Prov[1],BrLeft->Prov[2],
 			BrRight->Prov[0],BrRight->Prov[1],BrRight->Prov[2]);
 
@@ -259,7 +259,7 @@ BITMAP *MakeObstracles(BITMAP * Pic, int x, int y)
 						};
 					};					
 				};
-	//			textprintf (screen,Font1,700,20,COLOR_2,"Спрайт: %d, земля: %d",Counter,(pFirstProvince+PR)->ipTerrain);
+	//			textprintf (screen,Font1,700,20,COLOR_2,"РЎРїСЂР°Р№С‚: %d, Р·РµРјР»СЏ: %d",Counter,(pFirstProvince+PR)->ipTerrain);
 				if (Counter>0)
 				{
 					int iObj=Roll(false,CurGame.iSeed,j,i,2);
@@ -319,7 +319,7 @@ void FillObstracleMap(int Progress)
 	
 };
 
-//Создает границу между точками  (x1, y1) и (x2, y2)
+//РЎРѕР·РґР°РµС‚ РіСЂР°РЅРёС†Сѓ РјРµР¶РґСѓ С‚РѕС‡РєР°РјРё  (x1, y1) Рё (x2, y2)
 void DrawLine(int x1, int y1, int x2, int y2, int Pr1, int Pr2, int Pr3)
 {	
 	float dx, dy;
@@ -451,7 +451,7 @@ clDeep::clDeep(int sx, int sy, int sDeep, clDeep *Next)
 clDeep::~clDeep()
 {};
 
-//Добавляет новую точку в массив глубин, возвращает истину при успехе
+//Р”РѕР±Р°РІР»СЏРµС‚ РЅРѕРІСѓСЋ С‚РѕС‡РєСѓ РІ РјР°СЃСЃРёРІ РіР»СѓР±РёРЅ, РІРѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ РїСЂРё СѓСЃРїРµС…Рµ
 clDeep * AddDeep(int x, int y, int Deep, clDeep *pDeep)
 {
 	bool Result=false;
@@ -589,7 +589,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	CurGame.Map=mpMap;
 	srand(CurGame.iSeed);
 
-	//Расовые квесты
+	//Р Р°СЃРѕРІС‹Рµ РєРІРµСЃС‚С‹
 	for (int i=0; i<=iMaxRace; i++)
 	{
 		int Count=0;
@@ -651,7 +651,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	{
 		arPlayer[i].bInGame=false;
 	};
-	//Установка взаимоотношений между ИИ
+	//РЈСЃС‚Р°РЅРѕРІРєР° РІР·Р°РёРјРѕРѕС‚РЅРѕС€РµРЅРёР№ РјРµР¶РґСѓ РР
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
 		if (arPlayer[i].Control==2)
@@ -683,12 +683,12 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};
 
 
-	//Создание границ
+	//РЎРѕР·РґР°РЅРёРµ РіСЂР°РЅРёС†
 //	rectfill(screen,0,0,1024,768,makecol(20,50,150));
 //	int Txt=1;
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Номер карты: %d",CurGame.iSeed);
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РќРѕРјРµСЂ РєР°СЂС‚С‹: %d",CurGame.iSeed);
 //	Txt++;
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Создание границ...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РЎРѕР·РґР°РЅРёРµ РіСЂР°РЅРёС†...");
 //	Txt++;
 
 	int y=Map_h/6, RX=Map_w/3;
@@ -817,8 +817,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 
 	
 
-	//Вычисление соседей, размеров и центральных точек
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Вычисление соседей, размеров и центральных точек...");
+	//Р’С‹С‡РёСЃР»РµРЅРёРµ СЃРѕСЃРµРґРµР№, СЂР°Р·РјРµСЂРѕРІ Рё С†РµРЅС‚СЂР°Р»СЊРЅС‹С… С‚РѕС‡РµРє
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р’С‹С‡РёСЃР»РµРЅРёРµ СЃРѕСЃРµРґРµР№, СЂР°Р·РјРµСЂРѕРІ Рё С†РµРЅС‚СЂР°Р»СЊРЅС‹С… С‚РѕС‡РµРє...");
 //	Txt++;
 	long FullSize=0;
 //	objMain=new G_Object(objMain,0,0,0,bmpGUI_Dead);	
@@ -913,7 +913,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 				break;
 			};
 		};
-	//Поиск оптимальных мест для расположения построек
+	//РџРѕРёСЃРє РѕРїС‚РёРјР°Р»СЊРЅС‹С… РјРµСЃС‚ РґР»СЏ СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЏ РїРѕСЃС‚СЂРѕРµРє
 		int arPlace[10][3]=
 		{	
 			{-50,25,0},
@@ -1030,13 +1030,13 @@ void GenerateMap (clMap mpMap, int WorldRul)
 
 	if (Tutorial.Map)
 	{
-	//Карта для обучающей миссии
+	//РљР°СЂС‚Р° РґР»СЏ РѕР±СѓС‡Р°СЋС‰РµР№ РјРёСЃСЃРёРё
 		for (int j=1; j<=MapSize; j++)
 		{	
 			*(pMoveMap+j)=2;
 		};
 
-		//Замок противника
+		//Р—Р°РјРѕРє РїСЂРѕС‚РёРІРЅРёРєР°
 		(pFirstProvince+7)->ipTerrain=1;
 		(pFirstProvince+7)->ipType=7;
 		(pFirstProvince+7)->iExplore=50;
@@ -1064,7 +1064,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		{(pFirstProvince+7)->pGarrison->pSquad[i]=new dcUnit(4,30);};
 		MakeCastleName(7,pNames);
 
-		//Замок игрока
+		//Р—Р°РјРѕРє РёРіСЂРѕРєР°
 		(pFirstProvince+23)->ipTerrain=1;
 		(pFirstProvince+23)->ipType=7;
 		(pFirstProvince+23)->iExplore=50;
@@ -1099,7 +1099,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			MakeCastleName(23,pNames);
 		};
 		
-		//Остальные провинции
+		//РћСЃС‚Р°Р»СЊРЅС‹Рµ РїСЂРѕРІРёРЅС†РёРё
 		(pFirstProvince+1)->ipTerrain=MOUNTAIN_ID;
 		(pFirstProvince+2)->ipTerrain=MOUNTAIN_ID;
 		(pFirstProvince+3)->ipTerrain=WATER_ID;
@@ -1155,7 +1155,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		PR->iPopulation=300;		
 		PR->iExplore=1;		
 		
-//Название
+//РќР°Р·РІР°РЅРёРµ
 		ClearRoll();
 		int Count=0;
 		for (int i=1; i<=iMaxProvinceName; i++)
@@ -1184,7 +1184,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};
 		*(pNames+iName)=false;		
 
-//Доход
+//Р”РѕС…РѕРґ
 		PR->iGoldInc=(pFirstTerrain+PR->ipTerrain)->iGoldInc+(pFirstProvinceType+PR->ipType)->iGold;
 		PR->iGoldInc=PR->iGoldInc*PR->iSize/MedSize;
 		PR->iGoldInc+=2-Random(5);
@@ -1247,7 +1247,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		PR->iPopulation=100;		
 		PR->iExplore=30;		
 		
-//Название
+//РќР°Р·РІР°РЅРёРµ
 		ClearRoll();
 		int Count=0;
 		for (int i=1; i<=iMaxProvinceName; i++)
@@ -1276,7 +1276,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};
 		*(pNames+iName)=false;		
 
-//Доход
+//Р”РѕС…РѕРґ
 		PR->iGoldInc=8;
 		PR->iGemInc=0;
 		PR->PlaceGuard(5,0);
@@ -1285,11 +1285,11 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	else
 	{
 
-	//Генерация ландшафта
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Генерация ландшафта...");
+	//Р“РµРЅРµСЂР°С†РёСЏ Р»Р°РЅРґС€Р°С„С‚Р°
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р“РµРЅРµСЂР°С†РёСЏ Р»Р°РЅРґС€Р°С„С‚Р°...");
 //	Txt++;
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Вода и суша...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р’РѕРґР° Рё СЃСѓС€Р°...");
 //	Txt++;
 
 	for (int i=1; i<=MapSize; i++)
@@ -1351,7 +1351,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		mpMap.Isles--;
 	};
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Горы и холмы...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р“РѕСЂС‹ Рё С…РѕР»РјС‹...");
 //	Txt++;
 	mpMap.Hill=(MapSize-WaterPlaced)*mpMap.Hill/100;
 	int Mountain=mpMap.Hill/5;
@@ -1381,7 +1381,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};
 
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Леса...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р›РµСЃР°...");
 //	Txt++;
 	mpMap.Forest=(MapSize-WaterPlaced)*mpMap.Forest/100;
 	if (mpMap.Forest+HillPlaced+WaterPlaced>MapSize)
@@ -1402,7 +1402,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};
 
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Болота...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р‘РѕР»РѕС‚Р°...");
 //	Txt++;
 
 	mpMap.Swamp=(MapSize-WaterPlaced)*mpMap.Swamp/100;
@@ -1425,7 +1425,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};
 	NewProgress=300;
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Расстановка родовых замков...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЂРѕРґРѕРІС‹С… Р·Р°РјРєРѕРІ...");
 //	Txt++;
 
 	int *MapCastle=new int [MapSize+1];
@@ -1495,7 +1495,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};		
 		if (Places>=CurGame.iMaxPlayers)
 		{
-//			textprintf(screen,Font1,0,700,COLOR_2,"Дистанция: %d, Соседи: %d   ",MinDist, MinNeigh);
+//			textprintf(screen,Font1,0,700,COLOR_2,"Р”РёСЃС‚Р°РЅС†РёСЏ: %d, РЎРѕСЃРµРґРё: %d   ",MinDist, MinNeigh);
 //			rectfill(screen,0,725,200,728,COLOR_1);
 			int Try=Random(MapSize)+1;
 			while (((pFirstProvince+Try)->iFort!=1)||(!(pFirstProvince+Try)->bWarning))
@@ -1616,7 +1616,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		if (arPlayer[i].Control==1)
 		{
 
-	//!!Тест квестов!!
+	//!!РўРµСЃС‚ РєРІРµСЃС‚РѕРІ!!
 			/*for (int Quest=54; Quest<57; Quest++)
 			{
 				(pFirstProvince+arCastle[i])->PlaceSite((pFirstQuest+Quest)->iGiver,1,Quest,0,0);
@@ -1777,13 +1777,13 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		}
 	};
 
-//Расстановка ресурсов
+//Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЂРµСЃСѓСЂСЃРѕРІ
 	int arRes[20];
 	for (int i=1; i<=iMaxResource; i++)
 	{
 		arRes[i]=0;
 	};
-	//По 2 простых ресурса рядом с каждым замком
+	//РџРѕ 2 РїСЂРѕСЃС‚С‹С… СЂРµСЃСѓСЂСЃР° СЂСЏРґРѕРј СЃ РєР°Р¶РґС‹Рј Р·Р°РјРєРѕРј
 	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		int arNeigh[100];
@@ -1911,7 +1911,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			int Try=NEI+Random(NEI1-NEI);
 			while (((pFirstProvince+arNeigh[Try])->ipTerrain!=Land))
 			{
-				//Зациклило
+				//Р—Р°С†РёРєР»РёР»Рѕ
 				Try=NEI+Random(NEI1-NEI);
 			};					
 			switch (Land)
@@ -1976,7 +1976,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};	
 		};
 	};
-	//Остальные ресурсы
+	//РћСЃС‚Р°Р»СЊРЅС‹Рµ СЂРµСЃСѓСЂСЃС‹
 	for (int i=1; i<=iMaxResource; i++)
 	{
 		int MaxDrop=1+Random(2);
@@ -2072,9 +2072,9 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};
 	
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Заселение провинций...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Р—Р°СЃРµР»РµРЅРёРµ РїСЂРѕРІРёРЅС†РёР№...");
 //	Txt++;
-//	pFirstProvince->sName="Великое Ничто";
+//	pFirstProvince->sName="Р’РµР»РёРєРѕРµ РќРёС‡С‚Рѕ";
 //	pFirstProvince->sName=new char[sizeof (pFirstPhrase+327)->str];
 	pFirstProvince->sName=(pFirstPhrase+327)->str;
 	for (int i=1; i<=MapSize; i++)
@@ -2115,7 +2115,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		if ((PR->ipTerrain>0)&&(PR->ipTerrain<7))
 		{
 		int Level=*(pMoveMap+i);
-//Прибрежная
+//РџСЂРёР±СЂРµР¶РЅР°СЏ
 		PR->Coastal=false;
 		for (int i=0; i<MAX_NEIGHBOUR; i++)
 		{
@@ -2124,10 +2124,10 @@ void GenerateMap (clMap mpMap, int WorldRul)
 				PR->Coastal=true;
 			};
 		};
-//Тип провинции
+//РўРёРї РїСЂРѕРІРёРЅС†РёРё
 		if (PR->ipType==0)
 		{
-//		textprintf(screen,Font1,0,700,COLOR_2,"Тип            ");
+//		textprintf(screen,Font1,0,700,COLOR_2,"РўРёРї            ");
 		ClearRoll();
 		Counter=0;
 		for (int j=1; j<=iMaxProvinceType; j++)
@@ -2168,8 +2168,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		PR->iExplore=PR->iExplore*(pFirstTerrain+PR->ipTerrain)->iExploreMod/100;
 		PR->iExplore+=PR->iExplore*(mpMap.Population-2)/5;
 //		PR->iPopulation=PR->iPopulation*(pFirstTerrain+PR->ipTerrain)->iPopulationMod/100;
-//Название
-//		textprintf(screen,Font1,0,700,COLOR_2,"Название        ");
+//РќР°Р·РІР°РЅРёРµ
+//		textprintf(screen,Font1,0,700,COLOR_2,"РќР°Р·РІР°РЅРёРµ        ");
 		ClearRoll();
 		int Count=0; bool Isle=true;
 		for (int i=0; i<MAX_NEIGHBOUR; i++)
@@ -2228,8 +2228,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			};
 		};
 
-//Охранник
-//		textprintf(screen,Font1,0,700,COLOR_2,"Охранник  %d",PR->ipType);
+//РћС…СЂР°РЅРЅРёРє
+//		textprintf(screen,Font1,0,700,COLOR_2,"РћС…СЂР°РЅРЅРёРє  %d",PR->ipType);
 		int Grd=0;
 		ClearRoll();
 		while ((pFirstProvinceType+PR->ipType)->arGuard[Grd][0]>0)
@@ -2262,8 +2262,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		{GrdLvl=3;};		
 		PR->PlaceGuard((pFirstGuardType+(pFirstProvinceType+PR->ipType)->arGuard[Grd][0])->arGuard[GrdLvl],(pFirstGuardType+(pFirstProvinceType+PR->ipType)->arGuard[Grd][0])->iKarma);
 
-//Доход
-//		textprintf(screen,Font1,0,700,COLOR_2,"Доход         ");
+//Р”РѕС…РѕРґ
+//		textprintf(screen,Font1,0,700,COLOR_2,"Р”РѕС…РѕРґ         ");
 		PR->iGoldInc=(pFirstTerrain+PR->ipTerrain)->iGoldInc+(pFirstProvinceType+PR->ipType)->iGold;
 		PR->iGoldInc=PR->iGoldInc*PR->iSize/MedSize;
 		PR->iGoldInc+=2-Random(5);
@@ -2277,10 +2277,10 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		{PR->iGemInc=0;};
 		};
 
-//Cайты
-//		textprintf(screen,Font1,0,700,COLOR_2,"Сайты          ");
+//CР°Р№С‚С‹
+//		textprintf(screen,Font1,0,700,COLOR_2,"РЎР°Р№С‚С‹          ");
 
-	//Квестовые
+	//РљРІРµСЃС‚РѕРІС‹Рµ
 		int Possib=100-(iMaxQuest-13)*150/(CurGame.Map.X*CurGame.Map.Y);
 		if (Possib>98){Possib=98;};
 		if (Possib<50){Possib=50;};
@@ -2312,7 +2312,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			};	
 		};
 
-	//Обычные
+	//РћР±С‹С‡РЅС‹Рµ
 		int Sites=(pFirstProvinceType+PR->ipType)->iSites+Random(11)-5;
 		Sites+=Sites*(mpMap.Site-1)/10;
 		if (Sites>GetMin(MAX_PROVINCE_SITE-3,99-PR->iExplore))
@@ -2361,7 +2361,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};
 	};
 
-	//Квесты в кампании
+	//РљРІРµСЃС‚С‹ РІ РєР°РјРїР°РЅРёРё
 	if (CurGame.iGameType==2)
 	{
 		ClearMoveMap();
@@ -2421,8 +2421,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	delete [] pNames;
 	delete [] QuestList;
 
-//	//Отрисовка ландшафта
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка ландшафта...");
+//	//РћС‚СЂРёСЃРѕРІРєР° Р»Р°РЅРґС€Р°С„С‚Р°
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° Р»Р°РЅРґС€Р°С„С‚Р°...");
 //	Txt++;
 	FileLog("Landscape..  ");
 	if (mpMap.Y*(Map_h+Map_h/3)/2+Map_h>=750)
@@ -2513,7 +2513,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 						{
 							if ((pFirstProvince+PR)->ipTerrain==0)
 							{
-								//Светотень на песке
+								//РЎРІРµС‚РѕС‚РµРЅСЊ РЅР° РїРµСЃРєРµ
 								int PR1=GetProvinceIndex(x+6,y-6);
 								if ((PR1>0)&&((pFirstProvince+PR1)->ipTerrain!=0))
 								{draw_trans_sprite(bmpMap,(pFirstMapObject+i)->arPic[1],x-(pFirstMapObject+i)->dx/2,y-(pFirstMapObject+i)->dy/2);}
@@ -2536,8 +2536,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			};
 		};
 	};
-	//Создание карты глубин
-	/*textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Создание карты глубин...");
+	//РЎРѕР·РґР°РЅРёРµ РєР°СЂС‚С‹ РіР»СѓР±РёРЅ
+	/*textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РЎРѕР·РґР°РЅРёРµ РєР°СЂС‚С‹ РіР»СѓР±РёРЅ...");
 	Txt++;
 	clDeep *pDeep=NULL;
 	int iDeep=0;
@@ -2592,9 +2592,9 @@ void GenerateMap (clMap mpMap, int WorldRul)
 			};
 			iDeep++;
 		};*/
-		//Отрисовка воды
+		//РћС‚СЂРёСЃРѕРІРєР° РІРѕРґС‹
 
-//		textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка воды...");
+//		textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° РІРѕРґС‹...");
 //		Txt++;
 		FileLog("Water..  ");
 		int Deep, Coord;
@@ -2651,8 +2651,8 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	};*/
 
 
-	//Отрисовка тумана войны
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка тумана войны...");
+	//РћС‚СЂРёСЃРѕРІРєР° С‚СѓРјР°РЅР° РІРѕР№РЅС‹
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° С‚СѓРјР°РЅР° РІРѕР№РЅС‹...");
 //	Txt++;
 	FileLog("Fog..  ");
 	for (int i=1; i<=MapSize; i++)
@@ -2677,7 +2677,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		};
 	};
 	
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка спрайтов...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° СЃРїСЂР°Р№С‚РѕРІ...");
 //	Txt++;
 
 	FileLog("Sprites..  ");
@@ -2813,7 +2813,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 						};
 					};					
 				};
-	//			textprintf (screen,Font1,700,20,COLOR_2,"Спрайт: %d, земля: %d",Counter,(pFirstProvince+PR)->ipTerrain);
+	//			textprintf (screen,Font1,700,20,COLOR_2,"РЎРїСЂР°Р№С‚: %d, Р·РµРјР»СЏ: %d",Counter,(pFirstProvince+PR)->ipTerrain);
 				if (Counter>0)
 				{
 					int iObj=Roll(false,CurGame.iSeed,y,x,Layer);
@@ -2865,7 +2865,7 @@ void GenerateMap (clMap mpMap, int WorldRul)
 		delete Temp;
 	};*/
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка границ...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° РіСЂР°РЅРёС†...");
 //	Txt++;
 //	objMain=new G_Object(objMain,0,0,0,bmpGUI_Dead);
 	FileLog("Borders..  ");
@@ -2913,14 +2913,14 @@ void GenerateMap (clMap mpMap, int WorldRul)
  //             if ((Temp->Prov[0]!=0)&&(Temp->Prov[1]!=0))
  //             {
 	//			   if( ((Temp->x+i)/3)% 8 < 5 ){ rectfill(bmpMap, Temp->x, i, Temp->x+1, i+1, col ); };
- //                  //if( i%8 < 5 ){ rectfill(bmpMap, Temp->x, i, Temp->x+1, i+1, col ); } // grey - ВАНИАНТ 1 - тот что прислал
- //                  //if( ((Temp->x+i)/3)%7 < 4 ){ rectfill(bmpMap, Temp->x, i, Temp->x+1, i+1, col ); } //grey- ВАНИАНТ 2 - меньший шаг на 1рх
+ //                  //if( i%8 < 5 ){ rectfill(bmpMap, Temp->x, i, Temp->x+1, i+1, col ); } // grey - Р’РђРќРРђРќРў 1 - С‚РѕС‚ С‡С‚Рѕ РїСЂРёСЃР»Р°Р»
+ //                  //if( ((Temp->x+i)/3)%7 < 4 ){ rectfill(bmpMap, Temp->x, i, Temp->x+1, i+1, col ); } //grey- Р’РђРќРРђРќРў 2 - РјРµРЅСЊС€РёР№ С€Р°Рі РЅР° 1СЂС…
  //             };
  //             Temp=Temp->Next;
  //        };
  //   };
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Отрисовка НИЧТО...");
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РћС‚СЂРёСЃРѕРІРєР° РќРР§РўРћ...");
 //	Txt++;
 	FileLog("Nothing..  ");
 	set_trans_blender(40,40,40,40);
@@ -2951,23 +2951,23 @@ void GenerateMap (clMap mpMap, int WorldRul)
 	//////////////////////////////////////////////////////////////////////////////////////
 	//BLOCK#01
 	//grey WORK
-	//const int  MAP_BORDER_WIDTH = 20;	//max удаление от реальной границы при апроксимации
+	//const int  MAP_BORDER_WIDTH = 20;	//max СѓРґР°Р»РµРЅРёРµ РѕС‚ СЂРµР°Р»СЊРЅРѕР№ РіСЂР°РЅРёС†С‹ РїСЂРё Р°РїСЂРѕРєСЃРёРјР°С†РёРё
 
-	// сглаживание границ ландшафта
-/*	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Сглаживание границ ландшафта...");
+	// СЃРіР»Р°Р¶РёРІР°РЅРёРµ РіСЂР°РЅРёС† Р»Р°РЅРґС€Р°С„С‚Р°
+/*	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РЎРіР»Р°Р¶РёРІР°РЅРёРµ РіСЂР°РЅРёС† Р»Р°РЅРґС€Р°С„С‚Р°...");
 	Txt++;
 	objMain=new G_Object(objMain,0,0,0,bmpGUI_Dead);
 
-	const int  MAP_MIXED_DEPTH	= 9;//20;//10; //7;// max глубина смешивания текстур между провинциями с разн.типом ландшафта
+	const int  MAP_MIXED_DEPTH	= 9;//20;//10; //7;// max РіР»СѓР±РёРЅР° СЃРјРµС€РёРІР°РЅРёСЏ С‚РµРєСЃС‚СѓСЂ РјРµР¶РґСѓ РїСЂРѕРІРёРЅС†РёСЏРјРё СЃ СЂР°Р·РЅ.С‚РёРїРѕРј Р»Р°РЅРґС€Р°С„С‚Р°
 if(MAP_MIXED_DEPTH > 0){
-	//const int  MAP_COAST_RANGE	=  5;		// отступ береговой линии от границы текстур (наружу; -вглубь воды)
-	const int  MAP_COAST_WIDTH	=  5;//9;//11;//		// ширина береговой линии между водой и землей (для песка)
+	//const int  MAP_COAST_RANGE	=  5;		// РѕС‚СЃС‚СѓРї Р±РµСЂРµРіРѕРІРѕР№ Р»РёРЅРёРё РѕС‚ РіСЂР°РЅРёС†С‹ С‚РµРєСЃС‚СѓСЂ (РЅР°СЂСѓР¶Сѓ; -РІРіР»СѓР±СЊ РІРѕРґС‹)
+	const int  MAP_COAST_WIDTH	=  5;//9;//11;//		// С€РёСЂРёРЅР° Р±РµСЂРµРіРѕРІРѕР№ Р»РёРЅРёРё РјРµР¶РґСѓ РІРѕРґРѕР№ Рё Р·РµРјР»РµР№ (РґР»СЏ РїРµСЃРєР°)
 
-	const int  MAP_MIXED_STEP	=  1;//1; // шаг при смешивании текстур
-	const int  MAP_MIXED_LENGTH =  1;//2; // длина участка при смешивании текстур
+	const int  MAP_MIXED_STEP	=  1;//1; // С€Р°Рі РїСЂРё СЃРјРµС€РёРІР°РЅРёРё С‚РµРєСЃС‚СѓСЂ
+	const int  MAP_MIXED_LENGTH =  1;//2; // РґР»РёРЅР° СѓС‡Р°СЃС‚РєР° РїСЂРё СЃРјРµС€РёРІР°РЅРёРё С‚РµРєСЃС‚СѓСЂ
 
-	const int  MAP_MIX_MTR_LINES   =  5;	// кол-во кривых смешивания
-	const int  MAP_MIX_MTR_PIXELS  = 10;	// кол-во точек в каждой кривой смешивания
+	const int  MAP_MIX_MTR_LINES   =  5;	// РєРѕР»-РІРѕ РєСЂРёРІС‹С… СЃРјРµС€РёРІР°РЅРёСЏ
+	const int  MAP_MIX_MTR_PIXELS  = 10;	// РєРѕР»-РІРѕ С‚РѕС‡РµРє РІ РєР°Р¶РґРѕР№ РєСЂРёРІРѕР№ СЃРјРµС€РёРІР°РЅРёСЏ
 	const int  MAP_LN = MAP_MIX_MTR_LINES;
 	const int  MAP_PN = MAP_MIX_MTR_PIXELS;
 	int MAP_MIX_MATRIX[MAP_LN][MAP_PN] = {	1, 1, 2, 2, 5, 3, 3, 4, 4, 7,
@@ -2988,7 +2988,7 @@ if(MAP_MIXED_DEPTH > 0){
 	float mtrDiv = float(MAP_MIXED_DEPTH)/float(mtrMax!=0?mtrMax:1);	if(mtrDiv<0) mtrDiv=-mtrDiv;
 	//float mtrDiv = float(mtrMax)/float(MAP_MIXED_DEPTH);	if(mtrDiv<0) mtrDiv=-mtrDiv;
 	char a_strTemp[256]; sprintf(a_strTemp,"mtrMax= %d  _DEPTH= %d  Div= %d  =%d.%d",mtrMax,MAP_MIXED_DEPTH, int(mtrDiv*1000),int(mtrDiv),int(mtrDiv*1000)%1000 ); textprintf_ex(screen,Font1,30,(Txt++)*20,COLOR_2,-1, a_strTemp);
-	for(int i=0; i < MAP_MIX_MTR_LINES &&mtrDiv > 0; i++){ //растянуть/сжать линии MIX_MATRIX- f(MAP_MIXED_DEPTH)
+	for(int i=0; i < MAP_MIX_MTR_LINES &&mtrDiv > 0; i++){ //СЂР°СЃС‚СЏРЅСѓС‚СЊ/СЃР¶Р°С‚СЊ Р»РёРЅРёРё MIX_MATRIX- f(MAP_MIXED_DEPTH)
 		for(int j=0; j < MAP_MIX_MTR_PIXELS; j++){
 			//{char a_strTemp[256]; 			int go1= 10*(MAP_MIX_MATRIX[i][j]/mtrDiv);			sprintf(a_strTemp,"X1= %d.%d", go1/10, go1%10 );									textprintf_ex(screen,Font1,30,(Txt++)*20,COLOR_2,-1, a_strTemp);			sprintf(a_strTemp,"      X2= %d  ", ROUND( float(MAP_MIX_MATRIX[i][j])/mtrDiv ) );	textprintf_ex(screen,Font1,30,(Txt++)*20,COLOR_2,-1, a_strTemp);}
 			//MAP_MIX_MATRIX[i][j] = ROUND( float(MAP_MIX_MATRIX[i][j])/mtrDiv ); 
@@ -2997,7 +2997,7 @@ if(MAP_MIXED_DEPTH > 0){
 	}
 
 	int preTER = -1, prePR = -1;	int tnn = 301, stn = 12;
-	for(int x=0; x < mpMap.X*Map_w+Map_w*7/6; x++) { //проход по карте по Х 
+	for(int x=0; x < mpMap.X*Map_w+Map_w*7/6; x++) { //РїСЂРѕС…РѕРґ РїРѕ РєР°СЂС‚Рµ РїРѕ РҐ 
 		PROCESSBAR(x,50);//if(x%100 == 99) {textprintf_centre_ex(screen,Font1,tnn+=stn,180,COLOR_2,-1,".");}
 		for(int y=0; y < mpMap.Y*(Map_h+Map_h/3)/2+Map_h; y++ ) //y+=2 ) //y++) // y+=3
 		{
@@ -3014,7 +3014,7 @@ if(MAP_MIXED_DEPTH > 0){
 						int line_mix[MAX_MAP_MIXED_ZONE],lmi= 0, m3i= (x +PR+prePR)%(MAP_LN*MAP_PN);  //,m3ii= m3i/10, m3ij= m3i%10;
 						int mix_wid= MAP_MIX_MATRIX[m3i/10][m3i%10];//= MAP_MIX_MATRIX[(preTER+(pFirstProvince+PR)->ipTerrain)%MAP_LN][x%MAP_PN];//	//int mix_wid = MAP_MIXED_DEPTH; // = MAP_MIX_MATRIX[(PR+prePR)%MAP_LN][x%MAP_PN]; //= *(MAP_MIX_MATRIX+x%(MAP_LN*MAP_PN))
 
-						//захват линии смешивания
+						//Р·Р°С…РІР°С‚ Р»РёРЅРёРё СЃРјРµС€РёРІР°РЅРёСЏ
 						for(int yy=y-mix_wid; yy < y+mix_wid+1 ; yy++){
 							if(yy>0 && GetProvinceIndex(x,yy)>0)
 								line_mix[lmi++]= getpixel(bmpMap,x,yy);
@@ -3022,8 +3022,8 @@ if(MAP_MIXED_DEPTH > 0){
 						lmi--;
 
 						int board_w=0;
-						//смешивание текстур
-						if(preTER==WATER_ID || (pFirstProvince+PR)->ipTerrain==WATER_ID) //берег/вода
+						//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
+						if(preTER==WATER_ID || (pFirstProvince+PR)->ipTerrain==WATER_ID) //Р±РµСЂРµРі/РІРѕРґР°
 						{
 							int beach_wid= 2*mix_wid+MAP_COAST_WIDTH; //NEW!!!
 							for(int i=mix_wid; i < mix_wid+beach_wid && i+mix_wid+beach_wid<MAX_MAP_MIXED_ZONE; i++)
@@ -3035,18 +3035,18 @@ if(MAP_MIXED_DEPTH > 0){
 							board_w = beach_wid/2;
 							if(lmi>=MAX_MAP_MIXED_ZONE) lmi= MAX_MAP_MIXED_ZONE; 
 							
-							//смешивание текстур
+							//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
 							Mix_Array(line_mix, 0,		  lmi/3,	MAP_MIXED_LENGTH,MAP_MIXED_STEP); //water-sand
 							//Mix_Array(line_mix, lmi/3,  2*lmi/3,	MAP_MIXED_LENGTH,MAP_MIXED_STEP);
 							Mix_Array(line_mix, 2*lmi/3,    lmi,	MAP_MIXED_LENGTH,MAP_MIXED_STEP); //sand-earth
 						} else {
-							Mix_Array(line_mix,0,lmi,MAP_MIXED_LENGTH,MAP_MIXED_STEP);//смешивание текстур
+							Mix_Array(line_mix,0,lmi,MAP_MIXED_LENGTH,MAP_MIXED_STEP);//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
 							//int Mix_Array(int *arr /line/, int nn /lmi/, int pos1 /i/, int len /LEN/, int step=1 /STEP/, int rnd=0 /random(rnd)/)
 							
 						}
 						
 						mix_wid+= board_w;
-						for(int yy=y+mix_wid+1; yy > y-mix_wid &&lmi>=0; yy--) {//отрисовка смешаной линии
+						for(int yy=y+mix_wid+1; yy > y-mix_wid &&lmi>=0; yy--) {//РѕС‚СЂРёСЃРѕРІРєР° СЃРјРµС€Р°РЅРѕР№ Р»РёРЅРёРё
 							if(line_mix[lmi]>=0 && yy>0 && GetProvinceIndex(x,yy)>0)
 								putpixel(bmpMap,x,yy,line_mix[lmi--]);
 						}
@@ -3062,7 +3062,7 @@ if(MAP_MIXED_DEPTH > 0){
 
 	// FOR y(x) ---------------------------------------------------------------------
 	preTER = -1; prePR = -1;
-	for(int y=0; y < mpMap.Y*(Map_h+Map_h/3)/2+Map_h ; y++ ) { //проход по карте по Y 
+	for(int y=0; y < mpMap.Y*(Map_h+Map_h/3)/2+Map_h ; y++ ) { //РїСЂРѕС…РѕРґ РїРѕ РєР°СЂС‚Рµ РїРѕ Y 
 		PROCESSBAR( y+1,50);//if(y%100 == 99) {textprintf_centre_ex(screen,Font1,tnn+=stn,180,COLOR_2,-1,".");}
 		for(int x=0; x < mpMap.X*Map_w+Map_w*7/6; x++)
 		{
@@ -3076,13 +3076,13 @@ if(MAP_MIXED_DEPTH > 0){
 						int line_mix[MAX_MAP_MIXED_ZONE],lmi= 0, m3i= (y +PR+prePR)%(MAP_LN*MAP_PN);
 						int mix_wid= MAP_MIX_MATRIX[m3i/10][m3i%10];
 						
-						for(int xx=x-mix_wid; xx < x+mix_wid+1 ; xx++){//захват линии смешивания
+						for(int xx=x-mix_wid; xx < x+mix_wid+1 ; xx++){//Р·Р°С…РІР°С‚ Р»РёРЅРёРё СЃРјРµС€РёРІР°РЅРёСЏ
 							if(xx>0 && GetProvinceIndex(xx,y)>0)
 								line_mix[lmi++]= getpixel(bmpMap,xx,y);
 						}
 						lmi--;
 						int board_w=0;
-						if(preTER==WATER_ID || (pFirstProvince+PR)->ipTerrain==WATER_ID) { //берег/вода
+						if(preTER==WATER_ID || (pFirstProvince+PR)->ipTerrain==WATER_ID) { //Р±РµСЂРµРі/РІРѕРґР°
 							int beach_wid= 2*mix_wid+MAP_COAST_WIDTH;
 							for(int i=mix_wid; i < mix_wid+beach_wid && i+mix_wid+beach_wid<MAX_MAP_MIXED_ZONE; i++){
 								line_mix[i+mix_wid+beach_wid] = line_mix[i];
@@ -3091,15 +3091,15 @@ if(MAP_MIXED_DEPTH > 0){
 							board_w = beach_wid/2;
 							lmi+= beach_wid;
 							if(lmi>=MAX_MAP_MIXED_ZONE) lmi= MAX_MAP_MIXED_ZONE;							
-							//смешивание текстур
+							//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
 							Mix_Array(line_mix, 0,		  lmi/3,	MAP_MIXED_LENGTH,MAP_MIXED_STEP); // water-sand
 							Mix_Array(line_mix, 2*lmi/3,    lmi,	MAP_MIXED_LENGTH,MAP_MIXED_STEP); // sand-earth
 						} else {
-							Mix_Array(line_mix,0,lmi,MAP_MIXED_LENGTH,MAP_MIXED_STEP);//смешивание текстур
+							Mix_Array(line_mix,0,lmi,MAP_MIXED_LENGTH,MAP_MIXED_STEP);//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
 						}
 						
 						mix_wid+= board_w;
-						for(int xx=x+mix_wid+1; xx > x-mix_wid &&lmi>=0; xx--) {//отрисовка смешаной линии
+						for(int xx=x+mix_wid+1; xx > x-mix_wid &&lmi>=0; xx--) {//РѕС‚СЂРёСЃРѕРІРєР° СЃРјРµС€Р°РЅРѕР№ Р»РёРЅРёРё
 							if(line_mix[lmi]>=0 && xx>0 && GetProvinceIndex(xx,y)>0)
 								putpixel(bmpMap,xx,y,line_mix[lmi--]);
 						}
@@ -3117,7 +3117,7 @@ if(MAP_MIXED_DEPTH > 0){
 //WAIT1();
 
 //	// FOR y(x)	//BLOCK-#02
-//	for(int y=0; y < mpMap.Y*(Map_h+Map_h/3)/2+Map_h &&false; y++ ) { //проход по карте по Y 
+//	for(int y=0; y < mpMap.Y*(Map_h+Map_h/3)/2+Map_h &&false; y++ ) { //РїСЂРѕС…РѕРґ РїРѕ РєР°СЂС‚Рµ РїРѕ Y 
 //		PROCESSBAR( y+1,20);//if(y%100 == 99) {textprintf_centre_ex(screen,Font1,tnn+=stn,180,COLOR_2,-1,".");}
 //		for(int x=0; x < mpMap.X*Map_w+Map_w*7/6; x++)
 //		{
@@ -3130,13 +3130,13 @@ if(MAP_MIXED_DEPTH > 0){
 //					if(preTER != (pFirstProvince+PR)->ipTerrain) {  
 //						int line_mix[100], lmi= 0, m3i= (y +PR+prePR)%(MAP_LN*MAP_PN), m3ii = m3i/10, m3ij = m3i%10;
 //						int mix_wid = MAP_MIX_MATRIX[m3i/10][m3i%10];
-//						//захват линии смешивания
+//						//Р·Р°С…РІР°С‚ Р»РёРЅРёРё СЃРјРµС€РёРІР°РЅРёСЏ
 //						for(int xx=x-mix_wid; xx < x+mix_wid+1; xx++) { 
 //							if(xx>0 && GetProvinceIndex(xx,y)>0)
 //								line_mix[lmi++]= getpixel(bmpMap,xx,y);
 //						}
 //						lmi--;
-//						//смешивание текстур
+//						//СЃРјРµС€РёРІР°РЅРёРµ С‚РµРєСЃС‚СѓСЂ
 //						for(int xx=x-mix_wid; xx < x+mix_wid+1; xx+=(MAP_MIXED_LENGTH+MAP_MIXED_STEP)) {
 //							for(int lmj=0; lmj < MAP_MIXED_LENGTH ; lmj++) {
 //								if(lmi >= 0 && line_mix[lmi]>=0 && xx+lmj>0 && GetProvinceIndex(xx+lmj,y)>0) {
@@ -3177,7 +3177,7 @@ if(MAP_MIXED_DEPTH > 0){
 //	{sprintf(sFileName,"map%d.cmp",arHumans[0].iFileIndex);};
 //	sprintf(sFileName,"Map%d.map",CurGame.iSeed);
 
-//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"Сохранение карты в %s ...",sFileName);
+//	textprintf_ex(screen,Font1,30,Txt*20,COLOR_2,-1,"РЎРѕС…СЂР°РЅРµРЅРёРµ РєР°СЂС‚С‹ РІ %s ...",sFileName);
 //	Txt++;
 	FileLog("Save Map...  ");
 	RunHourGlass(149, 0);
@@ -3195,24 +3195,24 @@ void SaveMap()
 
 //	sprintf(sMapFile.str,sFileName);
 //	char sFile [50];
-//	sprintf(sFile,"save\\%s",sFileName);
+//	sprintf(sFile,"save/%s",sFileName);
 	char sFileName[100];
 	switch (CurGame.iGameType)
 	{
 	case 1:
-		sprintf(sFileName,"save\\map%d.map",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.map",arHumans[0].iFileIndex);
 		break;
 	case 2:	
-		sprintf(sFileName,"save\\map%d.cmp",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.cmp",arHumans[0].iFileIndex);
 		break;
 	case 3:
-		sprintf(sFileName,"save\\map%d.hot",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.hot",arHumans[0].iFileIndex);
 		break;
 	case 4:
-		sprintf(sFileName,"save\\map%d.lan",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.lan",arHumans[0].iFileIndex);
 		break;
 	case 5:
-		sprintf(sFileName,"save\\map%d.net",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.net",arHumans[0].iFileIndex);
 		break;
 	};
 	WorkFile=pack_fopen(sFileName,"wp");
@@ -3303,24 +3303,24 @@ void LoadMap()
 	PALETTE Palet;		
 //	char sFile [50];
 //	sprintf(sMapFile.str,sFileName);
-//	sprintf(sFile,"maps\\%s",sFileName);
+//	sprintf(sFile,"maps/%s",sFileName);
 	char sFileName[100];
 	switch (CurGame.iGameType)
 	{
 	case 1:
-		sprintf(sFileName,"save\\map%d.map",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.map",arHumans[0].iFileIndex);
 		break;
 	case 2:	
-		sprintf(sFileName,"save\\map%d.cmp",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.cmp",arHumans[0].iFileIndex);
 		break;
 	case 3:
-		sprintf(sFileName,"save\\map%d.hot",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.hot",arHumans[0].iFileIndex);
 		break;
 	case 4:
-		sprintf(sFileName,"save\\map%d.lan",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.lan",arHumans[0].iFileIndex);
 		break;
 	case 5:
-		sprintf(sFileName,"save\\map%d.net",arHumans[0].iFileIndex);
+		sprintf(sFileName,"save/map%d.net",arHumans[0].iFileIndex);
 		break;
 	};
 	WorkFile=pack_fopen(sFileName,"rp");
@@ -3453,7 +3453,7 @@ void LoadMap()
 
 void UnloadMap()
 {
-//	WriteLog("Графика");
+//	WriteLog("Р“СЂР°С„РёРєР°");
 	FileLog("Unloading map...");
 	destroy_bitmap(bmpMap);
 	bmpMap=NULL;
@@ -3461,10 +3461,10 @@ void UnloadMap()
 	{
 		destroy_bitmap((pFirstFog+i)->Pic);		
 	};
-//	WriteLog("Туман карта");
+//	WriteLog("РўСѓРјР°РЅ РєР°СЂС‚Р°");
 //	readkey();
 	delete [] pFirstFog;
-//	WriteLog("Провинции");
+//	WriteLog("РџСЂРѕРІРёРЅС†РёРё");
 //	readkey();
 	pFirstProvince->pGarrison=NULL;
 	pFirstProvince->pGuard=NULL;
@@ -3475,12 +3475,12 @@ void UnloadMap()
 	};
 	delete [] pFirstProvince;
 
-//	WriteLog("Карта движения");
+//	WriteLog("РљР°СЂС‚Р° РґРІРёР¶РµРЅРёСЏ");
 //	readkey();
 	delete [] pMoveMap;
 	delete [] pRunMap;
 	delete [] pMobilMap;
-//	WriteLog("Границы");
+//	WriteLog("Р“СЂР°РЅРёС†С‹");
 //	readkey();
 	Map_Border *BR, *BR1;
 	for (int i=0; i<MAP_SIZE; i++)

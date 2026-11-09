@@ -3,71 +3,71 @@
 
 #include "Windower.h"
 
-extern int MinWeight;		//Минимальная длина пути (в единицах скорости)
-extern int MinStamina;		//Необходимая стамина для найденного пути
+extern int MinWeight;		//РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° РїСѓС‚Рё (РІ РµРґРёРЅРёС†Р°С… СЃРєРѕСЂРѕСЃС‚Рё)
+extern int MinStamina;		//РќРµРѕР±С…РѕРґРёРјР°СЏ СЃС‚Р°РјРёРЅР° РґР»СЏ РЅР°Р№РґРµРЅРЅРѕРіРѕ РїСѓС‚Рё
 extern BITMAP *bmpPathPic;
 extern BITMAP *bmpUnitBar;
 extern BITMAP *bmpWarMenu, *bmpCheckBox, *bmpCheckBird;
-extern int ActivePlayer;	//Активный игрок-человек
+extern int ActivePlayer;	//РђРєС‚РёРІРЅС‹Р№ РёРіСЂРѕРє-С‡РµР»РѕРІРµРє
 
-extern clPath *TruePath;	//Указатель на найденный путь
+extern clPath *TruePath;	//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°Р№РґРµРЅРЅС‹Р№ РїСѓС‚СЊ
 
 class BF_Unit;
-extern BF_Unit * arNeigh [6];	//Массив для хранения соседних юнитов
-extern dcHero * Heroes[2];		//Участвующие в бою герои
-extern int LifeMod[2];			//Изменение максиума жизни нейтралов в завасимость от сложности (в %)
-extern int SummonExp[2];		//Опыт за вызванных существ
-extern int SummonSurv[2];		//Сколько суммоны прожили
-extern int SummonWork[2];		//Сколько наработали
+extern BF_Unit * arNeigh [6];	//РњР°СЃСЃРёРІ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЃРѕСЃРµРґРЅРёС… СЋРЅРёС‚РѕРІ
+extern dcHero * Heroes[2];		//РЈС‡Р°СЃС‚РІСѓСЋС‰РёРµ РІ Р±РѕСЋ РіРµСЂРѕРё
+extern int LifeMod[2];			//РР·РјРµРЅРµРЅРёРµ РјР°РєСЃРёСѓРјР° Р¶РёР·РЅРё РЅРµР№С‚СЂР°Р»РѕРІ РІ Р·Р°РІР°СЃРёРјРѕСЃС‚СЊ РѕС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё (РІ %)
+extern int SummonExp[2];		//РћРїС‹С‚ Р·Р° РІС‹Р·РІР°РЅРЅС‹С… СЃСѓС‰РµСЃС‚РІ
+extern int SummonSurv[2];		//РЎРєРѕР»СЊРєРѕ СЃСѓРјРјРѕРЅС‹ РїСЂРѕР¶РёР»Рё
+extern int SummonWork[2];		//РЎРєРѕР»СЊРєРѕ РЅР°СЂР°Р±РѕС‚Р°Р»Рё
 extern int GemSpent[2];
-extern bool IsPlayed[2];		//Флаги игроков-людей
-extern int SideCanCast[2];		//Флаги использования заклятий при автобое 0 - полный запрет, 1 - без жертв, 2 - любые
+extern bool IsPlayed[2];		//Р¤Р»Р°РіРё РёРіСЂРѕРєРѕРІ-Р»СЋРґРµР№
+extern int SideCanCast[2];		//Р¤Р»Р°РіРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ Р·Р°РєР»СЏС‚РёР№ РїСЂРё Р°РІС‚РѕР±РѕРµ 0 - РїРѕР»РЅС‹Р№ Р·Р°РїСЂРµС‚, 1 - Р±РµР· Р¶РµСЂС‚РІ, 2 - Р»СЋР±С‹Рµ
 
 const int MAX_SUMMONS=SPELLBOOK_SIZE;
-const int POISON_DURATION=3;		//Продолжительность действия яда
-extern bool bFirstMove;				//Флаг истинный, если активный юнит еще не двигался
-extern bool bShowBattle;			//Истинна если в бою есть игрок-человек
-extern bool bAltFlag;				//Флаг нажатия клавиши Alt
+const int POISON_DURATION=3;		//РџСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёСЏ СЏРґР°
+extern bool bFirstMove;				//Р¤Р»Р°Рі РёСЃС‚РёРЅРЅС‹Р№, РµСЃР»Рё Р°РєС‚РёРІРЅС‹Р№ СЋРЅРёС‚ РµС‰Рµ РЅРµ РґРІРёРіР°Р»СЃСЏ
+extern bool bShowBattle;			//РСЃС‚РёРЅРЅР° РµСЃР»Рё РІ Р±РѕСЋ РµСЃС‚СЊ РёРіСЂРѕРє-С‡РµР»РѕРІРµРє
+extern bool bAltFlag;				//Р¤Р»Р°Рі РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё Alt
 extern bool bCastle;
 extern UI_Button2 buttCrush, buttDoubleShot, buttRoundAtt;
 extern G_Object *objMain;
-extern G_Object *objSim;			//Объект для эмуляции битв
+extern G_Object *objSim;			//РћР±СЉРµРєС‚ РґР»СЏ СЌРјСѓР»СЏС†РёРё Р±РёС‚РІ
 extern G_Object *objSelect;
-//extern int arSimCrystal[2];		//Количество кристаллов для симуляции боя
+//extern int arSimCrystal[2];		//РљРѕР»РёС‡РµСЃС‚РІРѕ РєСЂРёСЃС‚Р°Р»Р»РѕРІ РґР»СЏ СЃРёРјСѓР»СЏС†РёРё Р±РѕСЏ
 
 
 
 
-//Ячейка поля боя
+//РЇС‡РµР№РєР° РїРѕР»СЏ Р±РѕСЏ
 struct strHexx
 {
-	int Land,	//Тип ландшафта (или затраты хода для массива поиска пути)
-	Shoot;		//Флаг области обстрела
-	bool Pass;	//Проходимость
+	int Land,	//РўРёРї Р»Р°РЅРґС€Р°С„С‚Р° (РёР»Рё Р·Р°С‚СЂР°С‚С‹ С…РѕРґР° РґР»СЏ РјР°СЃСЃРёРІР° РїРѕРёСЃРєР° РїСѓС‚Рё)
+	Shoot;		//Р¤Р»Р°Рі РѕР±Р»Р°СЃС‚Рё РѕР±СЃС‚СЂРµР»Р°
+	bool Pass;	//РџСЂРѕС…РѕРґРёРјРѕСЃС‚СЊ
 };
 
 
-extern strHexx arGrid [8] [8];	//Карта проходимости
-extern strHexx Field [8] [8];	//Карта для поиска пути
-extern int CanPass[3];			//Флаги проходимости территорий для учета знания местности при поиске пути
+extern strHexx arGrid [8] [8];	//РљР°СЂС‚Р° РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё
+extern strHexx Field [8] [8];	//РљР°СЂС‚Р° РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё
+extern int CanPass[3];			//Р¤Р»Р°РіРё РїСЂРѕС…РѕРґРёРјРѕСЃС‚Рё С‚РµСЂСЂРёС‚РѕСЂРёР№ РґР»СЏ СѓС‡РµС‚Р° Р·РЅР°РЅРёСЏ РјРµСЃС‚РЅРѕСЃС‚Рё РїСЂРё РїРѕРёСЃРєРµ РїСѓС‚Рё
 extern int ProvinceMoraleBonus;
 
 
 
-//Эффекты на юнитах
+//Р­С„С„РµРєС‚С‹ РЅР° СЋРЅРёС‚Р°С…
 class BF_Effect
 {
 public:
 
-//	char sName[20];		//Название
-//	bool bVisible;		//Отображается ли в инфо окне
-	int iType,			//Тип эффекта
-		iPower,			//Сила эффекта (множитель)
-		iTime;			//Сколько ходов будет действовать (0-постоянный)
-	bool bVisible,		//Виден ли на панели
-		bDestroyOnHit;	//Уничтожается если цель получила повреждения
-	BF_Effect *pNext;	//Ссылка на следующий эффект в списке
-	BF_Effect *pPrev;	//Ссылка на предыдущий эффект в списке
+//	char sName[20];		//РќР°Р·РІР°РЅРёРµ
+//	bool bVisible;		//РћС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ Р»Рё РІ РёРЅС„Рѕ РѕРєРЅРµ
+	int iType,			//РўРёРї СЌС„С„РµРєС‚Р°
+		iPower,			//РЎРёР»Р° СЌС„С„РµРєС‚Р° (РјРЅРѕР¶РёС‚РµР»СЊ)
+		iTime;			//РЎРєРѕР»СЊРєРѕ С…РѕРґРѕРІ Р±СѓРґРµС‚ РґРµР№СЃС‚РІРѕРІР°С‚СЊ (0-РїРѕСЃС‚РѕСЏРЅРЅС‹Р№)
+	bool bVisible,		//Р’РёРґРµРЅ Р»Рё РЅР° РїР°РЅРµР»Рё
+		bDestroyOnHit;	//РЈРЅРёС‡С‚РѕР¶Р°РµС‚СЃСЏ РµСЃР»Рё С†РµР»СЊ РїРѕР»СѓС‡РёР»Р° РїРѕРІСЂРµР¶РґРµРЅРёСЏ
+	BF_Effect *pNext;	//РЎСЃС‹Р»РєР° РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌС„С„РµРєС‚ РІ СЃРїРёСЃРєРµ
+	BF_Effect *pPrev;	//РЎСЃС‹Р»РєР° РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СЌС„С„РµРєС‚ РІ СЃРїРёСЃРєРµ
 	clSpell * pSpell;	
 	clUnitUpgrade * pAbility;
 	BF_Effect(BF_Effect *prEffect, int Type, int Power, int Time);
@@ -75,7 +75,7 @@ public:
 	~BF_Effect();
 };
 
-//Преобразование координат юнита в координаты графического объекта
+//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚ СЋРЅРёС‚Р° РІ РєРѕРѕСЂРґРёРЅР°С‚С‹ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РѕР±СЉРµРєС‚Р°
 int TransX (int x, int y, int w);
 int TransY (int x, int y, int h);
 
@@ -83,77 +83,77 @@ class BF_Unit
 {
 public:
 		
-	int iLife,				//Текущая жизнь
-		iSpeed,				//Запас хода
-		iMorale,			//Текущий бевой дух
-		iFear,				//Показатель страха (чем выше, тем ниже шанс восстановить боевой дух)
-		iStamina,			//Текущая выносливость
-		iAmmo,				//Количество выстрелов
-		iMeleeDamageDone,	//Нанесено урона в рукопашной
-		iRangeDamageDone,	//Получено урона в рукопашной
-		iMeleeDamageTaken,	//Нанесено урона выстрелами
-		iRangeDamageTaken,	//Получено урона выстрелами
-		iSpellDamageTaken,	//Получено урона от заклинаний
-		iPoisonDamageTaken,	//Получено урона от яда
-		iDamageHealed,		//Излечено урона
-		iSpellCast,			//Потрачено выносливости на вызов заклинаний
-		iEnemyShotted,		//Застрелено врагов
-		iEnemySlayed,		//Убито в рукопашную врагов
-		iStaminaUsed,		//Потрачено выносливости
-		x, y,				//Координаты на поле боя
-		iSurvived,			//Сколько ходов сражался
-		iSide,				//За какую сторону сражается
-		iNumm,				//Порядковый номер в отряде
-		ipSummonType;		//Тип вызванного юнита
-	bool bCanAct,			//Может ли действовать на данном ходу
-		bResting,			//Выполняет команду "Отдыхать"
-		bMarch,				//Можно ли использовать марш-бросок
-		bParry,				//Можно ли использовать парирование
-		bInBattle,			//Находится в бою
-		bPacked,			//Флаг превращения в демона (для очистки памяти при симуляции)
-//		bWait,				//Для АИ, ожидание движения
-		bSummoned;			//Призванный юнит
-	G_Object *G_Obj;		//Графическая часть
-	G_Object *objBar;		//Объект с хинтом
-	BITMAP * bmpBar;		//Картинка хинта
-	dcUnit *pUnit;			//Указатель на юнит отряда
-	dcUnit *pTrueForm;		//Хранит ссылку на иситинного юнита на случай полиморфа
-	dcHero *pHero;			//Указатель на героя, к отряду которого юнит принедлежит
-	BF_Effect *pEffect;		//Список активных эффектов
+	int iLife,				//РўРµРєСѓС‰Р°СЏ Р¶РёР·РЅСЊ
+		iSpeed,				//Р—Р°РїР°СЃ С…РѕРґР°
+		iMorale,			//РўРµРєСѓС‰РёР№ Р±РµРІРѕР№ РґСѓС…
+		iFear,				//РџРѕРєР°Р·Р°С‚РµР»СЊ СЃС‚СЂР°С…Р° (С‡РµРј РІС‹С€Рµ, С‚РµРј РЅРёР¶Рµ С€Р°РЅСЃ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ Р±РѕРµРІРѕР№ РґСѓС…)
+		iStamina,			//РўРµРєСѓС‰Р°СЏ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ
+		iAmmo,				//РљРѕР»РёС‡РµСЃС‚РІРѕ РІС‹СЃС‚СЂРµР»РѕРІ
+		iMeleeDamageDone,	//РќР°РЅРµСЃРµРЅРѕ СѓСЂРѕРЅР° РІ СЂСѓРєРѕРїР°С€РЅРѕР№
+		iRangeDamageDone,	//РџРѕР»СѓС‡РµРЅРѕ СѓСЂРѕРЅР° РІ СЂСѓРєРѕРїР°С€РЅРѕР№
+		iMeleeDamageTaken,	//РќР°РЅРµСЃРµРЅРѕ СѓСЂРѕРЅР° РІС‹СЃС‚СЂРµР»Р°РјРё
+		iRangeDamageTaken,	//РџРѕР»СѓС‡РµРЅРѕ СѓСЂРѕРЅР° РІС‹СЃС‚СЂРµР»Р°РјРё
+		iSpellDamageTaken,	//РџРѕР»СѓС‡РµРЅРѕ СѓСЂРѕРЅР° РѕС‚ Р·Р°РєР»РёРЅР°РЅРёР№
+		iPoisonDamageTaken,	//РџРѕР»СѓС‡РµРЅРѕ СѓСЂРѕРЅР° РѕС‚ СЏРґР°
+		iDamageHealed,		//РР·Р»РµС‡РµРЅРѕ СѓСЂРѕРЅР°
+		iSpellCast,			//РџРѕС‚СЂР°С‡РµРЅРѕ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚Рё РЅР° РІС‹Р·РѕРІ Р·Р°РєР»РёРЅР°РЅРёР№
+		iEnemyShotted,		//Р—Р°СЃС‚СЂРµР»РµРЅРѕ РІСЂР°РіРѕРІ
+		iEnemySlayed,		//РЈР±РёС‚Рѕ РІ СЂСѓРєРѕРїР°С€РЅСѓСЋ РІСЂР°РіРѕРІ
+		iStaminaUsed,		//РџРѕС‚СЂР°С‡РµРЅРѕ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚Рё
+		x, y,				//РљРѕРѕСЂРґРёРЅР°С‚С‹ РЅР° РїРѕР»Рµ Р±РѕСЏ
+		iSurvived,			//РЎРєРѕР»СЊРєРѕ С…РѕРґРѕРІ СЃСЂР°Р¶Р°Р»СЃСЏ
+		iSide,				//Р—Р° РєР°РєСѓСЋ СЃС‚РѕСЂРѕРЅСѓ СЃСЂР°Р¶Р°РµС‚СЃСЏ
+		iNumm,				//РџРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ РІ РѕС‚СЂСЏРґРµ
+		ipSummonType;		//РўРёРї РІС‹Р·РІР°РЅРЅРѕРіРѕ СЋРЅРёС‚Р°
+	bool bCanAct,			//РњРѕР¶РµС‚ Р»Рё РґРµР№СЃС‚РІРѕРІР°С‚СЊ РЅР° РґР°РЅРЅРѕРј С…РѕРґСѓ
+		bResting,			//Р’С‹РїРѕР»РЅСЏРµС‚ РєРѕРјР°РЅРґСѓ "РћС‚РґС‹С…Р°С‚СЊ"
+		bMarch,				//РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РјР°СЂС€-Р±СЂРѕСЃРѕРє
+		bParry,				//РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїР°СЂРёСЂРѕРІР°РЅРёРµ
+		bInBattle,			//РќР°С…РѕРґРёС‚СЃСЏ РІ Р±РѕСЋ
+		bPacked,			//Р¤Р»Р°Рі РїСЂРµРІСЂР°С‰РµРЅРёСЏ РІ РґРµРјРѕРЅР° (РґР»СЏ РѕС‡РёСЃС‚РєРё РїР°РјСЏС‚Рё РїСЂРё СЃРёРјСѓР»СЏС†РёРё)
+//		bWait,				//Р”Р»СЏ РђР, РѕР¶РёРґР°РЅРёРµ РґРІРёР¶РµРЅРёСЏ
+		bSummoned;			//РџСЂРёР·РІР°РЅРЅС‹Р№ СЋРЅРёС‚
+	G_Object *G_Obj;		//Р“СЂР°С„РёС‡РµСЃРєР°СЏ С‡Р°СЃС‚СЊ
+	G_Object *objBar;		//РћР±СЉРµРєС‚ СЃ С…РёРЅС‚РѕРј
+	BITMAP * bmpBar;		//РљР°СЂС‚РёРЅРєР° С…РёРЅС‚Р°
+	dcUnit *pUnit;			//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° СЋРЅРёС‚ РѕС‚СЂСЏРґР°
+	dcUnit *pTrueForm;		//РҐСЂР°РЅРёС‚ СЃСЃС‹Р»РєСѓ РЅР° РёСЃРёС‚РёРЅРЅРѕРіРѕ СЋРЅРёС‚Р° РЅР° СЃР»СѓС‡Р°Р№ РїРѕР»РёРјРѕСЂС„Р°
+	dcHero *pHero;			//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РіРµСЂРѕСЏ, Рє РѕС‚СЂСЏРґСѓ РєРѕС‚РѕСЂРѕРіРѕ СЋРЅРёС‚ РїСЂРёРЅРµРґР»РµР¶РёС‚
+	BF_Effect *pEffect;		//РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЌС„С„РµРєС‚РѕРІ
 		
 	BF_Unit();
 	~BF_Unit();
 	G_Object * Init(dcUnit *Un, G_Object *Obj, int Sider, int Numm);
 	G_Object * Summon(int U_Type, int Power, int x, int y, G_Object *Obj);
-	void Clear(); //Очистка информации о юните
-	void ChangeSide(int NewNum);	//Переход на сторону врага, занять слот NewNum
-	void DrawBar();					//Отрисовка хинта под юниитом
-	int CheckEffect(int Index);		//Проверка наличия выбранного эффекта
-	int GetEffectDuration(int Index);	//Проверка длительности эффекта
-	int CheckSkill(int Index);		//Проверка наличия улучшения в свойствах, повышениях и эффетках
-	bool CheckCaster();				//Проверка, умеет ли юнит колдовать
-	int FindNeighbour(int Side);	//Находит соседних юнитов стороны Side и заносит их в массив arNeigh, возвращает количество найденных
+	void Clear(); //РћС‡РёСЃС‚РєР° РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЋРЅРёС‚Рµ
+	void ChangeSide(int NewNum);	//РџРµСЂРµС…РѕРґ РЅР° СЃС‚РѕСЂРѕРЅСѓ РІСЂР°РіР°, Р·Р°РЅСЏС‚СЊ СЃР»РѕС‚ NewNum
+	void DrawBar();					//РћС‚СЂРёСЃРѕРІРєР° С…РёРЅС‚Р° РїРѕРґ СЋРЅРёРёС‚РѕРј
+	int CheckEffect(int Index);		//РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЌС„С„РµРєС‚Р°
+	int GetEffectDuration(int Index);	//РџСЂРѕРІРµСЂРєР° РґР»РёС‚РµР»СЊРЅРѕСЃС‚Рё СЌС„С„РµРєС‚Р°
+	int CheckSkill(int Index);		//РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ СѓР»СѓС‡С€РµРЅРёСЏ РІ СЃРІРѕР№СЃС‚РІР°С…, РїРѕРІС‹С€РµРЅРёСЏС… Рё СЌС„С„РµС‚РєР°С…
+	bool CheckCaster();				//РџСЂРѕРІРµСЂРєР°, СѓРјРµРµС‚ Р»Рё СЋРЅРёС‚ РєРѕР»РґРѕРІР°С‚СЊ
+	int FindNeighbour(int Side);	//РќР°С…РѕРґРёС‚ СЃРѕСЃРµРґРЅРёС… СЋРЅРёС‚РѕРІ СЃС‚РѕСЂРѕРЅС‹ Side Рё Р·Р°РЅРѕСЃРёС‚ РёС… РІ РјР°СЃСЃРёРІ arNeigh, РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР°Р№РґРµРЅРЅС‹С…
 //	void AddEffect(int Eff, int Power, int Time);
 //	void RemoveEffect ( Eff);
-	bool TakeDamage (int Hit, int dType);  //Юнит получает повреждения, dType 0 - рукопашные, 1 - дистанционные, 2 - от заклинания. Возвращает 1 если он погиб
-	void Move(int x1, int y1);  //Переместить юнита
-	void Replace(int x1, int y1); //Мгновенно переместить юнита
-	int SoulSteal (BF_Unit *Enemy);	//Выпить душу врага, возвращает количество полученной жизни
-	void RaiseCorpse(BF_Unit *Enemy);	//Создать скелета из поверженного врага
-	int Attack(int x1, int y1, BF_Unit *Enemy); //Атаковать юнита Enemy с клетки x1, y1, возвращает 0 если атакующий погиб
-	int UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster); //Воздействие заклинания Spell, примененного магом Hero, принадлежащим стороне Caster
-	void Shoot(BF_Unit *Enemy);	//Стрелять в юнита Enemy
-	void Heal(BF_Unit *Target); //Лечить юнита Target	
+	bool TakeDamage (int Hit, int dType);  //Р®РЅРёС‚ РїРѕР»СѓС‡Р°РµС‚ РїРѕРІСЂРµР¶РґРµРЅРёСЏ, dType 0 - СЂСѓРєРѕРїР°С€РЅС‹Рµ, 1 - РґРёСЃС‚Р°РЅС†РёРѕРЅРЅС‹Рµ, 2 - РѕС‚ Р·Р°РєР»РёРЅР°РЅРёСЏ. Р’РѕР·РІСЂР°С‰Р°РµС‚ 1 РµСЃР»Рё РѕРЅ РїРѕРіРёР±
+	void Move(int x1, int y1);  //РџРµСЂРµРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р°
+	void Replace(int x1, int y1); //РњРіРЅРѕРІРµРЅРЅРѕ РїРµСЂРµРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р°
+	int SoulSteal (BF_Unit *Enemy);	//Р’С‹РїРёС‚СЊ РґСѓС€Сѓ РІСЂР°РіР°, РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР»СѓС‡РµРЅРЅРѕР№ Р¶РёР·РЅРё
+	void RaiseCorpse(BF_Unit *Enemy);	//РЎРѕР·РґР°С‚СЊ СЃРєРµР»РµС‚Р° РёР· РїРѕРІРµСЂР¶РµРЅРЅРѕРіРѕ РІСЂР°РіР°
+	int Attack(int x1, int y1, BF_Unit *Enemy); //РђС‚Р°РєРѕРІР°С‚СЊ СЋРЅРёС‚Р° Enemy СЃ РєР»РµС‚РєРё x1, y1, РІРѕР·РІСЂР°С‰Р°РµС‚ 0 РµСЃР»Рё Р°С‚Р°РєСѓСЋС‰РёР№ РїРѕРіРёР±
+	int UnderSpell(clSpell *Spell, BF_Unit * Hero, int Caster); //Р’РѕР·РґРµР№СЃС‚РІРёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ Spell, РїСЂРёРјРµРЅРµРЅРЅРѕРіРѕ РјР°РіРѕРј Hero, РїСЂРёРЅР°РґР»РµР¶Р°С‰РёРј СЃС‚РѕСЂРѕРЅРµ Caster
+	void Shoot(BF_Unit *Enemy);	//РЎС‚СЂРµР»СЏС‚СЊ РІ СЋРЅРёС‚Р° Enemy
+	void Heal(BF_Unit *Target); //Р›РµС‡РёС‚СЊ СЋРЅРёС‚Р° Target	
 	void Panic();
 	void Death();
-	void UseStamina(unsigned int Num);	//Тратит выносливость юнита
-	void ChangeMorale(int Num);			//Изменяет боевой дух юнита
-	void GoMarch();		//Включает марш-бросок для управляемого АИ юнита
-	bool IsNeighbour(int x, int y);	//Возвращает истину, если юнит находится в соседнем с указанным тайле.
-	void ShowInfoScreen();		//Вывести окно с информацией о юните
-	void MakeParamHint(int Param);	//Отрисовать хинт о параметре Param
+	void UseStamina(unsigned int Num);	//РўСЂР°С‚РёС‚ РІС‹РЅРѕСЃР»РёРІРѕСЃС‚СЊ СЋРЅРёС‚Р°
+	void ChangeMorale(int Num);			//РР·РјРµРЅСЏРµС‚ Р±РѕРµРІРѕР№ РґСѓС… СЋРЅРёС‚Р°
+	void GoMarch();		//Р’РєР»СЋС‡Р°РµС‚ РјР°СЂС€-Р±СЂРѕСЃРѕРє РґР»СЏ СѓРїСЂР°РІР»СЏРµРјРѕРіРѕ РђР СЋРЅРёС‚Р°
+	bool IsNeighbour(int x, int y);	//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё СЋРЅРёС‚ РЅР°С…РѕРґРёС‚СЃСЏ РІ СЃРѕСЃРµРґРЅРµРј СЃ СѓРєР°Р·Р°РЅРЅС‹Рј С‚Р°Р№Р»Рµ.
+	void ShowInfoScreen();		//Р’С‹РІРµСЃС‚Рё РѕРєРЅРѕ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ СЋРЅРёС‚Рµ
+	void MakeParamHint(int Param);	//РћС‚СЂРёСЃРѕРІР°С‚СЊ С…РёРЅС‚ Рѕ РїР°СЂР°РјРµС‚СЂРµ Param
 
-	//Получение параметров в зависимости от повышений, наград и эффектов
+	//РџРѕР»СѓС‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РїРѕРІС‹С€РµРЅРёР№, РЅР°РіСЂР°Рґ Рё СЌС„С„РµРєС‚РѕРІ
 	int GetLife();
 	int GetAttack();
 	int GetCounterAttack();
@@ -161,7 +161,7 @@ public:
 	int GetRangedDefence();
 	int GetResist();
 	int GetSpeed();	
-	int GetFatigure(); //Возвращает 1 если скорость меньше 1
+	int GetFatigure(); //Р’РѕР·РІСЂР°С‰Р°РµС‚ 1 РµСЃР»Рё СЃРєРѕСЂРѕСЃС‚СЊ РјРµРЅСЊС€Рµ 1
 	int GetRangedAttack();	
 	int GetShootingRange();
 	int GetAmmo();
@@ -174,25 +174,25 @@ public:
 	int GetKarma();
 };
 
-extern	int AA;									//Активный игрок
-extern	int BF_Player[2];						//Игроки
-extern	int Spells[2][2][SPELLBOOK_SIZE];		//Заклинания
-extern BF_Unit Squad[2][MAX_SQUAD+MAX_SUMMONS];	//Отряды
-extern BF_Unit * ActiveUnit;					//Указатель на активный юнит
-extern bool bArchmage;							//Флаг истинный, если герой может вызывать 2 заклинания в ход
-extern int IndexAI;								//Используется для оптимизации хода ИИ
+extern	int AA;									//РђРєС‚РёРІРЅС‹Р№ РёРіСЂРѕРє
+extern	int BF_Player[2];						//РРіСЂРѕРєРё
+extern	int Spells[2][2][SPELLBOOK_SIZE];		//Р—Р°РєР»РёРЅР°РЅРёСЏ
+extern BF_Unit Squad[2][MAX_SQUAD+MAX_SUMMONS];	//РћС‚СЂСЏРґС‹
+extern BF_Unit * ActiveUnit;					//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° Р°РєС‚РёРІРЅС‹Р№ СЋРЅРёС‚
+extern bool bArchmage;							//Р¤Р»Р°Рі РёСЃС‚РёРЅРЅС‹Р№, РµСЃР»Рё РіРµСЂРѕР№ РјРѕР¶РµС‚ РІС‹Р·С‹РІР°С‚СЊ 2 Р·Р°РєР»РёРЅР°РЅРёСЏ РІ С…РѕРґ
+extern int IndexAI;								//РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕРїС‚РёРјРёР·Р°С†РёРё С…РѕРґР° РР
 
 int GetMoveCost(int x, int y);
 int GetStamCost(int x, int y);
 void SimulateMap(int x, int y, int Weight, int Speed, int SpeedLeft, bool Flight);
 void SimulatePath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft, bool Flight);
-int StepMap (int x, int y, int Weight, int Speed, int StamCost, int StamLeft); //Рекурсивная функция для создания карты поиска пути
-int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCost, int StamLeft); //Рекурсивная функция для поиска пути
+int StepMap (int x, int y, int Weight, int Speed, int StamCost, int StamLeft); //Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё
+int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCost, int StamLeft); //Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° РїСѓС‚Рё
 //int StepPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int StamCost, int StamLeft, bool NoTrans);
-int FlyMap (int x, int y, int Weight, int Speed, bool Over); //Рекурсивная функция для создания карты поиска пути для летающих юнитов
-int FlyPath (int x, int y, int Weight, clPath *Path, int x1, int y1); //Поиск пути для летающих юнитов
+int FlyMap (int x, int y, int Weight, int Speed, bool Over); //Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РїРѕРёСЃРєР° РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ
+int FlyPath (int x, int y, int Weight, clPath *Path, int x1, int y1); //РџРѕРёСЃРє РїСѓС‚Рё РґР»СЏ Р»РµС‚Р°СЋС‰РёС… СЋРЅРёС‚РѕРІ
 //int FlyPath (int x, int y, int Weight, clPath *Path, int x1, int y1, bool NoTrans);
-int ShootMap (int x, int y, int Weight, int Range); //Рекурсивная функция для создания карты дальности выстрела
+int ShootMap (int x, int y, int Weight, int Range); //Р РµРєСѓСЂСЃРёРІРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РєР°СЂС‚С‹ РґР°Р»СЊРЅРѕСЃС‚Рё РІС‹СЃС‚СЂРµР»Р°
 
 //int StepAIMap (int x, int y, int Weight, int Speed, int SpeedLeft, int StamCost, int StamLeft);
 //int StepAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft, int StamCost, int StamLeft);
@@ -200,10 +200,10 @@ int ShootMap (int x, int y, int Weight, int Range); //Рекурсивная функция для со
 //int FlyAIPath (int x, int y, int Weight, clPath *Path, int x1, int y1, int Speed, int SpeedLeft);
 
 int GetHit(int Attack, int Defence);
-int GetMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking);	//Вычисление рукопашных повреждений
-int GetRangedHit(BF_Unit * Attacker, BF_Unit * Defender);	//Вычисление дистанционных повреждений
-int CalcMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking);	//Вычисление рукопашных повреждений без рандома
-int CalcRangedHit(BF_Unit * Attacker, BF_Unit * Defender);	//Вычисление дистанционных повреждений без рандома
+int GetMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking);	//Р’С‹С‡РёСЃР»РµРЅРёРµ СЂСѓРєРѕРїР°С€РЅС‹С… РїРѕРІСЂРµР¶РґРµРЅРёР№
+int GetRangedHit(BF_Unit * Attacker, BF_Unit * Defender);	//Р’С‹С‡РёСЃР»РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅС‹С… РїРѕРІСЂРµР¶РґРµРЅРёР№
+int CalcMeleeHit(BF_Unit * Attacker, BF_Unit * Defender, bool bAttacking);	//Р’С‹С‡РёСЃР»РµРЅРёРµ СЂСѓРєРѕРїР°С€РЅС‹С… РїРѕРІСЂРµР¶РґРµРЅРёР№ Р±РµР· СЂР°РЅРґРѕРјР°
+int CalcRangedHit(BF_Unit * Attacker, BF_Unit * Defender);	//Р’С‹С‡РёСЃР»РµРЅРёРµ РґРёСЃС‚Р°РЅС†РёРѕРЅРЅС‹С… РїРѕРІСЂРµР¶РґРµРЅРёР№ Р±РµР· СЂР°РЅРґРѕРјР°
 
 void AI_CalcPower();
 void AI_CalcDangerZone();
@@ -213,7 +213,7 @@ int FindCorpse(int Side, int x, int y);
 BF_Unit * FindNextUnit();
 void CorpseSpell(clSpell *Spell, BF_Unit *Corpse);
 void TileSpell(clSpell *Spell, int x, int y);
-int Loss(int Side); //Проверка при потере юнита (возвращает индекс живого юнита или -1 если юнитов нет)
+int Loss(int Side); //РџСЂРѕРІРµСЂРєР° РїСЂРё РїРѕС‚РµСЂРµ СЋРЅРёС‚Р° (РІРѕР·РІСЂР°С‰Р°РµС‚ РёРЅРґРµРєСЃ Р¶РёРІРѕРіРѕ СЋРЅРёС‚Р° РёР»Рё -1 РµСЃР»Рё СЋРЅРёС‚РѕРІ РЅРµС‚)
 int WarMenu(int AA);
 void EndBattle(int Win, int Site);
 

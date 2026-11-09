@@ -63,7 +63,7 @@ G_Object * GUI_ProvBar::Init(int st_y, int st_Layer, dcProvince *Prov, bool Butt
 void GUI_ProvBar::Show()
 {
 	char Txt[200];
-	//Îáû÷íàÿ èíôà
+	//ÐžÐ±Ñ‹Ñ‡Ð½Ð°Ñ Ð¸Ð½Ñ„Ð°
 	if (Mode==0)
 	{
 	if (bCheckable)
@@ -224,7 +224,7 @@ void GUI_ProvBar::Show()
 	};
 
 
-	//Ñïèñîê ñàéòîâ
+	//Ð¡Ð¿Ð¸ÑÐ¾Ðº ÑÐ°Ð¹Ñ‚Ð¾Ð²
 	if (Mode==1)
 	{
 	blit(bmpStuff[71],Pic,0,0,0,0,bmpStuff[68]->w,bmpStuff[68]->h);

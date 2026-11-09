@@ -6,7 +6,7 @@ int iScouting=0, iBribe=0;
 char stScouting[2000];
 
 //***************************************************
-//*** Вывод окна диалога ****************************
+//*** Р’С‹РІРѕРґ РѕРєРЅР° РґРёР°Р»РѕРіР° ****************************
 //***************************************************
 int clDialog::Show(int A1, int A2, int A3, int A4, BITMAP *Picture, char *sNewText)
 {
@@ -455,7 +455,7 @@ int clDialog::Show(int A1, int A2, int A3, int A4, BITMAP *Picture, char *sNewTe
 };
 
 //***************************************************
-//*** Окно повышения юнита **************************
+//*** РћРєРЅРѕ РїРѕРІС‹С€РµРЅРёСЏ СЋРЅРёС‚Р° **************************
 //***************************************************
 void WindowUnitLvlUp(dcUnit * Unit, int Player)
 {
@@ -573,7 +573,7 @@ void WindowUnitLvlUp(dcUnit * Unit, int Player)
 };
 
 //***************************************************
-//*** Окно награждения юнита ************************
+//*** РћРєРЅРѕ РЅР°РіСЂР°Р¶РґРµРЅРёСЏ СЋРЅРёС‚Р° ************************
 //***************************************************
 void WindowUnitReward(dcUnit * Unit, int Reward)
 {
@@ -657,7 +657,7 @@ void WindowUnitReward(dcUnit * Unit, int Reward)
 
 
 //***************************************************
-//*** Окно повышения героя **************************
+//*** РћРєРЅРѕ РїРѕРІС‹С€РµРЅРёСЏ РіРµСЂРѕСЏ **************************
 //***************************************************
 void WindowHeroLvlUp(dcHero * Hero)
 {	
@@ -911,7 +911,7 @@ void WindowHeroLvlUp(dcHero * Hero)
 
 
 //***************************************************
-//*** Окно информации о юните ***********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЋРЅРёС‚Рµ ***********************
 //***************************************************
 void WindowUnitInfo(dcUnit * Unit, int Morale)
 {
@@ -943,7 +943,7 @@ void WindowUnitInfo(dcUnit * Unit, int Morale)
 	UI_Mask arMedalMask[3];
 	int Medals=0;
 
-	//Награды
+	//РќР°РіСЂР°РґС‹
 	for (int i=0; i<3; i++)
 	{
 		if (Unit->arMedal[i]>0)
@@ -1301,7 +1301,7 @@ void WindowUnitInfo(dcUnit * Unit, int Morale)
 };
 
 //***************************************************
-//*** Окно информации о типе юнита ******************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚РёРїРµ СЋРЅРёС‚Р° ******************
 //***************************************************
 void WindowUnitTypeInfo(int Unit)
 {
@@ -1544,7 +1544,7 @@ void WindowUnitTypeInfo(int Unit)
 };
 
 //***************************************************
-//*** Окно информации о ресурсе *********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРµСЃСѓСЂСЃРµ *********************
 //***************************************************
 void WindowResourceInfo (int Res)
 {
@@ -1632,7 +1632,7 @@ void WindowResourceInfo (int Res)
 
 
 //***************************************************
-//*** Окно информации о заклинании ******************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ Р·Р°РєР»РёРЅР°РЅРёРё ******************
 //***************************************************
 void WindowSpellInfo (int Spell)
 {
@@ -1690,7 +1690,7 @@ void WindowSpellInfo (int Spell)
 };
 
 //***************************************************
-//*** Окно информации об умении героя ***************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СѓРјРµРЅРёРё РіРµСЂРѕСЏ ***************
 //***************************************************
 void WindowSkillInfo (int Skill, int Level)
 {
@@ -1746,7 +1746,7 @@ void WindowSkillInfo (int Skill, int Level)
 };
 
 //***************************************************
-//*** Окно информации о свойстве юнита **************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃРІРѕР№СЃС‚РІРµ СЋРЅРёС‚Р° **************
 //***************************************************
 void WindowAbilityInfo (int Ability, int Power)
 {
@@ -1810,7 +1810,7 @@ void WindowAbilityInfo (int Ability, int Power)
 };
 
 //***************************************************
-//*** Окно информации о награде юнита ***************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РЅР°РіСЂР°РґРµ СЋРЅРёС‚Р° ***************
 //***************************************************
 void WindowMedalInfo (int Medal)
 {
@@ -1863,7 +1863,7 @@ void WindowMedalInfo (int Medal)
 };
 
 //***************************************************
-//*** Окно информации о страже **********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЃС‚СЂР°Р¶Рµ **********************
 //***************************************************
 void WindowDefenderInfo (int Defender, int GoldPayment, int GemPayment)
 {
@@ -1985,7 +1985,7 @@ void WindowDefenderInfo (int Defender, int GoldPayment, int GemPayment)
 };
 
 //***************************************************
-//*** Окно информации о внешней постройке ***********
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІРЅРµС€РЅРµР№ РїРѕСЃС‚СЂРѕР№РєРµ ***********
 //***************************************************
 void WindowOuterBldInfo (int Bld)
 {
@@ -2086,7 +2086,7 @@ void WindowOuterBldInfo (int Bld)
 };
 
 //***************************************************
-//*** Окно информации о ритуале *********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂРёС‚СѓР°Р»Рµ *********************
 //***************************************************
 void WindowRitualInfo (int Rit)
 {
@@ -2197,7 +2197,7 @@ void WindowRitualInfo (int Rit)
 };
 
 //***************************************************
-//*** Универсальное окно с текстом ******************
+//*** РЈРЅРёРІРµСЂСЃР°Р»СЊРЅРѕРµ РѕРєРЅРѕ СЃ С‚РµРєСЃС‚РѕРј ******************
 //***************************************************
 void WindowInfo (char * sName, char * sText, BITMAP *Pic)
 {
@@ -2250,7 +2250,7 @@ void WindowInfo (char * sName, char * sText, BITMAP *Pic)
 };
 
 //***************************************************
-//*** Окно информации о расе ************************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЂР°СЃРµ ************************
 //***************************************************
 void WindowRaceInfo (int Race)
 {
@@ -2303,7 +2303,7 @@ void WindowRaceInfo (int Race)
 };
 
 //***************************************************
-//*** Окно информации об эффекте ********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СЌС„С„РµРєС‚Рµ ********************
 //***************************************************
 void WindowEffectInfo (clUnitUpgrade *Ability, clSpell *Spell, int Time, int Power)
 {
@@ -2396,7 +2396,7 @@ void WindowEffectInfo (clUnitUpgrade *Ability, clSpell *Spell, int Time, int Pow
 
 
 //***************************************************
-//*** Окно информации о предмете ********************
+//*** РћРєРЅРѕ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїСЂРµРґРјРµС‚Рµ ********************
 //***************************************************
 void WindowItemInfo (int Item, int Dur)
 {
@@ -2751,7 +2751,7 @@ void WindowItemInfo (int Item, int Dur)
 };
 int MemoryPrice=0;
 
-//Создание всплывающей подсказки по предметам
+//РЎРѕР·РґР°РЅРёРµ РІСЃРїР»С‹РІР°СЋС‰РµР№ РїРѕРґСЃРєР°Р·РєРё РїРѕ РїСЂРµРґРјРµС‚Р°Рј
 void MakeItemHint (int Item, int Dur, dcHero *Hero, int PriceText, int Gold, int Gem)
 {
 	if (((HintType!=1)||(HintMember!=Item)||(HintDur!=Dur)||(PriceText!=MemoryPrice))&&(Item>0))
@@ -3039,7 +3039,7 @@ void MakeInnBldHint(int Build, int Player)
 	};
 };
 
-//Создание всплывающей подсказки по параметрам и свойствам юнитов
+//РЎРѕР·РґР°РЅРёРµ РІСЃРїР»С‹РІР°СЋС‰РµР№ РїРѕРґСЃРєР°Р·РєРё РїРѕ РїР°СЂР°РјРµС‚СЂР°Рј Рё СЃРІРѕР№СЃС‚РІР°Рј СЋРЅРёС‚РѕРІ
 void MakeAbilityHint (int Ability)
 {
 	if (((HintType!=2)||(HintMember!=Ability))&&(Ability>0))
@@ -3066,7 +3066,7 @@ void MakeAbilityHint (int Ability)
 	};
 };
 
-//Создание всплывающей подсказки с указанной строкой
+//РЎРѕР·РґР°РЅРёРµ РІСЃРїР»С‹РІР°СЋС‰РµР№ РїРѕРґСЃРєР°Р·РєРё СЃ СѓРєР°Р·Р°РЅРЅРѕР№ СЃС‚СЂРѕРєРѕР№
 void MakeStringHint (int Phrase)
 {
 	if (((HintType!=3)||(HintMember!=Phrase))&&(Phrase>0))
@@ -3181,7 +3181,7 @@ void MakeSiteHint(dcProvince *PR, int Site)
 };
 
 //***************************************************
-//*** Окно нахождения сокровищ **********************
+//*** РћРєРЅРѕ РЅР°С…РѕР¶РґРµРЅРёСЏ СЃРѕРєСЂРѕРІРёС‰ **********************
 //***************************************************
 
 void WindowTreasure (int Level, int Player, dcHero * Hero, int Site, int Index)
@@ -3870,7 +3870,7 @@ bool CampAllowBuild(int Build, int Player)
 	};
 };
 
-//Возвращает ложь, если постройка или её предшественник требует союз с расой, с которой он не заключен
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ Р»РѕР¶СЊ, РµСЃР»Рё РїРѕСЃС‚СЂРѕР№РєР° РёР»Рё РµС‘ РїСЂРµРґС€РµСЃС‚РІРµРЅРЅРёРє С‚СЂРµР±СѓРµС‚ СЃРѕСЋР· СЃ СЂР°СЃРѕР№, СЃ РєРѕС‚РѕСЂРѕР№ РѕРЅ РЅРµ Р·Р°РєР»СЋС‡РµРЅ
 bool NoAllyFlag(int Build, int Player)
 {
 	if (!CampAllowBuild(Build, Player))
@@ -3980,7 +3980,7 @@ int WindowInnBldInfo(int Build, int Player)
 	UI_Button1 buttPlan;
 	WObj=buttPlan.Init(x+159,y+Height-49,1,3,bmpButton[243],bmpButton[244],bmpButton[245],bmpButton[246],WObj);
 	if ((!arPlayer[Player].arBld[Build])&&(!arPlayer[Player].CanBuild(Build))&&(!IsRestricted(Build,Player)))
-//Добавить проверку необязательных построек
+//Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹С… РїРѕСЃС‚СЂРѕРµРє
 	{buttPlan.Activate(1);}
 	else
 	{buttPlan.Activate(0);};
@@ -4039,7 +4039,7 @@ int WindowInnBldInfo(int Build, int Player)
 		}
 		else
 		{
-			//Добавить проверку необязательных построек
+			//Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹С… РїРѕСЃС‚СЂРѕРµРє
 			if (IsRestricted(Build,Player))
 			{
 				textprintf_centre_ex(bmpWindow,Font1,bmpWindow->w/2,120,makecol(250,0,0),-1,(pFirstPhrase+248)->str);
@@ -4058,7 +4058,7 @@ int WindowInnBldInfo(int Build, int Player)
 	txtBox.Activate((pFirstInnerBld+Build)->sText);
 	int Shift=342;
 
-//Маска юнита
+//РњР°СЃРєР° СЋРЅРёС‚Р°
 	UI_Mask mskUnit;	
 	if (iUnit>0)
 	{
@@ -4073,7 +4073,7 @@ int WindowInnBldInfo(int Build, int Player)
 		Shift+=90;
 	};
 
-//Маски объектов
+//РњР°СЃРєРё РѕР±СЉРµРєС‚РѕРІ
 	UI_Mask mskSpell[SPELL];
 	int arSpell[SPELL][2];
 	int SpellShift;
@@ -4154,7 +4154,7 @@ int WindowInnBldInfo(int Build, int Player)
 		Shift+=70;
 	};
 
-//Маски предшественников
+//РњР°СЃРєРё РїСЂРµРґС€РµСЃС‚РІРµРЅРЅРёРєРѕРІ
 	UI_Mask mskParent[MAX_BUILDING_NEED];
 	int Parent=0;
 	if (BLD->arBuildings[0]>0)
@@ -4183,7 +4183,7 @@ int WindowInnBldInfo(int Build, int Player)
 			}
 			else
 			{
-				//Добавить требование всех построек из группы
+				//Р”РѕР±Р°РІРёС‚СЊ С‚СЂРµР±РѕРІР°РЅРёРµ РІСЃРµС… РїРѕСЃС‚СЂРѕРµРє РёР· РіСЂСѓРїРїС‹
 				draw_sprite(bmpWindow,bmpGUI_GroupIcon,ParentShift+i*60+5,Shift+5);
 				if (!GroupIsFull(Player,BLD->arBuildings[i]-1000))
 				{draw_trans_sprite(bmpWindow,bmpDD,ParentShift+i*60+5,Shift+5);};
@@ -4321,7 +4321,7 @@ int WindowInnBldInfo(int Build, int Player)
 				{Result=BLD->arBuildings[i];}
 				else
 				{
-					//Добавить описание группы
+					//Р”РѕР±Р°РІРёС‚СЊ РѕРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹
 				};
 			}
 			else
@@ -4337,7 +4337,7 @@ int WindowInnBldInfo(int Build, int Player)
 					{
 						MakeGroupHint(BLD->arBuildings[i]-1000, Player);
 						bHint=true;
-						//Добавить описание группы
+						//Р”РѕР±Р°РІРёС‚СЊ РѕРїРёСЃР°РЅРёРµ РіСЂСѓРїРїС‹
 					};
 				};
 			};
@@ -4869,7 +4869,7 @@ void DrawTownFlag(int Col1, int Col2, int Sign, int x, int y, BITMAP *Target)
 
 
 //***************************************************
-//*** Таблица рекордов ******************************
+//*** РўР°Р±Р»РёС†Р° СЂРµРєРѕСЂРґРѕРІ ******************************
 //***************************************************
 void WindowHighScore()
 {
@@ -4935,7 +4935,7 @@ void WindowHighScore()
 };
 
 //***************************************************
-//*** Таблица рекордов в кампании *******************
+//*** РўР°Р±Р»РёС†Р° СЂРµРєРѕСЂРґРѕРІ РІ РєР°РјРїР°РЅРёРё *******************
 //***************************************************
 void WindowCampHighScore()
 {
@@ -5277,7 +5277,7 @@ void WindowHerb (clHumanProfile *Hum)
 };
 
 //***************************************************
-//*** Окно победы в кампании ************************
+//*** РћРєРЅРѕ РїРѕР±РµРґС‹ РІ РєР°РјРїР°РЅРёРё ************************
 //***************************************************
 void WindowCampaignVictory()
 {
@@ -5285,7 +5285,7 @@ void WindowCampaignVictory()
 	if ((Campaign.iActiveShard<0)&&(Campaign.bDefender))
 	{
 		ScreenEndGame(1,true,true,false);
-		//Передача данных в кампанию
+		//РџРµСЂРµРґР°С‡Р° РґР°РЅРЅС‹С… РІ РєР°РјРїР°РЅРёСЋ
 		Campaign.arCampPlayer[0].iMapScore+=arPlayer[1].arRes[0];
 	//	Campaign.arCampPlayer[0].iScore+=arPlayer[1].arRes[0];
 		Campaign.arCampPlayer[0].iKarma+=(arPlayer[1].iKarma-Campaign.arCampPlayer[0].iKarma)/10;
@@ -5468,7 +5468,7 @@ void WindowCampaignVictory()
 		bHint=false;
 	};
 
-//Передача данных в кампанию
+//РџРµСЂРµРґР°С‡Р° РґР°РЅРЅС‹С… РІ РєР°РјРїР°РЅРёСЋ
 	Campaign.arCampPlayer[0].iMapScore+=arPlayer[1].arRes[0];
 //	Campaign.arCampPlayer[0].iScore+=arPlayer[1].arRes[0];
 	Campaign.arCampPlayer[0].iKarma+=(arPlayer[1].iKarma-Campaign.arCampPlayer[0].iKarma)/10;
@@ -5514,7 +5514,7 @@ void ChangeMusicVolume()
 
 
 //***************************************************
-//*** Окно редактирования профиля игрока ************
+//*** РћРєРЅРѕ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РїСЂРѕС„РёР»СЏ РёРіСЂРѕРєР° ************
 //***************************************************
 bool WindowProfile (int Index, bool bList)
 {
@@ -5884,7 +5884,7 @@ bool WindowProfile (int Index, bool bList)
 	{
 		iActivePlayer=arHumans[0].iFileIndex;
 		PACKFILE *WorkFile;
-		WorkFile=pack_fopen("save\\game.con","w");
+		WorkFile=pack_fopen("save/game.con","w");
 		pack_fwrite(&iActivePlayer,sizeof iActivePlayer,WorkFile);
 		pack_fclose(WorkFile);
 	};*/
@@ -5907,7 +5907,7 @@ bool WindowProfile (int Index, bool bList)
 
 
 //***************************************************
-//*** Окно выбора профиля игрока ********************
+//*** РћРєРЅРѕ РІС‹Р±РѕСЂР° РїСЂРѕС„РёР»СЏ РёРіСЂРѕРєР° ********************
 //***************************************************
 
 void WindowChoosePlayer (int Index)
@@ -5946,7 +5946,7 @@ void WindowChoosePlayer (int Index)
 	clHumanProfile Prof;
 	int Max=0;
 	
-	if (al_findfirst("Save\\player*.prf",&ProFile,FA_ALL)==0)
+	if (al_findfirst("save/player*.prf",&ProFile,FA_ALL)==0)
 	{		
 		do {Max++;} while (al_findnext(&ProFile)==0);		
 		al_findclose(&ProFile);
@@ -5982,13 +5982,13 @@ void WindowChoosePlayer (int Index)
 			blit(bmpGUI_ChoosePlayer,bmpWindow,20,37+59,20,37+59,330,59*6);
 			int Count=0;
 			MaxMask=1;
-			if (al_findfirst("Save\\player*.prf",&ProFile,FA_ALL)==0)
+			if (al_findfirst("save/player*.prf",&ProFile,FA_ALL)==0)
 			{		
 				do 
 				{
 					if ((Count>=Shift*6)&&(Count<Shift*6+6))
 					{
-						sprintf(FName,"Save\\%s",ProFile.name);
+						sprintf(FName,"save/%s",ProFile.name);
 						WorkFile=pack_fopen(FName,"rp");
 						pack_fread(&Prof,sizeof Prof,WorkFile);
 						pack_fclose(WorkFile);
@@ -6059,7 +6059,7 @@ void WindowChoosePlayer (int Index)
 	{
 		int CN=0;
 		Result--;
-		if (al_findfirst("Save\\player*.prf",&ProFile,FA_ALL)==0)
+		if (al_findfirst("save/player*.prf",&ProFile,FA_ALL)==0)
 		{
 			while (CN<Result+Shift*6)
 			{
@@ -6067,7 +6067,7 @@ void WindowChoosePlayer (int Index)
 				al_findnext(&ProFile);
 			};
 		};
-		sprintf(FName,"Save\\%s",ProFile.name);
+		sprintf(FName,"save/%s",ProFile.name);
 		WorkFile=pack_fopen(FName,"rp");
 		pack_fread(&arHumans[Index],sizeof arHumans[Index],WorkFile);
 		pack_fclose(WorkFile);
@@ -6105,7 +6105,7 @@ void ProfileOperator (int Index)
 	};
 	iActivePlayer=arHumans[0].iFileIndex;
 	PACKFILE *WorkFile;
-	WorkFile=pack_fopen("save\\game.con","w");
+	WorkFile=pack_fopen("save/game.con","w");
 	pack_fwrite(&iActivePlayer,sizeof iActivePlayer,WorkFile);
 	pack_fclose(WorkFile);
 	iSoundVolume=arHumans[0].iSndVolume;
@@ -6115,7 +6115,7 @@ void ProfileOperator (int Index)
 };
 
 //***************************************************
-//*** Окно Алхимии **********************************
+//*** РћРєРЅРѕ РђР»С…РёРјРёРё **********************************
 //***************************************************
 void WindowAlchemy (int Player)
 {
@@ -6218,7 +6218,7 @@ void WindowAlchemy (int Player)
 
 
 //***************************************************
-//*** Внутриигровое меню ****************************
+//*** Р’РЅСѓС‚СЂРёРёРіСЂРѕРІРѕРµ РјРµРЅСЋ ****************************
 //***************************************************
 bool WindowMenu (int Player)
 {
@@ -6271,7 +6271,7 @@ bool WindowMenu (int Player)
 		if ((bMenu[2])&&(CurGame.iGameType==2))
 		{
 			char sFile[150];
-			sprintf(sFile,"save\\game%d.bka",arHumans[0].iFileIndex);
+			sprintf(sFile,"save/game%d.bka",arHumans[0].iFileIndex);
 			al_ffblk Fil;
 			if (al_findfirst(sFile,&Fil,FA_ALL)==0)
 			{bAstralShift=true;};
@@ -6430,7 +6430,7 @@ bool WindowMenu (int Player)
 };
 
 //***************************************************
-//*** Окно редактирования свойств карты *************
+//*** РћРєРЅРѕ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ СЃРІРѕР№СЃС‚РІ РєР°СЂС‚С‹ *************
 //***************************************************
 void WindowMapSettings(clMap *Map, int *BRD)
 {	
@@ -6683,7 +6683,7 @@ void WindowMapSettings(clMap *Map, int *BRD)
 
 
 //***************************************************
-//*** Окно настроек *********************************
+//*** РћРєРЅРѕ РЅР°СЃС‚СЂРѕРµРє *********************************
 //***************************************************
 bool WindowSettings(int ipPlayer)
 {

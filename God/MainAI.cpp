@@ -1,21 +1,21 @@
 #include "Mapper.h"
 
 bool bCanSpend, 
-	bExpand; //Истина, если нет нейтралов для атакаи
-int GoldLimit, GemLimit;		//НЗ для найма войска
-//Наборы целей для героев АИ
-int EnemyTarget[MAX_HERO][MAX_HERO][4],		//Вражеская провинция
-	NeutralTarget[MAX_HERO][MAX_HERO][4],	//Нейтральная провинция
-	SiteTarget[MAX_HERO][MAX_HERO][4],		//Сайт
-	RuinSiegeTarget[MAX_HERO][MAX_HERO][4],	//Снятие осады
-	SiegeTarget[MAX_HERO][MAX_HERO][4],		//Помощь в осаде
-	TargetPower[MAX_HERO],					//Cила выбранной цели
-	ExploreTarget[MAX_HERO];				//Провинция для исследования
+	bExpand; //РСЃС‚РёРЅР°, РµСЃР»Рё РЅРµС‚ РЅРµР№С‚СЂР°Р»РѕРІ РґР»СЏ Р°С‚Р°РєР°Рё
+int GoldLimit, GemLimit;		//РќР— РґР»СЏ РЅР°Р№РјР° РІРѕР№СЃРєР°
+//РќР°Р±РѕСЂС‹ С†РµР»РµР№ РґР»СЏ РіРµСЂРѕРµРІ РђР
+int EnemyTarget[MAX_HERO][MAX_HERO][4],		//Р’СЂР°Р¶РµСЃРєР°СЏ РїСЂРѕРІРёРЅС†РёСЏ
+	NeutralTarget[MAX_HERO][MAX_HERO][4],	//РќРµР№С‚СЂР°Р»СЊРЅР°СЏ РїСЂРѕРІРёРЅС†РёСЏ
+	SiteTarget[MAX_HERO][MAX_HERO][4],		//РЎР°Р№С‚
+	RuinSiegeTarget[MAX_HERO][MAX_HERO][4],	//РЎРЅСЏС‚РёРµ РѕСЃР°РґС‹
+	SiegeTarget[MAX_HERO][MAX_HERO][4],		//РџРѕРјРѕС‰СЊ РІ РѕСЃР°РґРµ
+	TargetPower[MAX_HERO],					//CРёР»Р° РІС‹Р±СЂР°РЅРЅРѕР№ С†РµР»Рё
+	ExploreTarget[MAX_HERO];				//РџСЂРѕРІРёРЅС†РёСЏ РґР»СЏ РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ
 	
-int HNum, 				//Номер текущего героя 
-	MaxTargets;			//Максимум целей в списке для одного героя
+int HNum, 				//РќРѕРјРµСЂ С‚РµРєСѓС‰РµРіРѕ РіРµСЂРѕСЏ 
+	MaxTargets;			//РњР°РєСЃРёРјСѓРј С†РµР»РµР№ РІ СЃРїРёСЃРєРµ РґР»СЏ РѕРґРЅРѕРіРѕ РіРµСЂРѕСЏ
 
-int GetUnitSlotLevel(int Slot) //Возвращает ранг указанного слота
+int GetUnitSlotLevel(int Slot) //Р’РѕР·РІСЂР°С‰Р°РµС‚ СЂР°РЅРі СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃР»РѕС‚Р°
 {
 	if (Slot<7)
 	{return 1;};
@@ -26,7 +26,7 @@ int GetUnitSlotLevel(int Slot) //Возвращает ранг указанного слота
 	return 4;
 };
 
-//Оценка силы юнита
+//РћС†РµРЅРєР° СЃРёР»С‹ СЋРЅРёС‚Р°
 int GetUnitPower(int Unit)
 {
 	clUnitType *UN=(pFirstUnitType+Unit);
@@ -67,7 +67,7 @@ int GetUnitPower(int Unit)
 	return Result;
 };
 
-//Оценка предмета героем
+//РћС†РµРЅРєР° РїСЂРµРґРјРµС‚Р° РіРµСЂРѕРµРј
 int GetItemTaste(int Item, dcHero *Hero)
 {
 	if (!Hero->CanUse(Item))
@@ -98,7 +98,7 @@ int GetItemTaste(int Item, dcHero *Hero)
 	switch (Hero->ipClass1)
 	{
 	case 1:
-		//Воин
+		//Р’РѕРёРЅ
 		switch (IT->arEffect[i][0])
 		{
 		case 2:
@@ -137,7 +137,7 @@ int GetItemTaste(int Item, dcHero *Hero)
 		};
 		break;
 	case 2:
-		//Разведчик
+		//Р Р°Р·РІРµРґС‡РёРє
 		switch (IT->arEffect[i][0])
 		{
 		case 7:
@@ -165,12 +165,12 @@ int GetItemTaste(int Item, dcHero *Hero)
 		{Result*=2;};
 		break;
 	case 3:
-		//Командир
+		//РљРѕРјР°РЅРґРёСЂ
 		if ((IT->arEffect[i][0]>0)&&(IT->arEffect[i][2]==1))
 		{Result+=IT->arEffect[i][1]*2;};
 		break;
 	case 4:
-		//Волшебник
+		//Р’РѕР»С€РµР±РЅРёРє
 		switch (IT->arEffect[i][0])
 		{
 		case 11:
@@ -192,7 +192,7 @@ int GetItemTaste(int Item, dcHero *Hero)
 		break;
 	};
 	};	
-	//Сетовый шмот
+	//РЎРµС‚РѕРІС‹Р№ С€РјРѕС‚
 	for (int Set=1; Set<=iMaxItemSet; Set++)
 	{
 		clItemSet *ST=(pFirstItemSet+Set);
@@ -215,7 +215,7 @@ int GetItemTaste(int Item, dcHero *Hero)
 	return Result;
 };
 
-//Возвращает пользу заклинания для конкретного героя или для общества, если герой не указан
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»СЊР·Сѓ Р·Р°РєР»РёРЅР°РЅРёСЏ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РіРµСЂРѕСЏ РёР»Рё РґР»СЏ РѕР±С‰РµСЃС‚РІР°, РµСЃР»Рё РіРµСЂРѕР№ РЅРµ СѓРєР°Р·Р°РЅ
 int GetSpellTaste(int Spell, dcHero *Hero)
 {
 	int Taste=3;
@@ -319,7 +319,7 @@ int GetDefenderPower(int Index, dcHero * Def)
 	{return (pFirstDefender+Index)->iPower;};
 };
 
-//Истинно, если данный ритуал можно использовать
+//РСЃС‚РёРЅРЅРѕ, РµСЃР»Рё РґР°РЅРЅС‹Р№ СЂРёС‚СѓР°Р» РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 bool IsRitualAllowed(int Player, int Ritual)
 {
 	if ((*(arPlayer[Player].pRitual+Ritual)!=0)&&(*(arPlayer[Player].pRitualCD+Ritual)==0)&&(arPlayer[Player].iCanCast>0)&&
@@ -330,7 +330,7 @@ bool IsRitualAllowed(int Player, int Ritual)
 	{return false;};
 };
 
-//Истинно, если данный ритуал можно использовать, не нарушив НЗ
+//РСЃС‚РёРЅРЅРѕ, РµСЃР»Рё РґР°РЅРЅС‹Р№ СЂРёС‚СѓР°Р» РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ, РЅРµ РЅР°СЂСѓС€РёРІ РќР—
 bool IsRitualCheap(int Player, int Ritual)
 {
 	if ((IsRitualAllowed(Player,Ritual))&&
@@ -348,7 +348,7 @@ bool IsRitualCheap(int Player, int Ritual)
 	{return false;};
 };
 
-//Выбирает и использует ритуал для лечения отрядов героев
+//Р’С‹Р±РёСЂР°РµС‚ Рё РёСЃРїРѕР»СЊР·СѓРµС‚ СЂРёС‚СѓР°Р» РґР»СЏ Р»РµС‡РµРЅРёСЏ РѕС‚СЂСЏРґРѕРІ РіРµСЂРѕРµРІ
 void RitualHealUnits(int Player)
 {
 	int Hero1=-1, Hero2=-1, Power1=0, Power2=0;
@@ -398,7 +398,7 @@ bool TryRitual(int Ritual, int Province, int Player, bool bNeed)
 	return false;
 };
 
-//Пытается провести разрушительный ритуал в указанной провинции, есл bNeed истинно - проводит не экономные ритуалы
+//РџС‹С‚Р°РµС‚СЃСЏ РїСЂРѕРІРµСЃС‚Рё СЂР°Р·СЂСѓС€РёС‚РµР»СЊРЅС‹Р№ СЂРёС‚СѓР°Р» РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё, РµСЃР» bNeed РёСЃС‚РёРЅРЅРѕ - РїСЂРѕРІРѕРґРёС‚ РЅРµ СЌРєРѕРЅРѕРјРЅС‹Рµ СЂРёС‚СѓР°Р»С‹
 bool DestructiveRitual(int Province, int Player, bool bNeed)
 {
 	if (bNeed)
@@ -443,7 +443,7 @@ void KillWeak(dcHero *Hero)
 	};
 };
 
-//****Нанимает и воскрешает героев. Возвращает ложь, если не хватает денег для найма первого героя или воскрешения
+//****РќР°РЅРёРјР°РµС‚ Рё РІРѕСЃРєСЂРµС€Р°РµС‚ РіРµСЂРѕРµРІ. Р’РѕР·РІСЂР°С‰Р°РµС‚ Р»РѕР¶СЊ, РµСЃР»Рё РЅРµ С…РІР°С‚Р°РµС‚ РґРµРЅРµРі РґР»СЏ РЅР°Р№РјР° РїРµСЂРІРѕРіРѕ РіРµСЂРѕСЏ РёР»Рё РІРѕСЃРєСЂРµС€РµРЅРёСЏ
 bool AI_RecruitHero(int Player)
 {
 	if ((pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex()>=0)
@@ -465,7 +465,7 @@ bool AI_RecruitHero(int Player)
 	};
 	if (bFirstHero)
 	{
-		//Выбор первого героя
+		//Р’С‹Р±РѕСЂ РїРµСЂРІРѕРіРѕ РіРµСЂРѕСЏ
 		if ((arPlayer[Player].Gold>=arPlayer[Player].GetHeroGoldPrice(1))&&(arPlayer[Player].Gem>=arPlayer[Player].GetHeroGemPrice(1)))
 		{
 			bHire=true;
@@ -496,7 +496,7 @@ bool AI_RecruitHero(int Player)
 	else
 	{
 		bool bNeedRess=false;
-		//Воскрешение героев (добавить захоронение первого неопытного героя)
+		//Р’РѕСЃРєСЂРµС€РµРЅРёРµ РіРµСЂРѕРµРІ (РґРѕР±Р°РІРёС‚СЊ Р·Р°С…РѕСЂРѕРЅРµРЅРёРµ РїРµСЂРІРѕРіРѕ РЅРµРѕРїС‹С‚РЅРѕРіРѕ РіРµСЂРѕСЏ)
 		for (int i=0; i<MAX_HERO; i++)
 		{			
 			if ((arPlayer[Player].arHero[i])&&(arPlayer[Player].arHero[i]->iDead==0))
@@ -513,7 +513,7 @@ bool AI_RecruitHero(int Player)
 				}
 				else
 				{					
-					//Воскрешение героя при недостатке средств					
+					//Р’РѕСЃРєСЂРµС€РµРЅРёРµ РіРµСЂРѕСЏ РїСЂРё РЅРµРґРѕСЃС‚Р°С‚РєРµ СЃСЂРµРґСЃС‚РІ					
 					bool WillRess=true;
 					for (int j=0; j<MAX_HERO; j++)
 					{							
@@ -544,7 +544,7 @@ bool AI_RecruitHero(int Player)
 		if (bNeedRess)
 		{return false;};
 
-		//Выбор нового героя
+		//Р’С‹Р±РѕСЂ РЅРѕРІРѕРіРѕ РіРµСЂРѕСЏ
 		if (CurGame.iCurrentTurn>10)
 		{
 		for (int i=0; i<4; i++)
@@ -577,7 +577,7 @@ bool AI_RecruitHero(int Player)
 	{
 		int NewClass=Roll(false);
 		char sLog[300];
-		sprintf(sLog,"%s нанял героя, золото: %d, кристаллы: %d",arPlayer[Player].GetName(),arPlayer[Player].Gold,arPlayer[Player].Gem);
+		sprintf(sLog,"%s РЅР°РЅСЏР» РіРµСЂРѕСЏ, Р·РѕР»РѕС‚Рѕ: %d, РєСЂРёСЃС‚Р°Р»Р»С‹: %d",arPlayer[Player].GetName(),arPlayer[Player].Gold,arPlayer[Player].Gem);
 		FileLog(sLog);
 		arPlayer[Player].Gold-=arPlayer[Player].GetHeroGoldPrice(NewClass);
 		arPlayer[Player].Gem-=arPlayer[Player].GetHeroGemPrice(NewClass);
@@ -586,7 +586,7 @@ bool AI_RecruitHero(int Player)
 	return true;
 };
 
-//Возвращает истину, если группа зданий, в которой состоит потройка, полностью отстроена
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РіСЂСѓРїРїР° Р·РґР°РЅРёР№, РІ РєРѕС‚РѕСЂРѕР№ СЃРѕСЃС‚РѕРёС‚ РїРѕС‚СЂРѕР№РєР°, РїРѕР»РЅРѕСЃС‚СЊСЋ РѕС‚СЃС‚СЂРѕРµРЅР°
 bool BldFullGroup(int Player, int Building)
 {
 	if ((pFirstInnerBld+Building)->iGroup>0)
@@ -616,7 +616,7 @@ bool CampaignAllowBuild(int Player, int Build)
 	{return true;};
 };
 
-//Раздача приоритетов указанному зданию и его предшественникам
+//Р Р°Р·РґР°С‡Р° РїСЂРёРѕСЂРёС‚РµС‚РѕРІ СѓРєР°Р·Р°РЅРЅРѕРјСѓ Р·РґР°РЅРёСЋ Рё РµРіРѕ РїСЂРµРґС€РµСЃС‚РІРµРЅРЅРёРєР°Рј
 void MakeBldTaste(int Player, int Building, int Taste, long int *Arr)
 {
 	if (!CampaignAllowBuild(Player, Building))
@@ -632,7 +632,7 @@ void MakeBldTaste(int Player, int Building, int Taste, long int *Arr)
 		for (int j=0; j<MAX_BUILDING_NEED; j++)
 		{
 			if ((pFirstInnerBld+Building)->arBuildings[j]>MAX_BLD)
-			//Отстроенная группа
+			//РћС‚СЃС‚СЂРѕРµРЅРЅР°СЏ РіСЂСѓРїРїР°
 			{
 				int iGroup=0;
 				for (int i=1; i<iMaxInnerBld; i++)
@@ -650,7 +650,7 @@ void MakeBldTaste(int Player, int Building, int Taste, long int *Arr)
 				};
 			}
 			else
-			//Обычные
+			//РћР±С‹С‡РЅС‹Рµ
 			{
 				if (!arPlayer[Player].arBld[(pFirstInnerBld+Building)->arBuildings[j]])
 				{MakeBldTaste(Player,(pFirstInnerBld+Building)->arBuildings[j],Taste,Arr);};
@@ -660,7 +660,7 @@ void MakeBldTaste(int Player, int Building, int Taste, long int *Arr)
 };
 
 
-//****Строительство в замке
+//****РЎС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ РІ Р·Р°РјРєРµ
 void AI_InnerBuild(int Player)
 {
 	/*bool bCC=bDemo;
@@ -731,7 +731,7 @@ void AI_InnerBuild(int Player)
 
 
 
-	//Строим библиотеку в первый ход
+	//РЎС‚СЂРѕРёРј Р±РёР±Р»РёРѕС‚РµРєСѓ РІ РїРµСЂРІС‹Р№ С…РѕРґ
 	if (CurGame.iCurrentTurn<2)
 	{
 		if (arPlayer[Player].arHero[0])
@@ -760,8 +760,8 @@ void AI_InnerBuild(int Player)
 		*(pBld+i)=1;
 	};	
 	int Found, Built;
-	//Оценка построек с юнитами
-//	WriteLog("Оценка построек с юнитами              ");
+	//РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ СЋРЅРёС‚Р°РјРё
+//	WriteLog("РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ СЋРЅРёС‚Р°РјРё              ");
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		if (arPlayer[Player].arHero[Hero])
@@ -822,8 +822,8 @@ void AI_InnerBuild(int Player)
 			};
 		};
 	};
-	//Оценка построек с заклинаниями	
-//	WriteLog("Оценка построек с заклинаниями              ");
+	//РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё	
+//	WriteLog("РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё              ");
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		if (arPlayer[Player].arHero[Hero])
@@ -874,8 +874,8 @@ void AI_InnerBuild(int Player)
 			};
 		};
 	};
-	//Оценка построек с предметами	
-//	WriteLog("Оценка построек с предметами              ");
+	//РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ РїСЂРµРґРјРµС‚Р°РјРё	
+//	WriteLog("РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ РїСЂРµРґРјРµС‚Р°РјРё              ");
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		if (arPlayer[Player].arHero[Hero])
@@ -927,8 +927,8 @@ void AI_InnerBuild(int Player)
 			};
 		};
 	};
-	//Оценка построек со стражами
-//	WriteLog("Оценка построек со стражами              ");
+	//РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃРѕ СЃС‚СЂР°Р¶Р°РјРё
+//	WriteLog("РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃРѕ СЃС‚СЂР°Р¶Р°РјРё              ");
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
 		for (int j=0; j<MAX_BUILDING_ABILITY; j++)
@@ -989,7 +989,7 @@ void AI_InnerBuild(int Player)
 			};
 		};
 	};
-	//	Оценка построек союзников
+	//	РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃРѕСЋР·РЅРёРєРѕРІ
 	if (arPlayer[Player].iUnion>0)
 	{		
 		for (int i=1; i<=iMaxInnerBld; i++)
@@ -1006,8 +1006,8 @@ void AI_InnerBuild(int Player)
 			};
 		};
 	};
-	//Оценка построек с настроением
-//	WriteLog("Оценка построек с настроением              ");
+	//РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ РЅР°СЃС‚СЂРѕРµРЅРёРµРј
+//	WriteLog("РћС†РµРЅРєР° РїРѕСЃС‚СЂРѕРµРє СЃ РЅР°СЃС‚СЂРѕРµРЅРёРµРј              ");
 	if ((pFirstProvince+arPlayer[Player].ipProvince)->GetMood()<0)
 	{
 		int Taste=abs((pFirstProvince+arPlayer[Player].ipProvince)->GetMood())*100;
@@ -1045,7 +1045,7 @@ void AI_InnerBuild(int Player)
 //	textprintf(screen,Font1,800,700,COLOR_2,arPlayer[Player].GetName());
 //	textprintf(screen1,Font1,800,700,COLOR_2,arPlayer[Player].GetName());
 
-	//Учёт состояния провинций
+	//РЈС‡С‘С‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїСЂРѕРІРёРЅС†РёР№
 	int Coast=0; int Mood=0;
 	for (int i=1; i<=MapSize; i++)
 	{
@@ -1072,20 +1072,20 @@ void AI_InnerBuild(int Player)
 	
 	int Count=0;
 	ClearRoll();
-//	WriteLog("Влияние кармы              ");
+//	WriteLog("Р’Р»РёСЏРЅРёРµ РєР°СЂРјС‹              ");
 	int NoTaste=0, YesTaste=0, Wanna=0;
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
 		if ((*(pBld+i)>0)&&(arPlayer[Player].CanBuild(i))&&(CampaignAllowBuild(Player,i)))
 		{
 			
-			//Учёт свойств постройки
+			//РЈС‡С‘С‚ СЃРІРѕР№СЃС‚РІ РїРѕСЃС‚СЂРѕР№РєРё
 				for (int j=0; j<MAX_BUILDING_ABILITY; j++)
 				{
 					switch ((pFirstInnerBld+i)->arAbility[j][0])
 					{
 					case 5:
-					//Доход
+					//Р”РѕС…РѕРґ
 						if ((pFirstInnerBld+i)->arAbility[j][1]>0)
 						{
 							int Mult=1;
@@ -1110,24 +1110,24 @@ void AI_InnerBuild(int Player)
 						};
 						break;
 					case 9:
-					//Доход с ресурса
+					//Р”РѕС…РѕРґ СЃ СЂРµСЃСѓСЂСЃР°
 						*(pBld+i)+=(pFirstInnerBld+i)->arAbility[j][2]*arPlayer[Player].GetResource((pFirstInnerBld+i)->arAbility[j][1]);
 						break;
 					case 12:
-					//Настроение
+					//РќР°СЃС‚СЂРѕРµРЅРёРµ
 						*(pBld+i)+=(pFirstInnerBld+i)->arAbility[j][2]*50+(pFirstInnerBld+i)->arAbility[j][1]*10;
 						break;
 					case 16:
 					case 22:
-					//Общий доход, цена построек
+					//РћР±С‰РёР№ РґРѕС…РѕРґ, С†РµРЅР° РїРѕСЃС‚СЂРѕРµРє
 						*(pBld+i)+=(pFirstInnerBld+i)->arAbility[j][1]*20;
 						break;
 					case 37:
-					//Скорость
+					//РЎРєРѕСЂРѕСЃС‚СЊ
 						*(pBld+i)+=(pFirstInnerBld+i)->arAbility[j][1]*100;
 						break;						
 					case 17:
-					//Цены на ресурсы
+					//Р¦РµРЅС‹ РЅР° СЂРµСЃСѓСЂСЃС‹
 						for (int R=1; R<=9; R++)
 						{
 							if (arPlayer[Player].GetResource(i)==0)
@@ -1135,7 +1135,7 @@ void AI_InnerBuild(int Player)
 						};
 						break;
 					case 46:
-					//Карма
+					//РљР°СЂРјР°
 						if (pProfile->iKarma!=0)
 						{
 							if (sign(pProfile->iKarma)==sign((pFirstInnerBld+i)->arAbility[j][1]))
@@ -1188,25 +1188,25 @@ void AI_InnerBuild(int Player)
 		};
 		if (Builder)
 		{
-//			StopLog("Выбор....              ", Count);
+//			StopLog("Р’С‹Р±РѕСЂ....              ", Count);
 			Count=Roll(false);
-//			StopLog("Строим....              ", Count);
+//			StopLog("РЎС‚СЂРѕРёРј....              ", Count);
 			arPlayer[Player].Build(Count);
 			char Mess[500];
-			sprintf(Mess,"%s построил %s в родовом замке",arPlayer[Player].GetName(),(pFirstInnerBld+Count)->sName);
+			sprintf(Mess,"%s РїРѕСЃС‚СЂРѕРёР» %s РІ СЂРѕРґРѕРІРѕРј Р·Р°РјРєРµ",arPlayer[Player].GetName(),(pFirstInnerBld+Count)->sName);
 			FileLog(Mess);
 		}
 		else
 		{
 			char Mess[500];
-			sprintf(Mess,"%s копит ресурсы на строительство %s",arPlayer[Player].GetName(),(pFirstInnerBld+Wanna)->sName);
+			sprintf(Mess,"%s РєРѕРїРёС‚ СЂРµСЃСѓСЂСЃС‹ РЅР° СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ %s",arPlayer[Player].GetName(),(pFirstInnerBld+Wanna)->sName);
 			FileLog(Mess);
 		};
 	};
 	delete [] pBld;
 };
 
-//****Распределяет юнитов отряда по слотам, если Slot>0 - резервирует место под юнита данного ранга
+//****Р Р°СЃРїСЂРµРґРµР»СЏРµС‚ СЋРЅРёС‚РѕРІ РѕС‚СЂСЏРґР° РїРѕ СЃР»РѕС‚Р°Рј, РµСЃР»Рё Slot>0 - СЂРµР·РµСЂРІРёСЂСѓРµС‚ РјРµСЃС‚Рѕ РїРѕРґ СЋРЅРёС‚Р° РґР°РЅРЅРѕРіРѕ СЂР°РЅРіР°
 void ArrangeUnits(dcHero * Hero, int Slot)
 {
 	int FreeSlot=0;
@@ -1259,7 +1259,7 @@ void ArrangeUnits(dcHero * Hero, int Slot)
 };
 int arSpecUnit[40][2];
 
-//Добавляет юнита в список, если его там ещё нет, или увеличивает их количество
+//Р”РѕР±Р°РІР»СЏРµС‚ СЋРЅРёС‚Р° РІ СЃРїРёСЃРѕРє, РµСЃР»Рё РµРіРѕ С‚Р°Рј РµС‰С‘ РЅРµС‚, РёР»Рё СѓРІРµР»РёС‡РёРІР°РµС‚ РёС… РєРѕР»РёС‡РµСЃС‚РІРѕ
 void AddSpecUnit(int Index, int Quantity)
 {
 	for (int i=0; i<40; i++)
@@ -1281,7 +1281,7 @@ void AddSpecUnit(int Index, int Quantity)
 	};
 };
 
-//Создаёт список особых юнитов для найма
+//РЎРѕР·РґР°С‘С‚ СЃРїРёСЃРѕРє РѕСЃРѕР±С‹С… СЋРЅРёС‚РѕРІ РґР»СЏ РЅР°Р№РјР°
 void CalcSpecUnits(int Player, dcProvince *PR)
 {
 	for (int i=0; i<20; i++)
@@ -1289,7 +1289,7 @@ void CalcSpecUnits(int Player, dcProvince *PR)
 		arSpecUnit[i][0]=0;
 		arSpecUnit[i][1]=0;
 	};
-	//Юниты из сайтов
+	//Р®РЅРёС‚С‹ РёР· СЃР°Р№С‚РѕРІ
 	if (arPlayer[Player].iDifficulty>0)
 	{
 	for (int i=0; i<MAX_PROVINCE_SITE; i++)
@@ -1323,7 +1323,7 @@ void CalcSpecUnits(int Player, dcProvince *PR)
 		};
 	};
 	};
-	//Юниты из предметов
+	//Р®РЅРёС‚С‹ РёР· РїСЂРµРґРјРµС‚РѕРІ
 	for (int i=0; i<TREASURY_SIZE; i++)
 	{
 		if ((arPlayer[Player].arTreasury[i][0]>0)&&((pFirstItem+arPlayer[Player].arTreasury[i][0])->arEffect[0][0]==84)&&(arPlayer[Player].GetBldParam2(31,arPlayer[Player].arTreasury[i][0])))
@@ -1333,7 +1333,7 @@ void CalcSpecUnits(int Player, dcProvince *PR)
 	};
 };
 
-//****Пополнение отряда героя и обмен войсками с гарнизоном
+//****РџРѕРїРѕР»РЅРµРЅРёРµ РѕС‚СЂСЏРґР° РіРµСЂРѕСЏ Рё РѕР±РјРµРЅ РІРѕР№СЃРєР°РјРё СЃ РіР°СЂРЅРёР·РѕРЅРѕРј
 void HireUnits(int Player, int Hero)
 {
 	dcHero *HR=arPlayer[Player].arHero[Hero];
@@ -1343,7 +1343,7 @@ void HireUnits(int Player, int Hero)
 	{bCastle=true;};
 	if ((HR->pProvince->ipPlayer!=Player)||((!bCastle)&&(arSpecUnit[0][0]==0)))
 	{return;};
-	//Определяем карму набираемых в отряд воинов
+	//РћРїСЂРµРґРµР»СЏРµРј РєР°СЂРјСѓ РЅР°Р±РёСЂР°РµРјС‹С… РІ РѕС‚СЂСЏРґ РІРѕРёРЅРѕРІ
 	int Rank=4;
 	while (HR->GetUnitSlot(Rank)==0)
 	{Rank--;};
@@ -1396,7 +1396,7 @@ void HireUnits(int Player, int Hero)
 	{
 		ArrangeUnits(HR->pProvince->pGarrison,0);
 		for (int i=1; i<MAX_SQUAD; i++)
-		//Забираем из гарнизона здоровых
+		//Р—Р°Р±РёСЂР°РµРј РёР· РіР°СЂРЅРёР·РѕРЅР° Р·РґРѕСЂРѕРІС‹С…
 		{
 			if ((HR->CanUseUnitSlot(i))&&((HR->pSquad[i]==NULL)||(HR->pSquad[i]->iLife<HR->pSquad[i]->GetLife()/2)))
 			{
@@ -1438,7 +1438,7 @@ void HireUnits(int Player, int Hero)
 			};
 		};
 		for (int i=1; i<MAX_SQUAD; i++)
-		//Оставляем в гарнизоне раненых
+		//РћСЃС‚Р°РІР»СЏРµРј РІ РіР°СЂРЅРёР·РѕРЅРµ СЂР°РЅРµРЅС‹С…
 		{
 			if ((HR->pSquad[i])&&(HR->pSquad[i]->pType()->iUnitKind!=2)&&((HR->pSquad[i]->iLife<HR->pSquad[i]->GetLife()/2)||
 				((HR->pSquad[i]->pType()->iKarma!=0)&&(Karma!=0)&&(sign(HR->pSquad[i]->pType()->iKarma)!=Karma))))
@@ -1456,7 +1456,7 @@ void HireUnits(int Player, int Hero)
 //		MaxFreeSlot
 	for (int Rank=4; Rank>0; Rank--)
 	{
-		//Найм новобранцев
+		//РќР°Р№Рј РЅРѕРІРѕР±СЂР°РЅС†РµРІ
 		int Count=1;
 		while ((Count>0)&&(HR->GetFreeUnitSlot(Rank)))
 		{
@@ -1464,7 +1464,7 @@ void HireUnits(int Player, int Hero)
 			ClearRoll();
 			if (bCastle)
 			{
-				//Из гарнизона
+				//РР· РіР°СЂРЅРёР·РѕРЅР°
 				for (int i=0; i<MAX_RECRUIT-1; i++)
 				{
 					if ((arPlayer[Player].arRecruit[i]>0)&&((pFirstUnitType+arPlayer[Player].arRecruit[i])->iLevel==Rank)&&
@@ -1479,7 +1479,7 @@ void HireUnits(int Player, int Hero)
 					};
 				};
 			};
-			//Из особых мест
+			//РР· РѕСЃРѕР±С‹С… РјРµСЃС‚
 			for (int i=0; i<40; i++)
 			{
 				if ((arSpecUnit[i][0]>0)&&((pFirstUnitType+arSpecUnit[i][0])->iLevel==Rank)&&
@@ -1516,7 +1516,7 @@ void HireUnits(int Player, int Hero)
 						};					
 					};
 			//	};
-				//Удаление предмета из сокровищницы, если юнит из предмета
+				//РЈРґР°Р»РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РёР· СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹, РµСЃР»Рё СЋРЅРёС‚ РёР· РїСЂРµРґРјРµС‚Р°
 				for (int i=0; i<40; i++)
 				{					
 					if ((arSpecUnit[i][0]==Recruit)&&(arSpecUnit[i][1]>0))
@@ -1540,7 +1540,7 @@ void HireUnits(int Player, int Hero)
 			};				
 		};
 	};
-	//Ритуалы по вызову юнитов
+	//Р РёС‚СѓР°Р»С‹ РїРѕ РІС‹Р·РѕРІСѓ СЋРЅРёС‚РѕРІ
 	if (Karma<1)
 	{
 		if ((HR->GetFreeUnitSlot(2))&&(IsRitualCheap(Player,11)))
@@ -1550,7 +1550,7 @@ void HireUnits(int Player, int Hero)
 	};
 };
 
-//****Изучение заклинаний
+//****РР·СѓС‡РµРЅРёРµ Р·Р°РєР»РёРЅР°РЅРёР№
 void LearnSpells(int Player, int Hero)
 {	
 	bool bLib=false;	
@@ -1776,7 +1776,7 @@ void LearnSpells(int Player, int Hero)
 	};
 };
 
-//Возвращает номер слота, если герой эту вещь хочет надеть и 0 если не хочет
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ СЃР»РѕС‚Р°, РµСЃР»Рё РіРµСЂРѕР№ СЌС‚Сѓ РІРµС‰СЊ С…РѕС‡РµС‚ РЅР°РґРµС‚СЊ Рё 0 РµСЃР»Рё РЅРµ С…РѕС‡РµС‚
 int TryItem(int Item, dcHero *Hero, bool TwoHand)
 {
 	if (!Hero->CanUse(Item))
@@ -1894,7 +1894,7 @@ int TryItem(int Item, dcHero *Hero, bool TwoHand)
 	return 0;
 };
 
-//Возвращает истину, если предмет никем не востребован
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РїСЂРµРґРјРµС‚ РЅРёРєРµРј РЅРµ РІРѕСЃС‚СЂРµР±РѕРІР°РЅ
 bool CanSell(int Player, int Item)
 {
 	if ((pFirstItem+Item)->arEffect[0][0]==84)
@@ -1917,7 +1917,7 @@ bool CanSell(int Player, int Item)
 	return true;
 };
 
-//Оплата покупки предмета и изменение цен ресурсов
+//РћРїР»Р°С‚Р° РїРѕРєСѓРїРєРё РїСЂРµРґРјРµС‚Р° Рё РёР·РјРµРЅРµРЅРёРµ С†РµРЅ СЂРµСЃСѓСЂСЃРѕРІ
 void BuyItem(int Player, int Item)
 {
 	arPlayer[Player].Gold-=arPlayer[Player].GetItemGoldPrice(Item, &arPlayer[Player].Shop);
@@ -1942,7 +1942,7 @@ void BuyItem(int Player, int Item)
 	};
 };
 
-//Снятие предмета
+//РЎРЅСЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 void Undress(int Player, dcHero *HR, int Slot)
 {
 	if (HR->arInventory[Slot][0]>0)
@@ -1988,11 +1988,11 @@ void Undress(int Player, dcHero *HR, int Slot)
 };
 
 
-//****Менеджер предметов
+//****РњРµРЅРµРґР¶РµСЂ РїСЂРµРґРјРµС‚РѕРІ
 void EquipItems(int Player, int Hero)
 {
 	dcHero *HR=arPlayer[Player].arHero[Hero];
-//Надеваем подходящие вещи из инвентаря
+//РќР°РґРµРІР°РµРј РїРѕРґС…РѕРґСЏС‰РёРµ РІРµС‰Рё РёР· РёРЅРІРµРЅС‚Р°СЂСЏ
 	bool TwoHand=false;
 	for (int j=0; j<3; j++)
 	{
@@ -2014,7 +2014,7 @@ void EquipItems(int Player, int Hero)
 						for (int k=16; k<INVENTORY_SIZE; k++)
 						{
 							if (HR->arInventory[k][0]==0)
-							{//Взятие двуруча при экипированном щите
+							{//Р’Р·СЏС‚РёРµ РґРІСѓСЂСѓС‡Р° РїСЂРё СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРј С‰РёС‚Рµ
 								CanDo=true;
 								HR->arInventory[k][0]=HR->arInventory[2][0];
 								HR->arInventory[k][1]=HR->arInventory[2][1];
@@ -2025,7 +2025,7 @@ void EquipItems(int Player, int Hero)
 						};
 					};
 					if ((Slot==2)&&(HR->arInventory[1][0]>0)&&((pFirstItem+HR->arInventory[1][0])->ipSlot==100))
-					{//Взятие щита при экипированном двуручном оружии
+					{//Р’Р·СЏС‚РёРµ С‰РёС‚Р° РїСЂРё СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРј РґРІСѓСЂСѓС‡РЅРѕРј РѕСЂСѓР¶РёРё
 						int It=HR->arInventory[i][0], Dr=HR->arInventory[i][1];
 						HR->arInventory[i][0]=HR->arInventory[1][0];
 						HR->arInventory[i][1]=HR->arInventory[1][1];
@@ -2047,7 +2047,7 @@ void EquipItems(int Player, int Hero)
 			};			
 		};
 	};
-//Проверка, доступен ли магазин
+//РџСЂРѕРІРµСЂРєР°, РґРѕСЃС‚СѓРїРµРЅ Р»Рё РјР°РіР°Р·РёРЅ
 	if (HR->pProvince->ipPlayer!=Player)
 	{return;};
 	bool bShop=false;	
@@ -2073,7 +2073,7 @@ void EquipItems(int Player, int Hero)
 	};
 	if (bShop)
 	{
-//Экипировка предметов из сокровищницы
+//Р­РєРёРїРёСЂРѕРІРєР° РїСЂРµРґРјРµС‚РѕРІ РёР· СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹
 		TwoHand=false;
 		for (int j=0; j<3; j++)
 		{
@@ -2095,7 +2095,7 @@ void EquipItems(int Player, int Hero)
 							for (int k=0; k<TREASURY_SIZE; k++)
 							{
 								if (arPlayer[Player].arTreasury[k][0]==0)
-								{//Взятие двуруча при экипированном щите
+								{//Р’Р·СЏС‚РёРµ РґРІСѓСЂСѓС‡Р° РїСЂРё СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРј С‰РёС‚Рµ
 									CanDo=true;
 									arPlayer[Player].arTreasury[k][0]=HR->arInventory[2][0];
 									arPlayer[Player].arTreasury[k][1]=HR->arInventory[2][1];
@@ -2106,7 +2106,7 @@ void EquipItems(int Player, int Hero)
 							};
 						};
 						if ((Slot==2)&&(HR->arInventory[1][0]>0)&&((pFirstItem+HR->arInventory[1][0])->ipSlot==100))
-						{//Взятие щита при экипированном двуручном оружии
+						{//Р’Р·СЏС‚РёРµ С‰РёС‚Р° РїСЂРё СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРј РґРІСѓСЂСѓС‡РЅРѕРј РѕСЂСѓР¶РёРё
 							int It=arPlayer[Player].arTreasury[i][0], Dr=arPlayer[Player].arTreasury[i][1];
 							arPlayer[Player].arTreasury[i][0]=HR->arInventory[1][0];
 							arPlayer[Player].arTreasury[i][1]=HR->arInventory[1][1];
@@ -2128,12 +2128,12 @@ void EquipItems(int Player, int Hero)
 				};			
 			};
 		};
-//Продажа предметов из инвентаря
+//РџСЂРѕРґР°Р¶Р° РїСЂРµРґРјРµС‚РѕРІ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ
 		for (int i=16; i<=INVENTORY_SIZE; i++)
 		{
 			if ((HR->arInventory[i][0]>0)&&(CanSell(Player,HR->arInventory[i][0])))
 			{
-				//Выбор предмета для торговли
+				//Р’С‹Р±РѕСЂ РїСЂРµРґРјРµС‚Р° РґР»СЏ С‚РѕСЂРіРѕРІР»Рё
 				bool bSell=true;
 				if ((pFirstItem+HR->arInventory[i][0])->iRarity>2)
 				{
@@ -2165,7 +2165,7 @@ void EquipItems(int Player, int Hero)
 				HR->arInventory[i][1]=0;				
 			};
 		};
-//Продажа предметов из сокровищницы
+//РџСЂРѕРґР°Р¶Р° РїСЂРµРґРјРµС‚РѕРІ РёР· СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹
 		for (int i=0; i<TREASURY_SIZE-1; i++)
 		{
 			if ((arPlayer[Player].arTreasury[i][0])&&(CanSell(Player,arPlayer[Player].arTreasury[i][0])))
@@ -2204,7 +2204,7 @@ void EquipItems(int Player, int Hero)
 				};				
 			};
 		};
-//Перемещение инвентаря в сокровищницу
+//РџРµСЂРµРјРµС‰РµРЅРёРµ РёРЅРІРµРЅС‚Р°СЂСЏ РІ СЃРѕРєСЂРѕРІРёС‰РЅРёС†Сѓ
 		for (int i=16; i<=INVENTORY_SIZE; i++)
 		{
 			if (HR->arInventory[i][0]>0)
@@ -2222,7 +2222,7 @@ void EquipItems(int Player, int Hero)
 				};
 			};
 		};
-//Покупка предметов
+//РџРѕРєСѓРїРєР° РїСЂРµРґРјРµС‚РѕРІ
 		int Choosen=1, Choosen1=0, Choosen2, Taste=0;
 		while (Choosen>0)
 		{
@@ -2309,7 +2309,7 @@ void EquipItems(int Player, int Hero)
 				};
 			};
 		};
-//Ремонт предметов
+//Р РµРјРѕРЅС‚ РїСЂРµРґРјРµС‚РѕРІ
 		for (int i=1; i<=INVENTORY_SIZE; i++)
 		{		
 			if ((HR->arInventory[i][0]>0)&&
@@ -2323,7 +2323,7 @@ void EquipItems(int Player, int Hero)
 	};
 };
 
-//Сравнение сил отрядов. Возвращает 100 если силы равны, если больше - первый отряд сильнее
+//РЎСЂР°РІРЅРµРЅРёРµ СЃРёР» РѕС‚СЂСЏРґРѕРІ. Р’РѕР·РІСЂР°С‰Р°РµС‚ 100 РµСЃР»Рё СЃРёР»С‹ СЂР°РІРЅС‹, РµСЃР»Рё Р±РѕР»СЊС€Рµ - РїРµСЂРІС‹Р№ РѕС‚СЂСЏРґ СЃРёР»СЊРЅРµРµ
 int CompareStrength(dcHero *Hero1, dcHero *Hero2)
 {
 	if (bVerySmartAI)
@@ -2335,7 +2335,7 @@ int CompareStrength(dcHero *Hero1, dcHero *Hero2)
 	Army[0]=Hero1;
 	Army[1]=Hero2;
 
-	//Вычисление общих параметров защиты и жизни
+	//Р’С‹С‡РёСЃР»РµРЅРёРµ РѕР±С‰РёС… РїР°СЂР°РјРµС‚СЂРѕРІ Р·Р°С‰РёС‚С‹ Рё Р¶РёР·РЅРё
 	for (int AA=0; AA<2; AA++)
 	{
 		Str[AA]=0;
@@ -2369,7 +2369,7 @@ int CompareStrength(dcHero *Hero1, dcHero *Hero2)
 			Def[AA]/=Count; RDef[AA]/=Count; Res[AA]/=Count; Spd[AA]/=Count; CAtt[AA]=CAtt[AA]*8/(10*Count);
 		};
 	};
-	//Преимущество сильных компов над слабыми
+	//РџСЂРµРёРјСѓС‰РµСЃС‚РІРѕ СЃРёР»СЊРЅС‹С… РєРѕРјРїРѕРІ РЅР°Рґ СЃР»Р°Р±С‹РјРё
 	if ((arPlayer[Hero1->ipPlayer].Control!=1)&&(arPlayer[Hero2->ipPlayer].Control!=1))
 	{		
 		if (arPlayer[Hero1->ipPlayer].iDifficulty>arPlayer[Hero2->ipPlayer].iDifficulty)
@@ -2461,7 +2461,7 @@ int CompareStrength(dcHero *Hero1, dcHero *Hero2)
 	return Result;
 };
 
-//Пытается построить внешнюю постройку с гарнизоном в указанной провинции. Возвращает истину, если попытка удалась.
+//РџС‹С‚Р°РµС‚СЃСЏ РїРѕСЃС‚СЂРѕРёС‚СЊ РІРЅРµС€РЅСЋСЋ РїРѕСЃС‚СЂРѕР№РєСѓ СЃ РіР°СЂРЅРёР·РѕРЅРѕРј РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё. Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РїРѕРїС‹С‚РєР° СѓРґР°Р»Р°СЃСЊ.
 bool TryBuildGarrison(int Player, int Province)
 {
 	dcProvince *PR=(pFirstProvince+Province);
@@ -2486,7 +2486,7 @@ bool TryBuildGarrison(int Player, int Province)
 	return false;
 };
 
-//Пытается построить внешнюю постройку с библиотекой в указанной провинции. Возвращает истину, если попытка удалась.
+//РџС‹С‚Р°РµС‚СЃСЏ РїРѕСЃС‚СЂРѕРёС‚СЊ РІРЅРµС€РЅСЋСЋ РїРѕСЃС‚СЂРѕР№РєСѓ СЃ Р±РёР±Р»РёРѕС‚РµРєРѕР№ РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё. Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РїРѕРїС‹С‚РєР° СѓРґР°Р»Р°СЃСЊ.
 bool TryBuildLibrary(int Player, int Province)
 {
 	dcProvince *PR=(pFirstProvince+Province);
@@ -2506,7 +2506,7 @@ bool TryBuildLibrary(int Player, int Province)
 	return false;
 };
 
-//Пытается построить внешнюю постройку с магазином в указанной провинции. Возвращает истину, если попытка удалась.
+//РџС‹С‚Р°РµС‚СЃСЏ РїРѕСЃС‚СЂРѕРёС‚СЊ РІРЅРµС€РЅСЋСЋ РїРѕСЃС‚СЂРѕР№РєСѓ СЃ РјР°РіР°Р·РёРЅРѕРј РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё. Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РїРѕРїС‹С‚РєР° СѓРґР°Р»Р°СЃСЊ.
 bool TryBuildShop(int Player, int Province)
 {
 	dcProvince *PR=(pFirstProvince+Province);
@@ -2526,7 +2526,7 @@ bool TryBuildShop(int Player, int Province)
 	return false;
 };
 
-//Преверка соседей для атаки (с рекурсивным учетом портов)
+//РџСЂРµРІРµСЂРєР° СЃРѕСЃРµРґРµР№ РґР»СЏ Р°С‚Р°РєРё (СЃ СЂРµРєСѓСЂСЃРёРІРЅС‹Рј СѓС‡РµС‚РѕРј РїРѕСЂС‚РѕРІ)
 void AttackNeighbour(int Player, dcProvince *PR, dcHero *HR, int Port)
 {
 	for (int j=0; j<MAX_NEIGHBOUR; j++)
@@ -2598,7 +2598,7 @@ void AttackNeighbour(int Player, dcProvince *PR, dcHero *HR, int Port)
 
 
 
-//Проверка провинции для атаки
+//РџСЂРѕРІРµСЂРєР° РїСЂРѕРІРёРЅС†РёРё РґР»СЏ Р°С‚Р°РєРё
 void TryAttack(int Player, int Prov, dcHero *HR)
 {
 	dcProvince *PR=(pFirstProvince+Prov);
@@ -2655,7 +2655,7 @@ void TryAttack(int Player, int Prov, dcHero *HR)
 		((PR->ipPlayer==0)||(arPlayer[Player].Politic[PR->ipPlayer].Treaty==1)))
 	{
 //		int Power=CompareStrength(HR,PR->pGuard);
-	//Проверка заключенного союза
+	//РџСЂРѕРІРµСЂРєР° Р·Р°РєР»СЋС‡РµРЅРЅРѕРіРѕ СЃРѕСЋР·Р°
 		if (PR->ipPlayer==0)
 		{
 			if (arPlayer[Player].iUnion>0)
@@ -2667,10 +2667,10 @@ void TryAttack(int Player, int Prov, dcHero *HR)
 			{
 				if (CurGame.iCurrentTurn>=15-arPlayer[Player].iDifficulty)
 				{
-				//Проверка возможного союза
+				//РџСЂРѕРІРµСЂРєР° РІРѕР·РјРѕР¶РЅРѕРіРѕ СЃРѕСЋР·Р°
 				if ((PR->ipRace>1)&&(arPlayer[Player].Control==2))
 				{
-					//Особый союз
+					//РћСЃРѕР±С‹Р№ СЃРѕСЋР·
 					switch (arPlayer[Player].ipProfile)
 					{
 					case 4: 
@@ -2716,7 +2716,7 @@ void TryAttack(int Player, int Prov, dcHero *HR)
 						};
 						break;
 					};
-					//Обычный союз
+					//РћР±С‹С‡РЅС‹Р№ СЃРѕСЋР·
 					if (arPlayer[Player].AIUnion[0]==0)
 					{
 						if (((arPlayer[Player].iKarma<0)&&((pFirstRace+PR->ipRace)->iKarma>0))||
@@ -2839,7 +2839,7 @@ void TryAttack(int Player, int Prov, dcHero *HR)
 
 int arCastles[MAX_HERO];
 
-//***Выбор целей для героев
+//***Р’С‹Р±РѕСЂ С†РµР»РµР№ РґР»СЏ РіРµСЂРѕРµРІ
 bool FillTarget(int Player, int Hero)
 {
 	bool bChange=false;
@@ -2862,7 +2862,7 @@ bool FillTarget(int Player, int Hero)
 	WalkSpeed=HR->GetMobility();
 	MoveMap(HR->ipProvince,-1,WalkSpeed,0,0);
 
-	//***Проверка пути к родовой провинции, постройка верфи
+	//***РџСЂРѕРІРµСЂРєР° РїСѓС‚Рё Рє СЂРѕРґРѕРІРѕР№ РїСЂРѕРІРёРЅС†РёРё, РїРѕСЃС‚СЂРѕР№РєР° РІРµСЂС„Рё
 	if ((HR->ipProvince!=arPlayer[Player].ipProvince)&&(HR->pProvince->ipPlayer==Player)&&(*(pMoveMap+arPlayer[Player].ipProvince)<0)&&(HR->pProvince->Coastal)&&(HR->pProvince->GetPort()==0))
 	{
 		int BldSlot=0;
@@ -2885,14 +2885,14 @@ bool FillTarget(int Player, int Hero)
 		HR->pProvince->DrawPic(false);
 	};
 
-	//***Отмена прежних заданий
+	//***РћС‚РјРµРЅР° РїСЂРµР¶РЅРёС… Р·Р°РґР°РЅРёР№
 	
 	
 	if (HR->iTask!=2)
 	{HR->iAITask=0;};
 	HR->iTask=0;
 
-//Строим крепость и пополняем отряд, если далеко от замка и отряд побит
+//РЎС‚СЂРѕРёРј РєСЂРµРїРѕСЃС‚СЊ Рё РїРѕРїРѕР»РЅСЏРµРј РѕС‚СЂСЏРґ, РµСЃР»Рё РґР°Р»РµРєРѕ РѕС‚ Р·Р°РјРєР° Рё РѕС‚СЂСЏРґ РїРѕР±РёС‚
 	int Count=0;
 	for (int i=1; i<MAX_SQUAD; i++)
 	{
@@ -2928,7 +2928,7 @@ bool FillTarget(int Player, int Hero)
 		};
 	};
 
-	//Заполнение массива целей для помощи в осаде
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° С†РµР»РµР№ РґР»СЏ РїРѕРјРѕС‰Рё РІ РѕСЃР°РґРµ
 	for (int HH=0; HH<MAX_HERO; HH++)
 	{
 		if ((HH!=Hero)&&(arPlayer[Player].arHero[HH])&&(arPlayer[Player].arHero[HH]->iDead<0)&&(arPlayer[Player].arHero[HH]->pProvince->ipPlayer!=Player)&&(TargetPower[HH]<100))
@@ -2992,7 +2992,7 @@ bool FillTarget(int Player, int Hero)
 	};
 
 
-//Заполнение массива целей для снятия осады
+//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР° С†РµР»РµР№ РґР»СЏ СЃРЅСЏС‚РёСЏ РѕСЃР°РґС‹
 	for (int Target=1; Target<=MapSize; Target++)
 	{
 		if (((pFirstProvince+Target)->ipPlayer==Player)&&((pFirstProvince+Target)->GetSiegeIndex()>=0)&&(*(pMoveMap+Target)>0))
@@ -3070,19 +3070,19 @@ bool FillTarget(int Player, int Hero)
 
 	//if ((TargetPower[Hero]>=100)&&(HR->iTask==1)&&(abs(HR->iAITask)==5))
 	//{return bChange;};
-	////Продолжаем осаду
+	////РџСЂРѕРґРѕР»Р¶Р°РµРј РѕСЃР°РґСѓ
 	//if (HR->pProvince->ipPlayer!=Player)
 	//{return bChange;};	
 	
-//Поиск провинции для атаки
-	DFileLog("Поиск провинции для атаки");
+//РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ Р°С‚Р°РєРё
+	DFileLog("РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ Р°С‚Р°РєРё");
 	for (int i=1; i<=MapSize; i++)
 	{
 		TryAttack(Player,i,HR);		
 	};
 
-	//Поиск провинции для пополнения отряда
-	DFileLog("Поиск провинции для пополнения");
+	//РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РїРѕРїРѕР»РЅРµРЅРёСЏ РѕС‚СЂСЏРґР°
+	DFileLog("РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РїРѕРїРѕР»РЅРµРЅРёСЏ");
 	arCastles[Hero]=0;
 	Count=0;
 	for (int i=1; i<MAX_SQUAD; i++)
@@ -3141,7 +3141,7 @@ bool FillTarget(int Player, int Hero)
 		else
 		{bCanSpend=false;};
 	};
-	//Поиск провинции для пополнения заклинаний
+	//РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РїРѕРїРѕР»РЅРµРЅРёСЏ Р·Р°РєР»РёРЅР°РЅРёР№
 	if (arPlayer[Player].arLibrary[1]>0)
 	{
 		int Count=0;
@@ -3211,7 +3211,7 @@ bool FillTarget(int Player, int Hero)
 			};
 		};
 	};
-	//Поиск провинции для обмена предметами
+	//РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РѕР±РјРµРЅР° РїСЂРµРґРјРµС‚Р°РјРё
 	if (arPlayer[Player].Shop.Items[1][0]>0)
 	{
 		int Count=0;
@@ -3276,8 +3276,8 @@ bool FillTarget(int Player, int Hero)
 			};
 		};
 	};
-	//Поиск сайта для обыска
-	DFileLog("Поиск сайта для обыска");
+	//РџРѕРёСЃРє СЃР°Р№С‚Р° РґР»СЏ РѕР±С‹СЃРєР°
+	DFileLog("РџРѕРёСЃРє СЃР°Р№С‚Р° РґР»СЏ РѕР±С‹СЃРєР°");
 	for (int Prov=1; Prov<=MapSize; Prov++)
 	{
 		if (((pFirstProvince+Prov)->ipPlayer==Player)&&((pFirstProvince+Prov)->GetSiegeIndex()<0)&&(*(pMoveMap+Prov)>=0))
@@ -3350,8 +3350,8 @@ bool FillTarget(int Player, int Hero)
 		};
 	};
 		
-	//Поиск провинции для исследований
-	DFileLog("Поиск провинции для исследований");
+	//РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РёСЃСЃР»РµРґРѕРІР°РЅРёР№
+	DFileLog("РџРѕРёСЃРє РїСЂРѕРІРёРЅС†РёРё РґР»СЏ РёСЃСЃР»РµРґРѕРІР°РЅРёР№");
 	if (HR->pProvince->iExplore<100)
 	{
 		ExploreTarget[Hero]=HR->ipProvince;		
@@ -3373,7 +3373,7 @@ bool FillTarget(int Player, int Hero)
 };
 
 
-//Вычисление силы противника героя
+//Р’С‹С‡РёСЃР»РµРЅРёРµ СЃРёР»С‹ РїСЂРѕС‚РёРІРЅРёРєР° РіРµСЂРѕСЏ
 int CalcPower(int Player, dcHero *HR)
 {
 	int Result=1000;
@@ -3402,15 +3402,15 @@ int CalcPower(int Player, dcHero *HR)
 };
 
 //*****************************
-//*** Выдача заданий героям ***
+//*** Р’С‹РґР°С‡Р° Р·Р°РґР°РЅРёР№ РіРµСЂРѕСЏРј ***
 //*****************************
 void HeroTaskmaster(int Player, int Progress)
 {
 	char stLog[200];
 	MaxTargets=0;
 	int Heroes=1;
-	//Заполнение массивов целей и вычисление силы противника
-	DFileLog("Заполнение массивов целей и вычисление силы противника");
+	//Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІРѕРІ С†РµР»РµР№ Рё РІС‹С‡РёСЃР»РµРЅРёРµ СЃРёР»С‹ РїСЂРѕС‚РёРІРЅРёРєР°
+	DFileLog("Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІРѕРІ С†РµР»РµР№ Рё РІС‹С‡РёСЃР»РµРЅРёРµ СЃРёР»С‹ РїСЂРѕС‚РёРІРЅРёРєР°");
 	for (int i=0; i<MAX_HERO; i++)
 	{
 		TargetPower[i]=1000;
@@ -3431,7 +3431,7 @@ void HeroTaskmaster(int Player, int Progress)
 	{
 		if ((arPlayer[Player].arHero[i])&&(arPlayer[Player].arHero[i]->iDead<0))
 		{
-			sprintf(stLog,"Герой: %s (%d)",arPlayer[Player].arHero[i]->pstName,i);
+			sprintf(stLog,"Р“РµСЂРѕР№: %s (%d)",arPlayer[Player].arHero[i]->pstName,i);
 			DFileLog(stLog);
 			if (FillTarget(Player,i))
 			{
@@ -3440,8 +3440,8 @@ void HeroTaskmaster(int Player, int Progress)
 			NewProgress+=Progress/Heroes*3/4;
 		};
 	};
-	//Пересчёт сил целей по точному алгоритму, определение количества доступных целей
-	DFileLog("Пересчёт сил целей по точному алгоритму, определение количества доступных целей");
+	//РџРµСЂРµСЃС‡С‘С‚ СЃРёР» С†РµР»РµР№ РїРѕ С‚РѕС‡РЅРѕРјСѓ Р°Р»РіРѕСЂРёС‚РјСѓ, РѕРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° РґРѕСЃС‚СѓРїРЅС‹С… С†РµР»РµР№
+	DFileLog("РџРµСЂРµСЃС‡С‘С‚ СЃРёР» С†РµР»РµР№ РїРѕ С‚РѕС‡РЅРѕРјСѓ Р°Р»РіРѕСЂРёС‚РјСѓ, РѕРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° РґРѕСЃС‚СѓРїРЅС‹С… С†РµР»РµР№");
 	int arTask[MAX_HERO];
 	for (int HR=0; HR<MAX_HERO; HR++)
 	{
@@ -3507,22 +3507,22 @@ void HeroTaskmaster(int Player, int Progress)
 	};
 
 	dcHero *Herr;
-	//Первоочередные задания
-	DFileLog("Первоочередные задания");
+	//РџРµСЂРІРѕРѕС‡РµСЂРµРґРЅС‹Рµ Р·Р°РґР°РЅРёСЏ
+	DFileLog("РџРµСЂРІРѕРѕС‡РµСЂРµРґРЅС‹Рµ Р·Р°РґР°РЅРёСЏ");
 	for (int Select=0; Select<MAX_HERO; Select++)
 	{
 		if (arTask[Select]>0)
 		{
 			Herr=arPlayer[Player].arHero[Select];
 			bool NeedTask=true;
-			//Наш родовой замок осаждён
+			//РќР°С€ СЂРѕРґРѕРІРѕР№ Р·Р°РјРѕРє РѕСЃР°Р¶РґС‘РЅ
 			for (int i=0; i<MaxTargets; i++)
 			{
 				if (RuinSiegeTarget[Select][i][0]==arPlayer[Player].ipProvince)
 				{
 					if ((pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex()>0)
 					{
-						//Осаждать родовой замок врага если он ближе
+						//РћСЃР°Р¶РґР°С‚СЊ СЂРѕРґРѕРІРѕР№ Р·Р°РјРѕРє РІСЂР°РіР° РµСЃР»Рё РѕРЅ Р±Р»РёР¶Рµ
 						if ((Herr->pProvince->ipPlayer==(pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex())&&(Herr->ipProvince==arPlayer[(pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex()].ipProvince))
 						{
 							Herr->iTask=0;
@@ -3548,7 +3548,7 @@ void HeroTaskmaster(int Player, int Progress)
 						Herr->iTarget=RuinSiegeTarget[Select][i][0];
 						Herr->iAITask=-5;
 						NeedTask=false;
-						//Ускориться ритуалом, если сильней врага и до замка далеко
+						//РЈСЃРєРѕСЂРёС‚СЊСЃСЏ СЂРёС‚СѓР°Р»РѕРј, РµСЃР»Рё СЃРёР»СЊРЅРµР№ РІСЂР°РіР° Рё РґРѕ Р·Р°РјРєР° РґР°Р»РµРєРѕ
 						if ((RuinSiegeTarget[Select][i][2]>=100)&&(RuinSiegeTarget[Select][i][1]>2))
 						{
 							if ((RuinSiegeTarget[Select][i][1]>4)&&(IsRitualAllowed(Player,20)))
@@ -3563,8 +3563,8 @@ void HeroTaskmaster(int Player, int Progress)
 				};
 			};
 			
-			//Родовой замок врага осаждён
-			//Этим героем
+			//Р РѕРґРѕРІРѕР№ Р·Р°РјРѕРє РІСЂР°РіР° РѕСЃР°Р¶РґС‘РЅ
+			//Р­С‚РёРј РіРµСЂРѕРµРј
 			if (NeedTask)
 			{
 				if ((Herr->pProvince->ipPlayer!=Player)&&(arPlayer[Herr->pProvince->ipPlayer].ipProvince==Herr->ipProvince))
@@ -3574,7 +3574,7 @@ void HeroTaskmaster(int Player, int Progress)
 				};
 			};
 
-			//Не найден путь к осаждённому родовому замку, использовать ритуал
+			//РќРµ РЅР°Р№РґРµРЅ РїСѓС‚СЊ Рє РѕСЃР°Р¶РґС‘РЅРЅРѕРјСѓ СЂРѕРґРѕРІРѕРјСѓ Р·Р°РјРєСѓ, РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЂРёС‚СѓР°Р»
 			if ((NeedTask)&&((pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex()>=0)&&(IsRitualAllowed(Player,20)))
 			{
 				dcProvince *PR=(pFirstProvince+arPlayer[Player].ipProvince);
@@ -3594,7 +3594,7 @@ void HeroTaskmaster(int Player, int Progress)
 				};
 			};
 
-			//Помощь в осаде
+			//РџРѕРјРѕС‰СЊ РІ РѕСЃР°РґРµ
 			if (NeedTask)
 			{
 				for (int i=0; i<MaxTargets; i++)
@@ -3602,7 +3602,7 @@ void HeroTaskmaster(int Player, int Progress)
 					int Dist=1000;
 					if ((SiegeTarget[Select][i][0]>0)&&(SiegeTarget[Select][i][0]==arPlayer[(pFirstProvince+SiegeTarget[Select][i][0])->ipPlayer].ipProvince))
 					{
-						//Идти за войском, если отряд слабый
+						//РРґС‚Рё Р·Р° РІРѕР№СЃРєРѕРј, РµСЃР»Рё РѕС‚СЂСЏРґ СЃР»Р°Р±С‹Р№
 						if ((SiegeTarget[Select][i][2]<100)&&(Herr->iTask==1)&&(Herr->iAITask==1))
 						{NeedTask=false;}
 						else
@@ -3620,7 +3620,7 @@ void HeroTaskmaster(int Player, int Progress)
 				};
 			};
 
-			//Родовой замок врага найден
+			//Р РѕРґРѕРІРѕР№ Р·Р°РјРѕРє РІСЂР°РіР° РЅР°Р№РґРµРЅ
 			if (NeedTask)
 			{
 				for (int i=0; i<MaxTargets; i++)
@@ -3628,7 +3628,7 @@ void HeroTaskmaster(int Player, int Progress)
 					int Power=0;
 					if ((EnemyTarget[Select][i][0]>0)&&(EnemyTarget[Select][i][0]==arPlayer[(pFirstProvince+EnemyTarget[Select][i][0])->ipPlayer].ipProvince))
 					{
-						//Идти за войском, если отряд слабый
+						//РРґС‚Рё Р·Р° РІРѕР№СЃРєРѕРј, РµСЃР»Рё РѕС‚СЂСЏРґ СЃР»Р°Р±С‹Р№
 						if ((EnemyTarget[Select][i][2]<100)&&(Herr->iTask==1)&&(Herr->iAITask==1))
 						{NeedTask=false;}
 						else
@@ -3653,7 +3653,7 @@ void HeroTaskmaster(int Player, int Progress)
 								NeedTask=false;
 								if ((EnemyTarget[Select][i][2]>=100)&&(EnemyTarget[Select][i][1]>2)&&(IsRitualAllowed(Player,4)))
 								{arPlayer[Player].CastRitual(4,Herr->ipProvince,Select);};
-								//Ослабить защитника ритуалом
+								//РћСЃР»Р°Р±РёС‚СЊ Р·Р°С‰РёС‚РЅРёРєР° СЂРёС‚СѓР°Р»РѕРј
 								if ((EnemyTarget[Select][i][2]<150)&&(EnemyTarget[Select][i][1]==1))
 								{DestructiveRitual(EnemyTarget[Select][i][0],Player,true);};
 							};							
@@ -3662,11 +3662,11 @@ void HeroTaskmaster(int Player, int Progress)
 				};
 			};
 
-			//Идти за войском
+			//РРґС‚Рё Р·Р° РІРѕР№СЃРєРѕРј
 			if ((NeedTask)&&(Herr->iTask==1)&&(Herr->iAITask==1))
 			{NeedTask=false;};
 
-			//Продолжать осаду
+			//РџСЂРѕРґРѕР»Р¶Р°С‚СЊ РѕСЃР°РґСѓ
 			if ((NeedTask)&&(Herr->pProvince->ipPlayer!=Player))
 			{NeedTask=false;};
 
@@ -3675,9 +3675,9 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//***Выбор задания***
-	DFileLog("Помощь в осаде");
-	//Помощь в осаде
+	//***Р’С‹Р±РѕСЂ Р·Р°РґР°РЅРёСЏ***
+	DFileLog("РџРѕРјРѕС‰СЊ РІ РѕСЃР°РґРµ");
+	//РџРѕРјРѕС‰СЊ РІ РѕСЃР°РґРµ
 	int SelectHero=0, SelectTarget;
 	while (SelectHero>=0)
 	{
@@ -3735,8 +3735,8 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//Снятие осады
-	DFileLog("Снятие осады");
+	//РЎРЅСЏС‚РёРµ РѕСЃР°РґС‹
+	DFileLog("РЎРЅСЏС‚РёРµ РѕСЃР°РґС‹");
 	SelectHero=0;
 	while (SelectHero>=0)
 	{
@@ -3797,8 +3797,8 @@ void HeroTaskmaster(int Player, int Progress)
 	};
 
 
-	//Атака вражеской провинции
-	DFileLog("Атака вражеской провинции");
+	//РђС‚Р°РєР° РІСЂР°Р¶РµСЃРєРѕР№ РїСЂРѕРІРёРЅС†РёРё
+	DFileLog("РђС‚Р°РєР° РІСЂР°Р¶РµСЃРєРѕР№ РїСЂРѕРІРёРЅС†РёРё");
 	SelectHero=0;
 	while (SelectHero>=0)
 	{
@@ -3830,13 +3830,13 @@ void HeroTaskmaster(int Player, int Progress)
 			arPlayer[Player].arHero[SelectHero]->iTask=1;
 			arPlayer[Player].arHero[SelectHero]->iAITask=0;
 			arPlayer[Player].arHero[SelectHero]->iTarget=EnemyTarget[SelectHero][SelectTarget][0];
-			//Ускориться ритуалом
+			//РЈСЃРєРѕСЂРёС‚СЊСЃСЏ СЂРёС‚СѓР°Р»РѕРј
 			if ((EnemyTarget[SelectHero][SelectTarget][1]>3)&&(IsRitualCheap(Player,4)))
 			{arPlayer[Player].CastRitual(4,arPlayer[Player].arHero[SelectHero]->ipProvince,SelectHero);};
-			//Ослабить защитника ритуалом
+			//РћСЃР»Р°Р±РёС‚СЊ Р·Р°С‰РёС‚РЅРёРєР° СЂРёС‚СѓР°Р»РѕРј
 			if ((EnemyTarget[SelectHero][SelectTarget][2]<150)&&(EnemyTarget[SelectHero][SelectTarget][1]==1))
 			{DestructiveRitual(EnemyTarget[SelectHero][SelectTarget][0],Player,false);};
-			//Отменить данную провинцию из списка у остальных героев
+			//РћС‚РјРµРЅРёС‚СЊ РґР°РЅРЅСѓСЋ РїСЂРѕРІРёРЅС†РёСЋ РёР· СЃРїРёСЃРєР° Сѓ РѕСЃС‚Р°Р»СЊРЅС‹С… РіРµСЂРѕРµРІ
 			for (int HR=0; HR<MAX_HERO; HR++)
 			{
 				if (arTask[HR]>0)
@@ -3852,8 +3852,8 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//Атака нейтральной провинции
-	DFileLog("Атака нейтральной провинции");
+	//РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»СЊРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
+	DFileLog("РђС‚Р°РєР° РЅРµР№С‚СЂР°Р»СЊРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё");
 	SelectHero=0;
 	while (SelectHero>=0)
 	{
@@ -3900,13 +3900,13 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//Идти за заклинаниями или предметами
-	DFileLog("Идти за заклинаниями или предметами");
+	//РРґС‚Рё Р·Р° Р·Р°РєР»РёРЅР°РЅРёСЏРјРё РёР»Рё РїСЂРµРґРјРµС‚Р°РјРё
+	DFileLog("РРґС‚Рё Р·Р° Р·Р°РєР»РёРЅР°РЅРёСЏРјРё РёР»Рё РїСЂРµРґРјРµС‚Р°РјРё");
 	for (int HR=0; HR<MAX_HERO; HR++)
 	{
 		if ((arTask[HR]>0)&&(arPlayer[Player].arHero[HR]->iTask==1)&&((arPlayer[Player].arHero[HR]->iAITask==2)||(arPlayer[Player].arHero[HR]->iAITask==3)))
 		{arTask[HR]=0;};
-	//Идти за войском при недостаче нескольких воинов
+	//РРґС‚Рё Р·Р° РІРѕР№СЃРєРѕРј РїСЂРё РЅРµРґРѕСЃС‚Р°С‡Рµ РЅРµСЃРєРѕР»СЊРєРёС… РІРѕРёРЅРѕРІ
 		if ((arPlayer[Player].arHero[HR])&&(arPlayer[Player].arHero[HR]->iDead<0)&&(arPlayer[Player].arHero[HR]->pProvince->ipPlayer==Player)&&(arPlayer[Player].arHero[HR]->iTask==0)&&(arTask[HR]==0)&&(arCastles[HR]>0)&&(arCastles[HR]!=arPlayer[Player].arHero[HR]->ipProvince))
 		{
 			arPlayer[Player].arHero[HR]->iTask=1;
@@ -3915,8 +3915,8 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//Атака сайта
-	DFileLog("Атака сайта");
+	//РђС‚Р°РєР° СЃР°Р№С‚Р°
+	DFileLog("РђС‚Р°РєР° СЃР°Р№С‚Р°");
 	SelectHero=0;
 	while (SelectHero>=0)
 	{
@@ -3976,8 +3976,8 @@ void HeroTaskmaster(int Player, int Progress)
 		};
 	};
 
-	//Исследовать провинцию, если нет других заданий и целей
-	DFileLog("Исследовать провинцию, если нет других заданий и целей");
+	//РСЃСЃР»РµРґРѕРІР°С‚СЊ РїСЂРѕРІРёРЅС†РёСЋ, РµСЃР»Рё РЅРµС‚ РґСЂСѓРіРёС… Р·Р°РґР°РЅРёР№ Рё С†РµР»РµР№
+	DFileLog("РСЃСЃР»РµРґРѕРІР°С‚СЊ РїСЂРѕРІРёРЅС†РёСЋ, РµСЃР»Рё РЅРµС‚ РґСЂСѓРіРёС… Р·Р°РґР°РЅРёР№ Рё С†РµР»РµР№");
 	for (int HR=0; HR<MAX_HERO; HR++)
 	{
 		if ((arPlayer[Player].arHero[HR])&&(arPlayer[Player].arHero[HR]->iDead<0))
@@ -4007,7 +4007,7 @@ void HeroTaskmaster(int Player, int Progress)
 	};
 };
 
-//Попытка установить стража в указанной провинции
+//РџРѕРїС‹С‚РєР° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃС‚СЂР°Р¶Р° РІ СѓРєР°Р·Р°РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 void AITryDefender(int Province, bool bBigGuy)
 {
 	dcProvince *PR=(pFirstProvince+Province);
@@ -4044,7 +4044,7 @@ void AITryDefender(int Province, bool bBigGuy)
 		{
 			RollerN[Count]=i;
 			RollerP[Count]=GetDefenderPower(i);
-			//Уменьшаем вероятность появления одинаковых стражей
+			//РЈРјРµРЅСЊС€Р°РµРј РІРµСЂРѕСЏС‚РЅРѕСЃС‚СЊ РїРѕСЏРІР»РµРЅРёСЏ РѕРґРёРЅР°РєРѕРІС‹С… СЃС‚СЂР°Р¶РµР№
 			int Used=0;
 			if (*(arPlayer[Player].pDefender+i)<0)
 			{
@@ -4111,14 +4111,14 @@ void AITryDefender(int Province, bool bBigGuy)
 		arPlayer[Player].iCanHire--;
 		PR->PlaceDefender(Choosen);		
 		char Mess[500];
-		sprintf(Mess,"%s нанял стража %s в провинции %s",arPlayer[Player].GetName(),(pFirstDefender+Choosen)->sName,(pFirstProvince+Province)->sName);
+		sprintf(Mess,"%s РЅР°РЅСЏР» СЃС‚СЂР°Р¶Р° %s РІ РїСЂРѕРІРёРЅС†РёРё %s",arPlayer[Player].GetName(),(pFirstDefender+Choosen)->sName,(pFirstProvince+Province)->sName);
 		FileLog(Mess);
 	};
 	};
 };
 
 
-//****Расстановка стражей
+//****Р Р°СЃСЃС‚Р°РЅРѕРІРєР° СЃС‚СЂР°Р¶РµР№
 void AIPlaceDefender(int Player)
 {
 	AITryDefender(arPlayer[Player].ipProvince,true);
@@ -4194,10 +4194,10 @@ void AIPlaceDefender(int Player)
 	};
 };
 
-//****Отстройка внешних зданий 
+//****РћС‚СЃС‚СЂРѕР№РєР° РІРЅРµС€РЅРёС… Р·РґР°РЅРёР№ 
 void AIOuterBuild(int Player)
 {
-	//Постройка верфи для героя на острове
+	//РџРѕСЃС‚СЂРѕР№РєР° РІРµСЂС„Рё РґР»СЏ РіРµСЂРѕСЏ РЅР° РѕСЃС‚СЂРѕРІРµ
 	bool bIsland=true;
 	for (int i=0; i<MAX_HERO; i++)
 	{
@@ -4235,7 +4235,7 @@ void AIOuterBuild(int Player)
 			};
 		};
 	};
-	//Постройка верфи если соседи только море
+	//РџРѕСЃС‚СЂРѕР№РєР° РІРµСЂС„Рё РµСЃР»Рё СЃРѕСЃРµРґРё С‚РѕР»СЊРєРѕ РјРѕСЂРµ
 	bIsland=true;
 	int FreeProv=0, OccProv=0;
 	for (int i=1; i<=MapSize; i++)
@@ -4338,7 +4338,7 @@ void AIOuterBuild(int Player)
 			(pFirstProvince+Pick)->ConstructBuilding(10,false, true);
 		};
 	};
-	//Постройка верфи, если найден сосед на берегу
+	//РџРѕСЃС‚СЂРѕР№РєР° РІРµСЂС„Рё, РµСЃР»Рё РЅР°Р№РґРµРЅ СЃРѕСЃРµРґ РЅР° Р±РµСЂРµРіСѓ
 	if ((arPlayer[Player].arBld[52])&&(arPlayer[Player].iCanOuterBld>0))
 	{
 		if (FreeProv>0)
@@ -4362,7 +4362,7 @@ void AIOuterBuild(int Player)
 		};
 	};
 
-	//Выбор постройки из общего списка
+	//Р’С‹Р±РѕСЂ РїРѕСЃС‚СЂРѕР№РєРё РёР· РѕР±С‰РµРіРѕ СЃРїРёСЃРєР°
 	bool bProceed=true;
 	while ((arPlayer[Player].iCanOuterBld>0)&&(bProceed))
 	{
@@ -4393,7 +4393,7 @@ void AIOuterBuild(int Player)
 	{
 		(pFirstProvince+Province)->ConstructBuilding(Build,false, true);
 		char Mess[500];
-		sprintf(Mess,"%s построил %s в провинции %s",arPlayer[Player].GetName(),(pFirstOuterBld+Build)->sName,(pFirstProvince+Province)->sName);
+		sprintf(Mess,"%s РїРѕСЃС‚СЂРѕРёР» %s РІ РїСЂРѕРІРёРЅС†РёРё %s",arPlayer[Player].GetName(),(pFirstOuterBld+Build)->sName,(pFirstProvince+Province)->sName);
 		FileLog(Mess);
 	}
 	else
@@ -4402,7 +4402,7 @@ void AIOuterBuild(int Player)
 	};
 };
 
-//Выбор умения при повышении героя
+//Р’С‹Р±РѕСЂ СѓРјРµРЅРёСЏ РїСЂРё РїРѕРІС‹С€РµРЅРёРё РіРµСЂРѕСЏ
 void AIHeroLvlUp(dcHero * Hero)
 {	
 	int OldLife=Hero->pSquad[0]->GetLife();		
@@ -4452,10 +4452,10 @@ void AIHeroLvlUp(dcHero * Hero)
 	Hero->ChangeUnitType();
 };
 
-//Заполнение гарнизонов крепостей
+//Р—Р°РїРѕР»РЅРµРЅРёРµ РіР°СЂРЅРёР·РѕРЅРѕРІ РєСЂРµРїРѕСЃС‚РµР№
 void FillGarrison(int Player)
 {
-	//Всегда держим одного юнита в родовом замке
+	//Р’СЃРµРіРґР° РґРµСЂР¶РёРј РѕРґРЅРѕРіРѕ СЋРЅРёС‚Р° РІ СЂРѕРґРѕРІРѕРј Р·Р°РјРєРµ
 	bool bHomeDefender=true;
 	for (int i=0; i<MAX_SQUAD; i++)
 	{
@@ -4479,7 +4479,7 @@ void FillGarrison(int Player)
 			};
 		};
 	};
-	//Заполняем гарнизоны если рядом враг
+	//Р—Р°РїРѕР»РЅСЏРµРј РіР°СЂРЅРёР·РѕРЅС‹ РµСЃР»Рё СЂСЏРґРѕРј РІСЂР°Рі
 	for (int i=1; i<=MapSize; i++)
 	{
 		dcProvince *PR=(pFirstProvince+i);
@@ -4498,7 +4498,7 @@ void FillGarrison(int Player)
 			dcHero *HR=PR->pGarrison;
 		for (int Rank=4; Rank>0; Rank--)
 		{
-			//Найм новобранцев
+			//РќР°Р№Рј РЅРѕРІРѕР±СЂР°РЅС†РµРІ
 			int Count=1;
 			while ((Count>0)&&(HR->GetFreeUnitSlot(Rank)))
 			{
@@ -4542,10 +4542,10 @@ void FillGarrison(int Player)
 	};
 };
 
-//Выбор предметов при переполненном инвентаре
+//Р’С‹Р±РѕСЂ РїСЂРµРґРјРµС‚РѕРІ РїСЂРё РїРµСЂРµРїРѕР»РЅРµРЅРЅРѕРј РёРЅРІРµРЅС‚Р°СЂРµ
 void TakeLootAI(dcHero *HR)
 {
-	//Надеваем подходящие вещи из лута
+	//РќР°РґРµРІР°РµРј РїРѕРґС…РѕРґСЏС‰РёРµ РІРµС‰Рё РёР· Р»СѓС‚Р°
 	bool TwoHand=false;
 	for (int j=0; j<3; j++)
 	{
@@ -4641,8 +4641,8 @@ void TakeLootAI(dcHero *HR)
 };
 
 
-//Возвращает, насколько высока вероятность атаки на провинцию (с рекурсивным учётом вражеских портов)
-//0 - внутри страны, 1 - граничит с нейтралом, 2 - с оппонентом, 3 - с врагом, 4 - вражеский герой в соседней провинции
+//Р’РѕР·РІСЂР°С‰Р°РµС‚, РЅР°СЃРєРѕР»СЊРєРѕ РІС‹СЃРѕРєР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚СЊ Р°С‚Р°РєРё РЅР° РїСЂРѕРІРёРЅС†РёСЋ (СЃ СЂРµРєСѓСЂСЃРёРІРЅС‹Рј СѓС‡С‘С‚РѕРј РІСЂР°Р¶РµСЃРєРёС… РїРѕСЂС‚РѕРІ)
+//0 - РІРЅСѓС‚СЂРё СЃС‚СЂР°РЅС‹, 1 - РіСЂР°РЅРёС‡РёС‚ СЃ РЅРµР№С‚СЂР°Р»РѕРј, 2 - СЃ РѕРїРїРѕРЅРµРЅС‚РѕРј, 3 - СЃ РІСЂР°РіРѕРј, 4 - РІСЂР°Р¶РµСЃРєРёР№ РіРµСЂРѕР№ РІ СЃРѕСЃРµРґРЅРµР№ РїСЂРѕРІРёРЅС†РёРё
 int GetDanger(int Province, int Player, int Port)
 {
 	dcProvince *PR=(pFirstProvince+Province);
@@ -4696,7 +4696,7 @@ int GetDanger(int Province, int Player, int Port)
 	return Danger;
 };
 
-//Выбрать и провести ритуал
+//Р’С‹Р±СЂР°С‚СЊ Рё РїСЂРѕРІРµСЃС‚Рё СЂРёС‚СѓР°Р»
 void CastRitualAI(int Player)
 {	
 	int Cycle=arPlayer[Player].iCanCast;
@@ -4717,25 +4717,25 @@ void CastRitualAI(int Player)
 						NewHero=-1;
 						switch (Rit)
 						{
-						case 2: //Феерия
+						case 2: //Р¤РµРµСЂРёСЏ
 							if (PR->GetMood()<0)
 							{
 								NewTaste=abs(PR->GetMood())*PR->GetLevel()+PR->arUnrest[Player]/25;								
 							};
 							break;
-						case 3:	//Волшебный ларец
+						case 3:	//Р’РѕР»С€РµР±РЅС‹Р№ Р»Р°СЂРµС†
 							if ((arPlayer[Player].Gold<=GoldLimit)&&(PR->GetMood()>0))
 							{
 								NewTaste=PR->GetMood()*2+PR->GetLevel();
 							};
 							break;
-						case 5:	//Тёмный ритуал
+						case 5:	//РўС‘РјРЅС‹Р№ СЂРёС‚СѓР°Р»
 							if ((arPlayer[Player].Gem<=GemLimit)&&(PR->GetMood()>0))
 							{
 								NewTaste=PR->GetMood()*2+PR->GetLevel();
 							};
 							break;
-						case 8:	//Бой с иллюзией
+						case 8:	//Р‘РѕР№ СЃ РёР»Р»СЋР·РёРµР№
 							for (int HR=0; HR<MAX_HERO; HR++)
 							{
 								Temp=0;
@@ -4754,7 +4754,7 @@ void CastRitualAI(int Player)
 								};
 							};
 							break;
-						case 9:	//Сотворение
+						case 9:	//РЎРѕС‚РІРѕСЂРµРЅРёРµ
 							for (int HR=0; HR<MAX_HERO; HR++)
 							{
 								if (arPlayer[Player].arHero[HR])
@@ -4767,7 +4767,7 @@ void CastRitualAI(int Player)
 								};
 							};
 							break;
-						case 10: //Дары земли
+						case 10: //Р”Р°СЂС‹ Р·РµРјР»Рё
 							for (int i=0; i<MAX_NEIGHBOUR; i++)
 							{								
 								NewTaste=(PR->GetLevel()-GetDanger(Prov,Player,0))*10;
@@ -4775,7 +4775,7 @@ void CastRitualAI(int Player)
 								{NewTaste+=PR->GetMood()*10;};
 							};
 							break;
-						case 13: //Небесная стража
+						case 13: //РќРµР±РµСЃРЅР°СЏ СЃС‚СЂР°Р¶Р°
 							{
 								if (PR->pGuard)
 								{NewTaste=(GetDefenderPower(64,NULL)-GetDefenderPower(PR->iDefender,PR->pGuard))*20;}
@@ -4790,7 +4790,7 @@ void CastRitualAI(int Player)
 								{NewTaste*=2;};
 							};
 							break;
-						case 15: //Магический барьер
+						case 15: //РњР°РіРёС‡РµСЃРєРёР№ Р±Р°СЂСЊРµСЂ
 							{
 							int Danger=GetDanger(Prov,Player,0);
 							if (Danger>=3)
@@ -4812,7 +4812,7 @@ void CastRitualAI(int Player)
 							};
 							};
 							break;
-						case 14:	//Безумие
+						case 14:	//Р‘РµР·СѓРјРёРµ
 							if ((Player!=PR->ipPlayer)&&(PR->ipPlayer>0))
 							{
 								NewTaste=PR->GetLevel()-5;
@@ -4842,8 +4842,8 @@ void CastRitualAI(int Player)
 								};
 							};
 							break;
-						case 18:	//Восстание нежити
-						case 23:	//Нашествие демонов
+						case 18:	//Р’РѕСЃСЃС‚Р°РЅРёРµ РЅРµР¶РёС‚Рё
+						case 23:	//РќР°С€РµСЃС‚РІРёРµ РґРµРјРѕРЅРѕРІ
 							if ((Player!=PR->ipPlayer)&&(PR->ipPlayer>0))
 							{
 								NewTaste=(PR->GetGoldIncome()+PR->GetGemIncome()*2)/8;
@@ -4857,9 +4857,9 @@ void CastRitualAI(int Player)
 								{NewTaste*=4;};
 							};
 							break;
-						case 17:	//Серный дождь
-						case 22:	//Пожар
-						case 24:	//Поветрие
+						case 17:	//РЎРµСЂРЅС‹Р№ РґРѕР¶РґСЊ
+						case 22:	//РџРѕР¶Р°СЂ
+						case 24:	//РџРѕРІРµС‚СЂРёРµ
 							if ((Player!=PR->ipPlayer)&&(PR->ipPlayer>0)&&(arPlayer[Player].Politic[PR->ipPlayer].Treaty==1)&&(arPlayer[Player].Politic[PR->ipPlayer].CanKill<0))
 							{
 								NewTaste=Random(10)-5;
@@ -4874,7 +4874,7 @@ void CastRitualAI(int Player)
 								};
 							};
 							break;
-						case 16: //Снежный буран
+						case 16: //РЎРЅРµР¶РЅС‹Р№ Р±СѓСЂР°РЅ
 							if ((Player!=PR->ipPlayer)&&(PR->ipPlayer>0)&&(arPlayer[Player].Politic[PR->ipPlayer].Treaty==1))
 							{
 								bool bCast=false;
@@ -4898,10 +4898,10 @@ void CastRitualAI(int Player)
 								{NewTaste=0;};
 							};
 							break;
-						case 19: //Дары Небес
+						case 19: //Р”Р°СЂС‹ РќРµР±РµСЃ
 							NewTaste=50-PR->GetMood()*2;
 							break;
-						case 21: //Башня Молний
+						case 21: //Р‘Р°С€РЅСЏ РњРѕР»РЅРёР№
 							NewTaste=Random(30);
 							if (PR->ipTerrain==4)
 							{NewTaste+=10;};
@@ -4927,11 +4927,11 @@ void CastRitualAI(int Player)
 	};
 };
 
-//Вычисление политического преимущества (чем больше, тем сильней Player2 относительно 1-го)
+//Р’С‹С‡РёСЃР»РµРЅРёРµ РїРѕР»РёС‚РёС‡РµСЃРєРѕРіРѕ РїСЂРµРёРјСѓС‰РµСЃС‚РІР° (С‡РµРј Р±РѕР»СЊС€Рµ, С‚РµРј СЃРёР»СЊРЅРµР№ Player2 РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ 1-РіРѕ)
 int GetPoliticalPower(int Player1, int Player2)
 {
 	int Result=arPlayer[Player1].Politic[Player2].Power;
-	//Учёт политической ситуации
+	//РЈС‡С‘С‚ РїРѕР»РёС‚РёС‡РµСЃРєРѕР№ СЃРёС‚СѓР°С†РёРё
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
 		if ((i!=Player1)&&(i!=Player2)&&(arPlayer[i].bInGame))
@@ -4946,14 +4946,14 @@ int GetPoliticalPower(int Player1, int Player2)
 			{Result+=30;};
 		};
 	};
-	//Учёт уровня сложности
+	//РЈС‡С‘С‚ СѓСЂРѕРІРЅСЏ СЃР»РѕР¶РЅРѕСЃС‚Рё
 	if (arPlayer[Player2].Control==1)
 	{Result-=arPlayer[Player1].iDifficulty*3;}
 	else
 	{Result+=(arPlayer[Player2].iDifficulty-arPlayer[Player1].iDifficulty)*3;};
-	//Учёт отношений
+	//РЈС‡С‘С‚ РѕС‚РЅРѕС€РµРЅРёР№
 	Result+=arPlayer[Player1].GetAttitude(Player2)/3;
-	//Учёт незащищённых граничных провинций
+	//РЈС‡С‘С‚ РЅРµР·Р°С‰РёС‰С‘РЅРЅС‹С… РіСЂР°РЅРёС‡РЅС‹С… РїСЂРѕРІРёРЅС†РёР№
 	bool Border, Border1=false;
 	for (int i=1; i<=MapSize; i++)
 	{
@@ -4991,7 +4991,7 @@ int GetPoliticalPower(int Player1, int Player2)
 		//	};
 		//};
 	};
-	//Учёт живых героев
+	//РЈС‡С‘С‚ Р¶РёРІС‹С… РіРµСЂРѕРµРІ
 	for (int i=0; i<MAX_HERO; i++)
 	{
 		if ((arPlayer[Player1].arHero[i])&&(arPlayer[Player1].arHero[i]->iDead<0))
@@ -5004,12 +5004,12 @@ int GetPoliticalPower(int Player1, int Player2)
 		if (Result<0)
 		{Result/=2;};
 	};*/
-	//Осада родовой провинции
+	//РћСЃР°РґР° СЂРѕРґРѕРІРѕР№ РїСЂРѕРІРёРЅС†РёРё
 	if ((pFirstProvince+arPlayer[Player1].ipProvince)->GetSiegeIndex()==Player2)
 	{Result+=50;};
 	if ((pFirstProvince+arPlayer[Player2].ipProvince)->GetSiegeIndex()==Player1)
 	{Result-=250;};
-	//Близость к родовой провинции
+	//Р‘Р»РёР·РѕСЃС‚СЊ Рє СЂРѕРґРѕРІРѕР№ РїСЂРѕРІРёРЅС†РёРё
 	Border=false;Border1=false;
 	for (int j=0; j<MAX_NEIGHBOUR; j++)
 	{
@@ -5042,11 +5042,11 @@ int GetResPrice(int Res)
 	return ResPrice;
 };
 
-//Вычисление выгоды сделки
+//Р’С‹С‡РёСЃР»РµРЅРёРµ РІС‹РіРѕРґС‹ СЃРґРµР»РєРё
 int GetTradeProfit(int Player, dcMessage *Mess)
 {
 	int Result=0;
-	//Торговля
+	//РўРѕСЂРіРѕРІР»СЏ
 	if (Mess->Type==2)
 	{
 		Result+=Mess->Trade.Gold*2;
@@ -5105,7 +5105,7 @@ int GetTradeProfit(int Player, dcMessage *Mess)
 			};
 		};
 	};
-	//Обмен
+	//РћР±РјРµРЅ
 	if (Mess->Type==3)
 	{
 		Result+=Mess->Trade.Gold/2;
@@ -5186,7 +5186,7 @@ int GetTradeProfit(int Player, dcMessage *Mess)
 
 
 
-//Выбор ответа на дипломатическое предложение
+//Р’С‹Р±РѕСЂ РѕС‚РІРµС‚Р° РЅР° РґРёРїР»РѕРјР°С‚РёС‡РµСЃРєРѕРµ РїСЂРµРґР»РѕР¶РµРЅРёРµ
 int GetDiploAnswerAI(int Player, int Writer)
 {
 	int Result=1;
@@ -5242,7 +5242,7 @@ int GetDiploAnswerAI(int Player, int Writer)
 	{
 		Power-=arPlayer[Player].Politic[Writer].CanKill;
 		Power-=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/3;
-		//Проверка союзников при попытке заключить мир
+		//РџСЂРѕРІРµСЂРєР° СЃРѕСЋР·РЅРёРєРѕРІ РїСЂРё РїРѕРїС‹С‚РєРµ Р·Р°РєР»СЋС‡РёС‚СЊ РјРёСЂ
 		for (int i=1; i<=CurGame.iMaxPlayers; i++)
 		{
 			if ((i!=Player)&&(arPlayer[i].bInGame)&&(arPlayer[i].Politic[Writer].Treaty==3)&&(arPlayer[i].Politic[Player].Treaty==1))
@@ -5468,7 +5468,7 @@ int GetDiploAnswerAI(int Player, int Writer)
 	return Result;
 };
 
-//Получение подходящего текста для вставки в сообщение (Name отвечает за то, нужно ли в текст подставлять имя)
+//РџРѕР»СѓС‡РµРЅРёРµ РїРѕРґС…РѕРґСЏС‰РµРіРѕ С‚РµРєСЃС‚Р° РґР»СЏ РІСЃС‚Р°РІРєРё РІ СЃРѕРѕР±С‰РµРЅРёРµ (Name РѕС‚РІРµС‡Р°РµС‚ Р·Р° С‚Рѕ, РЅСѓР¶РЅРѕ Р»Рё РІ С‚РµРєСЃС‚ РїРѕРґСЃС‚Р°РІР»СЏС‚СЊ РёРјСЏ)
 char * GetDipText(int PL, int Index, int Att, int Param, int *Name)
 {
 	ClearRoll();
@@ -5510,7 +5510,7 @@ char * GetDipText(int PL, int Index, int Att, int Param, int *Name)
 	{return NULL;}
 };
 
-//Составление текста послания
+//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ С‚РµРєСЃС‚Р° РїРѕСЃР»Р°РЅРёСЏ
 void MakeDipText(int Player1, int Player2, int Index, int Param)
 {
 	ClearRoll();
@@ -5554,11 +5554,11 @@ void MakeDipText(int Player1, int Player2, int Index, int Param)
 	{sprintf(arPlayer[Player1].Politic[Player2].Message.Text,pFirstPhrase->str);};
 };
 
-//Составление сообщения с ответом
+//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РѕС‚РІРµС‚РѕРј
 void SendAnswerAI(int Player, int Victim)
 {
 	int Name; char *Mess=NULL;	
-	//Ответ союзника при несогласии с миром
+	//РћС‚РІРµС‚ СЃРѕСЋР·РЅРёРєР° РїСЂРё РЅРµСЃРѕРіР»Р°СЃРёРё СЃ РјРёСЂРѕРј
 	if (arPlayer[Player].Politic[Victim].Answer>1000)
 	{
 		int Writer=arPlayer[Player].Politic[Victim].Answer-1000;		
@@ -5594,7 +5594,7 @@ void SendAnswerAI(int Player, int Victim)
 
 };
 
-//Составление сообщения с приветствием
+//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РїСЂРёРІРµС‚СЃС‚РІРёРµРј
 void SendGreetingsAI(int Player, int Victim)
 {
 	arPlayer[Player].Politic[Victim].Message.Type=5;
@@ -5625,7 +5625,7 @@ void SendGreetingsAI(int Player, int Victim)
 	};
 };
 
-//Составление и рассылка дипломатической почты
+//РЎРѕСЃС‚Р°РІР»РµРЅРёРµ Рё СЂР°СЃСЃС‹Р»РєР° РґРёРїР»РѕРјР°С‚РёС‡РµСЃРєРѕР№ РїРѕС‡С‚С‹
 void MakeDiplomacyAI(int Player)
 {
 	if ((CurGame.iGameType==2)&&(arPlayer[Player].ipProfile==3)&&(Campaign.arDialog[104]==1))
@@ -5644,7 +5644,7 @@ void MakeDiplomacyAI(int Player)
 	MoveMap(arPlayer[Player].ipProvince,-1,WalkSpeed,0,0);
 	int iWar=0;
 	bool bExchange=true, bTreaty=true, bUnion=true;
-	//Поиск противника если со всеми мир
+	//РџРѕРёСЃРє РїСЂРѕС‚РёРІРЅРёРєР° РµСЃР»Рё СЃРѕ РІСЃРµРјРё РјРёСЂ
 	if (arPlayer[Player].GetWars()==0)
 	{
 		for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
@@ -5697,7 +5697,7 @@ void MakeDiplomacyAI(int Player)
 					{
 						if ((CurGame.iGameType==2)&&(Campaign.arDialog[103])&&(arPlayer[Player].ipProfile==3))
 						{
-							//Белез в кампании
+							//Р‘РµР»РµР· РІ РєР°РјРїР°РЅРёРё
 							arPlayer[Player].Politic[PL].Message.Type=8;
 							MakeDipText(Player,PL,31,0);
 						}
@@ -5706,7 +5706,7 @@ void MakeDiplomacyAI(int Player)
 						arPlayer[Player].Politic[PL].Answer=0;
 						if (P1>=P2*3)
 						{
-							//Предлагаем сдаться
+							//РџСЂРµРґР»Р°РіР°РµРј СЃРґР°С‚СЊСЃСЏ
 							arPlayer[Player].Politic[PL].Message.Type=8;
 							MakeDipText(Player,PL,21,0);
 						}
@@ -5714,13 +5714,13 @@ void MakeDiplomacyAI(int Player)
 						{
 							if (P2>=P1*3)
 							{
-								//Сдаёмся
+								//РЎРґР°С‘РјСЃСЏ
 								arPlayer[Player].Politic[PL].Message.Type=9;
 								MakeDipText(Player,PL,22,0);
 							}
 							else
 							{
-								//Предлагаем жребий
+								//РџСЂРµРґР»Р°РіР°РµРј Р¶СЂРµР±РёР№
 								arPlayer[Player].Politic[PL].Message.Type=7;
 								MakeDipText(Player,PL,20,0);
 							};
@@ -5735,7 +5735,7 @@ void MakeDiplomacyAI(int Player)
 						{arPlayer[Player].bInGame=false;};
 					};
 				};
-				//Объявляем войну если остались вдвоём с оппонентом
+				//РћР±СЉСЏРІР»СЏРµРј РІРѕР№РЅСѓ РµСЃР»Рё РѕСЃС‚Р°Р»РёСЃСЊ РІРґРІРѕС‘Рј СЃ РѕРїРїРѕРЅРµРЅС‚РѕРј
 				if (arPlayer[Player].Politic[PL].Treaty==2)
 				{
 					if (arPlayer[PL].Control==1)
@@ -5756,7 +5756,7 @@ void MakeDiplomacyAI(int Player)
 				switch (arPlayer[Player].Politic[PL].Treaty)
 				{
 				case 1:
-					//Предлагаем мир
+					//РџСЂРµРґР»Р°РіР°РµРј РјРёСЂ
 					if ((GetPoliticalPower(Player,PL)>0)||(arPlayer[Player].Politic[PL].CanKill<1))
 					{
 						int Time=arPlayer[Player].Politic[PL].arTalk[1][2];
@@ -5768,7 +5768,7 @@ void MakeDiplomacyAI(int Player)
 						{
 							if (((pFirstProvince+arPlayer[Player].ipProvince)->GetSiegeIndex()==PL)||(Random(50+CurGame.iCurrentTurn-Time)>(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/2))
 							{
-								sprintf(MSS,"Правитель %s предлагает мир правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+								sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ РјРёСЂ РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 								FileLog(MSS);
 								int Ally1=0, Ally2=0;
 								for (int i=1; i<=CurGame.iMaxPlayers; i++)
@@ -5828,7 +5828,7 @@ void MakeDiplomacyAI(int Player)
 										arPlayer[Player].Politic[PL].Treaty=2;
 										arPlayer[PL].Politic[Player].Treaty=2;
 										arPlayer[Player].Politic[PL].arTalk[2][2]=CurGame.iCurrentTurn;
-										FileLog("Согласие");
+										FileLog("РЎРѕРіР»Р°СЃРёРµ");
 									};
 								};								
 							};
@@ -5855,9 +5855,9 @@ void MakeDiplomacyAI(int Player)
 						{
 							int Ransom=100+(War-500)/3+CurGame.iCurrentTurn;
 							if ((CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[6][2]>=GetMin(20,CurGame.iCurrentTurn))&&(Random(War)<500+(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iGreed*10)&&(arPlayer[PL].Gem*3+arPlayer[PL].Gold>Ransom))
-							//Требуем выкуп
+							//РўСЂРµР±СѓРµРј РІС‹РєСѓРї
 							{
-								sprintf(MSS,"Правитель %s требует выкуп у правителя %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+								sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s С‚СЂРµР±СѓРµС‚ РІС‹РєСѓРї Сѓ РїСЂР°РІРёС‚РµР»СЏ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 								FileLog(MSS);
 								int Gold=0, Gem=0;
 								if (arPlayer[Player].Gem*4>arPlayer[Player].Gold)
@@ -5898,19 +5898,19 @@ void MakeDiplomacyAI(int Player)
 										arPlayer[PL].Gem-=Gem;
 										arPlayer[PL].Gold-=Gold;									
 										arPlayer[Player].Politic[PL].arTalk[6][1]=1;
-										FileLog("Уплачен");
+										FileLog("РЈРїР»Р°С‡РµРЅ");
 									}
 									else
 									{
 										arPlayer[Player].Politic[PL].arTalk[6][1]=0;
-										FileLog("Отказ");
+										FileLog("РћС‚РєР°Р·");
 									};
 								};
 							}
 							else
-							//Объявляем войну
+							//РћР±СЉСЏРІР»СЏРµРј РІРѕР№РЅСѓ
 							{
-								sprintf(MSS,"Правитель %s объявляет войну правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+								sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РѕР±СЉСЏРІР»СЏРµС‚ РІРѕР№РЅСѓ РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 								FileLog(MSS);
 								if (arPlayer[PL].Control==1)
 								{
@@ -5928,12 +5928,12 @@ void MakeDiplomacyAI(int Player)
 						};
 					};
 					};
-					//Предлагаем союз
+					//РџСЂРµРґР»Р°РіР°РµРј СЃРѕСЋР·
 					if ((bTreaty)&&(bUnion)&&(arPlayer[Player].GetUnionCount()==0)&&(arPlayer[PL].GetUnionCount()==0)&&(arPlayer[Player].GetAttitude(PL)>=50)&&(GetPoliticalPower(Player,PL)>100)&&(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[3][2]>(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy))
 					{
 						if ((CurGame.iGameType==2)&&(Campaign.arDialog[103])&&((arPlayer[Player].ipProfile==3)||(arPlayer[PL].ipProfile==3)))
 						{
-							//не предлагать белезом, если договор с игроком
+							//РЅРµ РїСЂРµРґР»Р°РіР°С‚СЊ Р±РµР»РµР·РѕРј, РµСЃР»Рё РґРѕРіРѕРІРѕСЂ СЃ РёРіСЂРѕРєРѕРј
 						}
 						else
 						{
@@ -5944,7 +5944,7 @@ void MakeDiplomacyAI(int Player)
 						{Poss-=arPlayer[Player].iDifficulty*20;};						
 						if ((Poss<20)||(Random(Poss)<20))
 						{
-							sprintf(MSS,"Правитель %s предлагает союз правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+							sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ СЃРѕСЋР· РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 							FileLog(MSS);
 							bUnion=false;
 							bTreaty=false;
@@ -5970,17 +5970,17 @@ void MakeDiplomacyAI(int Player)
 					};
 					break;
 				case 3:
-					//Отмена союза
+					//РћС‚РјРµРЅР° СЃРѕСЋР·Р°
 					if ((CurGame.iCurrentTurn-arPlayer[PL].Politic[Player].arTalk[3][2]>10)&&(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[3][2]>10)&&
 						((arPlayer[PL].GetUnionCount()>1)||(arPlayer[Player].GetAttitude(PL)<30)))
 					{
 						if ((CurGame.iGameType==2)&&(Campaign.arDialog[103])&&(arPlayer[Player].ipProfile==3)&&(PL==1))
 						{
-							//Оставляем союз для Белеза в кампании
+							//РћСЃС‚Р°РІР»СЏРµРј СЃРѕСЋР· РґР»СЏ Р‘РµР»РµР·Р° РІ РєР°РјРїР°РЅРёРё
 						}
 						else
 						{
-						sprintf(MSS,"Правитель %s отменяет союз с правителем %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+						sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РѕС‚РјРµРЅСЏРµС‚ СЃРѕСЋР· СЃ РїСЂР°РІРёС‚РµР»РµРј %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 						FileLog(MSS);
 						bTreaty=false;
 						if (arPlayer[PL].Control==1)
@@ -6002,16 +6002,16 @@ void MakeDiplomacyAI(int Player)
 				{bTreaty=false;};
 				if (arPlayer[Player].Politic[PL].Treaty>1)
 				{
-					//Отмена торгового договора 
+					//РћС‚РјРµРЅР° С‚РѕСЂРіРѕРІРѕРіРѕ РґРѕРіРѕРІРѕСЂР° 
 					if ((bTreaty)&&(arPlayer[Player].Politic[PL].Trade.bTrade))
 					{
 						bool bCancel=false, bCantTrade=false;
-						//(при отказе от пересмотра договора)
+						//(РїСЂРё РѕС‚РєР°Р·Рµ РѕС‚ РїРµСЂРµСЃРјРѕС‚СЂР° РґРѕРіРѕРІРѕСЂР°)
 						if ((arPlayer[Player].Politic[PL].arTalk[5][1]==0)&&
 							(arPlayer[Player].Politic[PL].arTalk[5][2]>0)&&
 							((arPlayer[Player].Politic[PL].arTalk[5][2]>arPlayer[PL].Politic[Player].arTalk[5][2])||(arPlayer[PL].Politic[Player].arTalk[5][1]==0)))
 						{bCancel=true;};
-						//(нет ресурса или лишний ресурс)
+						//(РЅРµС‚ СЂРµСЃСѓСЂСЃР° РёР»Рё Р»РёС€РЅРёР№ СЂРµСЃСѓСЂСЃ)
 						for (int i=1; i<=iMaxResource; i++)
 						{
 							if (arPlayer[Player].GetResource(i)<1)
@@ -6035,7 +6035,7 @@ void MakeDiplomacyAI(int Player)
 								};
 							};
 						};
-						//(отрицательный доход)
+						//(РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ РґРѕС…РѕРґ)
 						if ((arPlayer[Player].GoldInc<0)&&(arPlayer[Player].Politic[PL].Trade.Gold>0))
 						{bCancel=true;};
 						if ((arPlayer[Player].GemInc<0)&&(arPlayer[Player].Politic[PL].Trade.Gem>0))
@@ -6046,7 +6046,7 @@ void MakeDiplomacyAI(int Player)
 							((CurGame.iCurrentTurn-arPlayer[PL].Politic[Player].arTalk[5][2]>10)||(arPlayer[PL].Politic[Player].arTalk[5][1]==0))))
 
 						{
-							sprintf(MSS,"Правитель %s отменяет торговлю с правителем %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+							sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РѕС‚РјРµРЅСЏРµС‚ С‚РѕСЂРіРѕРІР»СЋ СЃ РїСЂР°РІРёС‚РµР»РµРј %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 							FileLog(MSS);
 							bTreaty=false;
 							if (arPlayer[PL].Control==1)
@@ -6062,7 +6062,7 @@ void MakeDiplomacyAI(int Player)
 						};
 					};
 
-					//Пересмотр торговли
+					//РџРµСЂРµСЃРјРѕС‚СЂ С‚РѕСЂРіРѕРІР»Рё
 					if ((bTreaty)&&(arPlayer[Player].Politic[PL].Trade.bTrade)&&(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[5][2]>10)&&
 						((CurGame.iCurrentTurn-arPlayer[PL].Politic[Player].arTalk[5][2]>10)||(arPlayer[PL].Politic[Player].arTalk[5][1]==0)))
 					{
@@ -6078,7 +6078,7 @@ void MakeDiplomacyAI(int Player)
 						if (Give>Take+10)
 						{
 							bTreaty=false;
-							sprintf(MSS,"Правитель %s предлагает пересмотр торговли правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+							sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ РїРµСЂРµСЃРјРѕС‚СЂ С‚РѕСЂРіРѕРІР»Рё РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 							FileLog(MSS);
 							int Gold1=arPlayer[Player].Politic[PL].Trade.Gold, Gold2=arPlayer[PL].Politic[Player].Trade.Gold,
 								Gem1=arPlayer[Player].Politic[PL].Trade.Gem, Gem2=arPlayer[PL].Politic[Player].Trade.Gem,
@@ -6139,18 +6139,18 @@ void MakeDiplomacyAI(int Player)
 									arPlayer[Player].Politic[PL].Trade.Gem=Gem1;
 									arPlayer[PL].Politic[Player].Trade.Gem=Gem2;								
 									arPlayer[Player].Politic[PL].arTalk[5][1]=1;
-									FileLog("Принято");
+									FileLog("РџСЂРёРЅСЏС‚Рѕ");
 								}
 								else
 								{
 									arPlayer[Player].Politic[PL].arTalk[5][1]=0;
-									FileLog("Отказ");
+									FileLog("РћС‚РєР°Р·");
 								};
 							};
 							arPlayer[Player].Politic[PL].arTalk[5][2]=CurGame.iCurrentTurn;
 						};
 					};
-					//Предлагаем торговлю				
+					//РџСЂРµРґР»Р°РіР°РµРј С‚РѕСЂРіРѕРІР»СЋ				
 					if ((bTreaty)&&(arPlayer[Player].GetAttitude(PL)>=10)&&(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[5][2]>(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy)&&(!arPlayer[Player].Politic[PL].Trade.bTrade))
 					{						
 						int Give=0, Take=0;
@@ -6163,7 +6163,7 @@ void MakeDiplomacyAI(int Player)
 						};
 						if ((Take>0)||(Give>0))
 						{
-							sprintf(MSS,"Правитель %s предлагает торговлю правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+							sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ С‚РѕСЂРіРѕРІР»СЋ РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 							FileLog(MSS);
 							bTreaty=false;
 							int Pay=0;
@@ -6237,24 +6237,24 @@ void MakeDiplomacyAI(int Player)
 									arPlayer[Player].Politic[PL].Trade.Stuff[0]=Give;
 									arPlayer[PL].Politic[Player].Trade.Stuff[0]=Take;
 									arPlayer[Player].Politic[PL].arTalk[5][1]=1;
-									FileLog("Принято");
+									FileLog("РџСЂРёРЅСЏС‚Рѕ");
 								}
 								else
 								{
 									arPlayer[Player].Politic[PL].arTalk[5][1]=0;
-									FileLog("Отказ");
+									FileLog("РћС‚РєР°Р·");
 								};
 							};
 							arPlayer[Player].Politic[PL].arTalk[5][2]=CurGame.iCurrentTurn;
 							};
 						};
 					};
-					//Предлагаем обмен
+					//РџСЂРµРґР»Р°РіР°РµРј РѕР±РјРµРЅ
 					if ((bTreaty)&&(arPlayer[Player].GetAttitude(PL)>=0)&&(arPlayer[Player].arTreasury[TREASURY_SIZE-1][0]>0)&&(bExchange)&&
 						(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[4][2]>(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy)&&
 						(arPlayer[Player].Politic[PL].arTalk[4][1]!=arPlayer[Player].arTreasury[TREASURY_SIZE-1][0]))
 					{
-						sprintf(MSS,"Правитель %s предлагает обмен правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
+						sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ РѕР±РјРµРЅ РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill);
 						FileLog(MSS);
 						bTreaty=false;
 						arPlayer[Player].Politic[PL].arTalk[4][1]=arPlayer[Player].arTreasury[TREASURY_SIZE-1][0];
@@ -6286,7 +6286,7 @@ void MakeDiplomacyAI(int Player)
 								};
 								if (Slot>=0)
 								{
-									sprintf(MSS,"Обмен состоялся, предмет: %s",(pFirstItem+arPlayer[Player].arTreasury[TREASURY_SIZE-1][0])->sName);
+									sprintf(MSS,"РћР±РјРµРЅ СЃРѕСЃС‚РѕСЏР»СЃСЏ, РїСЂРµРґРјРµС‚: %s",(pFirstItem+arPlayer[Player].arTreasury[TREASURY_SIZE-1][0])->sName);
 									FileLog(MSS);
 									arPlayer[Player].Gold+=(pFirstItem+arPlayer[Player].arTreasury[TREASURY_SIZE-1][0])->iGoldCost;
 									arPlayer[PL].Gold-=(pFirstItem+arPlayer[Player].arTreasury[TREASURY_SIZE-1][0])->iGoldCost;
@@ -6303,7 +6303,7 @@ void MakeDiplomacyAI(int Player)
 					};
 
 
-					//Предлагаем подарок
+					//РџСЂРµРґР»Р°РіР°РµРј РїРѕРґР°СЂРѕРє
 				//	int AAAA=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/2+((pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy-5)*3+Random(100+(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro);
 					int AAAA=Random((pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/2)+Random((pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/2)+Random((pFirstPlayerProfile+arPlayer[Player].ipProfile)->iAggro/2)+
 						Random(((pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy-5)*3)+Random(20);
@@ -6317,7 +6317,7 @@ void MakeDiplomacyAI(int Player)
 						(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[7][2]>(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iDiplomacy)&&
 						(CurGame.iCurrentTurn-arPlayer[Player].Politic[PL].arTalk[6][2]>10))
 					{
-						sprintf(MSS,"Правитель %s предлагает дар правителю %s. Отношения: Politic: %d, Attitude: %d, CanKill: %d, AAAA: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill,AAAA);
+						sprintf(MSS,"РџСЂР°РІРёС‚РµР»СЊ %s РїСЂРµРґР»Р°РіР°РµС‚ РґР°СЂ РїСЂР°РІРёС‚РµР»СЋ %s. РћС‚РЅРѕС€РµРЅРёСЏ: Politic: %d, Attitude: %d, CanKill: %d, AAAA: %d",arPlayer[Player].GetName(),arPlayer[PL].GetName(),GetPoliticalPower(Player,PL),arPlayer[Player].GetAttitude(PL), arPlayer[Player].Politic[PL].CanKill,AAAA);
 						FileLog(MSS);
 						/*if (PL==1)
 						{
@@ -6436,12 +6436,12 @@ void MakeTurnAI(int Player, int Progress)
 	readkey();*/
 
 	char stLog[200];
-	sprintf (stLog,"%s ходит...",arPlayer[Player].GetName());
+	sprintf (stLog,"%s С…РѕРґРёС‚...",arPlayer[Player].GetName());
 	DFileLog(stLog);
 	if (arPlayer[Player].Control==3)
 	{arPlayer[Player].iKarma=0;};
 
-	//Добавляем договора с разными стражами
+	//Р”РѕР±Р°РІР»СЏРµРј РґРѕРіРѕРІРѕСЂР° СЃ СЂР°Р·РЅС‹РјРё СЃС‚СЂР°Р¶Р°РјРё
 	if (
 		(CurGame.iGameType==2)&&
 		(CurGame.iCurrentTurn%11==10))
@@ -6473,7 +6473,7 @@ void MakeTurnAI(int Player, int Progress)
 	GoldLimit=50+CurGame.iCurrentTurn;
 	GemLimit=20+CurGame.iCurrentTurn/5;
 
-	//Обновление массива вражеских героев-охранников	
+	//РћР±РЅРѕРІР»РµРЅРёРµ РјР°СЃСЃРёРІР° РІСЂР°Р¶РµСЃРєРёС… РіРµСЂРѕРµРІ-РѕС…СЂР°РЅРЅРёРєРѕРІ	
 	for (int j=0; j<MAX_HERO; j++)
 	{
 		if ((arPlayer[Player].arHero[j])&&(arPlayer[Player].arHero[j]->iDead<0)&&(arPlayer[Player].arHero[j]->iCamper>0)&&(arPlayer[Player].arHero[j]->iCampTurn>0))
@@ -6591,19 +6591,19 @@ void MakeTurnAI(int Player, int Progress)
 	{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
 	if ((CurGame.iCurrentTurn<=10)&&(bCanSpend))		
 	{
-		WriteLog("Строительство в замке (начало игры)");
+		WriteLog("РЎС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ РІ Р·Р°РјРєРµ (РЅР°С‡Р°Р»Рѕ РёРіСЂС‹)");
 		AI_InnerBuild(Player);
 		if (arPlayer[Player].Control==2)
 		{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
 	};
-	WriteLog("Ритуалы лечения");
+	WriteLog("Р РёС‚СѓР°Р»С‹ Р»РµС‡РµРЅРёСЏ");
 	RitualHealUnits(Player);
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		char LN[200];		
 		if ((arPlayer[Player].arHero[Hero])&&(arPlayer[Player].arHero[Hero]->iDead<0))
 		{
-			sprintf (LN,"Герой %s, торговля", arPlayer[Player].arHero[Hero]->pstName->str);
+			sprintf (LN,"Р“РµСЂРѕР№ %s, С‚РѕСЂРіРѕРІР»СЏ", arPlayer[Player].arHero[Hero]->pstName->str);
 			WriteLog(LN);
 			HireUnits(Player,Hero);
 			LearnSpells(Player,Hero);
@@ -6614,9 +6614,9 @@ void MakeTurnAI(int Player, int Progress)
 	};
 	if (arPlayer[Player].Control==2)
 	{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
-	DFileLog("Раздача приказов героям");
+	DFileLog("Р Р°Р·РґР°С‡Р° РїСЂРёРєР°Р·РѕРІ РіРµСЂРѕСЏРј");
 	HeroTaskmaster(Player, Progress);
-	DFileLog("Заполнение гарнизонов               ");
+	DFileLog("Р—Р°РїРѕР»РЅРµРЅРёРµ РіР°СЂРЅРёР·РѕРЅРѕРІ               ");
 	FillGarrison(Player);
 	if ((arPlayer[Player].iDifficulty==0)&&(CurGame.iCurrentTurn%2==0))
 	{bCanSpend=false;};
@@ -6626,21 +6626,21 @@ void MakeTurnAI(int Player, int Progress)
 	{
 		if (arPlayer[Player].Control==2)
 		{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
-		FileLog("Установка стражей               ");
+		FileLog("РЈСЃС‚Р°РЅРѕРІРєР° СЃС‚СЂР°Р¶РµР№               ");
 		AIPlaceDefender(Player);
 		if (arPlayer[Player].Control==2)
 		{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
 		if (CurGame.iCurrentTurn>10)
 			//&&((Random(100)>50)||(arPlayer[Player].Gold>=1000+CurGame.iCurrentTurn*10)))		
 		{
-			DFileLog("Строительство в замке          ");
+			DFileLog("РЎС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ РІ Р·Р°РјРєРµ          ");
 			AI_InnerBuild(Player);
 		};
 		if (arPlayer[Player].Control==2)
 		{arPlayer[Player].iKarma=(pFirstPlayerProfile+arPlayer[Player].ipProfile)->iKarma;};
 		if (Random(100)>60)
 		{
-			DFileLog("Внешние постройки                 ");
+			DFileLog("Р’РЅРµС€РЅРёРµ РїРѕСЃС‚СЂРѕР№РєРё                 ");
 			AIOuterBuild(Player);
 		};
 	};
@@ -6648,6 +6648,6 @@ void MakeTurnAI(int Player, int Progress)
 	if ((arPlayer[Player].Control==2)&&(CurGame.bDiplomacy))
 	{MakeDiplomacyAI(Player);};
 	NewProgress=TargetProgress;
-	DFileLog("Ход окончен");
-//	StopLog("Ход окончен, Игрок ", Player);
+	DFileLog("РҐРѕРґ РѕРєРѕРЅС‡РµРЅ");
+//	StopLog("РҐРѕРґ РѕРєРѕРЅС‡РµРЅ, РРіСЂРѕРє ", Player);
 };

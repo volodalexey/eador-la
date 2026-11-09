@@ -1,0 +1,6 @@
+[submodule "innoextract"]
+	path = innoextract
+	url = https://github.com/dscharrer/innoextract.git
+[submodule "allegro4"]
+	path = allegro4
+	url = https://github.com/liballeg/allegro4.git

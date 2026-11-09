@@ -1,6 +1,6 @@
 #include "Mapper.h"
 
-const int BAR_SIZE=6; //Количество позиций в окне строительства
+const int BAR_SIZE=6; //РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕР·РёС†РёР№ РІ РѕРєРЅРµ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°
 int arBuild[BAR_SIZE];
 int arBuildNum[BAR_SIZE];
 int CastleProv;
@@ -20,7 +20,7 @@ BITMAP *bmpBorder;
 bool bFogCheat=false;
 int MovePlayer, WalkType, WalkSpeed, MinLength, PathKicker;
 clPath *GoPath, *P1, *P2, *P3;
-UI_TextBox txtError;	//Сообщение о невозможности строительства/найма
+UI_TextBox txtError;	//РЎРѕРѕР±С‰РµРЅРёРµ Рѕ РЅРµРІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°/РЅР°Р№РјР°
 
 
 int MX,MY;
@@ -50,7 +50,7 @@ void ClearMoveMap()
 };
 
 
-//Возвращает затраты хода на прохождение провинции текущим героем
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ Р·Р°С‚СЂР°С‚С‹ С…РѕРґР° РЅР° РїСЂРѕС…РѕР¶РґРµРЅРёРµ РїСЂРѕРІРёРЅС†РёРё С‚РµРєСѓС‰РёРј РіРµСЂРѕРµРј
 int GetMoveCost(int Prov)
 {	
 	int Result=(pFirstTerrain+(pFirstProvince+Prov)->ipTerrain)->iBF_Pass;
@@ -67,14 +67,14 @@ dcProvince *PP;
 bool bSwim; int Add; 
 bool WillGo;
 
-//Заполняет массив pMoveMap количеством ходов, необходимым для достижения провинции текущим героем
+//Р—Р°РїРѕР»РЅСЏРµС‚ РјР°СЃСЃРёРІ pMoveMap РєРѕР»РёС‡РµСЃС‚РІРѕРј С…РѕРґРѕРІ, РЅРµРѕР±С…РѕРґРёРјС‹Рј РґР»СЏ РґРѕСЃС‚РёР¶РµРЅРёСЏ РїСЂРѕРІРёРЅС†РёРё С‚РµРєСѓС‰РёРј РіРµСЂРѕРµРј
 int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 {
 	bool FirstMove=false;
 	if (Weight>MAX_PATH)
 	{return 0;};
 
-//Первый ход	
+//РџРµСЂРІС‹Р№ С…РѕРґ	
 	if (Weight<0)
 	{
 		bSwim=false;
@@ -82,13 +82,13 @@ int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 		Weight=1;
 		*(pMoveMap+Prov)=Weight;
 
-//Конюшня
+//РљРѕРЅСЋС€РЅСЏ
 		if (WalkType<10)
 		{
 			Moves+=(pFirstProvince+Prov)->GetStable();
 		};
 		addMoves=0;
-//Осада
+//РћСЃР°РґР°
 		if ((MovePlayer>0)&&((pFirstProvince+Prov)->ipPlayer!=MovePlayer))
 		{Moves=1;};
 		*(pMobilMap+Prov)=Moves;
@@ -116,7 +116,7 @@ int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 				*(pMobilMap+Prov)=Moves;
 				addMoves=0;				
 				Moves-=GetMoveCost(Prov);
-//Конюшня
+//РљРѕРЅСЋС€РЅСЏ
 				if ((Moves<=0)&&(WalkType<10))
 				{
 					addMoves=(pFirstProvince+Prov)->GetStable();
@@ -172,13 +172,13 @@ int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 		{			
 			PP=(pFirstProvince+(pFirstProvince+Prov)->arNeighbour[i]);
 			WillGo=true;
-			//море
+			//РјРѕСЂРµ
 			if ((PP->ipTerrain==0)&&(Port<1)&&(WalkType<10))
 			{WillGo=false;};
-			//горы
+			//РіРѕСЂС‹
 			if ((PP->ipTerrain==7)&&((WalkType<10)||(Moves<2)))
 			{WillGo=false;};
-			//уже достигнута за более короткий путь
+			//СѓР¶Рµ РґРѕСЃС‚РёРіРЅСѓС‚Р° Р·Р° Р±РѕР»РµРµ РєРѕСЂРѕС‚РєРёР№ РїСѓС‚СЊ
 			Add=Weight;
 			if ((Moves<=0)||((Port>0)&&(PP->ipTerrain==0)&&((pFirstProvince+Prov)->ipTerrain>0))&&(Moves<WalkSpeed))
 			{Add++;};
@@ -192,11 +192,11 @@ int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 			//	((*(pMobilMap+(pFirstProvince+Prov)->arNeighbour[i])>=0))&&
 				(*(pMobilMap+(pFirstProvince+Prov)->arNeighbour[i])>=Add))
 			{WillGo=false;};
-			//запрет атаки из осаждённой провинции
+			//Р·Р°РїСЂРµС‚ Р°С‚Р°РєРё РёР· РѕСЃР°Р¶РґС‘РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 			if ((WillGo)&&(MovePlayer>0)&&((pFirstProvince+Prov)->ipPlayer!=MovePlayer)&&(PP->ipPlayer!=MovePlayer)&&(!Tutorial.Map)&&((pFirstProvince+Prov)->ipTerrain>0)&&((pFirstProvince+Prov)->ipTerrain!=7))
 			{
 				WillGo=false;
-				//разрешить атаку, если по соседству есть своя провинция
+				//СЂР°Р·СЂРµС€РёС‚СЊ Р°С‚Р°РєСѓ, РµСЃР»Рё РїРѕ СЃРѕСЃРµРґСЃС‚РІСѓ РµСЃС‚СЊ СЃРІРѕСЏ РїСЂРѕРІРёРЅС†РёСЏ
 				/*for (int j=0; j<MAX_NEIGHBOUR; j++)
 				{
 					if ((PP->arNeighbour[j]>0)&&((pFirstProvince+PP->arNeighbour[j])->ipPlayer==MovePlayer))
@@ -240,7 +240,7 @@ int MoveMap (int Prov, int Weight, int Moves, int Port, int addMoves)
 };
 
 
-//На основании массива pMoveMap ищет оптимальный путь из провинции Prov в провинцию Prov1
+//РќР° РѕСЃРЅРѕРІР°РЅРёРё РјР°СЃСЃРёРІР° pMoveMap РёС‰РµС‚ РѕРїС‚РёРјР°Р»СЊРЅС‹Р№ РїСѓС‚СЊ РёР· РїСЂРѕРІРёРЅС†РёРё Prov РІ РїСЂРѕРІРёРЅС†РёСЋ Prov1
 
 int LastMoves, Checker;
 int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port, int Length, int addMoves)
@@ -265,7 +265,7 @@ int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port
 			{
 				addMoves=0;
 				Moves-=GetMoveCost(Prov);
-//Конюшня
+//РљРѕРЅСЋС€РЅСЏ
 				if ((Moves<=0)&&(WalkType<10))
 				{
 					addMoves=(pFirstProvince+Prov)->GetStable();
@@ -280,12 +280,12 @@ int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port
 	else
 	{
 		LastMoves=0;
-		//Конюшня
+		//РљРѕРЅСЋС€РЅСЏ
 		if (WalkType<10)
 		{
 			Moves+=(pFirstProvince+Prov)->GetStable();
 		};
-		//Осада
+		//РћСЃР°РґР°
 		addMoves=0;
 		if ((MovePlayer>0)&&((pFirstProvince+Prov)->ipPlayer!=MovePlayer))
 		{Moves=1;};
@@ -352,13 +352,13 @@ int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port
 		{
 			PP=(pFirstProvince+(pFirstProvince+Prov)->arNeighbour[i]);
 			bool WillGo=true;
-			//море
+			//РјРѕСЂРµ
 			if ((PP->ipTerrain==0)&&(Port<1)&&(WalkType<10))
 			{WillGo=false;};
-			//горы
+			//РіРѕСЂС‹
 			if ((PP->ipTerrain==7)&&((WalkType<10)||(Moves<2)))
 			{WillGo=false;};
-			//уже достигнута за более короткий путь
+			//СѓР¶Рµ РґРѕСЃС‚РёРіРЅСѓС‚Р° Р·Р° Р±РѕР»РµРµ РєРѕСЂРѕС‚РєРёР№ РїСѓС‚СЊ
 			Add=Weight;
 		//	if ((Moves<=0)||((Port>0)&&(PP->ipTerrain==0)&&((pFirstProvince+Prov)->ipTerrain>0))&&(Moves<WalkSpeed))
 		//	{Add++;};
@@ -399,11 +399,11 @@ int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port
 				{WillGo=false;};
 			}
 
-			//запрет атаки из осаждённой провинции
+			//Р·Р°РїСЂРµС‚ Р°С‚Р°РєРё РёР· РѕСЃР°Р¶РґС‘РЅРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 			if ((WillGo)&&(MovePlayer>0)&&((pFirstProvince+Prov)->ipPlayer!=MovePlayer)&&(PP->ipPlayer!=MovePlayer)&&(!Tutorial.Map)&&((pFirstProvince+Prov)->ipTerrain>0)&&((pFirstProvince+Prov)->ipTerrain!=7))
 			{
 				WillGo=false;
-				//разрешить атаку, если по соседству есть своя провинция
+				//СЂР°Р·СЂРµС€РёС‚СЊ Р°С‚Р°РєСѓ, РµСЃР»Рё РїРѕ СЃРѕСЃРµРґСЃС‚РІСѓ РµСЃС‚СЊ СЃРІРѕСЏ РїСЂРѕРІРёРЅС†РёСЏ
 				/*for (int j=0; j<MAX_NEIGHBOUR; j++)
 				{
 					if ((PP->arNeighbour[j]>0)&&((pFirstProvince+PP->arNeighbour[j])->ipPlayer==MovePlayer))
@@ -437,7 +437,7 @@ int MovePath (int Prov, int Weight, clPath *Path, int Prov1, int Moves, int Port
 };
 
 
-//Открывает туман войны вокруг провинции с портом
+//РћС‚РєСЂС‹РІР°РµС‚ С‚СѓРјР°РЅ РІРѕР№РЅС‹ РІРѕРєСЂСѓРі РїСЂРѕРІРёРЅС†РёРё СЃ РїРѕСЂС‚РѕРј
 int Swim(int Player, int Prov, int Port)
 {
 	if (Port<0)
@@ -456,7 +456,7 @@ int Swim(int Player, int Prov, int Port)
 	return 0;
 };
 
-//Вычисляет туман войны
+//Р’С‹С‡РёСЃР»СЏРµС‚ С‚СѓРјР°РЅ РІРѕР№РЅС‹
 void MakeFog(int Player)
 {
 	bool bView=bDemo;
@@ -478,7 +478,7 @@ void MakeFog(int Player)
 		};
 	};
 	};
-	//Вокруг провинций
+	//Р’РѕРєСЂСѓРі РїСЂРѕРІРёРЅС†РёР№
 	for (int i=1; i<=MapSize; i++)
 	{
 		if ((pFirstProvince+i)->ipPlayer==Player)
@@ -518,7 +518,7 @@ void MakeFog(int Player)
 			};
 		};
 	};
-	//Вокруг героев
+	//Р’РѕРєСЂСѓРі РіРµСЂРѕРµРІ
 	for (int i=0; i<MAX_HERO; i++)
 	{
 		if ((arPlayer[Player].arHero[i])&&(arPlayer[Player].arHero[i]->iDead<0))
@@ -535,7 +535,7 @@ void MakeFog(int Player)
 	};
 };
 
-//Формирует и выводит на экран список построек для строительства
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє РїРѕСЃС‚СЂРѕРµРє РґР»СЏ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°
 int BuildList(int Player, int Province, int Shift, BITMAP * Target)
 {
 	int MaxBld=0;
@@ -623,7 +623,7 @@ int BuildList(int Player, int Province, int Shift, BITMAP * Target)
 	return MaxBld;
 };
 
-//Формирует и выводит на экран список построек для сноса
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє РїРѕСЃС‚СЂРѕРµРє РґР»СЏ СЃРЅРѕСЃР°
 int RazeList(int Province, int Shift, BITMAP * Target)
 {
 	int MaxBld=0;
@@ -650,7 +650,7 @@ int RazeList(int Province, int Shift, BITMAP * Target)
 	return MaxBld;
 };
 
-//Формирует и выводит на экран список стражей для найма
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє СЃС‚СЂР°Р¶РµР№ РґР»СЏ РЅР°Р№РјР°
 int HireList(int Player, int Province, int Shift, BITMAP * Target)
 {
 	if (arPlayer[Player].iCanHire<=0)
@@ -729,7 +729,7 @@ int HireList(int Player, int Province, int Shift, BITMAP * Target)
 	return MaxDef;
 };
 
-//Формирует и выводит на экран список особых мест
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє РѕСЃРѕР±С‹С… РјРµСЃС‚
 int SiteList(int Province, int Shift, BITMAP * Target, bool CanEnter, dcHero *Hero)
 {
 	int MaxBld=0;
@@ -785,7 +785,7 @@ int SiteList(int Province, int Shift, BITMAP * Target, bool CanEnter, dcHero *He
 	return MaxBld;
 };
 
-//Формирует и выводит на экран список ритуалов
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє СЂРёС‚СѓР°Р»РѕРІ
 int RitualList(int Player, int Province, int Shift, BITMAP * Target)
 {
 	int MaxRit=0;
@@ -856,7 +856,7 @@ int RitualList(int Player, int Province, int Shift, BITMAP * Target)
 	return MaxRit;
 };
 
-//Формирует и выводит на экран список ритуалов для героев
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє СЂРёС‚СѓР°Р»РѕРІ РґР»СЏ РіРµСЂРѕРµРІ
 int HeroRitualList(int Player, int Hero, int Shift, BITMAP * Target)
 {
 	int MaxRit=0;
@@ -927,7 +927,7 @@ int HeroRitualList(int Player, int Hero, int Shift, BITMAP * Target)
 	return MaxRit;
 };
 
-//Формирует и выводит на экран список действующих ритуалов
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє РґРµР№СЃС‚РІСѓСЋС‰РёС… СЂРёС‚СѓР°Р»РѕРІ
 int EnchantList(int Player, int Province, int Shift, BITMAP * Target)
 {
 	int MaxRit=0;
@@ -963,7 +963,7 @@ int EnchantList(int Player, int Province, int Shift, BITMAP * Target)
 	return MaxRit;
 };
 
-//Формирует и выводит на экран список героев
+//Р¤РѕСЂРјРёСЂСѓРµС‚ Рё РІС‹РІРѕРґРёС‚ РЅР° СЌРєСЂР°РЅ СЃРїРёСЃРѕРє РіРµСЂРѕРµРІ
 int HeroList(int Player, int Hero, int Shift, BITMAP * Target, bool Exclude)
 {
 	int MaxHero=0;
@@ -992,7 +992,7 @@ int HeroList(int Player, int Hero, int Shift, BITMAP * Target, bool Exclude)
 	return MaxHero;
 };
 
-//******Создание графических объектов для визуализации карты**********
+//******РЎРѕР·РґР°РЅРёРµ РіСЂР°С„РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ РґР»СЏ РІРёР·СѓР°Р»РёР·Р°С†РёРё РєР°СЂС‚С‹**********
 G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 {
 	for (int i=1; i<=MapSize; i++)
@@ -1068,7 +1068,7 @@ G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 		{
 		dcProvince *PR=(pFirstProvince+i);
 
-		WriteLog("Ресурсы");
+		WriteLog("Р РµСЃСѓСЂСЃС‹");
 		if (PR->GetResource(1)>0)
 		{
 			objMain=new G_Object(objMain,0,0,2,(pFirstResource+PR->GetResource(1))->MedPic);
@@ -1114,7 +1114,7 @@ G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 		};
 		};
 
-		WriteLog("Гербы");
+		WriteLog("Р“РµСЂР±С‹");
 		if ((PR->Pic)&&(PR->ipTerrain!=WATER_ID)&&(PR->ipTerrain!=MOUNTAIN_ID))
 		{
 			objMain=new G_Object(objMain,0,0,1,PR->Pic);
@@ -1131,7 +1131,7 @@ G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 		
 		if (PR->ipPlayer>0)
 		{
-			//Герб
+			//Р“РµСЂР±
 			if (arHumans[arPlayer[Player].iColor].arMap[0])
 			{
 				objMain=new G_Object(objMain,0,0,2,bmpHerb[arPlayer[PR->ipPlayer].iColor]);
@@ -1257,7 +1257,7 @@ G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 			};			
 		};
 	
-		WriteLog("Здания");
+		WriteLog("Р—РґР°РЅРёСЏ");
 
 		for (int i=0; i<MAX_PROVINCE_BLD; i++)
 		{
@@ -1296,7 +1296,7 @@ G_Object * ShowMap(int Player, G_Object *objMain, int *Prov, G_Object *objEmpty)
 		};
 	};
 	
-	WriteLog("Герои");
+	WriteLog("Р“РµСЂРѕРё");
 
 	for (int j=1; j<=CurGame.iMaxPlayers; j++)
 	{
@@ -1379,12 +1379,12 @@ void MainScreen(int Player)
 	bool bEnterPressed=false, bKeyGPressed=false;
 	bool bIdle;
 	CurrentPlayer=Player;
-	int Condition=0,	//Сосотояние инфо-окна 1 - выбрана провинция, 2 - меню строительства
-		Member=arPlayer[Player].ipProvince,	//Индекс выбранного элемента
-		Limit=0,		//Максимальное количество объектов в списке выбора
-		Shift=0,		//Смещение в списке выбора
-		Choosen=0;		//Выбранный из списка элемент
-	bool bTutFree=true;	//Флаг использования подсказки
+	int Condition=0,	//РЎРѕСЃРѕС‚РѕСЏРЅРёРµ РёРЅС„Рѕ-РѕРєРЅР° 1 - РІС‹Р±СЂР°РЅР° РїСЂРѕРІРёРЅС†РёСЏ, 2 - РјРµРЅСЋ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°
+		Member=arPlayer[Player].ipProvince,	//РРЅРґРµРєСЃ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°
+		Limit=0,		//РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ РІ СЃРїРёСЃРєРµ РІС‹Р±РѕСЂР°
+		Shift=0,		//РЎРјРµС‰РµРЅРёРµ РІ СЃРїРёСЃРєРµ РІС‹Р±РѕСЂР°
+		Choosen=0;		//Р’С‹Р±СЂР°РЅРЅС‹Р№ РёР· СЃРїРёСЃРєР° СЌР»РµРјРµРЅС‚
+	bool bTutFree=true;	//Р¤Р»Р°Рі РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РїРѕРґСЃРєР°Р·РєРё
 	if (arPlayer[Player].iCondition<15)
 	{
 		if ((pFirstProvince+arPlayer[Player].iMember)->ipPlayer==Player)
@@ -1434,7 +1434,7 @@ void MainScreen(int Player)
 	set_mouse_sprite(bmpMousePointer[0]);
 	bool Redraw=true;
 	bool bFirst=true;
-	int iRitualer=0;	//Номер провинции для анимации ритуала
+	int iRitualer=0;	//РќРѕРјРµСЂ РїСЂРѕРІРёРЅС†РёРё РґР»СЏ Р°РЅРёРјР°С†РёРё СЂРёС‚СѓР°Р»Р°
 	GoPath=NULL;
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
@@ -1675,16 +1675,16 @@ void MainScreen(int Player)
 		mskMain[i].iHint=115+i;
 	};
 
-	//Маски для параметров героя
+	//РњР°СЃРєРё РґР»СЏ РїР°СЂР°РјРµС‚СЂРѕРІ РіРµСЂРѕСЏ
 	UI_Mask1 mskParam[8];
-	mskParam[0].Init(BarX+72,BarY+41,56,54,0);	//Опыт	
-	mskParam[1].Init(BarX+190,BarY+41,56,54,0);	//Жизнь
-	mskParam[2].Init(BarX+69,BarY+157,58,28,0);	//Командование
-	mskParam[3].Init(BarX+127,BarY+157,58,28,0);//Магия
-	mskParam[4].Init(BarX+186,BarY+157,58,28,0);//Здоровье
-	mskParam[5].Init(BarX+69,BarY+188,58,28,0);	//Инициатива
-	mskParam[6].Init(BarX+127,BarY+188,58,28,0);//Осада
-	mskParam[7].Init(BarX+186,BarY+188,58,28,0);//Мобильность
+	mskParam[0].Init(BarX+72,BarY+41,56,54,0);	//РћРїС‹С‚	
+	mskParam[1].Init(BarX+190,BarY+41,56,54,0);	//Р–РёР·РЅСЊ
+	mskParam[2].Init(BarX+69,BarY+157,58,28,0);	//РљРѕРјР°РЅРґРѕРІР°РЅРёРµ
+	mskParam[3].Init(BarX+127,BarY+157,58,28,0);//РњР°РіРёСЏ
+	mskParam[4].Init(BarX+186,BarY+157,58,28,0);//Р—РґРѕСЂРѕРІСЊРµ
+	mskParam[5].Init(BarX+69,BarY+188,58,28,0);	//РРЅРёС†РёР°С‚РёРІР°
+	mskParam[6].Init(BarX+127,BarY+188,58,28,0);//РћСЃР°РґР°
+	mskParam[7].Init(BarX+186,BarY+188,58,28,0);//РњРѕР±РёР»СЊРЅРѕСЃС‚СЊ
 
 	UI_Mask1 mskRes[11];
 	for (int i=0; i<6; i++)
@@ -1787,7 +1787,7 @@ void MainScreen(int Player)
 		FileLog(stLog);
 	};*/
 
-	//Анимация дохода
+	//РђРЅРёРјР°С†РёСЏ РґРѕС…РѕРґР°
 	if ((bFirst)&&(CurGame.iCurrentTurn>0))
 	{
 		iIncomeY=46;
@@ -1923,9 +1923,9 @@ void MainScreen(int Player)
 		if (bTutor)
 		{
 
-		//****Обучающая миссия****
+		//****РћР±СѓС‡Р°СЋС‰Р°СЏ РјРёСЃСЃРёСЏ****
 
-		//Смерть героя в первой миссии
+		//РЎРјРµСЂС‚СЊ РіРµСЂРѕСЏ РІ РїРµСЂРІРѕР№ РјРёСЃСЃРёРё
 		if ((Tutorial.Map)&&(Tutorial.Death==1)&&(Tutorial.buttCastle==0))
 		{
 			Tutorial.Death=0;
@@ -1936,7 +1936,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Выделение героя
+		//Р’С‹РґРµР»РµРЅРёРµ РіРµСЂРѕСЏ
 		if ((Tutorial.Map)&&(Tutorial.Move==1))
 		{
 			Tutorial.Move=2;
@@ -1947,7 +1947,7 @@ void MainScreen(int Player)
 			buttNextHero.bBlink=true;
 		};
 
-		//Лавка1
+		//Р›Р°РІРєР°1
 		if ((Tutorial.Map)&&(Tutorial.Move==4)&&(arPlayer[Player].arHero[0]->ipProvince==27)&&(iIncTimer<100))
 		{
 			Tutorial.Move=5;
@@ -1986,7 +1986,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Лавка 2
+		//Р›Р°РІРєР° 2
 		if ((Tutorial.Map)&&(Tutorial.Move==8)&&(arPlayer[Player].arHero[0]->ipProvince==27)&&(iIncTimer<100)&&(Tutorial.Site==0)&&((pFirstProvince+27)->arSite[0][0]==0))
 		{
 			Tutorial.Move=9;			
@@ -2029,7 +2029,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Орки
+		//РћСЂРєРё
 		if ((Tutorial.Map)&&(Tutorial.Move==10))
 		{
 			Tutorial.Move=11;
@@ -2057,7 +2057,7 @@ void MainScreen(int Player)
 			Tutorial.Site=1;
 		};
 
-		//Лавка 3
+		//Р›Р°РІРєР° 3
 		if ((Tutorial.Map)&&(Tutorial.Move==12)&&(arPlayer[Player].arHero[0]->ipProvince==27)&&(iIncTimer<100)&&(Tutorial.Site==1)&&((pFirstProvince+27)->arSite[1][0]==0))
 		{
 			Tutorial.Move=13;			
@@ -2096,7 +2096,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Нежить
+		//РќРµР¶РёС‚СЊ
 		if ((Tutorial.Map)&&(Tutorial.Move==14))
 		{
 			Tutorial.Move=15;
@@ -2146,7 +2146,7 @@ void MainScreen(int Player)
 			Tutorial.Site=2;
 		};
 
-		//Разбойники
+		//Р Р°Р·Р±РѕР№РЅРёРєРё
 		if ((Tutorial.Map)&&(Tutorial.Move==16)&&((pFirstProvince+27)->arSite[2][0]==0))
 		{
 			Tutorial.Move=17;
@@ -2175,7 +2175,7 @@ void MainScreen(int Player)
 			Tutorial.buttEnter=0;
 		};
 
-		//Захвачена провинция
+		//Р—Р°С…РІР°С‡РµРЅР° РїСЂРѕРІРёРЅС†РёСЏ
 		if ((Tutorial.Map)&&(Tutorial.Move<=18)&&(arPlayer[1].arHero[0]->ipProvince==21))
 		{
 			Tutorial.Move=19;
@@ -2203,7 +2203,7 @@ void MainScreen(int Player)
 			MX+=300;
 		};
 
-		//Первый вход в замок
+		//РџРµСЂРІС‹Р№ РІС…РѕРґ РІ Р·Р°РјРѕРє
 		if ((Tutorial.Map)&&(Tutorial.Move==19)&&(arPlayer[1].arHero[0]->ipProvince==23))
 		{
 			Tutorial.Move=20;
@@ -2241,7 +2241,7 @@ void MainScreen(int Player)
 			arPlayer[1].arLibrary[2]=0;	
 		};		
 
-		//Выполнено задание по отстройке
+		//Р’С‹РїРѕР»РЅРµРЅРѕ Р·Р°РґР°РЅРёРµ РїРѕ РѕС‚СЃС‚СЂРѕР№РєРµ
 		if ((Tutorial.Map)&&(Tutorial.Task==0)&&(arPlayer[1].arBld[2])&&(arPlayer[1].arBld[7])&&(arPlayer[1].arBld[36]))
 		{
 			bTutFree=false;
@@ -2266,7 +2266,7 @@ void MainScreen(int Player)
 			Redraw=true;
 		};
 
-		//Первый выход из замка
+		//РџРµСЂРІС‹Р№ РІС‹С…РѕРґ РёР· Р·Р°РјРєР°
 		if ((Tutorial.Map)&&(Tutorial.Build==2))
 		{
 			Tutorial.Build=3;
@@ -2276,7 +2276,7 @@ void MainScreen(int Player)
 			objTutorial->iLayer=6;			
 		};
 
-		//Найм стражей 1
+		//РќР°Р№Рј СЃС‚СЂР°Р¶РµР№ 1
 		if ((bTutFree)&&(Tutorial.Map)&&(Tutorial.Turn>2)&&(arPlayer[1].arBld[7])&&(Tutorial.PrvGuard==0)&&(!Redraw))
 		{
 			bTutFree=false;
@@ -2291,7 +2291,7 @@ void MainScreen(int Player)
 			{Condition=0;};
 		};
 
-		//Найм стражей 2
+		//РќР°Р№Рј СЃС‚СЂР°Р¶РµР№ 2
 		if ((Tutorial.Map)&&(Tutorial.PrvGuard==2))
 		{
 			Tutorial.PrvGuard=3;
@@ -2302,7 +2302,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Постройки 1
+		//РџРѕСЃС‚СЂРѕР№РєРё 1
 		if ((bTutFree)&&(Tutorial.Map)&&(Tutorial.Turn>2)&&(arPlayer[1].arBld[36])&&(Tutorial.PrvBuild==0)&&(!Redraw))
 		{
 			Tutorial.PrvBuild=1;
@@ -2317,7 +2317,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Постройки 2
+		//РџРѕСЃС‚СЂРѕР№РєРё 2
 		if ((Tutorial.Map)&&(Tutorial.PrvBuild==2))
 		{
 			Tutorial.PrvBuild=3;
@@ -2328,7 +2328,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 		
-		//Ритуал над героем
+		//Р РёС‚СѓР°Р» РЅР°Рґ РіРµСЂРѕРµРј
 		if ((bTutFree)&&(Tutorial.Turn>2)&&((arPlayer[1].arBld[20])||(arPlayer[1].arBld[21]))&&(Tutorial.RitualHero==0)&&(!Redraw))
 		{
 			Tutorial.RitualHero=1;
@@ -2341,7 +2341,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Статистика
+		//РЎС‚Р°С‚РёСЃС‚РёРєР°
 		if ((bTutFree)&&(Tutorial.Map)&&(Tutorial.Turn>5)&&(Tutorial.Move==23))
 		{
 			Tutorial.Move=24;
@@ -2355,7 +2355,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Особые места
+		//РћСЃРѕР±С‹Рµ РјРµСЃС‚Р°
 		if ((Tutorial.Map)&&(Tutorial.Move==21))
 		{
 			Tutorial.Move=22;			
@@ -2368,7 +2368,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Исследования
+		//РСЃСЃР»РµРґРѕРІР°РЅРёСЏ
 		if ((bTutFree)&&(Tutorial.Map)&&(Tutorial.Move==22)&&(Tutorial.Turn>=2))
 		{
 			Tutorial.Move=23;			
@@ -2380,7 +2380,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Напоминание о задании
+		//РќР°РїРѕРјРёРЅР°РЅРёРµ Рѕ Р·Р°РґР°РЅРёРё
 		if ((bTutFree)&&(Tutorial.Map)&&(Tutorial.Task==0)&&(Tutorial.Turn>0)&&(Tutorial.Turn%10==0))
 		{
 			Tutorial.Turn++;
@@ -2391,7 +2391,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Родовые замки
+		//Р РѕРґРѕРІС‹Рµ Р·Р°РјРєРё
 		if ((bTutFree)&&(Tutorial.Map)&&((pFirstProvince+8)->ipPlayer==1)&&(Tutorial.Castles==0))
 		{
 			Tutorial.Castles=1;
@@ -2402,7 +2402,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Победа в обучающей миссии
+		//РџРѕР±РµРґР° РІ РѕР±СѓС‡Р°СЋС‰РµР№ РјРёСЃСЃРёРё
 		if ((Tutorial.Map)&&(!arPlayer[2].bInGame))
 		{
 			objMain=ShowActiveObjects(objMain,10,true,MX,MY);
@@ -2419,9 +2419,9 @@ void MainScreen(int Player)
 			iExitFlag=4;
 		};
 
-		//****Подсказки в процессе игры****
+		//****РџРѕРґСЃРєР°Р·РєРё РІ РїСЂРѕС†РµСЃСЃРµ РёРіСЂС‹****
 
-		//Найм героя
+		//РќР°Р№Рј РіРµСЂРѕСЏ
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Hero==0))
 		{
 			Tutorial.Hero=1;
@@ -2432,7 +2432,7 @@ void MainScreen(int Player)
 			buttCastle.bBlink=true;
 		};
 
-		//Защита мира
+		//Р—Р°С‰РёС‚Р° РјРёСЂР°
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&(Campaign.iActiveShard<0)&&(Tutorial.DefendWorld==0))
 		{
 			Tutorial.DefendWorld=1;
@@ -2442,7 +2442,7 @@ void MainScreen(int Player)
 			ScrollSound();			
 		};
 
-		//Герой нанят
+		//Р“РµСЂРѕР№ РЅР°РЅСЏС‚
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Hero==3))
 		{
 			bool bDead=false;
@@ -2461,7 +2461,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Гибель героя
+		//Р“РёР±РµР»СЊ РіРµСЂРѕСЏ
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&((Tutorial.Hero==4)||(Tutorial.Hero==6)))
 		{
 			bool bDead=false;
@@ -2489,7 +2489,7 @@ void MainScreen(int Player)
 			};			
 		};
 
-		//Дипломатия
+		//Р”РёРїР»РѕРјР°С‚РёСЏ
 		if ((Tutorial.Mode)&&(bTutFree)&&(CurGame.bDiplomacy)&&(Tutorial.Diplomacy==0))
 		{
 			bool bDip=false;
@@ -2526,7 +2526,7 @@ void MainScreen(int Player)
 			};	
 		};
 
-		//Защита замка
+		//Р—Р°С‰РёС‚Р° Р·Р°РјРєР°
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.DefendCastle==0)&&(bTutFree))
 		{
 			bool bDead=false;
@@ -2562,7 +2562,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Воскрешение героя
+		//Р’РѕСЃРєСЂРµС€РµРЅРёРµ РіРµСЂРѕСЏ
 		if ((!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Hero==5)&&(bTutFree))
 		{
 			bool bDead=false;
@@ -2584,7 +2584,7 @@ void MainScreen(int Player)
 		
 
 		
-		//Дальние земли
+		//Р”Р°Р»СЊРЅРёРµ Р·РµРјР»Рё
 		if ((bTutFree)&&(!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Population==0)&&(CurGame.iCurrentTurn>=2))
 		{
 			Tutorial.Population=1;
@@ -2595,7 +2595,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Население
+		//РќР°СЃРµР»РµРЅРёРµ
 		if ((bTutFree)&&(!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Population==1)&&(CurGame.iCurrentTurn>=3))
 		{
 			Tutorial.Population=2;
@@ -2606,7 +2606,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Население 2
+		//РќР°СЃРµР»РµРЅРёРµ 2
 		if ((bTutFree)&&(!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Population==2)&&(CurGame.iCurrentTurn>=4))
 		{
 			Tutorial.Population=3;
@@ -2617,7 +2617,7 @@ void MainScreen(int Player)
 			bTutFree=false;
 		};
 
-		//Ресурс
+		//Р РµСЃСѓСЂСЃ
 		if ((bTutFree)&&(!Tutorial.Map)&&(CurGame.iGameType==2)&&(Tutorial.Resource==0))
 		{
 			int Res=0;
@@ -2639,7 +2639,7 @@ void MainScreen(int Player)
 			};
 		};
 
-		//Ритуал в провинции
+		//Р РёС‚СѓР°Р» РІ РїСЂРѕРІРёРЅС†РёРё
 		if ((bTutFree)&&(Tutorial.RitualProv==0)&&(!Redraw))
 		{
 			for (int i=1; i<=iMaxRitual; i++)
@@ -2658,7 +2658,7 @@ void MainScreen(int Player)
 			};			
 		};
 
-		//Коррупция
+		//РљРѕСЂСЂСѓРїС†РёСЏ
 		if ((bTutFree)&&(Tutorial.Corrupt==0)&&(!Redraw)&&(arPlayer[Player].iCalcCorrupt>5))
 		{
 			Tutorial.Corrupt=1;
@@ -2675,10 +2675,10 @@ void MainScreen(int Player)
 			FileLog(stLog);
 		};*/
 		switch (Condition)
-//Проверка состояния инфоокна
+//РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРЅС„РѕРѕРєРЅР°
 		{
 		case 1:				
-	//Выбрана провинция
+	//Р’С‹Р±СЂР°РЅР° РїСЂРѕРІРёРЅС†РёСЏ
 			/*if (((pFirstProvince+Member)->ipPlayer!=Player)&&(key[KEY_Q]))
 			{
 				(pFirstProvince+Member)->ipPlayer=Player;
@@ -2771,7 +2771,7 @@ void MainScreen(int Player)
 				buttRitFilter.Activate(1,arPlayer[Player].bRitFilter);
 				
 			};
-	//Маски боковой панели
+	//РњР°СЃРєРё Р±РѕРєРѕРІРѕР№ РїР°РЅРµР»Рё
 			Check=mskRace.Check();
 			if ((Check==30)||(Check==40))
 			{
@@ -2842,7 +2842,7 @@ void MainScreen(int Player)
 				WindowInfo((pFirstTerrain+(pFirstProvince+Member)->ipTerrain)->sName,(pFirstMessage+43+(pFirstProvince+Member)->ipTerrain)->msg,bmpStuff[42+(pFirstProvince+Member)->ipTerrain]);				
 			};
 	
-//Просмотр стража
+//РџСЂРѕСЃРјРѕС‚СЂ СЃС‚СЂР°Р¶Р°
 			if (mskMain[0].Check()==30)
 			{
 				Condition=8;
@@ -2895,7 +2895,7 @@ void MainScreen(int Player)
 				buttGarrison.Activate(-1);
 				buttRitual.Activate(-1);				
 			};
-//Просмотр построенных зданий
+//РџСЂРѕСЃРјРѕС‚СЂ РїРѕСЃС‚СЂРѕРµРЅРЅС‹С… Р·РґР°РЅРёР№
 			if (mskMain[1].Check()==30)
 			{
 				Condition=4;
@@ -2922,7 +2922,7 @@ void MainScreen(int Player)
 				else
 				{buttScrollDown.Activate(0);};				
 			};
-//Просмотр действующих ритуалов
+//РџСЂРѕСЃРјРѕС‚СЂ РґРµР№СЃС‚РІСѓСЋС‰РёС… СЂРёС‚СѓР°Р»РѕРІ
 			if ((objEnchant->iLayer>0)&&(mskBroken.Check()==30))
 			{
 				Condition=14;
@@ -2950,7 +2950,7 @@ void MainScreen(int Player)
 				else
 				{buttScrollDown.Activate(0);};				
 			};
-//Просмотр состояния укреплений
+//РџСЂРѕСЃРјРѕС‚СЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ СѓРєСЂРµРїР»РµРЅРёР№
 			if (mskMain[2].Check()==30)
 			{
 				Condition=11;
@@ -3167,7 +3167,7 @@ void MainScreen(int Player)
 				buttGarrison.Activate(-1);
 				buttRitual.Activate(-1);				
 			};
-//Просмотр особых мест
+//РџСЂРѕСЃРјРѕС‚СЂ РѕСЃРѕР±С‹С… РјРµСЃС‚
 			if (mskMain[3].Check()==30)
 			{
 				Condition=9;
@@ -3246,7 +3246,7 @@ void MainScreen(int Player)
 
 			break;
 		case 2:
-	//Выбрано строительство в провинции
+	//Р’С‹Р±СЂР°РЅРѕ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ РІ РїСЂРѕРІРёРЅС†РёРё
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -3340,7 +3340,7 @@ void MainScreen(int Player)
 			};				
 			break;
 		case 3:
-	//Выбрана постройка из списка строительства
+	//Р’С‹Р±СЂР°РЅР° РїРѕСЃС‚СЂРѕР№РєР° РёР· СЃРїРёСЃРєР° СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°
 			if (buttBuild2.Check())
 			{	
 				(pFirstProvince+Member)->ConstructBuilding(Choosen,true, true);
@@ -3412,7 +3412,7 @@ void MainScreen(int Player)
 			txtDs.Check();
 			break;
 		case 4:
-	//Выбран список построенных зданий
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РїРѕСЃС‚СЂРѕРµРЅРЅС‹С… Р·РґР°РЅРёР№
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -3492,7 +3492,7 @@ void MainScreen(int Player)
 			};			
 			break;
 		case 5:
-	//Выбрана постройка из списка сноса
+	//Р’С‹Р±СЂР°РЅР° РїРѕСЃС‚СЂРѕР№РєР° РёР· СЃРїРёСЃРєР° СЃРЅРѕСЃР°
 			if (buttRaze.Check())
 			{
 				if ((pFirstProvince+Member)->GetSiegeIndex()<0)
@@ -3540,7 +3540,7 @@ void MainScreen(int Player)
 			txtDs.Check();
 			break;
 		case 6:
-	//Выбран найм стража в провинции
+	//Р’С‹Р±СЂР°РЅ РЅР°Р№Рј СЃС‚СЂР°Р¶Р° РІ РїСЂРѕРІРёРЅС†РёРё
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -3638,7 +3638,7 @@ void MainScreen(int Player)
 			};				
 			break;
 		case 7:
-	//Выбран страж из списка найма
+	//Р’С‹Р±СЂР°РЅ СЃС‚СЂР°Р¶ РёР· СЃРїРёСЃРєР° РЅР°Р№РјР°
 			if (buttGuard2.Check())
 			{
 				bool bHire=true;
@@ -3767,7 +3767,7 @@ void MainScreen(int Player)
 			txtDs1.Check();
 			break;
 		case 8:
-	//Выбран страж в провинции
+	//Р’С‹Р±СЂР°РЅ СЃС‚СЂР°Р¶ РІ РїСЂРѕРІРёРЅС†РёРё
 			if (buttDismiss.Check())
 			{	
 				if ((!arHumans[arPlayer[Player].iColor].arMess[5])||((pFirstDialog+2)->Show(true,true,false,false,NULL,NULL)==1))
@@ -3785,7 +3785,7 @@ void MainScreen(int Player)
 			txtDs1.Check();
 			break;
 		case 9:
-	//Выбран список особых мест
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РѕСЃРѕР±С‹С… РјРµСЃС‚
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -3842,7 +3842,7 @@ void MainScreen(int Player)
 			};			
 			break;
 		case 10:
-	//Выбрано особое место
+	//Р’С‹Р±СЂР°РЅРѕ РѕСЃРѕР±РѕРµ РјРµСЃС‚Рѕ
 			if (buttCancel2.Check())
 			{
 				Condition=9;				
@@ -3871,7 +3871,7 @@ void MainScreen(int Player)
 			};
 			txtDs2.Check();
 			break;
-	//Информация об укреплениях
+	//РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СѓРєСЂРµРїР»РµРЅРёСЏС…
 		case 11:
 			if (buttCancel2.Check())
 			{
@@ -3879,7 +3879,7 @@ void MainScreen(int Player)
 				Condition=0;
 			};
 		case 12:
-	//Выбран список ритуалов
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє СЂРёС‚СѓР°Р»РѕРІ
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -3976,7 +3976,7 @@ void MainScreen(int Player)
 			};				
 			break;
 		case 13:
-	//Выбран ритуал
+	//Р’С‹Р±СЂР°РЅ СЂРёС‚СѓР°Р»
 			if (buttRitual2.Check())
 			{
 				arPlayer[Player].CastRitual(Choosen,Member,-1);
@@ -4048,7 +4048,7 @@ void MainScreen(int Player)
 			txtDs.Check();
 			break;
 		case 14:
-	//Выбран список действующих ритуалов
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РґРµР№СЃС‚РІСѓСЋС‰РёС… СЂРёС‚СѓР°Р»РѕРІ
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -4086,7 +4086,7 @@ void MainScreen(int Player)
 			};
 			break;
 		case 15:
-	//Выбран список героев для активизации
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РіРµСЂРѕРµРІ РґР»СЏ Р°РєС‚РёРІРёР·Р°С†РёРё
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -4125,7 +4125,7 @@ void MainScreen(int Player)
 			};			
 			break;
 		case 16:
-	//Выбран список героев для обмена
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РіРµСЂРѕРµРІ РґР»СЏ РѕР±РјРµРЅР°
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -4161,7 +4161,7 @@ void MainScreen(int Player)
 			};			
 			break;
 		case 17:
-	//Выбран список особых мест для входа
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє РѕСЃРѕР±С‹С… РјРµСЃС‚ РґР»СЏ РІС…РѕРґР°
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -4235,7 +4235,7 @@ void MainScreen(int Player)
 			};			
 			break;
 		case 18:
-	//Выбран список ритуалов для героя
+	//Р’С‹Р±СЂР°РЅ СЃРїРёСЃРѕРє СЂРёС‚СѓР°Р»РѕРІ РґР»СЏ РіРµСЂРѕСЏ
 			for (int i=0; i<BAR_SIZE; i++)
 			{
 				if (i<Limit)
@@ -4332,7 +4332,7 @@ void MainScreen(int Player)
 			};*/				
 			break;
 		case 19:
-	//Выбран ритуал для героя
+	//Р’С‹Р±СЂР°РЅ СЂРёС‚СѓР°Р» РґР»СЏ РіРµСЂРѕСЏ
 			if (buttRitual2.Check())
 			{
 				int OldProv=arPlayer[Player].arHero[Member]->ipProvince;
@@ -4407,7 +4407,7 @@ void MainScreen(int Player)
 			txtDs.Check();
 			break;
 		case 21:
-	//Выбран герой
+	//Р’С‹Р±СЂР°РЅ РіРµСЂРѕР№
 			if (buttExplore.Check())
 			{
 				arPlayer[Player].arHero[Member]->iTask=2;
@@ -4811,7 +4811,7 @@ void MainScreen(int Player)
 			FileLog(stLog);
 		};*/
 		
-//Проверка объекта под курсором мыши
+//РџСЂРѕРІРµСЂРєР° РѕР±СЉРµРєС‚Р° РїРѕРґ РєСѓСЂСЃРѕСЂРѕРј РјС‹С€Рё
 		if ((!Redraw)&&((objBroken->iLayer<0)||(mskBroken.Check()<2))&&(mskInfoBar.Check()<2)&&(mskLowPanel.Check()<2)&&((!bTutHint)||(mskTutorial.flag<2)))
 		{
 			bool PrCheck=true, PrGo=true;
@@ -4838,7 +4838,7 @@ void MainScreen(int Player)
 							Condition=20;							
 						}
 						else
-//Отображение списка героев для выбора активного
+//РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЃРїРёСЃРєР° РіРµСЂРѕРµРІ РґР»СЏ РІС‹Р±РѕСЂР° Р°РєС‚РёРІРЅРѕРіРѕ
 						{
 							Condition=15;
 							if (GoPath)
@@ -5048,7 +5048,7 @@ void MainScreen(int Player)
 		};
 
 
-//Выделение активной провинции
+//Р’С‹РґРµР»РµРЅРёРµ Р°РєС‚РёРІРЅРѕР№ РїСЂРѕРІРёРЅС†РёРё
 		if ((Condition==0)&&(!Redraw))
 		{
 			if (GoPath)
@@ -5171,7 +5171,7 @@ void MainScreen(int Player)
 			objMapSelect->PlaceOnMap((pFirstFog+PR->iNumber)->x,(pFirstFog+PR->iNumber)->y);
 			blit(bmpGUI_ProvinceBar,bmpInfoBar,0,0,0,0,bmpGUI_ProvinceBar->w,bmpGUI_ProvinceBar->h);
 			set_trans_blender(128,128,128,128);
-		//Общедоступная информация
+		//РћР±С‰РµРґРѕСЃС‚СѓРїРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
 			if (PR->ipPlayer>0)
 			{
 				draw_sprite(bmpInfoBar,bmpHerb[arPlayer[PR->ipPlayer].iColor],8,60);
@@ -5207,7 +5207,7 @@ void MainScreen(int Player)
 				};
 			};
 
-		//Скрываемая туманом
+		//РЎРєСЂС‹РІР°РµРјР°СЏ С‚СѓРјР°РЅРѕРј
 			if (*(arPlayer[Player].pFog+Member)==0)
 			{
 			if (PR->ipPlayer==0)
@@ -5381,7 +5381,7 @@ void MainScreen(int Player)
 		};
 		};
 
-// Выделение активного героя
+// Р’С‹РґРµР»РµРЅРёРµ Р°РєС‚РёРІРЅРѕРіРѕ РіРµСЂРѕСЏ
 		if ((Condition==20)&&(!Redraw))
 		{
 			if ((Tutorial.Map)&&(Tutorial.Move==2))
@@ -5577,7 +5577,7 @@ void MainScreen(int Player)
 				buttSkip.Activate(1);
 				switch (arPlayer[Player].arHero[Member]->iTask)
 				{
-		//Поиск пути если указана провинция для движения
+		//РџРѕРёСЃРє РїСѓС‚Рё РµСЃР»Рё СѓРєР°Р·Р°РЅР° РїСЂРѕРІРёРЅС†РёСЏ РґР»СЏ РґРІРёР¶РµРЅРёСЏ
 				case 1:
 					PathKicker=0;
 					MovePath(PR->iNumber,1,NULL,arPlayer[Player].arHero[Member]->iTarget,WalkSpeed,0,0,0);
@@ -6545,7 +6545,7 @@ void EndMainTurn()
 {
 	srand(CurGame.iSeed+CurGame.iCurrentTurn);
 
-//	StopLog("Нейтральный игрок",0);
+//	StopLog("РќРµР№С‚СЂР°Р»СЊРЅС‹Р№ РёРіСЂРѕРє",0);
 
 	dcRitual *RR=pRitual;
 	while (RR)
@@ -6621,13 +6621,13 @@ void EndMainTurn()
 	};
 	
 
-//	StopLog("Остальные игроки",0);
+//	StopLog("РћСЃС‚Р°Р»СЊРЅС‹Рµ РёРіСЂРѕРєРё",0);
 	for (int Player=1; Player<=CurGame.iMaxPlayers; Player++)
 	{
 		if (arPlayer[Player].bInGame)
 		{
 		
-		//Появление наёмников
+		//РџРѕСЏРІР»РµРЅРёРµ РЅР°С‘РјРЅРёРєРѕРІ
 		arPlayer[Player].iMercTime++;
 		if (arPlayer[Player].iMercTime==MERCENARY_TIME)
 		{
@@ -6643,7 +6643,7 @@ void EndMainTurn()
 			};
 		};
 
-		//Изменение отношений в зависимости от текущих договоров
+		//РР·РјРµРЅРµРЅРёРµ РѕС‚РЅРѕС€РµРЅРёР№ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРєСѓС‰РёС… РґРѕРіРѕРІРѕСЂРѕРІ
 		if (CurGame.iCurrentTurn%10==0)
 		{
 			for (int j=1; j<=CurGame.iMaxPlayers; j++)
@@ -6660,7 +6660,7 @@ void EndMainTurn()
 			};
 		};
 
-		//Уменьшение задержек ритуалов
+		//РЈРјРµРЅСЊС€РµРЅРёРµ Р·Р°РґРµСЂР¶РµРє СЂРёС‚СѓР°Р»РѕРІ
 		for (int i=0; i<=iMaxRitual; i++)
 		{
 			if (*(arPlayer[Player].pRitualCD+i)>0)
@@ -6675,7 +6675,7 @@ void EndMainTurn()
 				int iComes=0, iExplore=0, iBonus=0, iExpl, Site;
 				dcEvent *pEvent;
 				bool bSearch=true;
-				//Проверка снежного бурана
+				//РџСЂРѕРІРµСЂРєР° СЃРЅРµР¶РЅРѕРіРѕ Р±СѓСЂР°РЅР°
 				bool bBlizz=false;
 				if (Hero->iTask!=0)
 				{
@@ -6702,7 +6702,7 @@ void EndMainTurn()
 				{
 				switch (Hero->iTask)
 				{
-			//Движение героя
+			//Р”РІРёР¶РµРЅРёРµ РіРµСЂРѕСЏ
 				case 1:			
 					ClearMoveMap();
 					MovePlayer=Player;
@@ -6768,7 +6768,7 @@ void EndMainTurn()
 						GoPath=NULL;						
 					};
 					break;
-//Исследование провинции
+//РСЃСЃР»РµРґРѕРІР°РЅРёРµ РїСЂРѕРІРёРЅС†РёРё
 				case 2:
 					if (Hero->pProvince->iExplore<100)
 					{
@@ -6803,7 +6803,7 @@ void EndMainTurn()
 							{
 								bSearch=false;
 								Site=Hero->pProvince->arSite[i][0];
-								//Найден охраняемый сайт
+								//РќР°Р№РґРµРЅ РѕС…СЂР°РЅСЏРµРјС‹Р№ СЃР°Р№С‚
 								if (Hero->pProvince->arSiteGuard[i])
 								{
 									dcEvent *pEvent;
@@ -6825,7 +6825,7 @@ void EndMainTurn()
 									sprintf(pTreeEvent->sMessage,(pFirstDialog+(pFirstSite+Site)->ipDialog)->sText,Hero->pstName->str,MaxGuards,txtSquad);
 								}
 								else
-								//Сайт без охраны
+								//РЎР°Р№С‚ Р±РµР· РѕС…СЂР°РЅС‹
 								{
 									if (((pFirstSite+Site)->iGuarded>0)||((pFirstSite+Site)->bCanEnter))
 									{
@@ -6843,7 +6843,7 @@ void EndMainTurn()
 									}
 									else
 									{
-								//Никогда не охраняемый сайт
+								//РќРёРєРѕРіРґР° РЅРµ РѕС…СЂР°РЅСЏРµРјС‹Р№ СЃР°Р№С‚
 										pEvent=new dcEvent((pFirstSite+Site)->ipEvent,&arPlayer[Player].pEvent,(pFirstSite+Site)->ipDialog,Player,0,Hero,NULL,Hero->pProvince,NULL,arPlayer[Player].pEvent);										
 									//	arPlayer[Player].pEvent=pEvent;
 										pEvent->iParam1=i;
@@ -6875,7 +6875,7 @@ void EndMainTurn()
 						Hero->iTask=0;
 					};
 					break;
-//Разграбление провинции
+//Р Р°Р·РіСЂР°Р±Р»РµРЅРёРµ РїСЂРѕРІРёРЅС†РёРё
 				case 3:
 					if (Hero->pProvince->iPopulation>0)
 					{
@@ -6933,24 +6933,24 @@ void EndMainTurn()
 						Hero->iTask=0;
 					};										
 					break;
-//Вход в особое место
+//Р’С…РѕРґ РІ РѕСЃРѕР±РѕРµ РјРµСЃС‚Рѕ
 				case 4:
 					Site=Hero->pProvince->arSite[Hero->iTarget][0];
-				//	textprintf(screen,Font1,100,100,COLOR_2,"Сайт: %d (%s), Герой: %s, Провинция: %s",Site, (pFirstSite+Hero->pProvince->arSite[Site][0])->sName, Hero->pstName->str, Hero->pProvince->s);
+				//	textprintf(screen,Font1,100,100,COLOR_2,"РЎР°Р№С‚: %d (%s), Р“РµСЂРѕР№: %s, РџСЂРѕРІРёРЅС†РёСЏ: %s",Site, (pFirstSite+Hero->pProvince->arSite[Site][0])->sName, Hero->pstName->str, Hero->pProvince->s);
 					Hero->iTask=0;
 					pEvent=new dcEvent((pFirstSite+Site)->ipEvent,&arPlayer[Player].pEvent,(pFirstSite+Site)->ipDialog,Player,0,Hero,Hero->pProvince->arSiteGuard[Hero->iTarget],Hero->pProvince,NULL,arPlayer[Player].pEvent);
 				//	arPlayer[Player].pEvent=pEvent;
 					pEvent->iParam1=Hero->iTarget;					
 					if (Hero->pProvince->arSiteGuard[Hero->iTarget])
 					{
-				//		textprintf(screen,Font1,100,120,COLOR_2,"Охрана есть");
+				//		textprintf(screen,Font1,100,120,COLOR_2,"РћС…СЂР°РЅР° РµСЃС‚СЊ");
 						char txtSquad [500];
 						int MaxGuards=Hero->pProvince->arSiteGuard[Hero->iTarget]->MakeDescription(txtSquad);
 						sprintf(pEvent->sMessage,(pFirstDialog+(pFirstSite+Site)->ipDialog)->sText,Hero->pstName->str,MaxGuards,txtSquad);
 					};
 					break;
 
-//Атаковать стража
+//РђС‚Р°РєРѕРІР°С‚СЊ СЃС‚СЂР°Р¶Р°
 				case 5:				
 					Hero->iTask=0;
 					pEvent=new dcEvent(5,&arPlayer[Player].pEvent,32,Player,0,Hero,Hero->pProvince->pGuard,Hero->pProvince,NULL,arPlayer[Player].pEvent);
@@ -6958,7 +6958,7 @@ void EndMainTurn()
 				//	Hero->pProvince->pGuard->ipPlayer=0;
 					sprintf(pEvent->sMessage,(pFirstDialog+32)->sText,Hero->pstName->str,Hero->pProvince->sName);
 					break;
-//Осада
+//РћСЃР°РґР°
 				default:
 					if ((Hero->pProvince->ipPlayer!=Player)&&(Hero->pProvince->pGarrison)&&((Tutorial.Map==false)||(Tutorial.buttCastle>0)))
 					{	
@@ -7007,7 +7007,7 @@ void EndMainTurn()
 							}
 							else
 							{
-								StopLog("НЕ НАЙДЕНЫ УКРЕПЛЕНИЯ В ПРОВИНЦИИ ",Hero->ipProvince);
+								StopLog("РќР• РќРђР™Р”Р•РќР« РЈРљР Р•РџР›Р•РќРРЇ Р’ РџР РћР’РРќР¦РР ",Hero->ipProvince);
 								Fort=0;
 							};
 						};
@@ -7065,7 +7065,7 @@ void EndMainTurn()
 						}
 						else
 						{
-							//Сдача крепости без гарнизона
+							//РЎРґР°С‡Р° РєСЂРµРїРѕСЃС‚Рё Р±РµР· РіР°СЂРЅРёР·РѕРЅР°
 							dcEvent *EV=arPlayer[Player].pEvent;
 							bool bNeed=true;
 							while (EV)
@@ -7106,22 +7106,22 @@ void EndMainTurn()
 		};
 		};
 	};
-	WriteLog("Ход прошел");
+	WriteLog("РҐРѕРґ РїСЂРѕС€РµР»");
 	FileLog(" ");
 	char sTurn[100];
-	sprintf(sTurn,"**** ХОД: %d ****",CurGame.iCurrentTurn);
+	sprintf(sTurn,"**** РҐРћР”: %d ****",CurGame.iCurrentTurn);
 	FileLog(sTurn);
 };
 
 
 //***************************************************************************
-//**** Обработка команд героям и нейтральных провинций **********************
+//**** РћР±СЂР°Р±РѕС‚РєР° РєРѕРјР°РЅРґ РіРµСЂРѕСЏРј Рё РЅРµР№С‚СЂР°Р»СЊРЅС‹С… РїСЂРѕРІРёРЅС†РёР№ **********************
 //***************************************************************************
 void EndMainTurnNew()
 {
 	srand(CurGame.iSeed+CurGame.iCurrentTurn);
 
-//Длительность ритуалов
+//Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЂРёС‚СѓР°Р»РѕРІ
 	dcRitual *RR=pRitual;
 	while (RR)
 	{		
@@ -7154,7 +7154,7 @@ void EndMainTurnNew()
 	{
 		dcProvince *PR=(pFirstProvince+i);
 		PR->RepairWalls();
-		//Проведение ритуалов в нейтральных провинциях
+		//РџСЂРѕРІРµРґРµРЅРёРµ СЂРёС‚СѓР°Р»РѕРІ РІ РЅРµР№С‚СЂР°Р»СЊРЅС‹С… РїСЂРѕРІРёРЅС†РёСЏС…
 		if (PR->ipPlayer==0)
 		{
 			dcRitual *RR=pRitual;
@@ -7170,7 +7170,7 @@ void EndMainTurnNew()
 				RR=RR->pNext;
 			};
 		};
-		//Изменение отношений местных жителей
+		//РР·РјРµРЅРµРЅРёРµ РѕС‚РЅРѕС€РµРЅРёР№ РјРµСЃС‚РЅС‹С… Р¶РёС‚РµР»РµР№
 		for (int j=1; j<MAX_PLAYERS; j++)
 		{
 			if (PR->arAttitude[j][0]!=0)
@@ -7183,7 +7183,7 @@ void EndMainTurnNew()
 				};
 			};
 		};
-		//Восстановление стражей
+		//Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЃС‚СЂР°Р¶РµР№
 		for (int j=0; j<MAX_PROVINCE_SITE; j++)
 		{
 			if (PR->arSiteGuard[j])
@@ -7199,13 +7199,13 @@ void EndMainTurnNew()
 	};
 	
 
-//	StopLog("Остальные игроки",0);
+//	StopLog("РћСЃС‚Р°Р»СЊРЅС‹Рµ РёРіСЂРѕРєРё",0);
 	for (int Player=1; Player<=CurGame.iMaxPlayers; Player++)
 	{
 		if (arPlayer[Player].bInGame)
 		{
 		
-		//Появление наёмников
+		//РџРѕСЏРІР»РµРЅРёРµ РЅР°С‘РјРЅРёРєРѕРІ
 		arPlayer[Player].iMercTime++;
 		if (arPlayer[Player].iMercTime==MERCENARY_TIME)
 		{
@@ -7221,7 +7221,7 @@ void EndMainTurnNew()
 			};
 		};
 
-		//Изменение отношений в зависимости от текущих договоров
+		//РР·РјРµРЅРµРЅРёРµ РѕС‚РЅРѕС€РµРЅРёР№ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРєСѓС‰РёС… РґРѕРіРѕРІРѕСЂРѕРІ
 		if (CurGame.iCurrentTurn%10==0)
 		{
 			for (int j=1; j<=CurGame.iMaxPlayers; j++)
@@ -7238,14 +7238,14 @@ void EndMainTurnNew()
 			};
 		};
 
-		//Уменьшение задержек ритуалов
+		//РЈРјРµРЅСЊС€РµРЅРёРµ Р·Р°РґРµСЂР¶РµРє СЂРёС‚СѓР°Р»РѕРІ
 		for (int i=0; i<=iMaxRitual; i++)
 		{
 			if (*(arPlayer[Player].pRitualCD+i)>0)
 			{*(arPlayer[Player].pRitualCD+i)-=1;};
 		};
 
-		//****** Обработка приказов героям ******
+		//****** РћР±СЂР°Р±РѕС‚РєР° РїСЂРёРєР°Р·РѕРІ РіРµСЂРѕСЏРј ******
 
 		for (int iHero=0; iHero<MAX_HERO; iHero++)
 		{	
@@ -7255,7 +7255,7 @@ void EndMainTurnNew()
 				int iComes=0, iExplore=0, iBonus=0, iExpl, Site;
 				dcEvent *pEvent;
 				bool bSearch=true;
-				//Проверка снежного бурана
+				//РџСЂРѕРІРµСЂРєР° СЃРЅРµР¶РЅРѕРіРѕ Р±СѓСЂР°РЅР°
 				bool bBlizz=false;
 				if (Hero->iTask!=0)
 				{
@@ -7277,7 +7277,7 @@ void EndMainTurnNew()
 				{Hero->ipEvent=20;}
 				else
 				{
-				//Движение героя
+				//Р”РІРёР¶РµРЅРёРµ РіРµСЂРѕСЏ
 				if (Hero->iTask==1)
 				{
 					ClearMoveMap();
@@ -7351,10 +7351,10 @@ void EndMainTurnNew()
 		};
 		};
 	};
-	WriteLog("Ход прошел");
+	WriteLog("РҐРѕРґ РїСЂРѕС€РµР»");
 	FileLog(" ");
 	char sTurn[100];
-	sprintf(sTurn,"**** ХОД: %d ****",CurGame.iCurrentTurn);
+	sprintf(sTurn,"**** РҐРћР”: %d ****",CurGame.iCurrentTurn);
 	FileLog(sTurn);
 };
 
@@ -7434,7 +7434,7 @@ void Victory(int Player)
 	bExitGame=true;	
 };
 
-//Проверяет условия победы или поражения, возвращает истину, если для игрока игра окончена
+//РџСЂРѕРІРµСЂСЏРµС‚ СѓСЃР»РѕРІРёСЏ РїРѕР±РµРґС‹ РёР»Рё РїРѕСЂР°Р¶РµРЅРёСЏ, РІРѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё РґР»СЏ РёРіСЂРѕРєР° РёРіСЂР° РѕРєРѕРЅС‡РµРЅР°
 int CheckPlayerCondition(int Player, bool bLose)
 {
 	if (!arPlayer[Player].bInGame)
@@ -7446,7 +7446,7 @@ int CheckPlayerCondition(int Player, bool bLose)
 	{
 		if (arPlayer[Player].bInGame)
 		{
-			//Расcылка сообщений по сети
+			//Р Р°СЃcС‹Р»РєР° СЃРѕРѕР±С‰РµРЅРёР№ РїРѕ СЃРµС‚Рё
 		};
 		arPlayer[Player].bInGame=false;
 		Result=true;
@@ -7493,7 +7493,7 @@ int CheckPlayerCondition(int Player, bool bLose)
 			Lose(Player);
 		};
 		};
-		//Очистка дипломатии
+		//РћС‡РёСЃС‚РєР° РґРёРїР»РѕРјР°С‚РёРё
 		for (int i=1; i<=CurGame.iMaxPlayers; i++)
 		{
 			arPlayer[Player].Politic[i].Trade.Clear();
@@ -7501,7 +7501,7 @@ int CheckPlayerCondition(int Player, bool bLose)
 			arPlayer[Player].Politic[i].Message.Clear();
 			arPlayer[i].Politic[Player].Message.Clear();
 		};
-		//Преобразование родовой провинции в нейтральную
+		//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ СЂРѕРґРѕРІРѕР№ РїСЂРѕРІРёРЅС†РёРё РІ РЅРµР№С‚СЂР°Р»СЊРЅСѓСЋ
 		if ((pFirstProvince+arPlayer[Player].ipProvince)->pGarrison->arGarrison[3]>0)		
 		{(pFirstProvince+arPlayer[Player].ipProvince)->arBuilding[0]=22;}
 		else
@@ -7542,7 +7542,7 @@ int CheckPlayerCondition(int Player, bool bLose)
 		};
 		arPlayer[Player].iWall=-1000;
 
-		//Преобразование остальных провинций в нейтральные
+		//РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РѕСЃС‚Р°Р»СЊРЅС‹С… РїСЂРѕРІРёРЅС†РёР№ РІ РЅРµР№С‚СЂР°Р»СЊРЅС‹Рµ
 		for (int i=1; i<=MapSize; i++)
 		{
 			if ((pFirstProvince+i)->ipPlayer==Player)
@@ -7553,7 +7553,7 @@ int CheckPlayerCondition(int Player, bool bLose)
 			}
 			else
 			{
-				//Осаждённые
+				//РћСЃР°Р¶РґС‘РЅРЅС‹Рµ
 				dcProvince *PR=(pFirstProvince+i);
 				int NewOwner=PR->GetSiegeIndex();
 				PR->ipPlayer=NewOwner;
@@ -7655,7 +7655,7 @@ void Exiter(G_Object *objMain, int *Prov, BITMAP * bmpLowPanel)
 	destroy_bitmap(bmpLowPanel);
 };
 
-//Создать карту и вывести сообщение о происшествии в провинции ipProv игроку Player. Mode=0 - обычная карта, Mode=1 - только провинция и окрестности
+//РЎРѕР·РґР°С‚СЊ РєР°СЂС‚Сѓ Рё РІС‹РІРµСЃС‚Рё СЃРѕРѕР±С‰РµРЅРёРµ Рѕ РїСЂРѕРёСЃС€РµСЃС‚РІРёРё РІ РїСЂРѕРІРёРЅС†РёРё ipProv РёРіСЂРѕРєСѓ Player. Mode=0 - РѕР±С‹С‡РЅР°СЏ РєР°СЂС‚Р°, Mode=1 - С‚РѕР»СЊРєРѕ РїСЂРѕРІРёРЅС†РёСЏ Рё РѕРєСЂРµСЃС‚РЅРѕСЃС‚Рё
 int ShowEventMessage(int Player, int Mode, int ipProv, int Dialog, int An1, int An2, int An3, int An4, char *Mess, BITMAP *Pic, bool HotSeat)
 {
 	int Answer=1;
@@ -7750,7 +7750,7 @@ void BeginMainTurn(int Player)
 	{arPlayer[1].bInGame=true;};
 //	FileLog("MainTurn");
 	
-//Обработка событий
+//РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
 	if (CheckPlayerCondition(Player,false))
 	{return;};
 	int *Prov=new int [MapSize+1];
@@ -7784,7 +7784,7 @@ void BeginMainTurn(int Player)
 	else
 	{RunHourGlass(148, HOUR_SHIFT);};
 	
-	//Ритуальные события
+	//Р РёС‚СѓР°Р»СЊРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ
 	dcRitual *RR=pRitual;
 	while (RR)
 	{
@@ -7895,16 +7895,16 @@ void BeginMainTurn(int Player)
 		Exiter(objMain, Prov, bmpLowPanel);
 		return;
 	};
-	WriteLog("События произошли");
+	WriteLog("РЎРѕР±С‹С‚РёСЏ РїСЂРѕРёР·РѕС€Р»Рё");
 	if (bExitGame)
 	{
 		Exiter(objMain, Prov, bmpLowPanel);
 		return;
 	};
 
-	//Дипломатическая переписка
+	//Р”РёРїР»РѕРјР°С‚РёС‡РµСЃРєР°СЏ РїРµСЂРµРїРёСЃРєР°
 	MakeFog(Player);
-	//Проверка почты союзников (для игрока-человека)
+	//РџСЂРѕРІРµСЂРєР° РїРѕС‡С‚С‹ СЃРѕСЋР·РЅРёРєРѕРІ (РґР»СЏ РёРіСЂРѕРєР°-С‡РµР»РѕРІРµРєР°)
 	if (arPlayer[Player].Control==1)
 	{
 		for (int i=1; i<=CurGame.iMaxPlayers; i++)
@@ -7932,7 +7932,7 @@ void BeginMainTurn(int Player)
 							}
 							else
 							{
-								//Мир с игроком
+								//РњРёСЂ СЃ РёРіСЂРѕРєРѕРј
 							};
 						};
 					};
@@ -7942,7 +7942,7 @@ void BeginMainTurn(int Player)
 	};
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
-		//Первая встреча
+		//РџРµСЂРІР°СЏ РІСЃС‚СЂРµС‡Р°
 		if ((arPlayer[i].bInGame)&&(i!=Player)&&(arPlayer[i].Politic[Player].Treaty==0))
 		{
 			bool bMeet=false;
@@ -7989,7 +7989,7 @@ void BeginMainTurn(int Player)
 				};
 			};
 		};
-		//Получение ответа на сообщение
+		//РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РІРµС‚Р° РЅР° СЃРѕРѕР±С‰РµРЅРёРµ
 		if ((arPlayer[i].bInGame)&&(i!=Player)&&(arPlayer[i].Politic[Player].Answer!=0))
 		{
 			if (arPlayer[Player].Control==1)
@@ -8002,7 +8002,7 @@ void BeginMainTurn(int Player)
 			};
 			arPlayer[i].Politic[Player].Answer=0;
 		};
-		//Сообщение при невыполнимом предложении
+		//РЎРѕРѕР±С‰РµРЅРёРµ РїСЂРё РЅРµРІС‹РїРѕР»РЅРёРјРѕРј РїСЂРµРґР»РѕР¶РµРЅРёРё
 		if ((arPlayer[i].bInGame)&&(arPlayer[Player].Control==1)&&(!arPlayer[Player].CheckMessage(i)))
 		//	((arPlayer[Player].Politic[i].Message.Type==2)||(arPlayer[Player].Politic[i].Message.Type==3)))
 		{
@@ -8014,7 +8014,7 @@ void BeginMainTurn(int Player)
 				arPlayer[i].CancelDeal(Player);
 	//		};
 		};
-		//Получение сообщения
+		//РџРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ
 		if ((arPlayer[i].bInGame)&&(i!=Player)&&(arPlayer[i].Politic[Player].Message.Type>0))
 		{
 			if (arPlayer[i].CheckMessage(Player))
@@ -8052,7 +8052,7 @@ void BeginMainTurn(int Player)
 		};
 	};
 
-	//Объявление войны врагам союзников 
+	//РћР±СЉСЏРІР»РµРЅРёРµ РІРѕР№РЅС‹ РІСЂР°РіР°Рј СЃРѕСЋР·РЅРёРєРѕРІ 
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
 		if ((i!=Player)&&(arPlayer[i].bInGame))
@@ -8078,7 +8078,7 @@ void BeginMainTurn(int Player)
 					};
 				};
 			};
-			//(и наоборот для человека)
+			//(Рё РЅР°РѕР±РѕСЂРѕС‚ РґР»СЏ С‡РµР»РѕРІРµРєР°)
 			if ((arPlayer[Player].Control==1)&&(arPlayer[Player].Politic[i].Treaty==1))
 			{
 				for (int j=1; j<=CurGame.iMaxPlayers; j++)
@@ -8095,7 +8095,7 @@ void BeginMainTurn(int Player)
 		};
 	};
 	
-	//Возврат героев, осаждающих дружественные замки
+	//Р’РѕР·РІСЂР°С‚ РіРµСЂРѕРµРІ, РѕСЃР°Р¶РґР°СЋС‰РёС… РґСЂСѓР¶РµСЃС‚РІРµРЅРЅС‹Рµ Р·Р°РјРєРё
 	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		if (arPlayer[PL].bInGame)
@@ -8110,7 +8110,7 @@ void BeginMainTurn(int Player)
 		};
 	};
 
-	//Проверка контакта с другим правителем
+	//РџСЂРѕРІРµСЂРєР° РєРѕРЅС‚Р°РєС‚Р° СЃ РґСЂСѓРіРёРј РїСЂР°РІРёС‚РµР»РµРј
 
 	/*for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
@@ -8145,7 +8145,7 @@ void BeginMainTurn(int Player)
 	
 	if (arPlayer[Player].Control==1)
 	{
-	//Обязательные события (по правилам мира)
+	//РћР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ (РїРѕ РїСЂР°РІРёР»Р°Рј РјРёСЂР°)
 		if (WorldRules.iMode>0)		
 		{
 			if (((pFirstWorldRules+WorldRules.iMode)->ipSpecialEvent>0)&&((pFirstWorldRules+WorldRules.iMode)->iSpecialEventTurn==CurGame.iCurrentTurn))
@@ -8173,7 +8173,7 @@ void BeginMainTurn(int Player)
 				};
 			};
 		};	
-	//Обязательные события (по таймеру)
+	//РћР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ (РїРѕ С‚Р°Р№РјРµСЂСѓ)
 	for (int i=1; i<=iMaxEvent; i++)
 	{
 		if (*(arPlayer[Player].pStory+i)>0)
@@ -8234,7 +8234,7 @@ void BeginMainTurn(int Player)
 			};
 		};
 	};
-//Активизация квеста (кампания)
+//РђРєС‚РёРІРёР·Р°С†РёСЏ РєРІРµСЃС‚Р° (РєР°РјРїР°РЅРёСЏ)
 	if ((CurGame.iGameType==2)&&(Campaign.iActiveShard>=0))
 	{
 		for (int i=0; i<MAX_CAMP_QUEST; i++)
@@ -8267,7 +8267,7 @@ void BeginMainTurn(int Player)
 				};
 			};
 		};
-//Обязательные события (кампания)
+//РћР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ (РєР°РјРїР°РЅРёСЏ)
 		for (int EV=1; EV<=iMaxEvent; EV++)
 		{
 			clEvent *pEV=(pFirstEvent+EV);
@@ -8302,7 +8302,7 @@ void BeginMainTurn(int Player)
 			};
 		};
 	};
-//События при атаке оппонентов
+//РЎРѕР±С‹С‚РёСЏ РїСЂРё Р°С‚Р°РєРµ РѕРїРїРѕРЅРµРЅС‚РѕРІ
 	if ((CurGame.iGameType==2)&&(Campaign.iActiveShard<0))
 	{
 		dcHero *pGarrison=(pFirstProvince+arPlayer[Player].ipProvince)->pGarrison;
@@ -8310,7 +8310,7 @@ void BeginMainTurn(int Player)
 		switch (abs(Campaign.iActiveShard))
 		{
 		case 1:
-			//Вианта против Адрагерона
+			//Р’РёР°РЅС‚Р° РїСЂРѕС‚РёРІ РђРґСЂР°РіРµСЂРѕРЅР°
 			if ((Campaign.arDialog[322]>0)&&(Campaign.arCampPlayer[12].bInGame))
 			{
 				if ((Campaign.arDialog[322]==3)&&(pGarrison->GetFreeUnitSlotNum(2)>=2)&&(CurGame.iCurrentTurn>20+Random(10)+Random(10)))
@@ -8331,7 +8331,7 @@ void BeginMainTurn(int Player)
 			};
 			break;
 		case 7:
-			//Вианта против Ланшара
+			//Р’РёР°РЅС‚Р° РїСЂРѕС‚РёРІ Р›Р°РЅС€Р°СЂР°
 			if ((Campaign.arDialog[310]>0)&&(Campaign.arCampPlayer[12].bInGame))
 			{
 				if ((Campaign.arDialog[310]==3)&&(pGarrison->GetFreeUnitSlotNum(2)>=2)&&(CurGame.iCurrentTurn>20+Random(10)+Random(10)))
@@ -8352,7 +8352,7 @@ void BeginMainTurn(int Player)
 			};
 			break;
 		case 14:
-			//Белез против Стинхрии
+			//Р‘РµР»РµР· РїСЂРѕС‚РёРІ РЎС‚РёРЅС…СЂРёРё
 			if ((Campaign.arDialog[111]>0)&&(Campaign.arCampPlayer[3].bInGame))
 			{
 				int Slots=pGarrison->GetFreeUnitSlotNum(2);
@@ -8404,7 +8404,7 @@ void BeginMainTurn(int Player)
 	
 	};
 
-//Доход и лечение войска
+//Р”РѕС…РѕРґ Рё Р»РµС‡РµРЅРёРµ РІРѕР№СЃРєР°
 	int GoldInc=0, GoldSpent=0, ProvNum=0;
 	int GemInc=0, GemSpent=0;	
 	arPlayer[Player].iCanInnerBld=0;
@@ -8420,7 +8420,7 @@ void BeginMainTurn(int Player)
 	arPlayer[Player].iCanOuterBld=1;
 	arPlayer[Player].iCanHire=1;
 	arPlayer[Player].iCanCast=1;
-//Провинции
+//РџСЂРѕРІРёРЅС†РёРё
 	for (int i=1; i<=MapSize; i++)
 	{
 		if ((pFirstProvince+i)->ipPlayer==Player)
@@ -8430,15 +8430,15 @@ void BeginMainTurn(int Player)
 			ProvNum+=(pFirstProvince+i)->GetCorruption();
 		};
 //		char txt[200];
-//		sprintf(txt,"Провинция: %s",(pFirstProvince+i)->sName);
+//		sprintf(txt,"РџСЂРѕРІРёРЅС†РёСЏ: %s",(pFirstProvince+i)->sName);
 //		FileLog(txt);
-//		FileLog("Доход...      ");
+//		FileLog("Р”РѕС…РѕРґ...      ");
 		int DefFourage=0;
 		if ((pFirstProvince+i)->GetSiegeIndex()<0)
 		{
 		GoldInc+=(pFirstProvince+i)->GetGoldIncome();
 		GemInc+=(pFirstProvince+i)->GetGemIncome();
-		//Прирост населения
+		//РџСЂРёСЂРѕСЃС‚ РЅР°СЃРµР»РµРЅРёСЏ
 		int OldLvl=(pFirstProvince+i)->GetLevel();
 		if (OldLvl<MAX_PROVINCE_LEVEL)
 		{			
@@ -8446,7 +8446,7 @@ void BeginMainTurn(int Player)
 			{
 				if (((pFirstProvince+i)->GetGrow()<0)&&((pFirstProvince+i)->iPopulation+(pFirstProvince+i)->GetGrow()<=0))
 				{
-					//На грани вымирания
+					//РќР° РіСЂР°РЅРё РІС‹РјРёСЂР°РЅРёСЏ
 				}
 				else
 				{
@@ -8490,8 +8490,8 @@ void BeginMainTurn(int Player)
 				{(pFirstProvince+i)->DrawPic(false);};
 			};
 		};		
-		//Защитник
-	//	FileLog("Защитники...");		
+		//Р—Р°С‰РёС‚РЅРёРє
+	//	FileLog("Р—Р°С‰РёС‚РЅРёРєРё...");		
 		if ((pFirstProvince+i)->iDefender>0)
 		{
 			if (arPlayer[Player].Control==1)
@@ -8555,7 +8555,7 @@ void BeginMainTurn(int Player)
 					}
 					else
 					{
-						StopLog("НЕ НАЙДЕНЫ УКРЕПЛЕНИЯ В ПРОВИНЦИИ ",PR->iNumber);
+						StopLog("РќР• РќРђР™Р”Р•РќР« РЈРљР Р•РџР›Р•РќРРЇ Р’ РџР РћР’РРќР¦РР ",PR->iNumber);
 						Fort=0;
 					};
 				};
@@ -8624,8 +8624,8 @@ void BeginMainTurn(int Player)
 				};						
 			};
 		};
-		//Гарнизон
-	//	FileLog("Гарнизоны...");
+		//Р“Р°СЂРЅРёР·РѕРЅ
+	//	FileLog("Р“Р°СЂРЅРёР·РѕРЅС‹...");
 		if ((pFirstProvince+i)->pGarrison)
 		{
 			int Payment=0;
@@ -8642,7 +8642,7 @@ void BeginMainTurn(int Player)
 			if (Payment>0)
 			{GoldSpent+=Payment;};
 		};
-//		FileLog("События...   ");
+//		FileLog("РЎРѕР±С‹С‚РёСЏ...   ");
 			int RND;
 			if (bStaticEvent)
 			{RND=Random(1000, CurGame.iCurrentTurn, i);}
@@ -8650,7 +8650,7 @@ void BeginMainTurn(int Player)
 			{RND=Random(1000);}
 			if ((CurGame.iCurrentTurn>2)&&(!Tutorial.Map)&&(RND<EVENT_POSSIBILITY))
 			{
-			//Случайное событие
+			//РЎР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ
 				if (arPlayer[Player].Control==1)
 				{
 					ClearRoll();
@@ -8674,7 +8674,7 @@ void BeginMainTurn(int Player)
 						{Event=Roll(false,i,CurGame.iCurrentTurn);}
 						else
 						{Event=Roll(false);}
-						StopLog("Событие: ",Event);
+						StopLog("РЎРѕР±С‹С‚РёРµ: ",Event);
 					//	rectfill(screen1,0,0,1024,768,COLOR_1);
 						blit(bmpGUI_LowPanel,bmpLowPanel,0,0,0,0,bmpGUI_LowPanel->w,bmpGUI_LowPanel->h);		
 						textprintf_centre_ex(bmpLowPanel,Font1,148,78,COLOR_2,-1,"%d",arPlayer[Player].Gold);
@@ -8724,8 +8724,8 @@ void BeginMainTurn(int Player)
 			else
 			{
 		
-			WriteLog("Недовольство...");
-		//Изменение шкалы недовольства
+			WriteLog("РќРµРґРѕРІРѕР»СЊСЃС‚РІРѕ...");
+		//РР·РјРµРЅРµРЅРёРµ С€РєР°Р»С‹ РЅРµРґРѕРІРѕР»СЊСЃС‚РІР°
 			if ((pFirstProvince+i)->GetSiegeIndex()<0)
 			{
 			if ((pFirstProvince+i)->GetMood()>=0)
@@ -8784,8 +8784,8 @@ void BeginMainTurn(int Player)
 	};
 		
 	int Perc=0;
-	WriteLog("Родовой замок...");
-//Родовой замок
+	WriteLog("Р РѕРґРѕРІРѕР№ Р·Р°РјРѕРє...");
+//Р РѕРґРѕРІРѕР№ Р·Р°РјРѕРє
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
 		if (arPlayer[Player].arBld[i])
@@ -8828,7 +8828,7 @@ void BeginMainTurn(int Player)
 	GoldInc+=arPlayer[Player].iGoldAdd;
 	GemInc+=arPlayer[Player].iGemAdd;
 //	GoldInc+=arPlayer[Player].Gold*arPlayer[Player].GetBldParam1(32)/100;
-//Оппоненты
+//РћРїРїРѕРЅРµРЅС‚С‹
 	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		if ((PL!=Player)&&(arPlayer[PL].bInGame))
@@ -8855,8 +8855,8 @@ void BeginMainTurn(int Player)
 			};			
 		};
 	};
-//Герои
-	WriteLog("Герои...                                 ");
+//Р“РµСЂРѕРё
+	WriteLog("Р“РµСЂРѕРё...                                 ");
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		if (arPlayer[Player].arHero[Hero])
@@ -8889,7 +8889,7 @@ void BeginMainTurn(int Player)
 			}
 			else
 			{
-				//Отмена исследования полностью исследованных провинций
+				//РћС‚РјРµРЅР° РёСЃСЃР»РµРґРѕРІР°РЅРёСЏ РїРѕР»РЅРѕСЃС‚СЊСЋ РёСЃСЃР»РµРґРѕРІР°РЅРЅС‹С… РїСЂРѕРІРёРЅС†РёР№
 				if ((arPlayer[Player].arHero[Hero]->iTask==2)&&(arPlayer[Player].arHero[Hero]->pProvince->iExplore>=100))
 				{arPlayer[Player].arHero[Hero]->iTask=0;};
 			};
@@ -9019,7 +9019,7 @@ void BeginMainTurn(int Player)
 	GoldInc+=GoldInc*Perc/100;
 
 
-	//Коррупция
+	//РљРѕСЂСЂСѓРїС†РёСЏ
 	int Corrupt=(arPlayer[Player].iCorrupt+ProvNum)/10-arDifficulty[arPlayer[Player].iDifficulty].iCorruptStart;
 	if ((arPlayer[Player].Control==1)&&(Corrupt>0))
 	{
@@ -9165,7 +9165,7 @@ void BeginMainTurn(int Player)
 	arPlayer[Player].Gem+=GemInc-GemSpent;
 	arPlayer[Player].GemInc=GemInc-GemSpent;
 	
-	WriteLog("Ход начался");
+	WriteLog("РҐРѕРґ РЅР°С‡Р°Р»СЃСЏ");
 	if (arPlayer[Player].Control!=1)
 	{
 		arPlayer[Player].Gold+=5+arPlayer[Player].iDifficulty*8;

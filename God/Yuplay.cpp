@@ -21,7 +21,7 @@ int YuPlayInit()
 {
 	if (iYuPlay)
 	{
-		DATAFILE* datYuPlay = load_datafile("dat\\yuplay.dat");
+		DATAFILE* datYuPlay = load_datafile("dat/yuplay.dat");
 		if (!datYuPlay)
 		{
 			textprintf_ex(screen,Font1,100,240,makecol(230,20,30),-1,"Error reading YuPlay.dat");		
@@ -57,7 +57,7 @@ bool InstallYuPlay()
 	}
 	al_ffblk Fil;
 	bHourGlass=false;
-	if (al_findfirst("YuPlay\\install_yuPlay_0.4.22.exe",&Fil,FA_ALL)==0)
+	if (al_findfirst("YuPlay/install_yuPlay_0.4.22.exe",&Fil,FA_ALL)==0)
 	{
 		if ((pFirstDialog+1257)->Show(1,1,0,0,NULL,NULL)==2)
 		{RunYuInstall();}
@@ -81,7 +81,7 @@ bool InstallYuPlay()
 	return bYuPlayClient;	
 };
 
-//Создание всплывающей подсказки по лотерейным билетам
+//РЎРѕР·РґР°РЅРёРµ РІСЃРїР»С‹РІР°СЋС‰РµР№ РїРѕРґСЃРєР°Р·РєРё РїРѕ Р»РѕС‚РµСЂРµР№РЅС‹Рј Р±РёР»РµС‚Р°Рј
 void MakeTicketHint (int Item, float Price, int Rare)
 {
 	if ((HintType!=8)||(HintMember!=Item)||(HintDur!=Rare))
@@ -286,7 +286,7 @@ void GeneratePrize(int Index, int Rarity)
 	int Prize1=Random(100), Prize2=Random(100), Lev, Rar, Exp;
 	switch (Index)
 	{
-	//Генерация предмета
+	//Р“РµРЅРµСЂР°С†РёСЏ РїСЂРµРґРјРµС‚Р°
 	case 0:
 		switch (Rarity)
 		{
@@ -347,7 +347,7 @@ void GeneratePrize(int Index, int Rarity)
 		ipLottPrizeType=1;
 		ipLottPrize=PickItem(Lev,Rar);
 		break;
-	//Генерация наёмника
+	//Р“РµРЅРµСЂР°С†РёСЏ РЅР°С‘РјРЅРёРєР°
 	case 1:
 		switch (Rarity)
 		{
@@ -413,7 +413,7 @@ void GeneratePrize(int Index, int Rarity)
 		pLottUnit=new dcUnit(ipLottPrize,Exp1);
 		pLottUnit->arMedal[0]=6;
 		break;
-	//Генерация заклинания
+	//Р“РµРЅРµСЂР°С†РёСЏ Р·Р°РєР»РёРЅР°РЅРёСЏ
 	case 2:
 		switch (Rarity)
 		{

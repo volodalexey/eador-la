@@ -1,3 +1,4 @@
+#include <iterator>
 #include <sstream>
 
 namespace binary {
@@ -6,7 +7,7 @@ namespace binary {
 	std::istream& operator>>(std::istream& in, custom& x);
 }
 
-#include "../GoD/ArrayInclusiveEnd.hpp"
+#include "../God/ArrayInclusiveEnd.hpp"
 #include "doctest-configured.h"
 
 namespace binary {
@@ -29,7 +30,7 @@ TEST_SUITE("ArrayInclusiveEnd") {
 	using binary::custom;
 
 	char arr[] = { 1, 2, 3, 4, 42 };
-	auto count = _countof(arr) - 1;
+	auto count = std::size(arr) - 1;
 
 	TEST_CASE("save array of int") {
 		auto box = binary::ArrayInclusiveEnd<char*>(arr, arr + count);

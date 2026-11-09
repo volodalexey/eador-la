@@ -1,8 +1,8 @@
 #include "Unit.h"
 #include "time.h"
 
-int RollerP[MAX_ROLL], RollerN[MAX_ROLL];			//Массивы вероятностей и ссылок для случайного выбора
-//unsigned int iSeed;									//Семя для случайных чисел
+int RollerP[MAX_ROLL], RollerN[MAX_ROLL];			//РњР°СЃСЃРёРІС‹ РІРµСЂРѕСЏС‚РЅРѕСЃС‚РµР№ Рё СЃСЃС‹Р»РѕРє РґР»СЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ РІС‹Р±РѕСЂР°
+//unsigned int iSeed;									//РЎРµРјСЏ РґР»СЏ СЃР»СѓС‡Р°Р№РЅС‹С… С‡РёСЃРµР»
 
 
 void Randomizer()

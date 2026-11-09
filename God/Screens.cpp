@@ -1,12 +1,12 @@
 #include "Windower.h"
 
-const int BLD_IN=18;	//Максимум построек на экране замка
+const int BLD_IN=18;	//РњР°РєСЃРёРјСѓРј РїРѕСЃС‚СЂРѕРµРє РЅР° СЌРєСЂР°РЅРµ Р·Р°РјРєР°
 int LootTable[MAX_LOOT][2];
 int arBuilding[BLD_IN];
 
-int Under; //Флаг объекта под курсором мыши
+int Under; //Р¤Р»Р°Рі РѕР±СЉРµРєС‚Р° РїРѕРґ РєСѓСЂСЃРѕСЂРѕРј РјС‹С€Рё
 
-//Возвращает номер слота предмета для указанного слота на "кукле" героя
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ СЃР»РѕС‚Р° РїСЂРµРґРјРµС‚Р° РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃР»РѕС‚Р° РЅР° "РєСѓРєР»Рµ" РіРµСЂРѕСЏ
 int SlotNum(int Slot) 
 {
 	int Result=Slot;
@@ -25,7 +25,7 @@ int SlotNum(int Slot)
 	return Result;
 };
 
-//Возвращает номер первого свободного слота в сумке героя или 0 если сумка заполнена
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅРѕРјРµСЂ РїРµСЂРІРѕРіРѕ СЃРІРѕР±РѕРґРЅРѕРіРѕ СЃР»РѕС‚Р° РІ СЃСѓРјРєРµ РіРµСЂРѕСЏ РёР»Рё 0 РµСЃР»Рё СЃСѓРјРєР° Р·Р°РїРѕР»РЅРµРЅР°
 int GetFreeSlot(dcHero *Hero, int Exclude)
 {
 	for (int i=16; i<INVENTORY_SIZE+1; i++)
@@ -37,7 +37,7 @@ int GetFreeSlot(dcHero *Hero, int Exclude)
 };
 
 
-//Возвращает максимальный уровень юнита для указанного слота
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ СЋРЅРёС‚Р° РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃР»РѕС‚Р°
 int SlotLvl(int Slot)
 {
 	if (Slot<SlotLvl2)
@@ -49,7 +49,7 @@ int SlotLvl(int Slot)
 	return 4;
 };
 
-//Возвращает максимальный уровень заклинания для указанного слота
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ Р·Р°РєР»РёРЅР°РЅРёСЏ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃР»РѕС‚Р°
 int SpellSlotLvl(int Slot)
 {
 	if (Slot<SpellLvl2)
@@ -61,7 +61,7 @@ int SpellSlotLvl(int Slot)
 	return 4;
 };
 
-//Возвращает свободный слот, подходящий для юнита указанного уровня
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚, РїРѕРґС…РѕРґСЏС‰РёР№ РґР»СЏ СЋРЅРёС‚Р° СѓРєР°Р·Р°РЅРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ
 int GetFreeUnitSlot(dcHero * Hero, int Level)
 {
 	switch (Level)
@@ -94,7 +94,7 @@ int GetFreeUnitSlot(dcHero * Hero, int Level)
 	return 0;
 };
 
-//Возвращает свободный слот, подходящий для заклинания указанного уровня
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚, РїРѕРґС…РѕРґСЏС‰РёР№ РґР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ
 int GetFreeSpellSlot(dcHero * Hero, int Level)
 {
 	switch (Level)
@@ -185,7 +185,7 @@ void DrawUnit(BITMAP *Pic, dcUnit *Unit, int x, int y, int Moraler, BITMAP *bmpE
 };
 
 //***************************************************
-//*** Методы ItemBlock ******************************
+//*** РњРµС‚РѕРґС‹ ItemBlock ******************************
 //***************************************************
 
 GUI_ItemBlock::GUI_ItemBlock()
@@ -418,7 +418,7 @@ void GUI_ItemBlock::Show()
 };
 
 //***************************************************
-//*** Методы UnitBlock ******************************
+//*** РњРµС‚РѕРґС‹ UnitBlock ******************************
 //***************************************************
 
 GUI_UnitBlock::GUI_UnitBlock()
@@ -571,7 +571,7 @@ void GUI_UnitBlock::Show()
 };
 
 //***************************************************
-//*** Методы SpellBlock *****************************
+//*** РњРµС‚РѕРґС‹ SpellBlock *****************************
 //***************************************************
 
 GUI_SpellBlock::GUI_SpellBlock()
@@ -715,7 +715,7 @@ void GUI_SpellBlock::Show()
 };
 
 //***************************************************
-//*** Методы StatBlock ******************************
+//*** РњРµС‚РѕРґС‹ StatBlock ******************************
 //***************************************************
 
 GUI_StatBlock::GUI_StatBlock()
@@ -834,7 +834,7 @@ void GUI_StatBlock::Check()
 };
 
 //***************************************************
-//*** Методы SkillBlock *****************************
+//*** РњРµС‚РѕРґС‹ SkillBlock *****************************
 //***************************************************
 
 GUI_SkillBlock::GUI_SkillBlock()
@@ -920,7 +920,7 @@ void GUI_SkillBlock::Check()
 };
 
 //***************************************************
-//*** Методы QuestBlock *****************************
+//*** РњРµС‚РѕРґС‹ QuestBlock *****************************
 //***************************************************
 
 GUI_QuestBlock::GUI_QuestBlock()
@@ -1052,7 +1052,7 @@ void GUI_QuestBlock::Check()
 
 
 //***************************************************
-//*** Методы InfoBlock ******************************
+//*** РњРµС‚РѕРґС‹ InfoBlock ******************************
 //***************************************************
 
 GUI_InfoBlock::GUI_InfoBlock()
@@ -1232,7 +1232,7 @@ void GUI_InfoBlock::Check()
 
 
 //***************************************************
-//*** Методы ResourceBlock **************************
+//*** РњРµС‚РѕРґС‹ ResourceBlock **************************
 //***************************************************
 
 GUI_ResourceBlock::GUI_ResourceBlock()
@@ -1324,7 +1324,7 @@ bool GUI_ResourceBlock::Check(G_Object * Obj)
 
 
 //***************************************************
-//*** Методы RecruitBlock ***************************
+//*** РњРµС‚РѕРґС‹ RecruitBlock ***************************
 //***************************************************
 
 GUI_RecruitBlock::GUI_RecruitBlock()
@@ -1547,7 +1547,7 @@ void GUI_RecruitBlock::Show()
 };
 
 //***************************************************
-//*** Методы LibraryBlock ***************************
+//*** РњРµС‚РѕРґС‹ LibraryBlock ***************************
 //***************************************************
 
 GUI_LibraryBlock::GUI_LibraryBlock()
@@ -1660,7 +1660,7 @@ int GUI_LibraryBlock::Check()
 };
 
 //***************************************************
-//*** Методы ShopBlock ******************************
+//*** РњРµС‚РѕРґС‹ ShopBlock ******************************
 //***************************************************
 
 GUI_ShopBlock::GUI_ShopBlock()
@@ -1761,7 +1761,7 @@ void GUI_ShopBlock::Show()
 	{
 		if (Shop->Items[i][0]>0)
 		{
-//			StopLog("Шмотка: ", Shop->Items[i][0]);
+//			StopLog("РЁРјРѕС‚РєР°: ", Shop->Items[i][0]);
 			draw_sprite(Pic,(pFirstItem+Shop->Items[i][0])->Pic,(i%9)*w,(i-i%9)/9*h);
 			if (Shop->Items[i][1]>0)
 			{
@@ -1901,7 +1901,7 @@ void GUI_ShopBlock::Pick(int Flag, int Item, int Dur)
 
 
 //***************************************************
-//*** Методы TreasuryBlock **************************
+//*** РњРµС‚РѕРґС‹ TreasuryBlock **************************
 //***************************************************
 
 GUI_TreasuryBlock::GUI_TreasuryBlock()
@@ -1998,7 +1998,7 @@ void GUI_TreasuryBlock::Show()
 
 
 //***************************************************
-//*** Экран обмена между героями ********************
+//*** Р­РєСЂР°РЅ РѕР±РјРµРЅР° РјРµР¶РґСѓ РіРµСЂРѕСЏРјРё ********************
 //***************************************************
 
 void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
@@ -2079,14 +2079,14 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 	{		
 		for (int A=0; A<2; A++)
 		{
-//Обмен предметами
+//РћР±РјРµРЅ РїСЂРµРґРјРµС‚Р°РјРё
 //****************
 
 		int Click=0;
 		Click=blItem[A].Check(0,NULL,SelectedItem);
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -2139,7 +2139,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Herr[A]->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Herr[A]->arInventory[1][0]==0)||((pFirstItem+Herr[A]->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Herr[A],0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Herr[A]->CanUse(SelectedItem))&&
@@ -2148,7 +2148,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 				{
 					if (Herr[A]->arInventory[Click][0]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Herr[A]->arInventory[Click][0])->ipSlot)&&
 							((Herr[SelectedHero]->CanUse(Herr[A]->arInventory[Click][0])))||(GetFreeSlot(Herr[SelectedHero],0)))
 							||(((pFirstItem+Herr[A]->arInventory[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -2157,7 +2157,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 						{
 							if (((!Herr[SelectedHero]->CanUse(Herr[A]->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Herr[A]->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Herr[SelectedHero],0);
 								Herr[SelectedHero]->arInventory[Free][0]=Herr[A]->arInventory[Click][0];
@@ -2168,7 +2168,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 								Herr[SelectedHero]->arInventory[SelectedSlot][0]=Herr[A]->arInventory[Click][0];
 								Herr[SelectedHero]->arInventory[SelectedSlot][1]=Herr[A]->arInventory[Click][1];
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Herr[A]->arInventory[Click][0])->ipSlot==100)&&(Herr[SelectedHero]->arInventory[2][0]>0)
 								&&Herr[SelectedHero]->CanUse(Herr[A]->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -2180,7 +2180,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 							};
 							Herr[A]->arInventory[Click][0]=SelectedItem;
 							Herr[A]->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Herr[A]->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Herr[A],SelectedSlot*(1-abs(A-SelectedHero)));
@@ -2189,7 +2189,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 								Herr[A]->arInventory[2][1]=0;
 								Herr[A]->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Herr[A]->arInventory[1][0]>0)&&((pFirstItem+Herr[A]->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Herr[A],0);
@@ -2213,14 +2213,14 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Herr[A]->arInventory[2][0]>0)&&(Click==1)&&(GetFreeSlot(Herr[A],0)==0))
 						{}
 						else
 						{
 						Herr[A]->arInventory[Click][0]=SelectedItem;
 						Herr[A]->arInventory[Click][1]=SelectedItemDur;	
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Herr[A]->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Herr[A],0);
@@ -2229,7 +2229,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 							Herr[A]->arInventory[2][1]=0;
 							Herr[A]->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Herr[A]->arInventory[1][0]>0)&&((pFirstItem+Herr[A]->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Herr[A],0);
@@ -2253,7 +2253,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 			}
 			else
 			{
-	//Взятие предмета
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				if (Herr[A]->arInventory[Click][0]>0)
 				{
 					if (SelectedUnit)
@@ -2283,7 +2283,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 			};
 		};
 
-//Обмен юнитами
+//РћР±РјРµРЅ СЋРЅРёС‚Р°РјРё
 //*************
 		Click=0;
 		Click=blUnit[A].Check(SelectedUnit);
@@ -2291,16 +2291,16 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 		{
 			if (SelectedUnit)
 			{				
-			//Попытка поместить юнита в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р° РІ...
 				if (SlotLvl(Click)>=SelectedUnit->pType()->iLevel)					
 				{
 					if (Herr[A]->pSquad[Click])
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeUnitSlot(Herr[SelectedHero],Herr[A]->pSquad[Click]->pType()->iLevel))
 						{
 							if (SlotLvl(SelectedSlot)<Herr[A]->pSquad[Click]->pType()->iLevel)
-							//Перемещение юнита в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeUnitSlot(Herr[SelectedHero],Herr[A]->pSquad[Click]->pType()->iLevel);
 							//	Herr[SelectedHero]->pSquad[Free]=Herr[A]->pSquad[Click];
@@ -2327,7 +2327,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Herr[A]->pSquad[Click]=NULL;
 						Herr[A]->PlaceUnit(SelectedUnit,Click);
 					//	Herr[A]->pSquad[Click]=SelectedUnit;							
@@ -2345,7 +2345,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 			}
 			else
 			{
-	//Взятие юнита
+	//Р’Р·СЏС‚РёРµ СЋРЅРёС‚Р°
 				if (Herr[A]->pSquad[Click])
 				{
 					if (SelectedItem)
@@ -2443,7 +2443,7 @@ void ScreenHeroHero(dcHero * Hero1, dcHero * Hero2)
 };
 
 //***************************************************
-//*** Экран просмотра героя *************************
+//*** Р­РєСЂР°РЅ РїСЂРѕСЃРјРѕС‚СЂР° РіРµСЂРѕСЏ *************************
 //***************************************************
 
 bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
@@ -2677,13 +2677,13 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 #endif
 		
 
-//Манипулирование предметами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 //**************************		
 		int Click=0;
 		Click=blItem.Check(0,NULL,SelectedItem);
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -2736,7 +2736,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Hero->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Hero->arInventory[1][0]==0)||((pFirstItem+Hero->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Hero,0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Hero->CanUse(SelectedItem))&&
@@ -2747,7 +2747,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 					{
 						if (SelectedSlot==0)
 						{
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -2756,7 +2756,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -2778,7 +2778,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 							blStat.Show();
 							blInfo.Show();
 						};
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Hero->arInventory[Click][0])->ipSlot)&&
 							((Hero->CanUse(Hero->arInventory[Click][0])))||(GetFreeSlot(Hero,0)))
 							||(((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -2787,7 +2787,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 						{
 							if (((!Hero->CanUse(Hero->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Hero->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Hero,0);
 								Hero->arInventory[Free][0]=Hero->arInventory[Click][0];
@@ -2798,7 +2798,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 								Hero->arInventory[SelectedSlot][0]=Hero->arInventory[Click][0];
 								Hero->arInventory[SelectedSlot][1]=Hero->arInventory[Click][1];
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 								&&Hero->CanUse(Hero->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -2810,7 +2810,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 							};
 							Hero->arInventory[Click][0]=SelectedItem;
 							Hero->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -2819,7 +2819,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -2839,10 +2839,10 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						Hero->arInventory[Click][0]=SelectedItem;
 						Hero->arInventory[Click][1]=SelectedItemDur;	
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -2851,7 +2851,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 							Hero->arInventory[2][1]=0;
 							Hero->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -2872,7 +2872,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 			}
 			else
 			{
-	//Взятие предмета
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				if (Hero->arInventory[Click][0]>0)
 				{
 					if (SelectedUnit)
@@ -2905,7 +2905,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 			
 		};
 
-//Манипулирование юнитами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ СЋРЅРёС‚Р°РјРё
 //***********************
 		Click=0;
 		Click=blUnit.Check(SelectedUnit);
@@ -2913,16 +2913,16 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 		{
 			if (SelectedUnit)
 			{				
-			//Попытка поместить юнита в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р° РІ...
 				if (SlotLvl(Click)>=SelectedUnit->pType()->iLevel)					
 				{
 					if (Hero->pSquad[Click])
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeUnitSlot(Hero,Hero->pSquad[Click]->pType()->iLevel))
 						{
 							if ((SelectedSlot==0)||(SlotLvl(SelectedSlot)<Hero->pSquad[Click]->pType()->iLevel))
-							//Перемещение юнита в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeUnitSlot(Hero,Hero->pSquad[Click]->pType()->iLevel);							
 								Hero->PlaceUnit(Hero->pSquad[Click], Free);
@@ -2956,7 +2956,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Hero->pSquad[Click]=NULL;
 						Hero->PlaceUnit(SelectedUnit,Click);
 					//	Herr[A]->pSquad[Click]=SelectedUnit;							
@@ -2971,7 +2971,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 			}
 			else
 			{
-	//Взятие юнита
+	//Р’Р·СЏС‚РёРµ СЋРЅРёС‚Р°
 				if (Hero->pSquad[Click])
 				{
 					if (SelectedItem)
@@ -3009,7 +3009,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 			};
 		};
 
-//Манипулирование заклинаниями
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё
 //****************************
 		Click=0;
 		Click=blSpell.Check(SelectedSpell);
@@ -3018,16 +3018,16 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 //			textprintf_ex(screen,Font1,900,40,makecol(200,200,200),-1,"%d",Click);
 			if (SelectedSpell)
 			{				
-			//Попытка поместить заклинание в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ Р·Р°РєР»РёРЅР°РЅРёРµ РІ...
 				if (SpellSlotLvl(Click)>=(pFirstSpell+SelectedSpell)->iLevel)					
 				{
 					if (Hero->arSpell[Click]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeSpellSlot(Hero,(pFirstSpell+Hero->arSpell[Click])->iLevel))
 						{
 							if ((SelectedSlot==0)||(SpellSlotLvl(SelectedSlot)<(pFirstSpell+Hero->arSpell[Click])->iLevel))
-							//Перемещение заклинания в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeSpellSlot(Hero,(pFirstSpell+Hero->arSpell[Click])->iLevel);
 								Hero->arSpell[Free]=Hero->arSpell[Click];
@@ -3057,7 +3057,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Hero->arSpell[Click]=SelectedSpell;													
 						SelectedSpell=0;
 						SelectedSlot=0;
@@ -3069,7 +3069,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 			}
 			else
 			{
-	//Взятие заклинания
+	//Р’Р·СЏС‚РёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ
 				if (Hero->arSpell[Click]>0)
 				{
 					if (SelectedItem)
@@ -3219,7 +3219,7 @@ bool ScreenHero(dcHero * Hero, dcUnit *Ally, bool CanDelete)
 
 
 //***************************************************
-//*** Экран героя в гарнизоне ***********************
+//*** Р­РєСЂР°РЅ РіРµСЂРѕСЏ РІ РіР°СЂРЅРёР·РѕРЅРµ ***********************
 //***************************************************
 
 void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
@@ -3557,13 +3557,13 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 
 		};		
 
-		//Манипулирование предметами
+		//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 		//**************************
 		Click=0;
 		Click=blItem.Check(0,NULL,SelectedItem);
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -3616,7 +3616,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Hero->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Hero->arInventory[1][0]==0)||((pFirstItem+Hero->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Hero,0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Hero->CanUse(SelectedItem))&&
@@ -3625,7 +3625,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 				{
 					if (Hero->arInventory[Click][0]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Hero->arInventory[Click][0])->ipSlot)&&
 							((Hero->CanUse(Hero->arInventory[Click][0])))||(GetFreeSlot(Hero,0)))
 							||(((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -3634,7 +3634,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 						{
 							if (((!Hero->CanUse(Hero->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Hero->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Hero,0);
 								Hero->arInventory[Free][0]=Hero->arInventory[Click][0];
@@ -3645,7 +3645,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 								Hero->arInventory[SelectedSlot][0]=Hero->arInventory[Click][0];
 								Hero->arInventory[SelectedSlot][1]=Hero->arInventory[Click][1];
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 								&&Hero->CanUse(Hero->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -3657,7 +3657,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 							};
 							Hero->arInventory[Click][0]=SelectedItem;
 							Hero->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -3666,7 +3666,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -3692,10 +3692,10 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						Hero->arInventory[Click][0]=SelectedItem;
 						Hero->arInventory[Click][1]=SelectedItemDur;	
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -3704,7 +3704,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 							Hero->arInventory[2][1]=0;
 							Hero->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -3731,7 +3731,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 			}
 			else
 			{
-	//Взятие предмета
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				if (Hero->arInventory[Click][0]>0)
 				{
 					if (SelectedUnit)
@@ -3779,7 +3779,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 
 		for (int A=0; A<2; A++)
 		{		
-	//Покупка юнитов и получение из предметов
+	//РџРѕРєСѓРїРєР° СЋРЅРёС‚РѕРІ Рё РїРѕР»СѓС‡РµРЅРёРµ РёР· РїСЂРµРґРјРµС‚РѕРІ
 	//***************************************
 		Click=0;
 		Click=blUnit[A].Check(SelectedUnit);
@@ -3849,19 +3849,19 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 				}
 				else
 
-			//Обмен юнитами
+			//РћР±РјРµРЅ СЋРЅРёС‚Р°РјРё
 			//*************
 				{
-			//Попытка поместить юнита в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р° РІ...
 				if (SlotLvl(Click)>=SelectedUnit->pType()->iLevel)					
 				{
 					if (Herr[A]->pSquad[Click])
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeUnitSlot(Herr[SelectedHero],Herr[A]->pSquad[Click]->pType()->iLevel))
 						{
 							if (SlotLvl(SelectedSlot)<Herr[A]->pSquad[Click]->pType()->iLevel)
-							//Перемещение юнита в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeUnitSlot(Herr[SelectedHero],Herr[A]->pSquad[Click]->pType()->iLevel);
 							//	Herr[SelectedHero]->pSquad[Free]=Herr[A]->pSquad[Click];
@@ -3887,7 +3887,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Herr[A]->pSquad[Click]=NULL;
 						Herr[A]->PlaceUnit(SelectedUnit,Click);
 					//	Herr[A]->pSquad[Click]=SelectedUnit;							
@@ -3905,7 +3905,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 			}
 			else
 			{
-	//Взятие юнита
+	//Р’Р·СЏС‚РёРµ СЋРЅРёС‚Р°
 				if (Herr[A]->pSquad[Click])
 				{
 					if (SelectedItem)
@@ -4049,7 +4049,7 @@ void ScreenHeroGarrison (dcHero * Hero, dcHero * Garrison, bool UseLocalTab)
 
 
 //***************************************************
-//*** Экран героя в библиотеке **********************
+//*** Р­РєСЂР°РЅ РіРµСЂРѕСЏ РІ Р±РёР±Р»РёРѕС‚РµРєРµ **********************
 //***************************************************
 void ScreenHeroLibrary (dcHero * Hero)
 {
@@ -4254,7 +4254,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 		};
 #endif
 		
-	//Взятие заклинания в библиотеке
+	//Р’Р·СЏС‚РёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ Р±РёР±Р»РёРѕС‚РµРєРµ
 	//******************************
 		Click=blLibrary.Check();
 		/*if ((Tutorial.Map)&&(Tutorial.Hire==1))
@@ -4296,7 +4296,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 		};
 			
 
-//Манипулирование заклинаниями
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё
 //****************************
 		Click=0;
 		if (iScroll>0)
@@ -4309,7 +4309,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 			{
 				if (iScroll>0)
 				{
-				//Свиток с заклинанием
+				//РЎРІРёС‚РѕРє СЃ Р·Р°РєР»РёРЅР°РЅРёРµРј
 					if (SpellSlotLvl(Click)>=(pFirstSpell+iScroll)->iLevel)					
 					{
 						if (Hero->arSpell[Click]>0)
@@ -4339,7 +4339,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 				{
 				if (SelectedSlot<0)
 				{					
-				//Заклинание из библиотеки
+				//Р—Р°РєР»РёРЅР°РЅРёРµ РёР· Р±РёР±Р»РёРѕС‚РµРєРё
 					if (SpellSlotLvl(Click)>=(pFirstSpell+SelectedSpell)->iLevel)					
 					{
 						bBuy=true;
@@ -4371,12 +4371,12 @@ void ScreenHeroLibrary (dcHero * Hero)
 				else
 				{
 
-			//Попытка поместить заклинание в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ Р·Р°РєР»РёРЅР°РЅРёРµ РІ...
 				if (SpellSlotLvl(Click)>=(pFirstSpell+SelectedSpell)->iLevel)					
 				{
 					if (Hero->arSpell[Click]>0)
 					{
-			//Занятый слот
+			//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeSpellSlot(Hero,(pFirstSpell+Hero->arSpell[Click])->iLevel))
 						{
 							if (SpellSlotLvl(SelectedSlot)<(pFirstSpell+Hero->arSpell[Click])->iLevel)
@@ -4410,7 +4410,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 					}
 					else
 					{	
-			//Свободный слот						
+			//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Hero->arSpell[Click]=SelectedSpell;													
 						SelectedSpell=0;
 						SelectedSlot=0;
@@ -4424,7 +4424,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 			}
 			else
 			{
-	//Взятие заклинания
+	//Р’Р·СЏС‚РёРµ Р·Р°РєР»РёРЅР°РЅРёСЏ
 				if (Hero->arSpell[Click]>0)
 				{
 					if (SelectedItem)
@@ -4450,13 +4450,13 @@ void ScreenHeroLibrary (dcHero * Hero)
 			};
 		};
 
-//Манипулирование предметами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 //**************************
 		Click=0;
 		Click=blItem.Check(0,NULL,SelectedItem);
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -4509,7 +4509,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Hero->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Hero->arInventory[1][0]==0)||((pFirstItem+Hero->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Hero,0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Hero->CanUse(SelectedItem))&&
@@ -4518,7 +4518,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 				{
 					if (Hero->arInventory[Click][0]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Hero->arInventory[Click][0])->ipSlot)&&
 							((Hero->CanUse(Hero->arInventory[Click][0])))||(GetFreeSlot(Hero,0)))
 							||(((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -4527,7 +4527,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 						{
 							if (((!Hero->CanUse(Hero->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Hero->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Hero,0);
 								Hero->arInventory[Free][0]=Hero->arInventory[Click][0];
@@ -4538,7 +4538,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 								Hero->arInventory[SelectedSlot][0]=Hero->arInventory[Click][0];
 								Hero->arInventory[SelectedSlot][1]=Hero->arInventory[Click][1];
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 								&&Hero->CanUse(Hero->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -4550,7 +4550,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 							};
 							Hero->arInventory[Click][0]=SelectedItem;
 							Hero->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -4559,7 +4559,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -4580,10 +4580,10 @@ void ScreenHeroLibrary (dcHero * Hero)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						Hero->arInventory[Click][0]=SelectedItem;
 						Hero->arInventory[Click][1]=SelectedItemDur;
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -4592,7 +4592,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 							Hero->arInventory[2][1]=0;
 							Hero->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -4614,7 +4614,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 			}
 			else
 			{
-	//Взятие предмета
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				if (Hero->arInventory[Click][0]>0)
 				{
 					if (SelectedSpell)
@@ -4740,7 +4740,7 @@ void ScreenHeroLibrary (dcHero * Hero)
 
 
 //***************************************************
-//*** Экран героя в магазине ************************
+//*** Р­РєСЂР°РЅ РіРµСЂРѕСЏ РІ РјР°РіР°Р·РёРЅРµ ************************
 //***************************************************
 void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 {
@@ -4980,13 +4980,13 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 		};
 #endif
 
-//Манипулирование предметами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 //**************************
 		Click=0;
 		Under1=Under;
 		Under=-1;
 		Click=blShop.Check(Hero);
-	//Общий ремонт
+	//РћР±С‰РёР№ СЂРµРјРѕРЅС‚
 		if (Click==10000)
 		{
 			PlayUnitSound(wavRepairAll);
@@ -5043,7 +5043,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 		if (SelectedItem)
 		{
 			if (ItemOwner<3)
-		//Продажа предмета
+		//РџСЂРѕРґР°Р¶Р° РїСЂРµРґРјРµС‚Р°
 			{
 				CoinSound();
 			//	play_sample(wavCoins,iSoundVolume/2,128,1000,0);
@@ -5064,7 +5064,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 				buttTrash1->Activate(0);
 			}
 			else
-	//Взятие предмета в магазине
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р° РІ РјР°РіР°Р·РёРЅРµ
 			{
 				if ((Click<1000)&&(Shop->Items[Click][0]>0)&&(Shop->Items[Click][0]!=SelectedItem)&&
 					(PL->Gold>=PL->GetItemGoldPrice(Shop->Items[Click][0],Shop))&&
@@ -5157,13 +5157,13 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 		{
 		if (SelectedItem)
 		{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 			if (PL->arTreasury[Click][0]>0)
 			{
-		//Занятый слот
+		//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 				if (ItemOwner==1)
 				{
-			//Предмет героя
+			//РџСЂРµРґРјРµС‚ РіРµСЂРѕСЏ
 					if (((SlotNum(SelectedSlot)==(pFirstItem+PL->arTreasury[Click][0])->ipSlot)&&
 						((Hero->CanUse(PL->arTreasury[Click][0])))||(GetFreeSlot(Hero,0)))
 						||(((pFirstItem+PL->arTreasury[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -5172,7 +5172,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 					{
 						if (((!Hero->CanUse(PL->arTreasury[Click][0]))||
 							(SlotNum(SelectedSlot)!=(pFirstItem+PL->arTreasury[Click][0])->ipSlot))&&(SelectedSlot<16))
-						//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 						{
 							int Free=GetFreeSlot(Hero,0);
 							Hero->arInventory[Free][0]=PL->arTreasury[Click][0];
@@ -5183,7 +5183,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 							Hero->arInventory[SelectedSlot][0]=PL->arTreasury[Click][0];
 							Hero->arInventory[SelectedSlot][1]=PL->arTreasury[Click][1];
 						};
-						//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+PL->arTreasury[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 							&&Hero->CanUse(PL->arTreasury[Click][0])&&(SelectedSlot==1))
 						{
@@ -5209,7 +5209,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 				};
 				if (ItemOwner==2)
 				{
-				//Предмет из сокровищницы
+				//РџСЂРµРґРјРµС‚ РёР· СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹
 					PL->arTreasury[SelectedSlot][0]=PL->arTreasury[Click][0];
 					PL->arTreasury[SelectedSlot][1]=PL->arTreasury[Click][1];
 					PL->arTreasury[Click][0]=SelectedItem;
@@ -5228,11 +5228,11 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 			}
 			else
 			{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 				bool bSkip=true;
 				if (ItemOwner==3)
 				{
-			//Покупка предмета
+			//РџРѕРєСѓРїРєР° РїСЂРµРґРјРµС‚Р°
 					CoinSound();
 				//	play_sample(wavCoins,iSoundVolume/2,128,1000,0);
 					bBuy=true;					
@@ -5283,7 +5283,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 			if (PL->arTreasury[Click][0]>0)
 			{
 			if (blShop.buttRepair.bPress)
-		//Ремонт предмета
+		//Р РµРјРѕРЅС‚ РїСЂРµРґРјРµС‚Р°
 			{
 				int Gold=PL->GetItemGoldRepPrice(PL->arTreasury[Click][0],PL->arTreasury[Click][1],Shop);
 				int Gem=PL->GetItemGemRepPrice(PL->arTreasury[Click][0],PL->arTreasury[Click][1],Shop);
@@ -5305,7 +5305,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 				};
 			}
 			else
-		//Взятие предмета
+		//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 			{	
 				SelectedItem=PL->arTreasury[Click][0];
 				SelectedItemDur=PL->arTreasury[Click][1];
@@ -5362,7 +5362,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 		{Under1=Under;};
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -5416,7 +5416,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 		//	{
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Hero->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Hero->arInventory[1][0]==0)||((pFirstItem+Hero->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Hero,0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Hero->CanUse(SelectedItem))&&
@@ -5425,7 +5425,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 				{
 					if (Hero->arInventory[Click][0]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 					//	if (ItemOwner<3)
 					//	{
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Hero->arInventory[Click][0])->ipSlot)&&
@@ -5438,7 +5438,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 							{
 							if (((!Hero->CanUse(Hero->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Hero->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Hero,0);
 								Hero->arInventory[Free][0]=Hero->arInventory[Click][0];
@@ -5449,7 +5449,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 								Hero->arInventory[SelectedSlot][0]=Hero->arInventory[Click][0];
 								Hero->arInventory[SelectedSlot][1]=Hero->arInventory[Click][1];
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 								&&Hero->CanUse(Hero->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -5473,7 +5473,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 							};
 							Hero->arInventory[Click][0]=SelectedItem;
 							Hero->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -5482,7 +5482,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -5493,7 +5493,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 							};
 							if (ItemOwner==3)
 							{
-								//Покупка предмета в занятый слот
+								//РџРѕРєСѓРїРєР° РїСЂРµРґРјРµС‚Р° РІ Р·Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 								CoinSound();						
 								bBuy=true;							
 								PL->Gold-=PL->GetItemGoldPrice(SelectedItem, Shop);
@@ -5563,7 +5563,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1)&&(GetFreeSlot(Hero,0)==0))
 						{}
 						else
@@ -5571,7 +5571,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 						bool bSkip=true;
 						if (ItemOwner==3)
 						{
-			//Покупка предмета
+			//РџРѕРєСѓРїРєР° РїСЂРµРґРјРµС‚Р°
 							CoinSound();
 						//	play_sample(wavCoins,iSoundVolume/2,128,1000,0);
 							bBuy=true;
@@ -5600,7 +5600,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 						};
 						Hero->arInventory[Click][0]=SelectedItem;
 						Hero->arInventory[Click][1]=SelectedItemDur;	
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -5609,7 +5609,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 							Hero->arInventory[2][1]=0;
 							Hero->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -5642,7 +5642,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 				{
 					if (blShop.buttRepair.bPress)
 					{
-				//Ремонт предмета
+				//Р РµРјРѕРЅС‚ РїСЂРµРґРјРµС‚Р°
 						int Gold=PL->GetItemGoldRepPrice(Hero->arInventory[Click][0],Hero->arInventory[Click][1],Shop);
 						int Gem=PL->GetItemGemRepPrice(Hero->arInventory[Click][0],Hero->arInventory[Click][1],Shop);
 						blShop.Pick(3,Hero->arInventory[Click][0],Hero->arInventory[Click][1]);
@@ -5663,7 +5663,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 						}
 					}
 					else
-				//Взятие предмета
+				//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				{	
 					SelectedItem=Hero->arInventory[Click][0];
 					SelectedItemDur=Hero->arInventory[Click][1];
@@ -5775,7 +5775,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 	HintType=0;
 	iAntisleep=iAntisleepDelay;
 	Shop->PriceModifier[Hero->ipPlayer]=OldPrice;
-	//Сдвигаем товары если выкуплен какой-либо лот
+	//РЎРґРІРёРіР°РµРј С‚РѕРІР°СЂС‹ РµСЃР»Рё РІС‹РєСѓРїР»РµРЅ РєР°РєРѕР№-Р»РёР±Рѕ Р»РѕС‚
 	int i=0; bool bRunShop=true;
 	while (bRunShop)
 	{
@@ -5807,7 +5807,7 @@ void ScreenHeroShop (dcHero * Hero, dcShop * Shop)
 
 
 //***************************************************
-//*** Экран гарнизона *******************************
+//*** Р­РєСЂР°РЅ РіР°СЂРЅРёР·РѕРЅР° *******************************
 //***************************************************
 
 void ScreenGarrison (dcHero * Garrison, bool CanHire)
@@ -5889,7 +5889,7 @@ void ScreenGarrison (dcHero * Garrison, bool CanHire)
 
 				
 				
-	//Покупка юнитов
+	//РџРѕРєСѓРїРєР° СЋРЅРёС‚РѕРІ
 	//**************
 		Click=0;
 		Click=blUnit.Check(SelectedUnit);
@@ -5968,19 +5968,19 @@ void ScreenGarrison (dcHero * Garrison, bool CanHire)
 				}
 				else
 
-			//Обмен юнитами
+			//РћР±РјРµРЅ СЋРЅРёС‚Р°РјРё
 			//*************
 				{
-			//Попытка поместить юнита в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р° РІ...
 				if (SlotLvl(Click)>=SelectedUnit->pType()->iLevel)					
 				{
 					if (Garrison->pSquad[Click])
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeUnitSlot(Garrison,Garrison->pSquad[Click]->pType()->iLevel))
 						{
 							if (SlotLvl(SelectedSlot)<Garrison->pSquad[Click]->pType()->iLevel)
-							//Перемещение юнита в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeUnitSlot(Garrison,Garrison->pSquad[Click]->pType()->iLevel);							
 								Garrison->PlaceUnit(Garrison->pSquad[Click], Free);
@@ -6000,7 +6000,7 @@ void ScreenGarrison (dcHero * Garrison, bool CanHire)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Garrison->pSquad[Click]=NULL;
 						Garrison->PlaceUnit(SelectedUnit,Click);					
 						SelectedUnit=NULL;
@@ -6014,7 +6014,7 @@ void ScreenGarrison (dcHero * Garrison, bool CanHire)
 			}
 			else
 			{
-	//Взятие юнита
+	//Р’Р·СЏС‚РёРµ СЋРЅРёС‚Р°
 				if (Garrison->pSquad[Click])
 				{					
 					SelectedUnit=Garrison->pSquad[Click];					
@@ -6122,7 +6122,7 @@ const char* GetRulerTitle(int Score)
 };
 
 //***************************************************
-//*** Экран статистики ******************************
+//*** Р­РєСЂР°РЅ СЃС‚Р°С‚РёСЃС‚РёРєРё ******************************
 //***************************************************
 int ScreenStatistics (int Player)
 {
@@ -6200,7 +6200,7 @@ int ScreenStatistics (int Player)
 	int GoldHeroSpent=0, GemHeroSpent=0;
 	int GoldCorrupt=0, GemCorrupt=0, ProvNum=0;
 	int GemInc=0, GemSpent=0;	
-//Провинции
+//РџСЂРѕРІРёРЅС†РёРё
 	for (int i=1; i<=MapSize; i++)
 	{
 		int DefFourage=0;
@@ -6223,7 +6223,7 @@ int ScreenStatistics (int Player)
 				GemProvInc+=(pFirstProvince+i)->GetGemIncome();
 			};
 				
-		//Защитник		
+		//Р—Р°С‰РёС‚РЅРёРє		
 		if ((pFirstProvince+i)->iDefender>0)
 		{
 			if ((pFirstDefender+(pFirstProvince+i)->iDefender)->iGoldPayment<0)
@@ -6246,7 +6246,7 @@ int ScreenStatistics (int Player)
 
 		};
 		};
-		//Гарнизон
+		//Р“Р°СЂРЅРёР·РѕРЅ
 		if ((pFirstProvince+i)->pGarrison)
 		{
 			int TempGold=0;
@@ -6266,7 +6266,7 @@ int ScreenStatistics (int Player)
 		};
 	};	
 	int Perc=0;
-//Родовой замок
+//Р РѕРґРѕРІРѕР№ Р·Р°РјРѕРє
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
 		if (arPlayer[Player].arBld[i])
@@ -6295,7 +6295,7 @@ int ScreenStatistics (int Player)
 	GoldCastInc+=Profit;
 	GoldCastInc+=arPlayer[Player].iGoldAdd;
 	GemCastInc+=arPlayer[Player].iGemAdd;
-//Оппоненты
+//РћРїРїРѕРЅРµРЅС‚С‹
 	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		if ((PL!=Player)&&(arPlayer[PL].bInGame))
@@ -6329,7 +6329,7 @@ int ScreenStatistics (int Player)
 			};			
 		};
 	};
-//Герои
+//Р“РµСЂРѕРё
 	for (int Hero=0; Hero<MAX_HERO; Hero++)
 	{
 		if (arPlayer[Player].arHero[Hero])
@@ -6356,7 +6356,7 @@ int ScreenStatistics (int Player)
 	GemInc=GemProvInc+GemCastInc+GemHeroInc+GemOppInc;
 	GoldCastInc+=GoldInc*Perc/100;
 	GoldInc+=GoldInc*Perc/100;
-	//Коррупция
+	//РљРѕСЂСЂСѓРїС†РёСЏ
 	int Corrupt=(arPlayer[Player].iCorrupt+ProvNum)/10-arDifficulty[arPlayer[Player].iDifficulty].iCorruptStart;
 	if ((arPlayer[Player].Control==1)&&(Corrupt>0))
 	{
@@ -6552,7 +6552,7 @@ int ScreenStatistics (int Player)
 
 
 //***************************************************
-//*** Экран статистики в кампании *******************
+//*** Р­РєСЂР°РЅ СЃС‚Р°С‚РёСЃС‚РёРєРё РІ РєР°РјРїР°РЅРёРё *******************
 //***************************************************
 void ScreenCampStat()
 {	
@@ -6824,7 +6824,7 @@ void ScreenCampStat()
 
 
 //***************************************************
-//** Окно получения предметов при полном инвентаре **
+//** РћРєРЅРѕ РїРѕР»СѓС‡РµРЅРёСЏ РїСЂРµРґРјРµС‚РѕРІ РїСЂРё РїРѕР»РЅРѕРј РёРЅРІРµРЅС‚Р°СЂРµ **
 //***************************************************
 
 void WindowTakeLoot(dcHero * Hero)
@@ -6880,13 +6880,13 @@ void WindowTakeLoot(dcHero * Hero)
 		if	(!key[KEY_ESC])
 		{NoExit=false;};		
 
-//Манипулирование предметами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 //**************************
 		int Click=0;
 		Click=blItem.Check(0,NULL,SelectedItem);
 		if (Click>=0)
 		{
-	//Клик на кукле героя		
+	//РљР»РёРє РЅР° РєСѓРєР»Рµ РіРµСЂРѕСЏ		
 			if (Click==0)
 			{
 			Click=(pFirstItem+SelectedItem)->ipSlot;
@@ -6939,7 +6939,7 @@ void WindowTakeLoot(dcHero * Hero)
 
 			if (SelectedItem)
 			{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 				if (((SlotNum(Click)==(pFirstItem+SelectedItem)->ipSlot)&&(Hero->CanUse(SelectedItem)))
 					&&((SlotNum(Click)!=2)||(Hero->arInventory[1][0]==0)||((pFirstItem+Hero->arInventory[1][0])->ipSlot!=100)||(GetFreeSlot(Hero,0)))
 					||(((pFirstItem+SelectedItem)->ipSlot==100)&&(SlotNum(Click)==1)&&(Hero->CanUse(SelectedItem))&&
@@ -6948,7 +6948,7 @@ void WindowTakeLoot(dcHero * Hero)
 				{
 					if (Hero->arInventory[Click][0]>0)
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (((SlotNum(SelectedSlot)==(pFirstItem+Hero->arInventory[Click][0])->ipSlot)&&
 							((Hero->CanUse(Hero->arInventory[Click][0])))||(GetFreeSlot(Hero,0)))
 							||(((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(SlotNum(SelectedSlot)==1)&&
@@ -6957,7 +6957,7 @@ void WindowTakeLoot(dcHero * Hero)
 						{
 							if (((!Hero->CanUse(Hero->arInventory[Click][0]))||
 								(SlotNum(SelectedSlot)!=(pFirstItem+Hero->arInventory[Click][0])->ipSlot))&&(SelectedSlot<16))
-							//Перемещение предмета в инвентарь, если отдающий герой не может его использовать
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РЅРµ РјРѕР¶РµС‚ РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 							{
 								int Free=GetFreeSlot(Hero,0);
 								Hero->arInventory[Free][0]=Hero->arInventory[Click][0];
@@ -6977,7 +6977,7 @@ void WindowTakeLoot(dcHero * Hero)
 									draw_sprite(bmpWindow,(pFirstItem+arLootTable[SelectedSlot-200][0])->Pic,24+((SelectedSlot-200)%3)*60,237+((SelectedSlot-200)-(SelectedSlot-200)%3)/3*60);
 								};
 							};
-							//Перемещение щита в инвентарь, если отдающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РѕС‚РґР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if (((pFirstItem+Hero->arInventory[Click][0])->ipSlot==100)&&(Hero->arInventory[2][0]>0)
 								&&Hero->CanUse(Hero->arInventory[Click][0])&&(SelectedSlot==1))
 							{
@@ -6989,7 +6989,7 @@ void WindowTakeLoot(dcHero * Hero)
 							};
 							Hero->arInventory[Click][0]=SelectedItem;
 							Hero->arInventory[Click][1]=SelectedItemDur;
-							//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 							if ((Click==1)&&((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0))
 							{
 								int Free=GetFreeSlot(Hero,SelectedSlot);
@@ -7015,7 +7015,7 @@ void WindowTakeLoot(dcHero * Hero)
 								Hero->arInventory[2][1]=0;
 								Hero->arInventory[2][0]=0;
 							};
-							//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 							if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 							{
 								int Free=GetFreeSlot(Hero,0);
@@ -7049,10 +7049,10 @@ void WindowTakeLoot(dcHero * Hero)
 					}
 					else
 					{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 						Hero->arInventory[Click][0]=SelectedItem;
 						Hero->arInventory[Click][1]=SelectedItemDur;	
-						//Перемещение щита в инвентарь, если получающий герой получил двуручный предмет
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ С‰РёС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїРѕР»СѓС‡Р°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» РґРІСѓСЂСѓС‡РЅС‹Р№ РїСЂРµРґРјРµС‚
 						if (((pFirstItem+SelectedItem)->ipSlot==100)&&(Hero->arInventory[2][0]>0)&&(Click==1))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -7078,7 +7078,7 @@ void WindowTakeLoot(dcHero * Hero)
 							Hero->arInventory[2][1]=0;
 							Hero->arInventory[2][0]=0;
 						};
-						//Перемещение двуручного оружия в инвентарь, если принимающий герой получил щит
+						//РџРµСЂРµРјРµС‰РµРЅРёРµ РґРІСѓСЂСѓС‡РЅРѕРіРѕ РѕСЂСѓР¶РёСЏ РІ РёРЅРІРµРЅС‚Р°СЂСЊ, РµСЃР»Рё РїСЂРёРЅРёРјР°СЋС‰РёР№ РіРµСЂРѕР№ РїРѕР»СѓС‡РёР» С‰РёС‚
 						if ((Click==2)&&(Hero->arInventory[1][0]>0)&&((pFirstItem+Hero->arInventory[1][0])->ipSlot==100))
 						{
 							int Free=GetFreeSlot(Hero,0);
@@ -7113,7 +7113,7 @@ void WindowTakeLoot(dcHero * Hero)
 			}
 			else
 			{
-	//Взятие предмета
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 				if (Hero->arInventory[Click][0]>0)
 				{					
 					SelectedItem=Hero->arInventory[Click][0];
@@ -7564,7 +7564,7 @@ void ScreenDiplomacy(int Player)
 	buttCancelTrade.Activate(-1);
 	buttCancelTrade.iHint=179;
 
-	int TradeTime, PeaceTime, PeaceType, UnionTime;	//Флаги ограничителей договоров по времени
+	int TradeTime, PeaceTime, PeaceType, UnionTime;	//Р¤Р»Р°РіРё РѕРіСЂР°РЅРёС‡РёС‚РµР»РµР№ РґРѕРіРѕРІРѕСЂРѕРІ РїРѕ РІСЂРµРјРµРЅРё
 
 
 	objGUI=new G_Object(objGUI,620,20,-1,bmpGUI_Hint);
@@ -7590,7 +7590,7 @@ void ScreenDiplomacy(int Player)
 	{textprintf_centre_ex(bmpScr,Font1,410+i*73,743,COLOR_2,-1,"%d",arPlayer[Player].GetResource(i+1));};
 	int Count=0;
 	int arOpp[15];
-	//Вывод портретов оппонентов
+	//Р’С‹РІРѕРґ РїРѕСЂС‚СЂРµС‚РѕРІ РѕРїРїРѕРЅРµРЅС‚РѕРІ
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
 		if ((Player!=i)&&(arPlayer[Player].Politic[i].Treaty>0)&&(arPlayer[i].Control<3))
@@ -7666,15 +7666,15 @@ void ScreenDiplomacy(int Player)
 
 	int arGive[18], arTake[18];
 
-	int Mode=0, //Режим экрана
-				//0-нет договоров
-				//1-выбор договора и торговли
-				//2-договор установлен, выбор торговли
-				//3-объявление войны
-				//4-торговля, договора нет
-				//5-обмен, договора нет
-				//6-договор и торговля
-				//7-договор и обмен
+	int Mode=0, //Р РµР¶РёРј СЌРєСЂР°РЅР°
+				//0-РЅРµС‚ РґРѕРіРѕРІРѕСЂРѕРІ
+				//1-РІС‹Р±РѕСЂ РґРѕРіРѕРІРѕСЂР° Рё С‚РѕСЂРіРѕРІР»Рё
+				//2-РґРѕРіРѕРІРѕСЂ СѓСЃС‚Р°РЅРѕРІР»РµРЅ, РІС‹Р±РѕСЂ С‚РѕСЂРіРѕРІР»Рё
+				//3-РѕР±СЉСЏРІР»РµРЅРёРµ РІРѕР№РЅС‹
+				//4-С‚РѕСЂРіРѕРІР»СЏ, РґРѕРіРѕРІРѕСЂР° РЅРµС‚
+				//5-РѕР±РјРµРЅ, РґРѕРіРѕРІРѕСЂР° РЅРµС‚
+				//6-РґРѕРіРѕРІРѕСЂ Рё С‚РѕСЂРіРѕРІР»СЏ
+				//7-РґРѕРіРѕРІРѕСЂ Рё РѕР±РјРµРЅ
 		Oppo=0, iTreaty=0, CloseInput=-1;
 	bool bRepeat=true, bShowTrade=false, bShowDeal=false, bPickDeal=false, 
 		bNormalizeButtons=false, bMessage=false, bCanExit=true;
@@ -7694,7 +7694,7 @@ void ScreenDiplomacy(int Player)
 			objTutorial->iLayer=2;
 			Tutorial.Diplomacy=2;
 		};
-		//Вывод информации о текущей торговле
+		//Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚РµРєСѓС‰РµР№ С‚РѕСЂРіРѕРІР»Рµ
 		if (bShowTrade)
 		{
 			blit(bmpGUI_Diplomacy,bmpScr,0,360,0,360,1024,310);
@@ -7762,7 +7762,7 @@ void ScreenDiplomacy(int Player)
 			bShowTrade=false;
 		};
 
-		//Активизация договора для редактирования
+		//РђРєС‚РёРІРёР·Р°С†РёСЏ РґРѕРіРѕРІРѕСЂР° РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
 		if (bPickDeal)
 		{
 			Mode=arPlayer[Player].Politic[Oppo].Message.Type;
@@ -7842,7 +7842,7 @@ void ScreenDiplomacy(int Player)
 			bPickDeal=false;
 		};
 
-		//Вывод информации о текущем договоре
+		//Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ С‚РµРєСѓС‰РµРј РґРѕРіРѕРІРѕСЂРµ
 		if (bShowDeal)
 		{
 			blit(bmpGUI_Diplomacy,bmpScr,0,360,0,360,1024,310);
@@ -7945,10 +7945,10 @@ void ScreenDiplomacy(int Player)
 			bShowDeal=false;
 		};
 
-		//Приведение в порядок кнопок
+		//РџСЂРёРІРµРґРµРЅРёРµ РІ РїРѕСЂСЏРґРѕРє РєРЅРѕРїРѕРє
 		if (bNormalizeButtons)
 		{
-			//Режим отсутствия послания
+			//Р РµР¶РёРј РѕС‚СЃСѓС‚СЃС‚РІРёСЏ РїРѕСЃР»Р°РЅРёСЏ
 			if (Mode==-1)
 			{			
 				buttTrade.Activate(-1);
@@ -7982,7 +7982,7 @@ void ScreenDiplomacy(int Player)
 					buttMessage.iHint=169;
 				};
 				switch (iTreaty)
-				//Кнопки договоров
+				//РљРЅРѕРїРєРё РґРѕРіРѕРІРѕСЂРѕРІ
 				{
 				case 0:
 					buttCancelTreaty.Activate(-1);
@@ -8052,7 +8052,7 @@ void ScreenDiplomacy(int Player)
 	//				StopLog("Mode   ",2);
 				switch (Mode)
 				{
-				//Кнопки торговли
+				//РљРЅРѕРїРєРё С‚РѕСЂРіРѕРІР»Рё
 				case 2:
 					buttCancelTrade.G_Obj->x=31;
 					buttCancelTrade.Activate(1);
@@ -8107,11 +8107,11 @@ void ScreenDiplomacy(int Player)
 				};
 			};
 			};
-			//Маски			
+			//РњР°СЃРєРё			
 			switch (Mode)
 			{
 			case 2:
-				//Торговля
+				//РўРѕСЂРіРѕРІР»СЏ
 				if (mskGive[0].flag<1)
 				{	
 					inpGoldTake.Activate(0);
@@ -8130,7 +8130,7 @@ void ScreenDiplomacy(int Player)
 				};
 				break;
 			case 3:
-				//Обмен
+				//РћР±РјРµРЅ
 				if (mskGive[0].flag<1)
 				{	
 		//			StopLog("Inpu   ",3);
@@ -8172,7 +8172,7 @@ void ScreenDiplomacy(int Player)
 			bNormalizeButtons=false;
 		};
 
-		//Закрытие окон ввода
+		//Р—Р°РєСЂС‹С‚РёРµ РѕРєРѕРЅ РІРІРѕРґР°
 		if (CloseInput>=0)
 		{
 			if (inpGoldGive.Flag>0)
@@ -8326,7 +8326,7 @@ void ScreenDiplomacy(int Player)
 		{
 
 
-		//Кнопка выхода/отмены
+		//РљРЅРѕРїРєР° РІС‹С…РѕРґР°/РѕС‚РјРµРЅС‹
 		if (buttExit.Check())
 		{				
 			bRepeat=false;
@@ -8337,19 +8337,19 @@ void ScreenDiplomacy(int Player)
 			};
 		};
 
-		//Кнопка отправки сообщения
+		//РљРЅРѕРїРєР° РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ
 		if (bMessage)
 		{
 			bMessage=false;
 			if (Mode==-1)
-			//Редактировать сообщение
+			//Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ
 			{
 				bPickDeal=true;
 				bShowDeal=true;
 			}
 			else
 			{
-			//Отправить сообщение
+			//РћС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ
 	//			arPlayer[Player].Politic[Oppo].Message.bDeal=true;
 				bool bSend=true, bGive=false, bTake=false, bDrawer=true;
 				for (int i=0; i<18; i++)
@@ -8406,7 +8406,7 @@ void ScreenDiplomacy(int Player)
 						{arPlayer[Player].Politic[Oppo].Message.Trade.Stuff[i+8]=0;};
 					};
 				};
-				//Создание текста сообщения
+				//РЎРѕР·РґР°РЅРёРµ С‚РµРєСЃС‚Р° СЃРѕРѕР±С‰РµРЅРёСЏ
 				switch (iTreaty)
 				{
 				case 1:
@@ -8462,7 +8462,7 @@ void ScreenDiplomacy(int Player)
 			};
 		};		
 
-		//Клик по портрету противника
+		//РљР»РёРє РїРѕ РїРѕСЂС‚СЂРµС‚Сѓ РїСЂРѕС‚РёРІРЅРёРєР°
 		for (int i=0; i<Count; i++)
 		{
 			Check=mskPlayer[i].Check();
@@ -8604,10 +8604,10 @@ void ScreenDiplomacy(int Player)
 		};	
 
 
-		//Проверка масок торговли
+		//РџСЂРѕРІРµСЂРєР° РјР°СЃРѕРє С‚РѕСЂРіРѕРІР»Рё
 		if ((Mode==2)||(Mode==3))
 		{			
-			//Окна ввода
+			//РћРєРЅР° РІРІРѕРґР°
 			if ((inpGoldGive.Check(false)==2)||(inpGemGive.Check(false)==2)||(inpGoldTake.Check(false)==2)||(inpGemTake.Check(false)==2))
 			{
 				CloseInput=0;
@@ -8719,7 +8719,7 @@ void ScreenDiplomacy(int Player)
 			{
 				Check=mskGive[j].Check();
 				if (Check==30)
-				//Отдаём
+				//РћС‚РґР°С‘Рј
 				{
 					bShowDeal=true;
 					CloseInput=0;
@@ -8728,7 +8728,7 @@ void ScreenDiplomacy(int Player)
 					if (j==17)
 					{CloseInput=2;};
 					if (Mode==2)
-					//Ресурсы
+					//Р РµСЃСѓСЂСЃС‹
 					{
 						if (j<16)
 						{							
@@ -8754,7 +8754,7 @@ void ScreenDiplomacy(int Player)
 					{
 						if (j<8)
 						{
-						//Провинции
+						//РџСЂРѕРІРёРЅС†РёРё
 							if (arGive[j]>0)
 							{
 						//		draw_sprite(bmpScr,bmpStuff[15],33+(j%8)*60,545+((j-j%8)/8)*60);
@@ -8774,7 +8774,7 @@ void ScreenDiplomacy(int Player)
 						};
 						if ((j>7)&&(j<16))
 						{
-						//Предметы
+						//РџСЂРµРґРјРµС‚С‹
 							if (arGive[j]>=0)
 							{
 						//		draw_sprite(bmpScr,bmpStuff[14],33+(j%8)*60,545+((j-j%8)/8)*60);
@@ -8795,7 +8795,7 @@ void ScreenDiplomacy(int Player)
 					};
 				};
 
-				//Всплывающие подсказки
+				//Р’СЃРїР»С‹РІР°СЋС‰РёРµ РїРѕРґСЃРєР°Р·РєРё
 				if (Check==2)
 				{
 					if (Mode==2)					
@@ -8870,7 +8870,7 @@ void ScreenDiplomacy(int Player)
 
 				if (Check==30)
 				{
-				//Требуем
+				//РўСЂРµР±СѓРµРј
 					bShowDeal=true;
 					CloseInput=0;
 					if (j==16)
@@ -8883,7 +8883,7 @@ void ScreenDiplomacy(int Player)
 					};
 					if (Mode==2)
 					{
-					//Ресурсы
+					//Р РµСЃСѓСЂСЃС‹
 						if (j<16)
 						{							
 							if (arTake[j]>0)
@@ -8906,7 +8906,7 @@ void ScreenDiplomacy(int Player)
 					}
 					else
 					{
-					//Провинции
+					//РџСЂРѕРІРёРЅС†РёРё
 						if (j<8)
 						{
 							if (arTake[j]>0)
@@ -8987,10 +8987,10 @@ void ScreenDiplomacy(int Player)
 			};
 			};
 		};
-		//Проверка состояния кнопок
+		//РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРЅРѕРїРѕРє
 		if (buttTrade.Check())
 		{
-		//Торговля			
+		//РўРѕСЂРіРѕРІР»СЏ			
 			if ((TradeTime>0)&&(arPlayer[Player].Politic[Oppo].Treaty>1))
 			{
 				char Mess[1000];
@@ -9070,7 +9070,7 @@ void ScreenDiplomacy(int Player)
 
 		if (buttExchange.Check())
 		{
-		//Обмен
+		//РћР±РјРµРЅ
 			Mode=3;
 			if ((Tutorial.Mode)&&(Tutorial.Exchange==0))
 			{
@@ -9289,7 +9289,7 @@ void ScreenDiplomacy(int Player)
 };
 
 //***************************************************
-//*** Экран окончания игры **************************
+//*** Р­РєСЂР°РЅ РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹ **************************
 //***************************************************
 bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 {
@@ -9314,15 +9314,15 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,837,50,COLOR_1,-1,(pFirstPhrase+280)->str);
 	textprintf_centre_ex(bmpStat,Font1,517,204,COLOR_1,-1,arDifficulty[arPlayer[Player].iDifficulty].sName);
 	
-	//Подсчёт очков
+	//РџРѕРґСЃС‡С‘С‚ РѕС‡РєРѕРІ
 	long int Score=0, Work1, Work2, Max, Reward=0, RewardScore=0, Bonus;
 	int arMedal[8];
 	for (int i=0; i<8; i++)
 	{arMedal[i]=0;};
 
-	//Особые награды
+	//РћСЃРѕР±С‹Рµ РЅР°РіСЂР°РґС‹
 
-	//Нет потерь (2)
+	//РќРµС‚ РїРѕС‚РµСЂСЊ (2)
 	if ((bWin)&&(arPlayer[Player].bNoLoss)&&(arPlayer[Player].iTimeShift==0))
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9335,7 +9335,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Нет поражений (8)
+	//РќРµС‚ РїРѕСЂР°Р¶РµРЅРёР№ (8)
 	if ((bWin)&&(arPlayer[Player].iLose==0)&&(arPlayer[Player].iTimeShift==0))
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9348,7 +9348,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Чемпион Арены (15)
+	//Р§РµРјРїРёРѕРЅ РђСЂРµРЅС‹ (15)
 	if (arPlayer[Player].arCamper[0]>=10)
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9360,7 +9360,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Исследовано много земель (3)
+	//РСЃСЃР»РµРґРѕРІР°РЅРѕ РјРЅРѕРіРѕ Р·РµРјРµР»СЊ (3)
 	if (arPlayer[Player].iExplore>1000)
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9372,7 +9372,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Открыта вся карта (10)
+	//РћС‚РєСЂС‹С‚Р° РІСЃСЏ РєР°СЂС‚Р° (10)
 	bool bReward=true;
 	for (int i=1; i<=MapSize; i++)
 	{
@@ -9391,7 +9391,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Замок полностью отстроен (13)
+	//Р—Р°РјРѕРє РїРѕР»РЅРѕСЃС‚СЊСЋ РѕС‚СЃС‚СЂРѕРµРЅ (13)
 	bReward=true;
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
@@ -9409,7 +9409,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Убито много драконов (1)
+	//РЈР±РёС‚Рѕ РјРЅРѕРіРѕ РґСЂР°РєРѕРЅРѕРІ (1)
 	if (arPlayer[Player].iDragonHunt>=10)
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9421,7 +9421,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Награблено много золота (4)
+	//РќР°РіСЂР°Р±Р»РµРЅРѕ РјРЅРѕРіРѕ Р·РѕР»РѕС‚Р° (4)
 	if (arPlayer[Player].iPillage>1000)
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9433,7 +9433,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 		Reward++;
 	};
 
-	//Собран сет (5)
+	//РЎРѕР±СЂР°РЅ СЃРµС‚ (5)
 	if ((arPlayer[Player].bSet)&&(Reward<8))
 	{
 		draw_sprite(bmpStat,bmpGUI_RulerBar,655,76+Reward*59);
@@ -9449,7 +9449,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 
 	textprintf_centre_ex(bmpStat,Font1,215,84,COLOR_1,-1,"%s",(pFirstPhrase+281)->str);
 
-	//Количество оппонентов
+	//РљРѕР»РёС‡РµСЃС‚РІРѕ РѕРїРїРѕРЅРµРЅС‚РѕРІ
 	Work1=0; Work2=0; Max=0;
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
@@ -9468,7 +9468,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 
 	int RulerPercent=Max+2;
 
-	//Повержено противников
+	//РџРѕРІРµСЂР¶РµРЅРѕ РїСЂРѕС‚РёРІРЅРёРєРѕРІ
 	Work1=0; Work2=0;
 	for (int i=1; i<=CurGame.iMaxPlayers; i++)
 	{
@@ -9483,20 +9483,20 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,132,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,132,COLOR_2,-1,"%d",Work2);
 	
-	//Побед	
+	//РџРѕР±РµРґ	
 	Score+=arPlayer[Player].iWin/2;
 	textprintf_centre_ex(bmpStat,Font1,145,156,COLOR_2,-1,"%s",(pFirstPhrase+267)->str);
 	textprintf_centre_ex(bmpStat,Font1,281,156,COLOR_2,-1,"%d",arPlayer[Player].iWin);
 	textprintf_centre_ex(bmpStat,Font1,342,156,COLOR_2,-1,"%d",arPlayer[Player].iWin/2);
 
-	//Поражений
+	//РџРѕСЂР°Р¶РµРЅРёР№
 	Work1=-arPlayer[Player].iLose/2;
 	Score+=Work1;
 	textprintf_centre_ex(bmpStat,Font1,145,180,COLOR_2,-1,"%s",(pFirstPhrase+268)->str);
 	textprintf_centre_ex(bmpStat,Font1,281,180,COLOR_2,-1,"%d",arPlayer[Player].iLose);
 	textprintf_centre_ex(bmpStat,Font1,342,180,COLOR_2,-1,"%d",Work1);
 
-	//Провинций
+	//РџСЂРѕРІРёРЅС†РёР№
 	Work1=0; Work2=0;
 	for (int i=1; i<=MapSize; i++)
 	{
@@ -9512,7 +9512,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,204,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,204,COLOR_2,-1,"%d",Work2);
 
-	//Героев
+	//Р“РµСЂРѕРµРІ
 	Work1=0; Work2=0;
 	for (int i=0; i<MAX_HERO; i++)
 	{
@@ -9527,7 +9527,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,228,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,228,COLOR_2,-1,"%d",Work2);
 
-	//Воинов-ветеранов
+	//Р’РѕРёРЅРѕРІ-РІРµС‚РµСЂР°РЅРѕРІ
 	Work1=0; Work2=0;
 	for (int i=0; i<MAX_HERO; i++)
 	{
@@ -9573,7 +9573,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,252,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,252,COLOR_2,-1,"%d",Work2);
 
-	//Построек в замке
+	//РџРѕСЃС‚СЂРѕРµРє РІ Р·Р°РјРєРµ
 	Work1=0;
 	for (int i=1; i<=iMaxInnerBld; i++)
 	{
@@ -9587,7 +9587,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,276,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,276,COLOR_2,-1,"%d",Work1/4);
 
-	//Сокровищ найдено
+	//РЎРѕРєСЂРѕРІРёС‰ РЅР°Р№РґРµРЅРѕ
 	Work1=0; Work2=0;
 	for (int i=0; i<3; i++)
 	{
@@ -9599,31 +9599,31 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	textprintf_centre_ex(bmpStat,Font1,281,300,COLOR_2,-1,"%d",Work1);
 	textprintf_centre_ex(bmpStat,Font1,342,300,COLOR_2,-1,"%d",Work2);
 
-	//Заданий выполнено
+	//Р—Р°РґР°РЅРёР№ РІС‹РїРѕР»РЅРµРЅРѕ
 	Score+=arPlayer[Player].iQuest*10;
 	textprintf_centre_ex(bmpStat,Font1,145,324,COLOR_2,-1,"%s",(pFirstPhrase+278)->str);
 	textprintf_centre_ex(bmpStat,Font1,281,324,COLOR_2,-1,"%d",arPlayer[Player].iQuest);
 	textprintf_centre_ex(bmpStat,Font1,342,324,COLOR_2,-1,"%d",arPlayer[Player].iQuest*10);
 
-	//Награды	
+	//РќР°РіСЂР°РґС‹	
 	textprintf_centre_ex(bmpStat,Font1,145,348,COLOR_2,-1,"%s",(pFirstPhrase+280)->str);
 	textprintf_centre_ex(bmpStat,Font1,281,348,COLOR_2,-1,"%d",Reward);
 	textprintf_centre_ex(bmpStat,Font1,342,348,COLOR_2,-1,"%d",RewardScore);
 
-	//Откаты во времени
+	//РћС‚РєР°С‚С‹ РІРѕ РІСЂРµРјРµРЅРё
 	Score-=arPlayer[Player].iTimeShift*20;
 	textprintf_centre_ex(bmpStat,Font1,145,372,COLOR_2,-1,"%s",(pFirstPhrase+396)->str);	
 	textprintf_centre_ex(bmpStat,Font1,281,372,COLOR_2,-1,"%d",arPlayer[Player].iTimeShift);
 	textprintf_centre_ex(bmpStat,Font1,342,372,COLOR_2,-1,"%d",-arPlayer[Player].iTimeShift*20);
 
-	//Характер
+	//РҐР°СЂР°РєС‚РµСЂ
 	Score+=abs(arPlayer[Player].iKarma)/10;
 	textprintf_centre_ex(bmpStat,Font1,145,396,COLOR_2,-1,"%s",(pFirstPhrase+285)->str);	
 	textprintf_centre_ex(bmpStat,Font1,342,396,COLOR_2,-1,"%d",abs(arPlayer[Player].iKarma)/10);
 
 	textprintf_centre_ex(bmpStat,Font1,215,420,COLOR_1,-1,"%s",(pFirstPhrase+282)->str);
 
-	//Время
+	//Р’СЂРµРјСЏ
 	int TrueTime=CurGame.iCurrentTurn+(150-((CurGame.Map.X+CurGame.Map.Y-12)/4)*25);
 	if (TrueTime<200)
 	{Work1=150-TrueTime/4;}
@@ -9662,7 +9662,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	{textprintf_centre_ex(bmpStat,Font1,342,444,COLOR_2,-1,"%d~",Work1-100);};
 	Score=Score*Work1/100;
 
-	//Сложность
+	//РЎР»РѕР¶РЅРѕСЃС‚СЊ
 	Work1=arDifficulty[arPlayer[Player].iDifficulty].iScore;
 	if (!CurGame.bFog)
 	{Work1=Work1*4/5;};
@@ -9678,7 +9678,7 @@ bool ScreenEndGame (int Player, bool bWin, bool bShow, bool bWrite)
 	if (Score<0)
 	{Score=0;};
 
-	//Победа/Поражение
+	//РџРѕР±РµРґР°/РџРѕСЂР°Р¶РµРЅРёРµ
 	if (bWin)
 	{
 		textprintf_centre_ex(bmpStat,Font1,145,492,COLOR_2,-1,"%s",(pFirstPhrase+22)->str);
@@ -9856,7 +9856,7 @@ void FillTab()
 };
 
 //***************************************************
-//*** Экран титров **********************************
+//*** Р­РєСЂР°РЅ С‚РёС‚СЂРѕРІ **********************************
 //***************************************************
 void ScreenCredits()
 {	
@@ -10038,7 +10038,7 @@ void ScreenDemo()
 		iGameMode=5;
 		ChangeMusic();
 	};
-	DATAFILE* datDemo = load_datafile("dat\\demo.dat");
+	DATAFILE* datDemo = load_datafile("dat/Demo.dat");
 	if (!datDemo)
 	{
 		OpenWeb();

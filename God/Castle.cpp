@@ -245,7 +245,7 @@ BITMAP * MakeCastlePic(int Player)
 };
 
 //***************************************************
-//*** Экран строительства в замке *******************
+//*** Р­РєСЂР°РЅ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР° РІ Р·Р°РјРєРµ *******************
 //***************************************************
 int ScreenCastleBuild (int Player)
 {
@@ -445,7 +445,7 @@ int ScreenCastleBuild (int Player)
 		arBld[i]=0;
 		if ((i>=4)&&(i<=16))
 		{
-			//Военный квартал
+			//Р’РѕРµРЅРЅС‹Р№ РєРІР°СЂС‚Р°Р»
 			bool bSearcher=true;
 			for (int GR=0; ((GR<4)&&(bSearcher)); GR++)
 			{
@@ -534,7 +534,7 @@ int ScreenCastleBuild (int Player)
 		}
 		else
 		{
-			//Квартал союзников
+			//РљРІР°СЂС‚Р°Р» СЃРѕСЋР·РЅРёРєРѕРІ
 			if (i>59)
 			{
 				for (int j=1; j<=iMaxInnerBld; j++)
@@ -549,7 +549,7 @@ int ScreenCastleBuild (int Player)
 			}
 			else
 			{
-				//Остальные кварталы
+				//РћСЃС‚Р°Р»СЊРЅС‹Рµ РєРІР°СЂС‚Р°Р»С‹
 			for (int j=1; j<=iMaxInnerBld; j++)
 			{
 				if (((pFirstInnerBld+j)->iSlot==i)&&((pFirstInnerBld+j)->iUpg==0)&&(!IsRestricted(j,Player)))
@@ -807,7 +807,7 @@ int ScreenCastleBuild (int Player)
 			}
 			else
 			{
-		//Подсказка о планировщике
+		//РџРѕРґСЃРєР°Р·РєР° Рѕ РїР»Р°РЅРёСЂРѕРІС‰РёРєРµ
 			};
 		};
 		if (blResource.Check(objGUI))
@@ -851,7 +851,7 @@ int ScreenCastleBuild (int Player)
 };
 
 //***************************************************
-//*** Окно найма героя ******************************
+//*** РћРєРЅРѕ РЅР°Р№РјР° РіРµСЂРѕСЏ ******************************
 //***************************************************
 int HeroRecruitWindow (int Player, int Class)
 {
@@ -944,7 +944,7 @@ int HeroRecruitWindow (int Player, int Class)
 };
 
 //***************************************************
-//*** Окно воскрешения героя ************************
+//*** РћРєРЅРѕ РІРѕСЃРєСЂРµС€РµРЅРёСЏ РіРµСЂРѕСЏ ************************
 //***************************************************
 int ResurrectWindow (int Player, int Choosen)
 {
@@ -1071,7 +1071,7 @@ int ResurrectWindow (int Player, int Choosen)
 
 
 //***************************************************
-//*** Экран найма героя *****************************
+//*** Р­РєСЂР°РЅ РЅР°Р№РјР° РіРµСЂРѕСЏ *****************************
 //***************************************************
 
 int ScreenHeroRecruit (int Player)
@@ -1248,7 +1248,7 @@ int ScreenHeroRecruit (int Player)
 		{bKeyFree=true;};
 		for (int i=0; i<MaxCorpse; i++)
 		{
-			//Инициализация окна воскрешения
+			//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РѕРєРЅР° РІРѕСЃРєСЂРµС€РµРЅРёСЏ
 			if (mskResurrect[i].Check()==30)
 			{
 				if (arPlayer[Player].arHero[arCorpses[i]]->iDead==0)
@@ -1278,7 +1278,7 @@ int ScreenHeroRecruit (int Player)
 		};
 		for (int i=0; i<4; i++)
 		{
-			//Инициализация окна найма
+			//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РѕРєРЅР° РЅР°Р№РјР°
 			if (mskRecruit[i].Check()==30)
 			{
 				int Count=0;
@@ -1380,7 +1380,7 @@ int ScreenHeroRecruit (int Player)
 
 
 //***************************************************
-//*** Экран сокровищницы ****************************
+//*** Р­РєСЂР°РЅ СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹ ****************************
 //***************************************************
 int ScreenTreasury(int Player)
 {
@@ -1468,7 +1468,7 @@ int ScreenTreasury(int Player)
 	while (Result==999)
 	{	
 		int Click=0;		
-//Манипулирование предметами
+//РњР°РЅРёРїСѓР»РёСЂРѕРІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°РјРё
 //**************************
 		Click=0;
 		Under1=Under;
@@ -1499,7 +1499,7 @@ int ScreenTreasury(int Player)
 		if (SelectedItem)
 		{
 			if (ItemOwner<3)
-		//Продажа предмета
+		//РџСЂРѕРґР°Р¶Р° РїСЂРµРґРјРµС‚Р°
 			{
 				CoinSound();
 				clItem * It=(pFirstItem+SelectedItem);
@@ -1519,7 +1519,7 @@ int ScreenTreasury(int Player)
 				buttTrash.Activate(0);
 			}
 			else
-	//Взятие предмета в магазине
+	//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р° РІ РјР°РіР°Р·РёРЅРµ
 			{
 				if ((PL->Shop.Items[Click][0]>0)&&(PL->Shop.Items[Click][0]!=SelectedItem)&&
 					(PL->Gold>=PL->GetItemGoldPrice(PL->Shop.Items[Click][0],&PL->Shop))&&
@@ -1606,13 +1606,13 @@ int ScreenTreasury(int Player)
 		{
 		if (SelectedItem)
 		{				
-	//Попытка поместить предмет в...
+	//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ РїСЂРµРґРјРµС‚ РІ...
 			if (PL->arTreasury[Click][0]>0)
 			{
-		//Занятый слот			
+		//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚			
 				if (ItemOwner==2)
 				{
-				//Предмет из сокровищницы
+				//РџСЂРµРґРјРµС‚ РёР· СЃРѕРєСЂРѕРІРёС‰РЅРёС†С‹
 					PL->arTreasury[SelectedSlot][0]=PL->arTreasury[Click][0];
 					PL->arTreasury[SelectedSlot][1]=PL->arTreasury[Click][1];
 					PL->arTreasury[Click][0]=SelectedItem;
@@ -1628,10 +1628,10 @@ int ScreenTreasury(int Player)
 			}
 			else
 			{	
-	//Свободный слот
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚
 				if (ItemOwner==3)
 				{
-			//Покупка предмета
+			//РџРѕРєСѓРїРєР° РїСЂРµРґРјРµС‚Р°
 					CoinSound();
 					PL->Gold-=PL->GetItemGoldPrice(SelectedItem, &PL->Shop);
 					PL->Gem-=PL->GetItemGemPrice(SelectedItem, &PL->Shop);
@@ -1669,7 +1669,7 @@ int ScreenTreasury(int Player)
 			if (PL->arTreasury[Click][0]>0)
 			{
 			if (blShop.buttRepair.bPress)
-		//Ремонт предмета
+		//Р РµРјРѕРЅС‚ РїСЂРµРґРјРµС‚Р°
 			{
 				int Gold=PL->GetItemGoldRepPrice(PL->arTreasury[Click][0],PL->arTreasury[Click][1],&PL->Shop);
 				int Gem=PL->GetItemGemRepPrice(PL->arTreasury[Click][0],PL->arTreasury[Click][1],&PL->Shop);
@@ -1689,7 +1689,7 @@ int ScreenTreasury(int Player)
 				};
 			}
 			else
-		//Взятие предмета
+		//Р’Р·СЏС‚РёРµ РїСЂРµРґРјРµС‚Р°
 			{	
 				SelectedItem=PL->arTreasury[Click][0];
 				SelectedItemDur=PL->arTreasury[Click][1];
@@ -1777,7 +1777,7 @@ int ScreenTreasury(int Player)
 	};
 	bHint=false;
 	HintType=0;
-	//Сдвигаем товары если выкуплен какой-либо лот
+	//РЎРґРІРёРіР°РµРј С‚РѕРІР°СЂС‹ РµСЃР»Рё РІС‹РєСѓРїР»РµРЅ РєР°РєРѕР№-Р»РёР±Рѕ Р»РѕС‚
 	int i=0; bool bRunShop=true;
 	while (bRunShop)
 	{
@@ -1926,7 +1926,7 @@ int HomeGarrison(int Player)
 
 				
 				
-	//Покупка юнитов
+	//РџРѕРєСѓРїРєР° СЋРЅРёС‚РѕРІ
 	//**************
 		Click=0;
 		Click=blUnit.Check(SelectedUnit);
@@ -1998,19 +1998,19 @@ int HomeGarrison(int Player)
 				}
 				else
 
-			//Обмен юнитами
+			//РћР±РјРµРЅ СЋРЅРёС‚Р°РјРё
 			//*************
 				{
-			//Попытка поместить юнита в...
+			//РџРѕРїС‹С‚РєР° РїРѕРјРµСЃС‚РёС‚СЊ СЋРЅРёС‚Р° РІ...
 				if (SlotLvl(Click)>=SelectedUnit->pType()->iLevel)					
 				{
 					if (Garrison->pSquad[Click])
 					{
-	//Занятый слот
+	//Р—Р°РЅСЏС‚С‹Р№ СЃР»РѕС‚
 						if (GetFreeUnitSlot(Garrison,Garrison->pSquad[Click]->pType()->iLevel))
 						{
 							if (SlotLvl(SelectedSlot)<Garrison->pSquad[Click]->pType()->iLevel)
-							//Перемещение юнита в свободный слот нужного уровня передающему герою
+							//РџРµСЂРµРјРµС‰РµРЅРёРµ СЋРЅРёС‚Р° РІ СЃРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚ РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РїРµСЂРµРґР°СЋС‰РµРјСѓ РіРµСЂРѕСЋ
 							{
 								int Free=GetFreeUnitSlot(Garrison,Garrison->pSquad[Click]->pType()->iLevel);							
 								Garrison->PlaceUnit(Garrison->pSquad[Click], Free);
@@ -2030,7 +2030,7 @@ int HomeGarrison(int Player)
 					}
 					else
 					{	
-	//Свободный слот						
+	//РЎРІРѕР±РѕРґРЅС‹Р№ СЃР»РѕС‚						
 						Garrison->pSquad[Click]=NULL;
 						Garrison->PlaceUnit(SelectedUnit,Click);					
 						SelectedUnit=NULL;
@@ -2044,7 +2044,7 @@ int HomeGarrison(int Player)
 			}
 			else
 			{
-	//Взятие юнита
+	//Р’Р·СЏС‚РёРµ СЋРЅРёС‚Р°
 				if (Garrison->pSquad[Click])
 				{					
 					SelectedUnit=Garrison->pSquad[Click];					

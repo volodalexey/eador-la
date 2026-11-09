@@ -3,7 +3,7 @@
 
 std::ostream& operator<<(std::ostream& out, const std::vector<unsigned char>& bytes);
 
-#include "../GoD/Optional.hpp"
+#include "../God/Optional.hpp"
 #include "doctest-configured.h"
 
 std::ostream& operator<<(std::ostream& out, const std::vector<unsigned char>& bytes) {

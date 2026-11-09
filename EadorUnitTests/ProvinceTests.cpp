@@ -1,6 +1,6 @@
-#include "../GoD/Unit.h"
+#include "../God/Unit.h"
 #include <iosfwd>
-#include "../GoD/Province.hpp"
+#include "../God/Province.hpp"
 #include "doctest-configured.h"
 #include <sstream>
 

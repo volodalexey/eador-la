@@ -53,7 +53,7 @@ namespace binary {
 
 namespace binary {
 	void SaveGame(std::ostream& out) {
-		char mode; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
+		char mode; //0 - РѕРґРёРЅРѕС‡РЅР°СЏ; 1 - РєР°РјРїР°РЅРёСЏ; 2 - РєР°РјРїР°РЅРёСЏ, Р°СЃС‚СЂР°Р»
 		if (iGameMode == 1)              mode = 2;
 		else if (CurGame.iGameType == 2) mode = 1;
 		else                             mode = 0;

@@ -4,20 +4,20 @@
 clHumanProfile::clHumanProfile()
 {
 	iVictory=0;
-	iLost=0;			//Поражения
+	iLost=0;			//РџРѕСЂР°Р¶РµРЅРёСЏ
 	iHint=0;
 	iSingle=0;
 	iCampaign=0;
-	iBattleSpeed=2;		//Скорость движения в бою
-	iMapBorders=0;		//Тип границ генерируемой карты	
-	bWarGrid=false;		//Сетка в бою
-	bWarBar=false;		//Инфо панели в бою
-	bWarEndTurn=false;	//Автопередача хода в бою
-	bHerbOnMap=false;	//Выводить гербы на карту	
+	iBattleSpeed=2;		//РЎРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ РІ Р±РѕСЋ
+	iMapBorders=0;		//РўРёРї РіСЂР°РЅРёС† РіРµРЅРµСЂРёСЂСѓРµРјРѕР№ РєР°СЂС‚С‹	
+	bWarGrid=false;		//РЎРµС‚РєР° РІ Р±РѕСЋ
+	bWarBar=false;		//РРЅС„Рѕ РїР°РЅРµР»Рё РІ Р±РѕСЋ
+	bWarEndTurn=false;	//РђРІС‚РѕРїРµСЂРµРґР°С‡Р° С…РѕРґР° РІ Р±РѕСЋ
+	bHerbOnMap=false;	//Р’С‹РІРѕРґРёС‚СЊ РіРµСЂР±С‹ РЅР° РєР°СЂС‚Сѓ	
 	bAutosave=true;
 	bFinishTutorial=false;
-	bDiplomacy=true;	//Дипломатия в одиночной игре
-	bFog=true;			//Закрытая карта в одиночной игре
+	bDiplomacy=true;	//Р”РёРїР»РѕРјР°С‚РёСЏ РІ РѕРґРёРЅРѕС‡РЅРѕР№ РёРіСЂРµ
+	bFog=true;			//Р—Р°РєСЂС‹С‚Р°СЏ РєР°СЂС‚Р° РІ РѕРґРёРЅРѕС‡РЅРѕР№ РёРіСЂРµ
 	iEnterData=0;
 	iColor1=Random(16); 
 	iColor2=Random(16); 
@@ -26,12 +26,12 @@ clHumanProfile::clHumanProfile()
 	iDifficulty=0;
 	bTutorialMode=true;
 
-	//Настройки игры
-	iSndVolume=225;				//Громкость эффектов
-	iMusVolume=255;				//Громкость музыки
-	iScrollSpeed=SCROLL_SPEED;	//Скорость скроллинга
-	iAutoLvlUp=0;				//Автоматическиё апгрейды юнитов до указанного ранга
-	iAutoCombat=0;				//Всегда автобой
+	//РќР°СЃС‚СЂРѕР№РєРё РёРіСЂС‹
+	iSndVolume=225;				//Р“СЂРѕРјРєРѕСЃС‚СЊ СЌС„С„РµРєС‚РѕРІ
+	iMusVolume=255;				//Р“СЂРѕРјРєРѕСЃС‚СЊ РјСѓР·С‹РєРё
+	iScrollSpeed=SCROLL_SPEED;	//РЎРєРѕСЂРѕСЃС‚СЊ СЃРєСЂРѕР»Р»РёРЅРіР°
+	iAutoLvlUp=0;				//РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёС‘ Р°РїРіСЂРµР№РґС‹ СЋРЅРёС‚РѕРІ РґРѕ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЂР°РЅРіР°
+	iAutoCombat=0;				//Р’СЃРµРіРґР° Р°РІС‚РѕР±РѕР№
 	for (int i=0; i<10; i++)
 	{arMess[i]=true;};
 	arMap[0]=false;
@@ -55,19 +55,19 @@ void clHumanProfile::ClearNames()
 	sprintf(sName,(pFirstPhrase+216)->str);
 	sprintf(sLand,(pFirstPhrase+217)->str);
 	iVictory=0;
-	iLost=0;			//Поражения
+	iLost=0;			//РџРѕСЂР°Р¶РµРЅРёСЏ
 	iHint=0;
-	iSndVolume=iSoundVolume;//Громкость эффектов
-	iMusVolume=iMusicVolume;//Громкость музыки
-	iScrollSpeed=SCROLL_SPEED;		//Скорость скроллинга
-	iBattleSpeed=2;		//Скорость движения в бою
-	iMapBorders=0;		//Тип границ генерируемой карты
-	iAutoLvlUp=0;		//Автоматическиё апгрейды юнитов до указанного ранга
-	bWarGrid=false;		//Сетка в бою
-	bWarBar=false;		//Инфо панели в бою
-	bWarEndTurn=false;	//Автопередача хода в бою
-	bHerbOnMap=false;	//Выводить гербы на карту
-	iAutoCombat=0;	//Всегда автобой
+	iSndVolume=iSoundVolume;//Р“СЂРѕРјРєРѕСЃС‚СЊ СЌС„С„РµРєС‚РѕРІ
+	iMusVolume=iMusicVolume;//Р“СЂРѕРјРєРѕСЃС‚СЊ РјСѓР·С‹РєРё
+	iScrollSpeed=SCROLL_SPEED;		//РЎРєРѕСЂРѕСЃС‚СЊ СЃРєСЂРѕР»Р»РёРЅРіР°
+	iBattleSpeed=2;		//РЎРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ РІ Р±РѕСЋ
+	iMapBorders=0;		//РўРёРї РіСЂР°РЅРёС† РіРµРЅРµСЂРёСЂСѓРµРјРѕР№ РєР°СЂС‚С‹
+	iAutoLvlUp=0;		//РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРёС‘ Р°РїРіСЂРµР№РґС‹ СЋРЅРёС‚РѕРІ РґРѕ СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЂР°РЅРіР°
+	bWarGrid=false;		//РЎРµС‚РєР° РІ Р±РѕСЋ
+	bWarBar=false;		//РРЅС„Рѕ РїР°РЅРµР»Рё РІ Р±РѕСЋ
+	bWarEndTurn=false;	//РђРІС‚РѕРїРµСЂРµРґР°С‡Р° С…РѕРґР° РІ Р±РѕСЋ
+	bHerbOnMap=false;	//Р’С‹РІРѕРґРёС‚СЊ РіРµСЂР±С‹ РЅР° РєР°СЂС‚Сѓ
+	iAutoCombat=0;	//Р’СЃРµРіРґР° Р°РІС‚РѕР±РѕР№
 	bAutosave=true;
 	bFinishTutorial=false;
 	bDiplomacy=true;
@@ -102,7 +102,7 @@ void clHumanProfile::Save()
 		al_ffblk ProFile;
 		while (iFileIndex==-1)
 		{
-			sprintf(FileName,"Save\\player%d.prf",Ind);
+			sprintf(FileName,"save/player%d.prf",Ind);
 			if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 			{al_findclose(&ProFile);}
 			else
@@ -111,7 +111,7 @@ void clHumanProfile::Save()
 		};
 	};
 	PACKFILE *WorkFile;	
-	sprintf(FileName,"save\\player%d.prf",iFileIndex);
+	sprintf(FileName,"save/player%d.prf",iFileIndex);
 	WorkFile=pack_fopen(FileName,"wp");
 	pack_fwrite(this,sizeof *this,WorkFile);
 	pack_fclose(WorkFile);
@@ -138,7 +138,7 @@ void SaveRecords()
 {
 	PACKFILE *WorkFile;	
 	char FileName[100];
-	sprintf(FileName,"save\\ruler.boo");
+	sprintf(FileName,"save/ruler.boo");
 	WorkFile=pack_fopen(FileName,"wp");
 	pack_fwrite(arRecords,(sizeof *arRecords)*10,WorkFile);
 	pack_fclose(WorkFile);
@@ -148,7 +148,7 @@ void SaveCampRecords()
 {
 	PACKFILE *WorkFile;	
 	char FileName[100];
-	sprintf(FileName,"save\\eador.boo");
+	sprintf(FileName,"save/eador.boo");
 	WorkFile=pack_fopen(FileName,"wp");
 	pack_fwrite(arCampRecords,(sizeof *arCampRecords)*10,WorkFile);
 	pack_fclose(WorkFile);
@@ -161,7 +161,7 @@ int RunGame(bool bSave)
 	{
 		RunHourGlass(149, HOUR_SHIFT);
 		CurGame.bAutoSave=true;
-		WriteLog("Сохранение...");	
+		WriteLog("РЎРѕС…СЂР°РЅРµРЅРёРµ...");	
 		CurGame.iActivePlayer=1;
 		SaveGame(0);
 	};	
@@ -225,7 +225,7 @@ int RunGame(bool bSave)
 		{		
 			RunHourGlass(149, HOUR_SHIFT);
 			CurGame.bAutoSave=true;
-			WriteLog("Сохранение...");
+			WriteLog("РЎРѕС…СЂР°РЅРµРЅРёРµ...");
 	//		if (CurGame.iGameType==2)
 			CurGame.iActivePlayer=LastPlayer;
 			SaveGame(4000);
@@ -289,7 +289,7 @@ int RunGame(bool bSave)
 			{
 				RunHourGlass(149, HOUR_SHIFT);
 				CurGame.bAutoSave=false;
-				WriteLog("Сохранение...");
+				WriteLog("РЎРѕС…СЂР°РЅРµРЅРёРµ...");
 		//		if (CurGame.iGameType==2)
 				CurGame.iActivePlayer=LastPlayer;
 				SaveGame(22000);
@@ -299,17 +299,17 @@ int RunGame(bool bSave)
 			if ((iExitFlag>0)&&(CurGame.iGameType==1))
 			{
 				char sFile[100];
-				sprintf(sFile,"save\\game%d.sav",arHumans[0].iFileIndex);
+				sprintf(sFile,"save/game%d.sav",arHumans[0].iFileIndex);
 				delete_file(sFile);
-				sprintf(sFile,"save\\map%d.map",arHumans[0].iFileIndex);
+				sprintf(sFile,"save/map%d.map",arHumans[0].iFileIndex);
 				delete_file(sFile);
 			};
 			if ((iExitFlag>0)&&(CurGame.iGameType==3))
 			{
 				char sFile[100];
-				sprintf(sFile,"save\\game%d.hot",arHumans[0].iFileIndex);
+				sprintf(sFile,"save/game%d.hot",arHumans[0].iFileIndex);
 				delete_file(sFile);
-				sprintf(sFile,"save\\map%d.hot",arHumans[0].iFileIndex);
+				sprintf(sFile,"save/map%d.hot",arHumans[0].iFileIndex);
 				delete_file(sFile);
 			};
 			UnloadGame();			
@@ -339,26 +339,26 @@ void SaveGame(int Progress)
 	switch (CurGame.iGameType)
 	{
 	case 1:
-		sprintf(sFile,"save\\game%d.sav",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.sav",arHumans[0].iFileIndex);
 		sprintf(sExt,"bks");
 		break;
 	case 2:	
-		sprintf(sFile,"save\\game%d.cmp",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.cmp",arHumans[0].iFileIndex);
 		if (iGameMode==1)
 		{sprintf(sExt,"bka");}
 		else
 		{sprintf(sExt,"bkc");};
 		break;
 	case 3:
-		sprintf(sFile,"save\\game%d.hot",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.hot",arHumans[0].iFileIndex);
 		sprintf(sExt,"bkh");
 		break;
 	case 4:
-		sprintf(sFile,"save\\game%d.lan",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.lan",arHumans[0].iFileIndex);
 		sprintf(sExt,"bkl");
 		break;
 	case 5:
-		sprintf(sFile,"save\\game%d.net",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.net",arHumans[0].iFileIndex);
 		sprintf(sExt,"bkn");
 		break;
 	};
@@ -371,14 +371,14 @@ void SaveGame(int Progress)
 	};
 	al_findclose(&Fil);
 	
-//	sprintf(sFile,"save\\%s",sFileName);
+//	sprintf(sFile,"save/%s",sFileName);
 	WorkFile=pack_fopen(sFile,"wp");
-	char MODE; //0 - одиночная; 1 - кампания; 2 - кампания, астрал
+	char MODE; //0 - РѕРґРёРЅРѕС‡РЅР°СЏ; 1 - РєР°РјРїР°РЅРёСЏ; 2 - РєР°РјРїР°РЅРёСЏ, Р°СЃС‚СЂР°Р»
 
 	MODE=111;
 	pack_putc(MODE,WorkFile);
 
-///********* ВЕРСИЯ СОХРАНЕНИЯ *************
+///********* Р’Р•Р РЎРРЇ РЎРћРҐР РђРќР•РќРРЇ *************
 	MODE=107;
 	pack_putc(MODE,WorkFile);
 
@@ -394,14 +394,14 @@ void SaveGame(int Progress)
 	pack_putc(MODE,WorkFile);
 	if (MODE<2)
 	{
-//Файл карты
+//Р¤Р°Р№Р» РєР°СЂС‚С‹
 //	pack_fwrite(&sMapFile,sizeof sMapFile,WorkFile);
 //	NewProgress+=Progress/5;
-//Общие данные
+//РћР±С‰РёРµ РґР°РЅРЅС‹Рµ
 	pack_fwrite(&CurGame,sizeof CurGame,WorkFile);
 	pack_fwrite(&WorldRules,sizeof WorldRules,WorkFile);
 	int PRG=NewProgress;
-//Провинции	
+//РџСЂРѕРІРёРЅС†РёРё	
 	for (int i=1; i<=MapSize; i++)
 	{
 		NewProgress=PRG+Progress/2*i/MapSize;
@@ -476,7 +476,7 @@ void SaveGame(int Progress)
 			};
 		};		
 	};
-//Игроки
+//РРіСЂРѕРєРё
 	pack_fwrite(&arPlayer,sizeof arPlayer,WorkFile);
 	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
@@ -540,7 +540,7 @@ void SaveGame(int Progress)
 	NewProgress+=Progress/5;
 	pack_fwrite(&iMaxPureItem,sizeof iMaxPureItem,WorkFile);
 
-	//События
+	//РЎРѕР±С‹С‚РёСЏ
 	/*for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		int Events=0;
@@ -576,7 +576,7 @@ void SaveGame(int Progress)
 			EV=EV->pNext;
 		};
 	};*/
-//Магазины
+//РњР°РіР°Р·РёРЅС‹
 	pack_fwrite(&iMaxShop,sizeof iMaxShop,WorkFile);
 	for (int i=0; i<iMaxShop; i++)
 	{
@@ -618,10 +618,10 @@ void SaveGame(int Progress)
 		};*/
 
 
-		//Сохранение данных кампании
+		//РЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… РєР°РјРїР°РЅРёРё
 		pack_fwrite(&Campaign,sizeof Campaign,WorkFile);
 //		pack_fwrite(&arCampPlayer,sizeof arCampPlayer,WorkFile);
-		//Осколки миров	
+		//РћСЃРєРѕР»РєРё РјРёСЂРѕРІ	
 		dcShard *SH=pFirstShard;
 		for (int i=0; i<Campaign.iMaxShards; i++)		
 		{			
@@ -632,8 +632,8 @@ void SaveGame(int Progress)
 	pack_fwrite(&Tutorial,sizeof Tutorial,WorkFile);
 
 		
-//	dcEvent *pEvent;					//Список событий
-//	UI_Mask arHeroMask[MAX_HERO];		//Массив масок для фигурок героев	
+//	dcEvent *pEvent;					//РЎРїРёСЃРѕРє СЃРѕР±С‹С‚РёР№
+//	UI_Mask arHeroMask[MAX_HERO];		//РњР°СЃСЃРёРІ РјР°СЃРѕРє РґР»СЏ С„РёРіСѓСЂРѕРє РіРµСЂРѕРµРІ	
 	pack_fclose(WorkFile);
 	if (iGameMode==1){FileCopy(sFile,sBuff);};
 	
@@ -643,12 +643,12 @@ void SaveGame(int Progress)
 //{
 //	PACKFILE *WorkFile;
 //	char sFile [150];
-//	sprintf(sFile,"save\\%s",sFileName);
+//	sprintf(sFile,"save/%s",sFileName);
 //	WorkFile=pack_fopen(sFile,"rp");
 //	char MODE=pack_getc(WorkFile);
 //	if (MODE<2)
 //	{
-////Файл карты
+////Р¤Р°Р№Р» РєР°СЂС‚С‹
 //		pack_fread(&sMapFile,sizeof sMapFile,WorkFile);
 //		pack_fclose(WorkFile);
 //		delete_file(sMapFile.str);
@@ -668,23 +668,23 @@ bool LoadGame(int iModd)
 	switch (iModd)
 	{
 	case 1:
-		sprintf(sFile,"save\\game%d.sav",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.sav",arHumans[0].iFileIndex);
 		break;
 	case 2:
-		sprintf(sFile,"save\\game%d.cmp",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.cmp",arHumans[0].iFileIndex);
 		break;
 	case 3:
-		sprintf(sFile,"save\\game%d.hot",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.hot",arHumans[0].iFileIndex);
 		break;
 	case 4:
-		sprintf(sFile,"save\\game%d.lan",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.lan",arHumans[0].iFileIndex);
 		break;
 	case 5:
-		sprintf(sFile,"save\\game%d.net",arHumans[0].iFileIndex);
+		sprintf(sFile,"save/game%d.net",arHumans[0].iFileIndex);
 		break;
 	};
 	
-//	sprintf(sFile,"save\\%s",sFileName);
+//	sprintf(sFile,"save/%s",sFileName);
 	WorkFile=pack_fopen(sFile,"rp");
 	char MODE=pack_getc(WorkFile);
 	if (MODE==111)
@@ -695,7 +695,7 @@ bool LoadGame(int iModd)
 //	MODE=pack_getc(WorkFile);	
 	if (MODE<2)
 	{
-//Файл карты
+//Р¤Р°Р№Р» РєР°СЂС‚С‹
 //	pack_fread(&sMapFile,sizeof sMapFile,WorkFile);
 //	pack_fclose(WorkFile);
 	
@@ -703,7 +703,7 @@ bool LoadGame(int iModd)
 //	MODE=pack_getc(WorkFile);
 //	pack_fread(&sMapFile,sizeof sMapFile,WorkFile);
 
-//Общие данные
+//РћР±С‰РёРµ РґР°РЅРЅС‹Рµ
 	pack_fread(&CurGame,sizeof CurGame,WorkFile);
 	if (Version>=107)
 	{pack_fread(&WorldRules,sizeof WorldRules,WorkFile);}
@@ -711,7 +711,7 @@ bool LoadGame(int iModd)
 	{WorldRules.iMode=0;}
 	LoadMap();
 	NewProgress=1000;
-//Провинции	
+//РџСЂРѕРІРёРЅС†РёРё	
 	dcProvince *PR=new dcProvince;
 	for (int i=1; i<=MapSize; i++)
 	{
@@ -845,8 +845,8 @@ bool LoadGame(int iModd)
 	//	};
 	};	
 
-//Игроки
-	WriteLog("Игроки");
+//РРіСЂРѕРєРё
+	WriteLog("РРіСЂРѕРєРё");
 /*	for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{
 		arPlayer[PL].Init(true,PL);
@@ -946,7 +946,7 @@ bool LoadGame(int iModd)
 		};
 		NewProgress=2100;
 
-		WriteLog("Защитники");
+		WriteLog("Р—Р°С‰РёС‚РЅРёРєРё");
 		int iWrk, iMax=iMaxDefender;
 		if (Version>102)
 		{
@@ -970,7 +970,7 @@ bool LoadGame(int iModd)
 		};
 		NewProgress=2200;
 
-		WriteLog("Постройки");
+		WriteLog("РџРѕСЃС‚СЂРѕР№РєРё");
 		iMax=iMaxOuterBld;
 		if (Version>102)
 		{
@@ -995,7 +995,7 @@ bool LoadGame(int iModd)
 		
 		NewProgress=2300;
 
-		WriteLog("Ритуалы");
+		WriteLog("Р РёС‚СѓР°Р»С‹");
 		iMax=iMaxRitual;
 		if (Version>102)
 		{
@@ -1025,14 +1025,14 @@ bool LoadGame(int iModd)
 			};
 		};
 		NewProgress=2400;
-		//Туман
+		//РўСѓРјР°РЅ
 		for (int i=1; i<=MapSize; i++)
 		{			
 			pack_fread((arPlayer[PL].pFog+i),sizeof *(arPlayer[PL].pFog+i),WorkFile);
 		};
 		*(arPlayer[PL].pFog)=0;
 		NewProgress=2500;
-		//События
+		//РЎРѕР±С‹С‚РёСЏ
 		iMax=iMaxEvent;
 		if (Version>102)
 		{
@@ -1067,7 +1067,7 @@ bool LoadGame(int iModd)
 		{
 			PACKFILE *PrfFile;
 			char stName [150];
-			sprintf(stName,"save\\player%d.prf",arPlayer[PL].ipProfile);
+			sprintf(stName,"save/player%d.prf",arPlayer[PL].ipProfile);
 			PrfFile=pack_fopen(stName,"rp");
 			pack_fread(&arHumans[arPlayer[PL].iColor],sizeof arHumans[arPlayer[PL].iColor],PrfFile);
 			pack_fclose(PrfFile);
@@ -1079,7 +1079,7 @@ bool LoadGame(int iModd)
 //	arPlayer[1].arTreasury[20][0]=395;
 //	arPlayer[1].arTreasury[20][1]=1;
 
-	//Проверка изменения количества предметов
+	//РџСЂРѕРІРµСЂРєР° РёР·РјРµРЅРµРЅРёСЏ РєРѕР»РёС‡РµСЃС‚РІР° РїСЂРµРґРјРµС‚РѕРІ
 	int OldMaxItem=394;
 	if (Version>105)
 	{pack_fread(&OldMaxItem,sizeof OldMaxItem,WorkFile);};
@@ -1128,7 +1128,7 @@ bool LoadGame(int iModd)
 			};
 		};
 	};
-	//События
+	//РЎРѕР±С‹С‚РёСЏ
 	/*for (int PL=1; PL<=CurGame.iMaxPlayers; PL++)
 	{		
 		int Events;
@@ -1153,7 +1153,7 @@ bool LoadGame(int iModd)
 		};		
 	};*/
 
-//Магазины
+//РњР°РіР°Р·РёРЅС‹
 	pack_fread(&iMaxShop,sizeof iMaxShop,WorkFile);
 	pFirstShop=new dcShop[iMaxShop];
 	for (int i=0; i<iMaxShop; i++)
@@ -1169,7 +1169,7 @@ bool LoadGame(int iModd)
 		};
 	};
 	NewProgress=2700;
-//Действующие ритуалы
+//Р”РµР№СЃС‚РІСѓСЋС‰РёРµ СЂРёС‚СѓР°Р»С‹
 	int Count=0;	
 	pack_fread(&Count,sizeof Count,WorkFile);
 	pRitual=NULL;
@@ -1192,10 +1192,10 @@ bool LoadGame(int iModd)
 
 	if (MODE>0)
 	{	
-		//Загрузка данных кампании
+		//Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… РєР°РјРїР°РЅРёРё
 		pack_fread(&Campaign,sizeof Campaign,WorkFile);		
 
-		//Осколки миров		
+		//РћСЃРєРѕР»РєРё РјРёСЂРѕРІ		
 		dcShard *SH=NULL, *SH1=NULL;
 		for (int i=0; i<Campaign.iMaxShards; i++)		
 		{
@@ -1367,7 +1367,7 @@ bool NewGame(int iSeed, int GameType)
 	char stName[20], FName[100];
 	arHumanID[0]=1;
 	sprintf(stName,"player%d.prf",arHumans[0].iFileIndex);
-	if ((GameType>2)&&(al_findfirst("Save\\player*.prf",&ProFile,FA_ALL)==0))
+	if ((GameType>2)&&(al_findfirst("save/player*.prf",&ProFile,FA_ALL)==0))
 	{		
 		do {			
 			bool bThisOne=true;
@@ -1380,7 +1380,7 @@ bool NewGame(int iSeed, int GameType)
 			{arHumanID[0]=MaxHumans;};
 		//	if (!bThisOne)
 			{
-				sprintf(FName,"Save\\%s",ProFile.name);
+				sprintf(FName,"save/%s",ProFile.name);
 				WorkFile=pack_fopen(FName,"rp");
 				pack_fread(&FileBase[MaxHumans],sizeof FileBase[MaxHumans],WorkFile);
 				pack_fclose(WorkFile);				
@@ -1799,7 +1799,7 @@ bool CheckCmpLoad()
 	bool Result=true;
 	al_ffblk ProFile;
 	char FileName[100];	
-	sprintf(FileName,"save\\game%d.cmp",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/game%d.cmp",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
@@ -1812,12 +1812,12 @@ bool CheckGameLoad()
 	bool Result=true;
 	al_ffblk ProFile;
 	char FileName[100];
-	sprintf(FileName,"save\\map%d.map",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/map%d.map",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
 	{Result=false;};
-	sprintf(FileName,"save\\game%d.sav",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/game%d.sav",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
@@ -1830,12 +1830,12 @@ bool CheckHotLoad()
 	bool Result=true;
 	al_ffblk ProFile;
 	char FileName[100];
-	sprintf(FileName,"save\\map%d.hot",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/map%d.hot",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
 	{Result=false;};
-	sprintf(FileName,"save\\game%d.hot",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/game%d.hot",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
@@ -1848,12 +1848,12 @@ bool CheckLANLoad()
 	bool Result=true;
 	al_ffblk ProFile;
 	char FileName[100];
-	sprintf(FileName,"save\\map%d.lan",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/map%d.lan",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
 	{Result=false;};
-	sprintf(FileName,"save\\game%d.lan",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/game%d.lan",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
@@ -1866,12 +1866,12 @@ bool CheckNetLoad()
 	bool Result=true;
 	al_ffblk ProFile;
 	char FileName[100];
-	sprintf(FileName,"save\\map%d.net",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/map%d.net",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
 	{Result=false;};
-	sprintf(FileName,"save\\game%d.net",arHumans[0].iFileIndex);
+	sprintf(FileName,"save/game%d.net",arHumans[0].iFileIndex);
 	if (al_findfirst(FileName,&ProFile,FA_ALL)==0)
 	{al_findclose(&ProFile);}
 	else
@@ -2089,7 +2089,7 @@ void ScreenMenu()
 		{			
 			switch (Mode)
 			{
-			//Основное меню
+			//РћСЃРЅРѕРІРЅРѕРµ РјРµРЅСЋ
 			case 0:
 						
 				Check=arMask[1].Check();
@@ -2177,7 +2177,7 @@ void ScreenMenu()
 					bRepeat=0;
 				};
 				break;
-			//Кампания
+			//РљР°РјРїР°РЅРёСЏ
 			case 1:
 				Check=arMask[0].Check();
 				if (Check==30)
@@ -2192,8 +2192,8 @@ void ScreenMenu()
 							if (bShowWallpaper){ShowWallpaper();}
 							bExitGame=false;
 							char sFile1[150], sFile2[150];
-							sprintf(sFile1,"save\\game%d.bka",arHumans[0].iFileIndex);
-							sprintf(sFile2,"save\\game%d.cmp",arHumans[0].iFileIndex);
+							sprintf(sFile1,"save/game%d.bka",arHumans[0].iFileIndex);
+							sprintf(sFile2,"save/game%d.cmp",arHumans[0].iFileIndex);
 							FileCopy(sFile1,sFile2);
 							LoadGame(CurGame.iGameType);
 							int Drain=GetEnergyIncome()/20;
@@ -2229,8 +2229,8 @@ void ScreenMenu()
 								if (bShowWallpaper){ShowWallpaper();}
 								bExitGame=false;
 								char sFile1[150], sFile2[150];
-								sprintf(sFile1,"save\\game%d.bka",arHumans[0].iFileIndex);
-								sprintf(sFile2,"save\\game%d.cmp",arHumans[0].iFileIndex);
+								sprintf(sFile1,"save/game%d.bka",arHumans[0].iFileIndex);
+								sprintf(sFile2,"save/game%d.cmp",arHumans[0].iFileIndex);
 								FileCopy(sFile1,sFile2);
 								LoadGame(CurGame.iGameType);
 								int Drain=GetEnergyIncome()/20;
@@ -2263,7 +2263,7 @@ void ScreenMenu()
 					bCycle=false;
 				};
 				break;
-			//Одиночная игра
+			//РћРґРёРЅРѕС‡РЅР°СЏ РёРіСЂР°
 			case 2:
 				Check=arMask[0].Check();
 				if (Check==30)
@@ -2305,7 +2305,7 @@ void ScreenMenu()
 					bCycle=false;
 				};
 				break;
-			//Выбор сетевой игры
+			//Р’С‹Р±РѕСЂ СЃРµС‚РµРІРѕР№ РёРіСЂС‹
 			case 3:
 				Check=arMask[0].Check();
 				if (Check==30)

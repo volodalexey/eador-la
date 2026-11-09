@@ -23,9 +23,9 @@ extern Map_Border *Map[MAP_SIZE];
 
 
 void GenerateMap(clMap Map, int WorldRul);
-//Type 1 - окруженая водой суша, 2 - случайные моря и озера, Isles - процент озер/островов, Dissolve - чем выше, тем меньшими кусочками будут создаваться участки территории
-//Вода указывается в процениах от общей площади, холмы, леса и болота - в процентах от площади суши
-//NeutralPower - ограничение силы нейтралов
+//Type 1 - РѕРєСЂСѓР¶РµРЅР°СЏ РІРѕРґРѕР№ СЃСѓС€Р°, 2 - СЃР»СѓС‡Р°Р№РЅС‹Рµ РјРѕСЂСЏ Рё РѕР·РµСЂР°, Isles - РїСЂРѕС†РµРЅС‚ РѕР·РµСЂ/РѕСЃС‚СЂРѕРІРѕРІ, Dissolve - С‡РµРј РІС‹С€Рµ, С‚РµРј РјРµРЅСЊС€РёРјРё РєСѓСЃРѕС‡РєР°РјРё Р±СѓРґСѓС‚ СЃРѕР·РґР°РІР°С‚СЊСЃСЏ СѓС‡Р°СЃС‚РєРё С‚РµСЂСЂРёС‚РѕСЂРёРё
+//Р’РѕРґР° СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РІ РїСЂРѕС†РµРЅРёР°С… РѕС‚ РѕР±С‰РµР№ РїР»РѕС‰Р°РґРё, С…РѕР»РјС‹, Р»РµСЃР° Рё Р±РѕР»РѕС‚Р° - РІ РїСЂРѕС†РµРЅС‚Р°С… РѕС‚ РїР»РѕС‰Р°РґРё СЃСѓС€Рё
+//NeutralPower - РѕРіСЂР°РЅРёС‡РµРЅРёРµ СЃРёР»С‹ РЅРµР№С‚СЂР°Р»РѕРІ
 void MainScreen(int Player);
 void EndMainTurn();
 void BeginMainTurn(int Player);
@@ -34,10 +34,10 @@ int GetDiploAnswerAI(int Player, int Writer);
 void SendGreetingsAI(int Player, int Victim);
 void SendAnswerAI(int Player, int Victim);
 void SaveMap();
-void LoadMap();	//Загрузить карту
+void LoadMap();	//Р—Р°РіСЂСѓР·РёС‚СЊ РєР°СЂС‚Сѓ
 void UnloadMap();
 void SaveGame(int Progress);
-bool LoadGame(int iModd); //1 - обычная, 2 - кампания, 3 - HotSeat, 4 - LAN, 5 - Inet
+bool LoadGame(int iModd); //1 - РѕР±С‹С‡РЅР°СЏ, 2 - РєР°РјРїР°РЅРёСЏ, 3 - HotSeat, 4 - LAN, 5 - Inet
 bool NewGame(int iSeed, int GameType);
 void NewCampaign();
 void UnloadGame();

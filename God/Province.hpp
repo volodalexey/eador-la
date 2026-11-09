@@ -10,6 +10,7 @@ namespace binary {
 #include "Hero.hpp"
 #include "ArrayInclusiveEnd.hpp"
 #include "GuardPrefix.hpp"
+#include <cstring>
 
 namespace binary {
 	inline std::ostream& operator<<(std::ostream& out, const dcProvince& province) {

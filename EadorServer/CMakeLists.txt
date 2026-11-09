@@ -1,11 +1,10 @@
-﻿cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.8)
 
-
-set(CMAKE_CXX_STANDARD_REQUIRED 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "src/*.hpp")
+find_package(Threads REQUIRED)
 
-add_executable(EadorServer "main.cpp" ${HEADERS} ${SOURCES})
+add_executable(EadorServer "main.cpp")
 target_include_directories(EadorServer PUBLIC "../include")
+target_link_libraries(EadorServer PRIVATE Threads::Threads)

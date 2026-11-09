@@ -81,7 +81,7 @@ dcPlayer::dcPlayer()
 dcPlayer::~dcPlayer()
 {};
 
-void dcPlayer::Init(_Bool InGame, int Color)
+void dcPlayer::Init(bool InGame, int Color)
 {
 	for (int i=0; i<MAX_RECRUIT; i++)
 	{
@@ -227,24 +227,24 @@ void dcPlayer::Init(_Bool InGame, int Color)
 void dcPlayer::Clear()
 {
 	
-//	WriteLog("Защитники");
+//	WriteLog("Р—Р°С‰РёС‚РЅРёРєРё");
 //	readkey();
 	delete [] pDefender;
 	
-//	WriteLog("Постройки");
+//	WriteLog("РџРѕСЃС‚СЂРѕР№РєРё");
 //	readkey();
 	delete [] pOuterBld;
-//	WriteLog("Ритуалы");
+//	WriteLog("Р РёС‚СѓР°Р»С‹");
 //	readkey();
 	delete [] pRitual;
 	delete [] pRitualCD;
-//	WriteLog("Туман");
+//	WriteLog("РўСѓРјР°РЅ");
 //	readkey();
 	delete [] pFog;
 	delete [] pStory;
 	delete [] pPlace;
 
-//	WriteLog("Герои");
+//	WriteLog("Р“РµСЂРѕРё");
 //	readkey();
 
 	while (arHero[0])
@@ -715,14 +715,14 @@ int dcPlayer::RecruitHero(int Class)
 
 bool dcPlayer::CanBuild(int Building)
 {	
-//Уже построена
+//РЈР¶Рµ РїРѕСЃС‚СЂРѕРµРЅР°
 	if (arBld[Building])
 	{return false;};
-//Необходимые постройки
+//РќРµРѕР±С…РѕРґРёРјС‹Рµ РїРѕСЃС‚СЂРѕР№РєРё
 	for (int j=0; j<MAX_BUILDING_NEED; j++)
 	{
 		if ((pFirstInnerBld+Building)->arBuildings[j]>MAX_BLD)
-		//Отстроенная группа
+		//РћС‚СЃС‚СЂРѕРµРЅРЅР°СЏ РіСЂСѓРїРїР°
 		{
 			int iGroup=0;
 			for (int i=1; i<iMaxInnerBld; i++)
@@ -736,13 +736,13 @@ bool dcPlayer::CanBuild(int Building)
 			};
 		}
 		else
-		//Обычные
+		//РћР±С‹С‡РЅС‹Рµ
 		{
 			if (!arBld[(pFirstInnerBld+Building)->arBuildings[j]])
 			{return false;};
 		};
 	};
-//Постройки из той же группы
+//РџРѕСЃС‚СЂРѕР№РєРё РёР· С‚РѕР№ Р¶Рµ РіСЂСѓРїРїС‹
 	if ((pFirstInnerBld+Building)->iGroup>0)
 	{
 		int iGroup=0;
@@ -754,7 +754,7 @@ bool dcPlayer::CanBuild(int Building)
 		if (iGroup>=arBldGroup[(pFirstInnerBld+Building)->iGroup])
 		{return false;};
 	};
-//Необходим союз с расой
+//РќРµРѕР±С…РѕРґРёРј СЃРѕСЋР· СЃ СЂР°СЃРѕР№
 	for (int i=0; i<MAX_BUILDING_ABILITY; i++)
 	{
 		if ((pFirstInnerBld+Building)->arAbility[i][0]==47)
@@ -845,7 +845,7 @@ void dcPlayer::Build(int Choosen)
 {
 	if ((Choosen>iMaxInnerBld)||(Choosen<=0))
 	{
-		StopLog("Неправильное строительство:",Choosen);
+		StopLog("РќРµРїСЂР°РІРёР»СЊРЅРѕРµ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІРѕ:",Choosen);
 		return;
 	};	
 	Gold-=GetInBldGoldPrice(Choosen);
@@ -1067,7 +1067,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 		{(pFirstDialog+1136)->Show(1,1,0,0,NULL,NULL);}
 		else
 		{
-			sprintf(Mess,"Игрок %s попытался провести ритуал %s в провинции %s, но попал в барьер",GetName(),Rit->sName,(pFirstProvince+Prov)->sName);
+			sprintf(Mess,"РРіСЂРѕРє %s РїРѕРїС‹С‚Р°Р»СЃСЏ РїСЂРѕРІРµСЃС‚Рё СЂРёС‚СѓР°Р» %s РІ РїСЂРѕРІРёРЅС†РёРё %s, РЅРѕ РїРѕРїР°Р» РІ Р±Р°СЂСЊРµСЂ",GetName(),Rit->sName,(pFirstProvince+Prov)->sName);
 			FileLog(Mess);
 		};
 		return;
@@ -1146,7 +1146,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 		{Choosen=arHR[0];};
 		};
 		if (Control!=1)
-		{	sprintf(Mess,"Игрок %s провёл ритуал %s в провинции %s, (цель: герой %s)",GetName(),Rit->sName,(pFirstProvince+Prov)->sName,arHero[Choosen]->pstName->str);
+		{	sprintf(Mess,"РРіСЂРѕРє %s РїСЂРѕРІС‘Р» СЂРёС‚СѓР°Р» %s РІ РїСЂРѕРІРёРЅС†РёРё %s, (С†РµР»СЊ: РіРµСЂРѕР№ %s)",GetName(),Rit->sName,(pFirstProvince+Prov)->sName,arHero[Choosen]->pstName->str);
 			FileLog(Mess);
 		};
 		for (int i=0; i<MAX_RITUAL_EFFECT; i++)
@@ -1158,21 +1158,21 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 	else
 	{
 		if (Control!=1)
-		{	sprintf(Mess,"Игрок %s провёл ритуал %s в провинции %s",GetName(),Rit->sName,(pFirstProvince+Prov)->sName);
+		{	sprintf(Mess,"РРіСЂРѕРє %s РїСЂРѕРІС‘Р» СЂРёС‚СѓР°Р» %s РІ РїСЂРѕРІРёРЅС†РёРё %s",GetName(),Rit->sName,(pFirstProvince+Prov)->sName);
 			FileLog(Mess);
 		};
 	};
 
-	//Эффекты ритуала
+	//Р­С„С„РµРєС‚С‹ СЂРёС‚СѓР°Р»Р°
 	for (int i=0; i<MAX_RITUAL_EFFECT; i++)
 	{
 		switch (Rit->arEffect[i][0])
 		{
-		case 3: //Изменение отношения к правителю
+		case 3: //РР·РјРµРЅРµРЅРёРµ РѕС‚РЅРѕС€РµРЅРёСЏ Рє РїСЂР°РІРёС‚РµР»СЋ
 			PR->StaticEvent(Rit->arEffect[i][1],Num);
 		//	PR->ChangeAttitude(Num,Rit->arEffect[i][1]);
 			break;
-		case 4: //Изменение населения (и получение ресурсов)
+		case 4: //РР·РјРµРЅРµРЅРёРµ РЅР°СЃРµР»РµРЅРёСЏ (Рё РїРѕР»СѓС‡РµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ)
 			if (PR->iPopulation>0)
 			{
 				int Dead=PR->iPopulation*Rit->arEffect[i][1]/100;
@@ -1189,7 +1189,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 				};
 			};
 			break;
-		//case 5: //Изменение здоровья воинов
+		//case 5: //РР·РјРµРЅРµРЅРёРµ Р·РґРѕСЂРѕРІСЊСЏ РІРѕРёРЅРѕРІ
 		//	if (PR->pGuard)
 		//	{PR->pGuard->HealUnits(Rit->arEffect[i][1]);};
 		//	if (PR->pGarrison)
@@ -1206,7 +1206,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 		//		};
 		//	};
 		//	break;
-		case 7: //Изменение боевого духа воинов
+		case 7: //РР·РјРµРЅРµРЅРёРµ Р±РѕРµРІРѕРіРѕ РґСѓС…Р° РІРѕРёРЅРѕРІ
 			{
 				int Morale=Rit->arEffect[i][1];
 				if (Rit->arEffect[i][2]!=0)
@@ -1233,7 +1233,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 			};
 			};
 			break;
-		case 9: //Вывод диалога
+		case 9: //Р’С‹РІРѕРґ РґРёР°Р»РѕРіР°
 			if (Rit->arEffect[i][2]==1)
 			{
 				char Mess[500];
@@ -1243,7 +1243,7 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 			else
 			{(pFirstDialog+Rit->arEffect[i][1])->Show(true,false,false,false,NULL,NULL);};
 			break;
-		case 11: //Нанесение вреда укреплениям и уничтожение постройки
+		case 11: //РќР°РЅРµСЃРµРЅРёРµ РІСЂРµРґР° СѓРєСЂРµРїР»РµРЅРёСЏРј Рё СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ РїРѕСЃС‚СЂРѕР№РєРё
 			if (PR->iFort>0)
 			{PR->iFort-=Rit->arEffect[i][1];};
 			if (PR->iFort<0)
@@ -1259,10 +1259,10 @@ void dcPlayer::CastRitual(int Index, int Prov, int Choosen)
 				{PR->arBuilding[Bld]=0;};
 			};
 			break;
-		case 13: //Повышение недовольства до максимума
+		case 13: //РџРѕРІС‹С€РµРЅРёРµ РЅРµРґРѕРІРѕР»СЊСЃС‚РІР° РґРѕ РјР°РєСЃРёРјСѓРјР°
 			PR->arUnrest[PR->ipPlayer]=500;
 			break;
-		case 14: //Изменение недовольства
+		case 14: //РР·РјРµРЅРµРЅРёРµ РЅРµРґРѕРІРѕР»СЊСЃС‚РІР°
 			{
 				int Unrest=Rit->arEffect[i][1]+Random(Rit->arEffect[i][2]);
 				if (Unrest>0)
@@ -1339,7 +1339,7 @@ void dcPlayer::ReturnHero(int NN)
 void dcPlayer::MessageEntry(int Sender, int Answer)
 {
 	dcMessage Mess=arPlayer[Sender].Politic[Num].Message;
-	//Политический договор
+	//РџРѕР»РёС‚РёС‡РµСЃРєРёР№ РґРѕРіРѕРІРѕСЂ
 	if (Mess.Treaty>0)
 	{
 		if (Mess.Treaty<4)
@@ -1375,7 +1375,7 @@ void dcPlayer::AcceptDeal(int Sender)
 {
 	MessageEntry(Sender,1);
 	dcMessage *Mess=&arPlayer[Sender].Politic[Num].Message;
-	//Политический договор
+	//РџРѕР»РёС‚РёС‡РµСЃРєРёР№ РґРѕРіРѕРІРѕСЂ
 	if (Mess->Treaty>0)
 	{
 		if (Mess->Treaty==2)
@@ -1409,7 +1409,7 @@ void dcPlayer::AcceptDeal(int Sender)
 	};
 	switch (Mess->Type)
 	{
-	//Торговый договор
+	//РўРѕСЂРіРѕРІС‹Р№ РґРѕРіРѕРІРѕСЂ
 	case 2:
 		Politic[Sender].Trade=Mess->Trade1;
 		Politic[Sender].Trade.bTrade=true;
@@ -1418,7 +1418,7 @@ void dcPlayer::AcceptDeal(int Sender)
 //		arPlayer[Sender].Politic[Num].arTalk[5][2]=CurGame.iCurrentTurn;
 		arPlayer[Sender].Politic[Num].arTalk[5][1]=1;
 		break;
-	//Обмен
+	//РћР±РјРµРЅ
 	case 3:
 		arPlayer[Sender].Gold+=Mess->Trade1.Gold;
 		Gold-=Mess->Trade1.Gold;
@@ -1475,12 +1475,12 @@ void dcPlayer::AcceptDeal(int Sender)
 			};
 		};
 		break;
-	//Отмена торговли
+	//РћС‚РјРµРЅР° С‚РѕСЂРіРѕРІР»Рё
 	case 4:
 		Politic[Sender].Trade.Clear();
 		arPlayer[Sender].Politic[Num].Trade.Clear();
 		break;
-	//Жребий
+	//Р–СЂРµР±РёР№
 	case 7:
 		(pFirstDialog+1122)->Show(1,1,0,0,NULL,NULL);
 		if (Random(100)<50)
@@ -1494,12 +1494,12 @@ void dcPlayer::AcceptDeal(int Sender)
 			Victory(Num);
 		};
 		break;
-	//Сдаться
+	//РЎРґР°С‚СЊСЃСЏ
 	case 8:
 		arPlayer[Sender].Politic[Num].Attitude+=10;
 		Lose(Num);
 		break;
-	//Победа
+	//РџРѕР±РµРґР°
 	case 9:
 		Victory(Num);
 		break;
@@ -1524,7 +1524,7 @@ void dcPlayer::AcceptDeal(int Sender)
 void dcPlayer::CancelDeal(int Sender)
 {
 	MessageEntry(Sender,0);
-	//Объявление войны при отказе в мирном разрешении присвоения осколка с союзником
+	//РћР±СЉСЏРІР»РµРЅРёРµ РІРѕР№РЅС‹ РїСЂРё РѕС‚РєР°Р·Рµ РІ РјРёСЂРЅРѕРј СЂР°Р·СЂРµС€РµРЅРёРё РїСЂРёСЃРІРѕРµРЅРёСЏ РѕСЃРєРѕР»РєР° СЃ СЃРѕСЋР·РЅРёРєРѕРј
 	if ((arPlayer[Sender].Politic[Num].Message.Type==8)||(arPlayer[Sender].Politic[Num].Message.Type==7))
 	{
 		DeclareWar(Sender);
@@ -1717,7 +1717,7 @@ void dcPlayer::MakeFlags()
 	};
 };
 
-//Возвращает истину, если этот герой наибольшего уровня у данного игрока
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё СЌС‚РѕС‚ РіРµСЂРѕР№ РЅР°РёР±РѕР»СЊС€РµРіРѕ СѓСЂРѕРІРЅСЏ Сѓ РґР°РЅРЅРѕРіРѕ РёРіСЂРѕРєР°
 bool dcPlayer::IsBestHero(int Hero)
 {
 	if (!arHero[Hero])

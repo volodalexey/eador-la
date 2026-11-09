@@ -171,7 +171,7 @@ int CompareStrength1(dcHero *Hero1, dcHero *Hero2)
 					Squad[AA][i].bParry=true;
 				};
 				int Hit=0;
-				//Отдых
+				//РћС‚РґС‹С…
 				if ((Squad[AA][i].bResting)||((Squad[AA][i].bCanAct)&&(Squad[AA][i].iSpeed==Squad[AA][i].GetSpeed())))
 				{
 					Squad[AA][i].iStamina+=(2+Squad[AA][i].CheckSkill(21));
@@ -185,7 +185,7 @@ int CompareStrength1(dcHero *Hero1, dcHero *Hero2)
 				};
 				BF_Effect * Eff=Squad[AA][i].pEffect;
 				BF_Effect * Eff1;
-				//Таймеры эффектов
+				//РўР°Р№РјРµСЂС‹ СЌС„С„РµРєС‚РѕРІ
 				while (Eff)
 				{	
 					if (Eff->iType==1)
@@ -232,7 +232,7 @@ int CompareStrength1(dcHero *Hero1, dcHero *Hero2)
 
 				Hit+=Squad[AA][i].CheckSkill(48);
 
-				//Яд/регенерация
+				//РЇРґ/СЂРµРіРµРЅРµСЂР°С†РёСЏ
 				if (Hit+Squad[AA][i].iLife<0)
 				{
 					Hit=-Squad[AA][i].iLife;
