@@ -2,8 +2,8 @@
 
 ## Requirements
 
-- `CMake 3.8+`, Ninja or Make
-- Packages: `libvorbis-dev`, `libx11-dev`, `libxinerama-dev`, `pkg-config`
+- `CMake 3.22+`, Ninja or Make
+- Packages: `zlib1g-dev` (for `innounp`), plus raylib/GLFW dependencies: `libx11-dev`, `libxrandr-dev`, `libxinerama-dev`, `libxcursor-dev`, `libxi-dev`, `libgl-dev`
 - Sources with submodules: `git submodule update --init --recursive`
 
 ## Get the sources
@@ -17,7 +17,7 @@ git pull --recurse-submodules
 ## Quick start
 
 ```sh
-# 1. Build (allegro4 is compiled from the submodule automatically)
+# 1. Build (raylib is compiled from the submodule automatically)
 make
 
 # 2. Import assets from the GOG installer
@@ -29,7 +29,8 @@ make import GOG_PATH="/path/to/Eador - Genesis"
 make run
 ```
 
-The binary and game data end up in `out/eador-linux/`.
+`out/` contains only the game data, `eador.cfg`, `save/`, `screens/` and the
+`eador` and `innounp` binaries. Intermediate build files go to `build/`.
 
 ## What `make import` copies
 
@@ -37,19 +38,19 @@ From the GOG distribution or installer:
 
 | Source             | Destination                 | Description                       |
 |--------------------|-----------------------------|-----------------------------------|
-| `dat/`             | `out/eador-linux/dat/`      | game data files (graphics, sound…)|
-| `text/`            | `out/eador-linux/text/`     | text strings (locale-dependent)   |
-| `var/`             | `out/eador-linux/var/`      | game parameters                   |
-| `font01.pcx` etc.  | `out/eador-linux/`          | bitmap fonts                      |
-| `goggame-*.ico`    | `out/eador-linux/eador.ico` | window icon                       |
+| `dat/`             | `out/dat/`      | game data files (graphics, sound…)|
+| `text/`            | `out/text/`     | text strings (locale-dependent)   |
+| `var/`             | `out/var/`      | game parameters                   |
+| `font01.pcx` etc.  | `out/`          | bitmap fonts                      |
+| `goggame-*.ico`    | `out/eador.ico` | window icon                       |
 
 `save/`, `screens/` and `eador.cfg` are **not overwritten** on a repeat import.  
 Both the English (`Text/`) and Russian (`text/`) installers are handled identically.
 
 ## Details
 
-**Allegro 4.4** is built from the `allegro4/` submodule into `out/allegro4/`;
-subsequent `make build` calls skip the rebuild.
+**raylib** is built from the `raylib/` submodule together with the game.
+Allegro 4 is no longer needed: the `God/allegro_rl.*` layer emulates its API (see `RAYLIB.md`).
 
 **innounp** (the `innounp/` directory) is a built-in extractor for the GOG
 installers (Inno Setup 5.5.7, LZMA1/LZMA2) that depends only on zlib. It is used
@@ -64,6 +65,5 @@ so any modern desktop environment renders it correctly.
 
 **Unit tests:**
 ```sh
-make build
-ctest --test-dir out/build --output-on-failure
+make test
 ```

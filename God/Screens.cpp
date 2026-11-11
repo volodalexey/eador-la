@@ -10076,7 +10076,7 @@ void ScreenDemo()
 			if ((iYuPlay>0)&&(bYuPlayClient))
 			{YuPlayBuyGame(true);}
 			else
-#endif;
+#endif
 			{OpenWeb();};
 		};
 		for (int i=0; i<6; i++)

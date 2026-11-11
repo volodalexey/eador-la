@@ -2,8 +2,8 @@
 
 ## Требования
 
-- `CMake 3.8+`, `Ninja` или `Make`
-- Пакеты: `libvorbis-dev`, `libx11-dev`, `libxinerama-dev`, `pkg-config`
+- `CMake 3.22+`, `Ninja` или `Make`
+- Пакеты: `zlib1g-dev` (для `innounp`), а также зависимости raylib/GLFW: `libx11-dev`, `libxrandr-dev`, `libxinerama-dev`, `libxcursor-dev`, `libxi-dev`, `libgl-dev`
 - Исходники с субмодулями: `git submodule update --init --recursive`
 
 ## Скачать исходники
@@ -17,7 +17,7 @@ git pull --recurse-submodules
 ## Быстрый старт
 
 ```sh
-# 1. Сборка (allegro4 собирается из субмодуля автоматически)
+# 1. Сборка (raylib собирается из субмодуля автоматически)
 make
 
 # 2. Импорт ресурсов из GOG-установщика
@@ -29,7 +29,8 @@ make import GOG_PATH="/path/to/Eador - Genesis"
 make run
 ```
 
-Бинарник и данные оказываются в `out/eador-linux/`.
+В `out/` лежат только данные игры, `eador.cfg`, `save/`, `screens/` и бинарники
+`eador` и `innounp`. Промежуточные файлы сборки лежат в `build/`.
 
 ## Что копирует `make import`
 
@@ -37,19 +38,19 @@ make run
 
 | Откуда             | Куда                    | Описание                          |
 |--------------------|-------------------------|-----------------------------------|
-| `dat/`             | `out/eador-linux/dat/`  | датафайлы игры (графика, звук…)   |
-| `text/`            | `out/eador-linux/text/` | тексты (локаль-зависимые)         |
-| `var/`             | `out/eador-linux/var/`  | игровые параметры                 |
-| `font01.pcx` и др. | `out/eador-linux/`      | растровые шрифты                  |
-| `goggame-*.ico`    | `out/eador-linux/eador.ico` | иконка окна                   |
+| `dat/`             | `out/dat/`  | датафайлы игры (графика, звук…)   |
+| `text/`            | `out/text/` | тексты (локаль-зависимые)         |
+| `var/`             | `out/var/`  | игровые параметры                 |
+| `font01.pcx` и др. | `out/`      | растровые шрифты                  |
+| `goggame-*.ico`    | `out/eador.ico` | иконка окна                   |
 
 `save/`, `screens/` и `eador.cfg` при повторном импорте **не трогаются**.  
 Английский (`Text/`) и русский (`text/`) установщики обрабатываются одинаково.
 
 ## Детали
 
-**Allegro 4.4** собирается из субмодуля `allegro4/` в `out/allegro4/`;
-при повторных `make build` пересборки не происходит.
+**raylib** собирается из субмодуля `raylib/` вместе с игрой. Allegro 4 больше
+не нужен: его API эмулирует слой `God/allegro_rl.*` (см. `RAYLIB.md`).
 
 **innounp** (каталог `innounp/`) — собственный распаковщик установщиков GOG
 (Inno Setup 5.5.7, LZMA1/LZMA2), зависит только от zlib. Используется только
@@ -64,6 +65,5 @@ make run
 
 **Тесты:**
 ```sh
-make build
-ctest --test-dir out/build --output-on-failure
+make test
 ```

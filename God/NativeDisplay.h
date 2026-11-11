@@ -1,6 +1,6 @@
 #pragma once
 
-#include <allegro.h>
+#include "allegro_rl.h"
 
 BITMAP *eador_screen();
 int eador_set_gfx_mode(int card, int w, int h, int vw, int vh);

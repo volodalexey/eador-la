@@ -16,7 +16,7 @@
 #define SNOWBALL
 
 #include <alogg.h>
-#include <allegro.h>
+#include "allegro_rl.h"
 #ifndef _WIN32
 #include "NativeDisplay.h"
 #endif

@@ -1,21 +1,14 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.22)
 project("GoD")
 
-# Allegro 4.4 prefix for native Linux builds (e.g. the allegro4 submodule
-# after `cmake --build --install`). Unset means only EadorServer is built.
-set(ALLEGRO4_PREFIX "" CACHE PATH "Root of an Allegro 4.4 installation")
-
-if(ALLEGRO4_PREFIX)
-  set(ALLEGRO4_INCLUDE "${ALLEGRO4_PREFIX}/include")
-  set(ALLEGRO4_LIB_DIR "${ALLEGRO4_PREFIX}/lib")
-  set(ALLEGRO4_LIBRARY "${ALLEGRO4_PREFIX}/lib/liballeg.so")
-endif()
+# Run directory: the eador binary goes here, game data is added by `make import`.
+set(EADOR_OUT_DIR "${PROJECT_SOURCE_DIR}/out" CACHE PATH "Directory for the eador binary and game data")
 
 enable_testing()
 
-add_subdirectory("EadorServer")
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory(raylib)
 
-if(ALLEGRO4_PREFIX)
-  add_subdirectory("God")
-  add_subdirectory("EadorUnitTests")
-endif()
+add_subdirectory("EadorServer")
+add_subdirectory("God")
+add_subdirectory("EadorUnitTests")

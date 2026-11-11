@@ -1,5 +1,4 @@
 out/
-allegro4/build*
 *.o
 *.a
 build/

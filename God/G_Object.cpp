@@ -431,7 +431,7 @@ clEffQue::clEffQue(int Type, int Delay, G_Object *OBB)
 	pNext=NULL;
 	ipType=Type;
 	iDelay=Delay;
-	wavSound=NULL;
+	wavSound=0;
 };
 
 clEffQue::~clEffQue()
@@ -451,7 +451,7 @@ void clEffQue::Call()
 		Obj->Make_Stars(Obj,Param1,iNum,x,y,w,h,r,g,b);
 		break;
 	case 4:
-		Obj->AnimDeath(NULL);
+		Obj->AnimDeath(0);
 		break;
 	};
 	if (wavSound)
