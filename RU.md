@@ -23,7 +23,7 @@ git pull --recurse-submodules
 make
 
 # 2. Импорт ресурсов из GOG-установщика
-make import GOG_EXE=/path/to/setup_eador_genesis_1.05.02.exe
+make import GOG_EXE=/path/to/setup_eador_genesis_1.05.02_language_update_(russian)_(21780).exe
 # — или из уже установленной копии
 make import GOG_PATH="/path/to/Eador - Genesis"
 

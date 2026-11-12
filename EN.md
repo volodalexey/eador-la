@@ -23,7 +23,7 @@ git pull --recurse-submodules
 make
 
 # 2. Import assets from the GOG installer
-make import GOG_EXE=/path/to/setup_eador_genesis_1.05.02.exe
+make import GOG_EXE=/path/to/setup_eador_genesis_1.05.02_language_update_(21780).exe
 # — or from an already installed copy
 make import GOG_PATH="/path/to/Eador - Genesis"
 
