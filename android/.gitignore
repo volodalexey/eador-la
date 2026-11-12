@@ -1,0 +1,6 @@
+.gradle/
+build/
+local.properties
+app/.cxx/
+app/build/
+app/src/main/assets/eador.cfg

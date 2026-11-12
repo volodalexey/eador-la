@@ -1,12 +1,14 @@
-# Сборка под Linux
+# Эадор. Сотворение - линукс|андроид порт
 
-## Требования
+## Сборка под Linux
+
+### Требования
 
 - `CMake 3.22+`, `Ninja` или `Make`
 - Пакеты: `zlib1g-dev` (для `innounp`), а также зависимости raylib/GLFW: `libx11-dev`, `libxrandr-dev`, `libxinerama-dev`, `libxcursor-dev`, `libxi-dev`, `libgl-dev`
 - Исходники с субмодулями: `git submodule update --init --recursive`
 
-## Скачать исходники
+### Скачать исходники
 
 ```sh
 git clone --recursive https://github.com/volodalexey/eador-la.git
@@ -14,7 +16,7 @@ git clone --recursive https://github.com/volodalexey/eador-la.git
 git pull --recurse-submodules
 ```
 
-## Быстрый старт
+### Быстрый старт
 
 ```sh
 # 1. Сборка (raylib собирается из субмодуля автоматически)
@@ -32,7 +34,7 @@ make run
 В `out/` лежат только данные игры, `eador.cfg`, `save/`, `screens/` и бинарники
 `eador` и `innounp`. Промежуточные файлы сборки лежат в `build/`.
 
-## Что копирует `make import`
+### Что копирует `make import`
 
 Из GOG-дистрибутива или установщика копируется:
 
@@ -47,7 +49,7 @@ make run
 `save/`, `screens/` и `eador.cfg` при повторном импорте **не трогаются**.  
 Английский (`Text/`) и русский (`text/`) установщики обрабатываются одинаково.
 
-## Детали
+### Детали
 
 **raylib** собирается из субмодуля `raylib/` вместе с игрой. Allegro 4 больше
 не нужен: его API эмулирует слой `God/allegro_rl.*` (см. `RAYLIB.md`).
@@ -64,6 +66,71 @@ make run
 поэтому корректно показывается в любом современном DE.
 
 **Тесты:**
+
 ```sh
 make test
 ```
+
+## Сборка под Android
+
+### Требования
+
+- JDK 17 (например, `openjdk-17-jdk`)
+- Пакеты Android SDK (X11/GL-пакеты из раздела про Linux не нужны):
+
+  ```sh
+  sdkmanager "platforms;android-35" "build-tools;35.0.0" \
+             "ndk;29.0.14206865" "cmake;3.22.1"
+  ```
+
+- Переменная окружения `ANDROID_HOME` или файл `android/local.properties` с `sdk.dir=/путь/к/sdk`
+
+Проект использует `Gradle` wrapper 8.13, который скачивается автоматически при первой сборке.
+
+### Быстрый старт
+
+```sh
+# 1. Сборка APK (все ABI: arm64-v8a, armeabi-v7a, x86, x86_64)
+cd android
+./gradlew assembleRelease
+
+# APK лежит в: app/build/outputs/apk/release/eador_reforged.apk
+```
+
+### Установка и импорт данных игры
+
+APK содержит только код игры. Данные нужно импортировать при первом запуске:
+
+1. Установить APK: `adb install app/build/outputs/apk/release/eador_reforged.apk`
+2. Запустить приложение. Появятся две кнопки:
+   - **Импортировать из файла GOG_EXE**: выбрать GOG-установщик `.exe` (потребуется ~600 МБ свободного места при распаковке)
+   - **Импортировать из папки GOG_PATH**: выбрать корневую папку уже установленной копии
+3. После успешного импорта при последующих запусках игра стартует автоматически.
+
+Данные игры хранятся в `/sdcard/Android/data/com.eador.reforged/files/`.
+
+### Импорт данных вручную
+
+Можно положить данные через `adb` вместо встроенного импортёра:
+
+```sh
+# Пример: загрузка из каталога out/ Linux-сборки
+D=/sdcard/Android/data/com.eador.reforged/files
+adb shell mkdir -p "$D"
+adb push out/dat out/text out/var out/font01.pcx out/font01.txt \
+         out/font02.pcx out/font02.txt "$D/"
+```
+
+### Детали
+
+**Платформа:** raylib с `PLATFORM=Android` (GLES2). Касания преобразуются в мышь:
+
+- Одиночное касание = левая кнопка
+- Долгое нажатие (≥500 мс) = правая кнопка
+- Вертикальный сдвиг двумя пальцами = колесо мыши
+
+**Экранная клавиатура:** Открывается автоматически, когда активно поле ввода (имя героя, название земли). Enter завершает ввод и скрывает её; системная кнопка «Назад» скрывает только клавиатуру, поле остаётся активным.
+
+**Минимальный SDK:** API 26 (Android 8.0) для поддержки AAudio. На старых устройствах raylib автоматически использует OpenSL ES.
+
+**ABI:** APK включает нативные библиотеки для всех четырёх ABI (arm64-v8a, armeabi-v7a, x86, x86_64).

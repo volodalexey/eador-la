@@ -30,3 +30,4 @@ int    rlb_next_char_pressed();            // Unicode code point, 0 when the que
 bool   rlb_key_produces_char(int scancode);
 void   rlb_mouse(int *x, int *y, int *buttons, int *wheel_delta);
 void   rlb_set_mouse(int x, int y);
+void   rlb_show_keyboard(bool show);       // show/hide soft keyboard on Android

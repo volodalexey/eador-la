@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eador Reforged</string>
+    <string name="import_exe">Import game files from GOG_EXE file</string>
+    <string name="import_folder">Import game files from GOG_PATH folder</string>
+    <string name="copying">Copying…</string>
+    <string name="importing">Importing: %1$d%%</string>
+    <string name="import_failed">Import failed: %1$s</string>
+    <string name="not_enough_space">Not enough free space (need about %1$d MB)</string>
+</resources>

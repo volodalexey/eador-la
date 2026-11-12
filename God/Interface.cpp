@@ -1,4 +1,7 @@
 #include "Interface.h"
+#ifdef __ANDROID__
+#include "rl_backend.h"
+#endif
 
 //**************************************
 //*** Методы UI_Mask *******************
@@ -987,6 +990,10 @@ UI_Input::UI_Input()
 
 UI_Input::~UI_Input()
 {
+#ifdef __ANDROID__
+	if (Flag>0)
+	{rlb_show_keyboard(false);};
+#endif
 	bInput=false;
 	if (bGameInProcess)
 	{destroy_bitmap(Pic);};
@@ -1019,6 +1026,13 @@ void UI_Input::Activate(int FLG)
 	{bInput=false;};
 	if (FLG>0)
 	{bInput=true;};
+#ifdef __ANDROID__
+	// Перо (bmpGUI_Cursor) рисуется при Flag>0: вместе с ним открываем экранную клавиатуру.
+	if (FLG>0)
+	{rlb_show_keyboard(true);}
+	else if (Flag>0)
+	{rlb_show_keyboard(false);};
+#endif
 	Flag=FLG;
 	Show();
 };

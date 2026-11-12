@@ -4,9 +4,16 @@
 
 #include "rl_backend.h"
 #include <raylib.h>
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <time.h>
+
+#ifdef __ANDROID__
+// android/app/src/main/cpp/android_input.cpp: символы из GameActivity, экранная клавиатура.
+int eador_android_next_char();
+void eador_android_show_keyboard(bool show);
+#endif
 
 // -------------------------------------------------------------------------
 // Raylib KeyboardKey → Allegro scancode mapping
@@ -201,6 +208,9 @@ static void build_keymap() {
     set(KEY_DELETE,       AL_DEL);
     set(KEY_KP_ENTER,     AL_ENTER_PAD);
     set(KEY_PAUSE,        AL_PAUSE);
+#ifdef __ANDROID__
+    set(KEY_BACK,         AL_ESC);
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -221,11 +231,16 @@ bool rlb_open_window(bool fullscreen) {
     HideCursor();    // the game draws mouse_sprite into the frame itself
     SetTargetFPS(0); // uncapped; we drive the loop
     InitAudioDevice();
+#ifndef __ANDROID__
+    // На Android окно всегда во весь экран, а эти функции — заглушки.
     if (fullscreen) {
         int mon = GetCurrentMonitor();
         SetWindowSize(GetMonitorWidth(mon), GetMonitorHeight(mon));
         ToggleFullscreen();
     }
+#else
+    (void)fullscreen;
+#endif
     // Create the upload texture (empty 1024×768 RGBA8)
     Image blank = {};
     blank.data    = g_rgba;
@@ -261,9 +276,15 @@ void rlb_screen_size(int *w, int *h) {
 }
 
 void rlb_monitor_size(int *w, int *h) {
+#ifdef __ANDROID__
+    // GetMonitorWidth/Height на Android возвращают 0; raylib сам вписывает 1024×768.
+    *w = g_window_open ? GetScreenWidth() : 1024;
+    *h = g_window_open ? GetScreenHeight() : 768;
+#else
     int mon = g_window_open ? GetCurrentMonitor() : 0;
     *w = GetMonitorWidth(mon);
     *h = GetMonitorHeight(mon);
+#endif
 }
 
 void rlb_set_title_utf8(const char *title) {
@@ -342,7 +363,11 @@ int rlb_next_key_pressed() {
 }
 
 int rlb_next_char_pressed() {
+#ifdef __ANDROID__
+    return eador_android_next_char();
+#else
     return GetCharPressed();
+#endif
 }
 
 bool rlb_key_produces_char(int al_scancode) {
@@ -370,8 +395,53 @@ void rlb_mouse(int *x, int *y, int *buttons, int *wheel_delta) {
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))  *buttons |= 2;
     if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE)) *buttons |= 4;
     *wheel_delta = (int)GetMouseWheelMove();
+
+#ifdef __ANDROID__
+    // Сенсор: долгое касание = правая кнопка, сдвиг двумя пальцами = колесо.
+    static constexpr double LONG_PRESS_SEC = 0.5;
+    static constexpr float  LONG_PRESS_SLOP = 16.0f;
+    static constexpr float  WHEEL_STEP = 40.0f;
+    static bool    tracking = false, right = false, moved = false;
+    static double  t0 = 0;
+    static Vector2 p0 = {0, 0};
+    static bool    two = false;
+    static float   last_y = 0, acc = 0;
+
+    if (GetTouchPointCount() >= 2) {
+        float y = (GetTouchPosition(0).y + GetTouchPosition(1).y) * 0.5f;
+        if (!two) { two = true; last_y = y; acc = 0; }
+        acc += y - last_y;
+        last_y = y;
+        while (acc >= WHEEL_STEP)  { (*wheel_delta)++; acc -= WHEEL_STEP; }
+        while (acc <= -WHEEL_STEP) { (*wheel_delta)--; acc += WHEEL_STEP; }
+        tracking = false;
+        right = false;
+        *buttons &= ~3;
+        return;
+    }
+    two = false;
+
+    if (*buttons & 1) {
+        if (!tracking) { tracking = true; right = false; moved = false; t0 = GetTime(); p0 = pos; }
+        if (std::fabs(pos.x - p0.x) > LONG_PRESS_SLOP || std::fabs(pos.y - p0.y) > LONG_PRESS_SLOP)
+            moved = true;
+        if (!moved && !right && GetTime() - t0 >= LONG_PRESS_SEC) right = true;
+        if (right) *buttons = (*buttons & ~1) | 2;
+    } else {
+        tracking = false;
+        right = false;
+    }
+#endif
 }
 
 void rlb_set_mouse(int x, int y) {
     if (g_window_open) SetMousePosition(x, y);
+}
+
+void rlb_show_keyboard(bool show) {
+#ifdef __ANDROID__
+    eador_android_show_keyboard(show);
+#else
+    (void)show;
+#endif
 }
