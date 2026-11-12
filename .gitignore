@@ -9,3 +9,14 @@ cmake_install.cmake
 .ninja_*
 gamelog.txt
 tracer.txt
+.rumdl_cache/
+
+wine_prefix_*/
+gog_installers/
+
+zig-eador/zig-pkg/
+zig-eador/zig-out/
+zig-eador/.zig-cache/
+zig-eador/.rumdl_cache/
+zig-eador/recomp/
+zig-eador/tools/
